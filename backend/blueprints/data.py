@@ -1,6 +1,8 @@
 from os import path
 import pandas as pd
 import flask
+from flask import request
+import json
 import server_data as sv
 
 data = flask.Blueprint('data_blueprint', __name__)
@@ -37,3 +39,21 @@ def rows_between(start, end):
     df_json = sv.dataFrame[start:end].to_json(orient='split')
 
     return flask.jsonify(success=True, message="Success", dataframe=df_json)
+
+
+@data.get('/printhead')
+def printhead():
+    print(sv.dataFrame.head())
+    return flask.jsonify(success=True)
+
+
+# drop columns by labels
+@data.route('/data/drop/columns', methods=['POST'])
+def drop():
+    data = json.loads(request.data)
+    labels = data["labels"]
+    print(labels)
+
+    sv.dataFrame = sv.dataFrame.drop(columns=labels)
+
+    return flask.jsonify(success=True, message="Success")

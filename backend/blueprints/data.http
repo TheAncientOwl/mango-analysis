@@ -21,3 +21,14 @@ GET http://localhost:5000/data/rows-between/10/1000
 
 ### 
 GET http://localhost:5000/data/rows-between/-100/3000
+
+### Drop columns by labels
+POST http://localhost:5000/data/drop/columns
+Content-Type: application/json
+
+{
+  "labels": ["EA", "EAM", "CP"]
+}
+
+###
+Get http://localhost:5000/printhead 
