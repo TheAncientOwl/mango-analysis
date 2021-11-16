@@ -54,21 +54,29 @@ def drop_columns():
     labels = data["labels"]
 
     dropLabels = set()
-    col_labels = sv.dataFrame.columns
+    colLabels = sv.dataFrame.columns
     for label in labels:
-        if label in col_labels:
+        if label in colLabels:
             dropLabels.add(label)
 
     sv.dataFrame = sv.dataFrame.drop(columns=dropLabels)
 
     return flask.jsonify(success=True, message="Success")
 
+
 # drop rows by index
-
-
 @data.route('/data/drop/rows', methods=["POST"])
 def drop_rows():
     data = json.loads(request.data)
     index = data["index"]
+
+    dropIndex = set()
+    nRows = sv.dataFrame.shape[0]
+    for idx in index:
+        if idx >= 0 and idx < nRows:
+            dropIndex.add(idx)
+
+    sv.dataFrame = sv.dataFrame.drop(
+        sv.dataFrame.index[list(dropIndex)], axis=0)
 
     return flask.jsonify(success=True, message="Success")
