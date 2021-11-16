@@ -27,7 +27,15 @@ POST http://localhost:5000/data/drop/columns
 Content-Type: application/json
 
 {
-  "labels": ["EA", "EAM", "CP"]
+  "labels": ["EA", "EAM", "CP", "IDK", "CP"]
+}
+
+### Drop lines by index
+POST http://localhost:5000/data/drop/columns
+Content-Type: application/json
+
+{
+  "index": [0, 1, 2]
 }
 
 ###

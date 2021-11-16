@@ -49,11 +49,26 @@ def printhead():
 
 # drop columns by labels
 @data.route('/data/drop/columns', methods=['POST'])
-def drop():
+def drop_columns():
     data = json.loads(request.data)
     labels = data["labels"]
-    print(labels)
 
-    sv.dataFrame = sv.dataFrame.drop(columns=labels)
+    dropLabels = set()
+    col_labels = sv.dataFrame.columns
+    for label in labels:
+        if label in col_labels:
+            dropLabels.add(label)
+
+    sv.dataFrame = sv.dataFrame.drop(columns=dropLabels)
+
+    return flask.jsonify(success=True, message="Success")
+
+# drop rows by index
+
+
+@data.route('/data/drop/rows', methods=["POST"])
+def drop_rows():
+    data = json.loads(request.data)
+    index = data["index"]
 
     return flask.jsonify(success=True, message="Success")
