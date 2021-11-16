@@ -1,1 +1,11 @@
-GET http://localhost:5000/data/hello
+### Read data
+GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/backend/Date.csv
+
+### Read unexisting data
+GET http://localhost:5000/data/import/csv/test
+
+### Save data ~ directory does not exist
+GET http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Codee/data-analysis-tool/backend
+
+### Save data ~ nothing to save + save
+GET http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/data-analysis-tool/backend
