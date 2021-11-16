@@ -37,5 +37,5 @@ Content-Type: application/json
   "index": [0, 1, 2, 6999, -100, 500, 30]
 }
 
-###
+### Prin server's dataframe head
 Get http://localhost:5000/printhead 
