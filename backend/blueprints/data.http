@@ -12,7 +12,6 @@ GET http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/Th
 
 ### Get rows between start and end
 GET http://localhost:5000/data/rows-between/0/10
-
 ###
 GET http://localhost:5000/data/rows-between/-10/3
 
@@ -35,7 +34,7 @@ POST http://localhost:5000/data/drop/rows
 Content-Type: application/json
 
 {
-  "index": [0, 1, 2, 6999, -100]
+  "index": [0, 1, 2, 6999, -100, 500, 30]
 }
 
 ###
