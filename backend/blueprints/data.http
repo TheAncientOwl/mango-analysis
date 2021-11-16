@@ -9,3 +9,15 @@ GET http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/Th
 
 ### Save data ~ nothing to save + save
 GET http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/data-analysis-tool/backend
+
+### Get rows between start and end
+GET http://localhost:5000/data/rows-between/0/10
+
+###
+GET http://localhost:5000/data/rows-between/-10/3
+
+###
+GET http://localhost:5000/data/rows-between/10/1000
+
+### 
+GET http://localhost:5000/data/rows-between/-100/3000

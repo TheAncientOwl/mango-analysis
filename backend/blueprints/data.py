@@ -27,3 +27,13 @@ def export_csv(fileName, dirPath):
     sv.dataFrame.to_csv(path_or_buf=path.join(dirPath, fileName), index=False)
 
     return flask.jsonify(success=True, message="File saved successfully")
+
+
+@data.get('/data/rows-between/<start>/<end>')
+def rows_between(start, end):
+    start = max(int(start), 0)
+    end = min(int(end), sv.dataFrame.shape[0])
+
+    df_json = sv.dataFrame[start:end].to_json(orient='split')
+
+    return flask.jsonify(success=True, message="Success", dataframe=df_json)
