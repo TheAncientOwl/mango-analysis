@@ -83,6 +83,7 @@ def rows_between(start, end):
 # * {
 # *   "labels": ["label1", "label2", ...]
 # * }
+# * @return jsonify(success, message, ?dataframe)
 @data.route('/data/drop/columns', methods=['POST'])
 def drop_columns():
     # get labels from request
@@ -107,6 +108,7 @@ def drop_columns():
 # * {
 # *   "index": [index1, index2, ...]
 # * }
+# * @return jsonify(success, message, ?dataframe)
 @data.route('/data/drop/rows', methods=["POST"])
 def drop_rows():
     # get index from request
