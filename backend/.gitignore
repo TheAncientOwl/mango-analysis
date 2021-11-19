@@ -2,5 +2,3 @@ __pycache__/
 *.pyc
 
 *.prv.ps1
-
-*.csv
