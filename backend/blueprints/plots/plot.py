@@ -55,13 +55,14 @@ def create_plot():
     plt.ylabel(yLab)
     plt.title(title)
 
+    # * Create directory and save plot
     save_path_directory = os.path.join(
         os.path.expanduser('~'), '.data-analysis-tool', 'plots')
 
     if not os.path.exists(save_path_directory):
         os.makedirs(save_path_directory)
 
-    file_path = os.path.join(save_path_directory,  f'{str(uuid4())}.png')
-    plt.savefig(file_path)
+    plot_path = os.path.join(save_path_directory,  f'{str(uuid4())}.png')
+    plt.savefig(plot_path)
 
-    return flask.jsonify(success=True, message='Plot saved', path=file_path)
+    return flask.jsonify(success=True, message='Plot saved', path=plot_path)
