@@ -22,11 +22,11 @@ def printhead():
 @data.get('/data/import/csv/<path:filePath>')
 def import_csv(filePath):
     if not path.exists(filePath):
-        return flask.jsonify(success=False, message="File does not exist")
+        return flask.jsonify(success=False, message='File does not exist')
 
     sv.dataFrame = pd.read_csv(filePath)
 
-    return flask.jsonify(success=True, message="Success")
+    return flask.jsonify(success=True, message='Success')
 
 
 # * Exports server's dataframe to csv file
@@ -37,14 +37,14 @@ def import_csv(filePath):
 @data.get('/data/export/csv/name/<fileName>/path/<path:dirPath>')
 def export_csv(fileName, dirPath):
     if not path.isdir(dirPath):
-        return flask.jsonify(success=False, message="Directory does not exist")
+        return flask.jsonify(success=False, message='Directory does not exist')
 
     if sv.dataFrame.empty:
-        return flask.jsonify(success=False, message="Nothing to save, dataframe empty")
+        return flask.jsonify(success=False, message='Nothing to save, dataframe empty')
 
     sv.dataFrame.to_csv(path_or_buf=path.join(dirPath, fileName), index=False)
 
-    return flask.jsonify(success=True, message="File saved successfully")
+    return flask.jsonify(success=True, message='File saved successfully')
 
 
 # * Get rows in range [start:end) ~ start inclusive, end exclusive.
@@ -62,32 +62,32 @@ def rows_between(start, end):
 
     # check if given range is valid <=> 0 <= start <= end < nRow(dataframe)
     if end < start:
-        return flask.jsonify(success=False, message="End cannot be less than Start")
+        return flask.jsonify(success=False, message='End cannot be less than Start')
 
     if start < 0:
-        return flask.jsonify(success=False, message="Start cannot be less than 0")
+        return flask.jsonify(success=False, message='Start cannot be less than 0')
 
     if end > sv.dataFrame.shape[0]:
-        return flask.jsonify(success=False, message="End cannot be greater than rows number")
+        return flask.jsonify(success=False, message='End cannot be greater than rows number')
 
     # get json from requested rows
     df_json = sv.dataFrame[start:end].to_json(orient='split')
 
-    return flask.jsonify(success=True, message="Success", dataframe=df_json)
+    return flask.jsonify(success=True, message='Success', dataframe=df_json)
 
 
 # * Drop columns by labels
 # * @return jsonify(success, message)
 # * @request-data-format:
 # * {
-# *   "labels": ["label1", "label2", ...]
+# *   'labels': ['label1', 'label2', ...]
 # * }
 # * @return jsonify(success, message, ?dataframe)
 @data.route('/data/drop/columns', methods=['POST'])
 def drop_columns():
     # get labels from request
     data = json.loads(flask.request.data)
-    labels = data["labels"]
+    labels = data['labels']
 
     # create valid labels set. (label valid if dataFrame contains it)
     dropLabels = set()
@@ -104,8 +104,9 @@ def drop_columns():
 
 # * Drop rows by index
 # * @return jsonify(success, message)
+# * @request-data-format:
 # * {
-# *   "index": [index1, index2, ...]
+# *   'index': [index1, index2, ...]
 # * }
 # * @return jsonify(success, message, ?dataframe, invalidIndexCount)
 @data.route('/data/drop/rows', methods=['POST'])
@@ -142,6 +143,10 @@ def transpose():
 
 # * Summary
 # * @return -> dataframe
+# * @request-data-format:
+# * {
+# *   'labels': ['label1', 'label2', ...]
+# * }
 # *     original dataframe: m x n
 # *     return   dataframe: p x n, p -> number of statistics
 # *     oc -> original column
@@ -151,17 +156,32 @@ def transpose():
 # *     ...  x   x  ...  x
 # *     sk   x   x  ...  x
 # *     ku   x   x  ...  x
-@data.get('/data/summary')
+# * @return jsonify(success, message, dataframe, unknownLabels, nonNumeric)
+@data.route('/data/summary', methods=['POST'])
 def summary():
+
+    data = json.loads(flask.request.data)
+    requestedLabels = data['labels']
+
+    # create valid labels set. (label valid if dataFrame contains it)
     originalColumnLabels = sv.dataFrame.columns
+    validRequestedLabels = set()
+    unknownLabels = 0
+    nonNumeric = 0
+    for columnLabel in requestedLabels:
+        if columnLabel in originalColumnLabels:
+            if not pandas_is_numeric(sv.dataFrame[columnLabel]):
+                nonNumeric = nonNumeric + 1
+            else:
+                validRequestedLabels.add(columnLabel)
+        else:
+            unknownLabels = unknownLabels + 1
+
     result = {
-        "statistic": ['min', 'max', 'median', 'mean', '1st Qu.', '3rd Qu.', 'std', 'sk', 'ku']
+        'statistic': ['min', 'max', 'median', 'mean', '1st Qu.', '3rd Qu.', 'std', 'sk', 'ku']
     }
 
-    for columnLabel in originalColumnLabels:
-        if not pandas_is_numeric(sv.dataFrame[columnLabel]):
-            continue
-
+    for columnLabel in validRequestedLabels:
         q1, q3 = sv.dataFrame[columnLabel].quantile(q=[0.25, 0.75])
 
         result[columnLabel] = [round(num, 4) for num in [
@@ -177,12 +197,13 @@ def summary():
         ]]
 
     # for key, values in result.items():
-    #     print(f">> {key}:", sep="")
+    #     print(f'>> {key}:', sep='')
     #     for value in values:
-    #         print(f"  {value}", end="")
+    #         print(f'  {value}', end='')
     #     print()
 
     resultDf = pd.DataFrame(result)
     df_json = resultDf.to_json(orient='split')
 
-    return flask.jsonify(success=True, message='Success', dataframe=df_json)
+    return flask.jsonify(success=True, message='Success', dataframe=df_json,
+                         unknownLabels=unknownLabels, nonNumeric=nonNumeric)

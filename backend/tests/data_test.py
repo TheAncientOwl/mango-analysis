@@ -104,7 +104,7 @@ class DataTest(TestBase):
     def test_drop_columns_by_label(self):
         self.readDataFrame()
 
-        dropLabels = ["EA", "EAM", "CP", "IDK", "CP"]
+        dropLabels = ['EA', 'EAM', 'CP', 'IDK', 'CP']
         response = self.client.post('/data/drop/columns', json={
             'labels': dropLabels
         })
@@ -165,12 +165,19 @@ class DataTest(TestBase):
     # * -----------------------------------------------------------------------------------------------------
     def test_summary(self):
         self.readDataFrame()
-        response = self.client.get('/data/summary')
+        requestLabels = ['EA', 'EAM', 'CP', 'IDK', 'CP', 'Country']
+        response = self.client.post('/data/summary', json={
+            'labels': requestLabels
+        })
         json_data = response.get_json()
 
         self.assertBasics(response, json_data)
         self.assertTrue(json_data[tokens.success])
         self.assertTrue('dataframe' in json_data)
+        self.assertTrue('unknownLabels' in json_data)
+        self.assertTrue('nonNumeric' in json_data)
+        self.assertTrue(json_data['unknownLabels'] == 1)
+        self.assertTrue(json_data['nonNumeric'] == 1)
 
 
 if __name__ == '__main__':
