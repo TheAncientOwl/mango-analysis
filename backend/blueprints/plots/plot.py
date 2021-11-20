@@ -55,8 +55,8 @@ def create_plot():
     plt.ylabel(yLab)
     plt.title(title)
 
-    save_path_directory = os.path.join(os.path.expanduser(
-        '~'), '.data-analysis-tool', 'plots')
+    save_path_directory = os.path.join(
+        os.path.expanduser('~'), '.data-analysis-tool', 'plots')
 
     if not os.path.exists(save_path_directory):
         os.makedirs(save_path_directory)
