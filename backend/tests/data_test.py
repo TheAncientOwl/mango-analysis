@@ -1,6 +1,5 @@
 import unittest
-
-from werkzeug.wrappers import response
+import json
 from test_base import TestBase, tokens
 import server_data as sv
 
@@ -160,6 +159,18 @@ class DataTest(TestBase):
         self.assertTrue(sv.dataFrame.shape[0] == initialColsNum and
                         sv.dataFrame.shape[1] == initialRowsNum,
                         'Dataframe not transposed')
+
+    # * -----------------------------------------------------------------------------------------------------
+    # * >> Summary
+    # * -----------------------------------------------------------------------------------------------------
+    def test_summary(self):
+        self.readDataFrame()
+        response = self.client.get('/data/summary')
+        json_data = response.get_json()
+
+        self.assertBasics(response, json_data)
+        self.assertTrue(json_data[tokens.success])
+        self.assertTrue('dataframe' in json_data)
 
 
 if __name__ == '__main__':

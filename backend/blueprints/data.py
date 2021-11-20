@@ -1,11 +1,10 @@
 import server_data as sv
 import pandas as pd
+from pandas.api.types import is_numeric_dtype as pandas_is_numeric
+
 import flask
 import json
-
-from flask import request
 from os import path
-
 
 data = flask.Blueprint('data_blueprint', __name__)
 
@@ -87,7 +86,7 @@ def rows_between(start, end):
 @data.route('/data/drop/columns', methods=['POST'])
 def drop_columns():
     # get labels from request
-    data = json.loads(request.data)
+    data = json.loads(flask.request.data)
     labels = data["labels"]
 
     # create valid labels set. (label valid if dataFrame contains it)
@@ -100,7 +99,7 @@ def drop_columns():
     # drop columns
     sv.dataFrame = sv.dataFrame.drop(columns=dropLabels)
 
-    return flask.jsonify(success=True, message="Success")
+    return flask.jsonify(success=True, message='Success')
 
 
 # * Drop rows by index
@@ -109,11 +108,11 @@ def drop_columns():
 # *   "index": [index1, index2, ...]
 # * }
 # * @return jsonify(success, message, ?dataframe, invalidIndexCount)
-@data.route('/data/drop/rows', methods=["POST"])
+@data.route('/data/drop/rows', methods=['POST'])
 def drop_rows():
     # get index from request
-    data = json.loads(request.data)
-    index = data["index"]
+    data = json.loads(flask.request.data)
+    index = data['index']
 
     # create valid index set. (index valid if between 0:nRows)
     dropIndex = set()
@@ -129,7 +128,7 @@ def drop_rows():
     sv.dataFrame = sv.dataFrame.drop(
         sv.dataFrame.index[list(dropIndex)], axis=0)
 
-    return flask.jsonify(success=True, message="Success", invalidIndexCount=invalidIndexCount)
+    return flask.jsonify(success=True, message='Success', invalidIndexCount=invalidIndexCount)
 
 
 # * Transpose dataframe matrix.
@@ -138,4 +137,52 @@ def drop_rows():
 def transpose():
     sv.dataFrame = sv.dataFrame.transpose()
 
-    return flask.jsonify(success=True, message="Success")
+    return flask.jsonify(success=True, message='Success')
+
+
+# * Summary
+# * @return -> dataframe
+# *     original dataframe: m x n
+# *     return   dataframe: p x n, p -> number of statistics
+# *     oc -> original column
+# *     ___ oc1 oc2 ... ocn
+# *     min  x   x  ...  x
+# *     max  x   x  ...  x
+# *     ...  x   x  ...  x
+# *     sk   x   x  ...  x
+# *     ku   x   x  ...  x
+@data.get('/data/summary')
+def summary():
+    originalColumnLabels = sv.dataFrame.columns
+    result = {
+        "statistic": ['min', 'max', 'median', 'mean', '1st Qu.', '3rd Qu.', 'std', 'sk', 'ku']
+    }
+
+    for columnLabel in originalColumnLabels:
+        if not pandas_is_numeric(sv.dataFrame[columnLabel]):
+            continue
+
+        q1, q3 = sv.dataFrame[columnLabel].quantile(q=[0.25, 0.75])
+
+        result[columnLabel] = [round(num, 4) for num in [
+            sv.dataFrame[columnLabel].min(),
+            sv.dataFrame[columnLabel].max(),
+            sv.dataFrame[columnLabel].median(),
+            sv.dataFrame[columnLabel].mean(),
+            q1,
+            q3,
+            sv.dataFrame[columnLabel].std(),
+            sv.dataFrame[columnLabel].skew(),
+            sv.dataFrame[columnLabel].kurtosis()
+        ]]
+
+    # for key, values in result.items():
+    #     print(f">> {key}:", sep="")
+    #     for value in values:
+    #         print(f"  {value}", end="")
+    #     print()
+
+    resultDf = pd.DataFrame(result)
+    df_json = resultDf.to_json(orient='split')
+
+    return flask.jsonify(success=True, message='Success', dataframe=df_json)
