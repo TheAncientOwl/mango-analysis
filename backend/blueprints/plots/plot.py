@@ -62,7 +62,6 @@ def create_plot():
         os.makedirs(save_path_directory)
 
     file_path = os.path.join(save_path_directory,  f'{str(uuid4())}.png')
-    # print(file_path)
     plt.savefig(file_path)
 
     return flask.jsonify(success=True, message='Plot saved', path=file_path)
