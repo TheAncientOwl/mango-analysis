@@ -97,7 +97,7 @@ class DataTest(TestBase):
         self.assertBasics(response, json_data)
         self.assertTrue(json_data[tokens.success])
         self.assertTrue('dataframe' in json_data,
-                        "Missing 'dataframe' key in json response")
+                        "Missing 'dataframe' key in json response.")
 
     # * -----------------------------------------------------------------------------------------------------
     # * >> Drop columns by label
@@ -122,6 +122,27 @@ class DataTest(TestBase):
 
         self.assertTrue(len(remainingDropLabels) == 0,
                         f"Some labels were not deleted... '{str(remainingDropLabels)}'")
+
+    # * -----------------------------------------------------------------------------------------------------
+    # * >> Drop rows by index
+    # * -----------------------------------------------------------------------------------------------------
+    def test_drop_rows_by_index(self):
+        self.readDataFrame()
+        initialRowsNum = sv.dataFrame.shape[0]
+
+        dropIndex = [0, 1, 2, 6999, -100, 500, 30]
+        response = self.client.post('/data/drop/rows', json={
+            'index': dropIndex
+        })
+        json_data = response.get_json()
+
+        self.assertBasics(response, json_data)
+        self.assertTrue(json_data[tokens.success])
+        self.assertTrue('invalidIndexCount' in json_data)
+        self.assertTrue(json_data['invalidIndexCount'] == 3,
+                        'Wrong count of invalid index detected.')
+        self.assertTrue(sv.dataFrame.shape[0] + 4 == initialRowsNum,
+                        'Not all rows were dropped.')
 
 
 if __name__ == '__main__':

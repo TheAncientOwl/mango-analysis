@@ -118,12 +118,15 @@ def drop_rows():
     # create valid index set. (index valid if between 0:nRows)
     dropIndex = set()
     nRows = sv.dataFrame.shape[0]
+    invalidIndexCount = 0
     for idx in index:
         if idx >= 0 and idx < nRows:
             dropIndex.add(idx)
+        else:
+            invalidIndexCount = invalidIndexCount + 1
 
     # drop rows
     sv.dataFrame = sv.dataFrame.drop(
         sv.dataFrame.index[list(dropIndex)], axis=0)
 
-    return flask.jsonify(success=True, message="Success")
+    return flask.jsonify(success=True, message="Success", invalidIndexCount=invalidIndexCount)
