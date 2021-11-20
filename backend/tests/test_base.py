@@ -2,6 +2,7 @@ import unittest
 import pandas
 import server
 import server_data as sv
+import os
 
 
 class tokens:
@@ -18,13 +19,16 @@ class TestBase(unittest.TestCase):
         self.client = server.app.test_client(self)
 
     def tearDown(self):
+        file = f'{tokens.working_dir}/DateExported.csv'
+        if os.path.exists(file):
+            os.remove(file)
         pass
 
     # data-frame read + empty
-    def readDataFrame():
+    def readDataFrame(self):
         sv.dataFrame = pandas.read_csv(f'{tokens.working_dir}/Date.csv')
 
-    def emptyDataFrame():
+    def emptyDataFrame(self):
         sv.dataFrame = pandas.DataFrame()
 
     # custom asserts
