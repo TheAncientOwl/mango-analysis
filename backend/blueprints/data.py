@@ -108,7 +108,7 @@ def drop_columns():
 # * {
 # *   "index": [index1, index2, ...]
 # * }
-# * @return jsonify(success, message, ?dataframe)
+# * @return jsonify(success, message, ?dataframe, invalidIndexCount)
 @data.route('/data/drop/rows', methods=["POST"])
 def drop_rows():
     # get index from request
@@ -130,3 +130,12 @@ def drop_rows():
         sv.dataFrame.index[list(dropIndex)], axis=0)
 
     return flask.jsonify(success=True, message="Success", invalidIndexCount=invalidIndexCount)
+
+
+# * Transpose dataframe matrix.
+# * @return jsonify(success, message)
+@data.get('/data/transpose')
+def transpose():
+    sv.dataFrame = sv.dataFrame.transpose()
+
+    return flask.jsonify(success=True, message="Success")

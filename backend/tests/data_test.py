@@ -144,6 +144,23 @@ class DataTest(TestBase):
         self.assertTrue(sv.dataFrame.shape[0] + 4 == initialRowsNum,
                         'Not all rows were dropped.')
 
+    # * -----------------------------------------------------------------------------------------------------
+    # * >> test transpose
+    # * -----------------------------------------------------------------------------------------------------
+    def test_transpose(self):
+        self.readDataFrame()
+        initialRowsNum = sv.dataFrame.shape[0]
+        initialColsNum = sv.dataFrame.shape[1]
+
+        response = self.client.get('/data/transpose')
+        json_data = response.get_json()
+
+        self.assertBasics(response, json_data)
+        self.assertTrue(json_data[tokens.success])
+        self.assertTrue(sv.dataFrame.shape[0] == initialColsNum and
+                        sv.dataFrame.shape[1] == initialRowsNum,
+                        'Dataframe not transposed')
+
 
 if __name__ == '__main__':
     unittest.main()
