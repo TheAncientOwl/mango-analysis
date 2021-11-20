@@ -11,5 +11,5 @@ CORS(app)
 
 app.register_blueprint(blueprints.data.data)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
