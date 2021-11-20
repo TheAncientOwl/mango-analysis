@@ -1,4 +1,5 @@
-from test_base import *
+import unittest
+from test_base import TestBase, tokens
 
 
 class DataTest(TestBase):
