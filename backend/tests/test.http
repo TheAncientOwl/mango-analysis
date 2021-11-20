@@ -1,0 +1,8 @@
+### Read data
+GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/backend/Date.csv
+
+### Save data
+GET http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/data-analysis-tool/backend
+
+### Prin server's dataframe head
+Get http://localhost:5000/printhead 
