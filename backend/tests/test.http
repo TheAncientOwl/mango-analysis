@@ -9,3 +9,15 @@ GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analy
 
 ###
 GET http://localhost:5000/data/summary
+
+###
+POST http://localhost:5000/data/plots/plot
+Content-Type: application/json
+
+{
+  "x": "EA",
+  "y": "EAM",
+  "xLab": "EA_lab",
+  "yLab": "EAM_lab",
+  "title": "Test plot"
+}
