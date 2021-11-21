@@ -77,7 +77,6 @@ def rows_between(start, end):
 
 
 # * Drop columns by labels
-# * @return jsonify(success, message)
 # * @request-data-format:
 # * {
 # *   'labels': ['label1', 'label2', ...]
@@ -103,7 +102,6 @@ def drop_columns():
 
 
 # * Drop rows by index
-# * @return jsonify(success, message)
 # * @request-data-format:
 # * {
 # *   'index': [index1, index2, ...]
@@ -142,7 +140,6 @@ def transpose():
 
 
 # * Summary
-# * @return -> dataframe
 # * @request-data-format:
 # * {
 # *   'labels': ['label1', 'label2', ...]

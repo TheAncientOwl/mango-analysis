@@ -13,6 +13,16 @@ from uuid import uuid4
 plot = flask.Blueprint('plot_blueprint', __name__)
 
 
+# * Creates plot
+# * @request-data-format:
+# * {
+# *   'x': 'column label'
+# *   'y': 'column label'
+# *   'yLab': 'plot y label'
+# *   'xLab': 'plot x label'
+# *   'title': 'plot title'
+# * }
+# * @return jsonify(success, message, ?path) -> absolute path to plot location
 @plot.route('/data/plots/plot', methods=['POST'])
 def create_plot():
     data = json.loads(flask.request.data)
