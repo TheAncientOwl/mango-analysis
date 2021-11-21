@@ -27,32 +27,36 @@ plot = flask.Blueprint('plot_blueprint', __name__)
 def create_plot():
     data = json.loads(flask.request.data)
 
-    # * Check if x and y columns are provided.
-    if 'x' not in data:
-        return flask.jsonify(success=False, message='Missing x.')
+    # * Extract columns.
+    # @return success, result
+    #   result -> if success, the list
+    #             else      , response
+    def extract_column(axis):
+        # check if axis column is provided.
+        if axis not in data:
+            return False, flask.jsonify(success=False, message='Missing x.')
 
-    if 'y' not in data:
-        return flask.jsonify(success=False, message='Missing y.')
+        # check if column label is in dataframe.
+        columnLabel = data[axis]
+        if columnLabel not in sv.dataFrame:
+            return False, flask.jsonify(success=False, message=f'Missing {axis}.')
 
-    # * Check if x and y columns are in dataframe.
-    x = data['x']
-    if x not in sv.dataFrame:
-        return flask.jsonify(success=False, message=f'Column "{x}" does not exist.')
+        # get list.
+        list = sv.dataFrame[columnLabel]
 
-    y = data['y']
-    if y not in sv.dataFrame:
-        return flask.jsonify(success=False, message=f'Column "{y}" does not exist.')
+        # check if list is numeric.
+        if not pandas_is_numeric(list):
+            return False, flask.jsonify(success=False, message=f'Column "{columnLabel}" is not numeric.')
 
-    # * Get lists to plot
-    xList = sv.dataFrame[x]
-    yList = sv.dataFrame[y]
+        return True, list
 
-    # * Check if x and y columns are numeric.
-    if not pandas_is_numeric(xList):
-        return flask.jsonify(success=False, message=f'Column "{x}" is not numeric.')
+    success, xList = extract_column('x')
+    if success == False:
+        return xList
 
-    if not pandas_is_numeric(yList):
-        return flask.jsonify(success=False, message=f'Column "{y}" is not numeric.')
+    success, yList = extract_column('y')
+    if success == False:
+        return yList
 
     # * Get the optional parameters.
     xLab = data.get('xLab', '')
