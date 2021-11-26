@@ -1,12 +1,12 @@
 import unittest
 import pandas
-import server
+from main import app
 import server_data as sv
 import os
 
 
 class tokens:
-    working_dir = 'C:/Users/TheAncientOwl/Code/data-analysis-tool/backend'
+    working_dir = 'C:/Users/TheAncientOwl/Code/data-analysis-tool/server'
     success = 'success'
     message = 'message'
     app_json = 'application/json'
@@ -16,7 +16,7 @@ class TestBase(unittest.TestCase):
     # test case set-up + tear-down
     def setUp(self):
         self.emptyDataFrame()
-        self.client = server.app.test_client(self)
+        self.client = app.test_client(self)
 
     def tearDown(self):
         file = f'{tokens.working_dir}/DateExported.csv'
