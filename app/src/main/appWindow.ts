@@ -15,6 +15,8 @@ export const createAppWindow = (): BrowserWindow => {
   appWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 700,
+    minHeight: 600,
     webPreferences: {
       sandbox: true,
       nodeIntegration: false,
