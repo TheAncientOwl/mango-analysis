@@ -8,7 +8,7 @@ import { MenuDrawer } from './MenuDrawer';
 
 const Application: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = useState('data');
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(true);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
