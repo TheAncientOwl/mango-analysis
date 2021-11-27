@@ -9,16 +9,23 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 interface Props {
   title: string;
+  onMenuButtonClick: () => void;
 }
 
 const Spacer = () => <Box sx={{ flexGrow: 1 }} />;
 
-export const TopBar: React.FC<Props> = ({ title }) => {
+export const TopBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='fixed' sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <IconButton size='medium' edge='start' color='inherit' aria-label='menu' sx={{ mr: 1 }}>
+          <IconButton
+            size='medium'
+            edge='start'
+            color='inherit'
+            aria-label='menu'
+            sx={{ mr: 1 }}
+            onClick={onMenuButtonClick}>
             <MenuIcon />
           </IconButton>
 

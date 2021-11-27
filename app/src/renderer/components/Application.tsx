@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import './Application.css';
 import { TopBar } from './TopBar';
@@ -8,13 +8,20 @@ import { MenuDrawer } from './MenuDrawer';
 
 const Application: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = useState('data');
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  useEffect(() => {
+    console.log(menuOpen);
+  }, [menuOpen]);
 
   return (
     <React.Fragment>
-      <TopBar title={currentSectionTitle} />
+      <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
 
       <Box sx={{ display: 'flex' }}>
-        <MenuDrawer onItemClick={setCurrentSectionTitle} />
+        <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
         <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
           <Typography paragraph>
