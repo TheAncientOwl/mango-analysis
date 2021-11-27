@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { hot } from 'react-hot-loader';
 import './Application.css';
 import { TopBar } from './TopBar';
-import { Box } from '@mui/system';
-import { Toolbar, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
 import { MenuDrawer } from './MenuDrawer';
 
 const Application: React.FC = () => {
+  const [currentSectionTitle, setCurrentSectionTitle] = useState('data');
+
   return (
     <React.Fragment>
-      <TopBar title='data' />
+      <TopBar title={currentSectionTitle} />
 
       <Box sx={{ display: 'flex' }}>
-        <MenuDrawer />
+        <MenuDrawer onItemClick={setCurrentSectionTitle} />
 
         <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
           <Typography paragraph>

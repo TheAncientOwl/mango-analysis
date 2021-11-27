@@ -6,14 +6,17 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import { SectionsConfig } from './SectionsConfig';
 
-const drawerWidth = 200;
+const drawerWidth = 180;
 
-export const MenuDrawer: React.FC = () => {
+interface Props {
+  onItemClick: (itemName: string) => void;
+}
+
+export const MenuDrawer: React.FC<Props> = ({ onItemClick }) => {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', bgcolor: 'primary.main' }}>
       <Drawer
         variant='permanent'
         sx={{
@@ -22,12 +25,16 @@ export const MenuDrawer: React.FC = () => {
           [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
         }}>
         <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
+        <Box sx={{ overflow: 'auto', bgcolor: 'primary.main', flexGrow: 1 }}>
           <List>
-            {['Data', 'Graphs', 'Analysis'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+            {SectionsConfig.map((section, index) => (
+              <ListItem
+                button
+                key={index}
+                sx={{ color: 'primary.contrastText' }}
+                onClick={() => onItemClick(section.title)}>
+                <ListItemIcon sx={{ color: 'inherit' }}>{section.icon}</ListItemIcon>
+                <ListItemText sx={{ textTransform: 'capitalize' }}>{section.title}</ListItemText>
               </ListItem>
             ))}
           </List>
