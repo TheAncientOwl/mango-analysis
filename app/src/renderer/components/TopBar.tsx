@@ -16,7 +16,7 @@ const Spacer = () => <Box sx={{ flexGrow: 1 }} />;
 export const TopBar: React.FC<Props> = ({ title }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position='fixed' sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <IconButton size='medium' edge='start' color='inherit' aria-label='menu' sx={{ mr: 1 }}>
             <MenuIcon />
@@ -39,6 +39,7 @@ export const TopBar: React.FC<Props> = ({ title }) => {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </Box>
   );
 };
