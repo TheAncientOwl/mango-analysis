@@ -58,15 +58,9 @@ interface Props {
 export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
   return (
     <Box sx={{ display: 'flex', bgcolor: 'primary.main' }}>
-      <Drawer
-        variant='permanent'
-        open={open}
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-        }}>
+      <Drawer variant='permanent' open={open}>
         <Toolbar />
-        <Box sx={{ overflow: 'auto', bgcolor: 'primary.main', flexGrow: 1 }}>
+        <Box sx={{ bgcolor: 'primary.main', flexGrow: 1 }}>
           <List>
             {SectionsConfig.map((section, index) => (
               <ListItem
