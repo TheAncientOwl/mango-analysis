@@ -5,6 +5,7 @@ import { TopBar } from './TopBar';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { MenuDrawer } from './MenuDrawer';
+import Paper from '@mui/material/Paper';
 
 const Application: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = useState('data');
@@ -20,10 +21,10 @@ const Application: React.FC = () => {
     <React.Fragment>
       <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
 
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', border: '1px solid green', minHeight: '900px' }}>
         <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
-        <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+        <Paper sx={{ m: 1, p: 2 }} elevation={8}>
           <Typography paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi
@@ -44,7 +45,7 @@ const Application: React.FC = () => {
             aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
             posuere sollicitudin aliquam ultrices sagittis orci a.
           </Typography>
-        </Box>
+        </Paper>
       </Box>
     </React.Fragment>
   );
