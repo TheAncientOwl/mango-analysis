@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
+import { ThemeProvider } from '@mui/material/styles';
 
 import { TopBar } from './TopBar';
 import { MenuDrawer } from './MenuDrawer';
 import { SectionsArray } from '../configs/sectionsConfig';
+import { theme } from '../configs/theme';
 
 const Application: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = useState(SectionsArray[0].name);
@@ -16,7 +18,7 @@ const Application: React.FC = () => {
 
   return (
     <HashRouter>
-      <React.Fragment>
+      <ThemeProvider theme={theme}>
         <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
 
         <Box sx={{ display: 'flex' }}>
@@ -28,7 +30,7 @@ const Application: React.FC = () => {
             ))}
           </Routes>
         </Box>
-      </React.Fragment>
+      </ThemeProvider>
     </HashRouter>
   );
 };
