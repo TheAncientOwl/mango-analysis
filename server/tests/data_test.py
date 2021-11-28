@@ -6,6 +6,17 @@ import server_data as sv
 
 class DataTest(TestBase):
     # * -----------------------------------------------------------------------------------------------------
+    # * >> Delete dataframe
+    # * -----------------------------------------------------------------------------------------------------
+    def test_delete_dataframe(self):
+        response = self.client.get('/data/delete')
+        json_data = response.get_json()
+
+        self.assertBasics(response, json_data)
+        self.assertTrue(json_data[tokens.success])
+        self.assertTrue(sv.dataFrame.shape[0] == 0)
+
+    # * -----------------------------------------------------------------------------------------------------
     # * >> Import csv route
     # * -----------------------------------------------------------------------------------------------------
     def test_import_unexisting_csv(self):

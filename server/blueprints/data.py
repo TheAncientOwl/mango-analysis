@@ -15,6 +15,12 @@ def printhead():
     print(sv.dataFrame.head())
     return flask.jsonify(success=True)
 
+# * Delete dataframe
+# * @return jsonify(success, message)
+@data.get('/data/delete')
+def delete_dataframe():
+    sv.dataFrame = pd.DataFrame()
+    return flask.jsonify(success=True, message='Dataframe deleted')
 
 # * Imports data from csv file into server's dataframe
 # * @param filePath -> csv file path to be imported

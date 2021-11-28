@@ -2,7 +2,10 @@
 GET http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/data-analysis-tool/backend
 
 ### Print server's dataframe head
-Get http://localhost:5000/printhead 
+GET http://localhost:5000/printhead 
+
+### Delete dataframe
+GET http://localhost:5000/data/delete
 
 ### Read data
 GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/Date.csv
