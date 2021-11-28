@@ -7,13 +7,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { RequestState } from '@renderer/misc';
 import { useLocalStorage } from '@renderer/hooks/useLocalStorage';
 import { useSnackbar } from '@renderer/hooks/useSnackbar';
+import { useSwitch } from '@renderer/hooks/useSwitch';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
 export const Import: React.FC = () => {
   const [importPath, setImportPath] = useLocalStorage<string | null>('import-path', null);
   const [dataLoaded, setDataLoaded] = useState<RequestState>(RequestState.None);
-  const [doubleCheckOpen, setDoubleCheckOpen] = useState(false);
+  const [doubleCheckSwitch, toggleDoubleCheck] = useSwitch(false);
+
   const snackbar = useSnackbar({
     title: 'Success',
     message: 'Data deleted!',
@@ -37,11 +39,8 @@ export const Import: React.FC = () => {
     });
   };
 
-  const triggerDoubleCheck = () => setDoubleCheckOpen(true);
-  const closeDoubleCheck = () => setDoubleCheckOpen(false);
-
   const cancelDeleteData = () => {
-    closeDoubleCheck();
+    toggleDoubleCheck();
   };
 
   const deleteData = () => {
@@ -53,13 +52,13 @@ export const Import: React.FC = () => {
       snackbar.setMessage('Data deleted!');
       snackbar.open();
     });
-    closeDoubleCheck();
+    toggleDoubleCheck();
   };
 
   return (
     <Box>
       <DoubleCheck
-        open={doubleCheckOpen}
+        open={doubleCheckSwitch}
         title='Double check'
         text={
           <React.Fragment>
@@ -95,7 +94,7 @@ export const Import: React.FC = () => {
 
       {importPath !== null && (
         <Box>
-          <IconButton sx={{ color: 'error.main' }} onClick={triggerDoubleCheck}>
+          <IconButton sx={{ color: 'error.main' }} onClick={toggleDoubleCheck}>
             <DeleteIcon />
           </IconButton>
           <Chip sx={{ px: 0.7, py: 1.8 }} size='small' color='info' variant='outlined' label={importPath} />
