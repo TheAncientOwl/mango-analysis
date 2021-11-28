@@ -1,17 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import Toolbar from '@mui/material/Toolbar';
-import MuiDrawer from '@mui/material/Drawer';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
 // eslint-disable-next-line import/named
 import { styled, Theme, CSSObject } from '@mui/material/styles';
+import MuiDrawer from '@mui/material/Drawer';
+import { Box, List, Toolbar, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 
-import { SectionsArray } from '../configs/sectionsConfig';
-import { Link } from 'react-router-dom';
+import { SectionsArray } from '../config';
 
 const drawerWidth = 180;
 
