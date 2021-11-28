@@ -1,16 +1,17 @@
-import * as React from 'react';
+import React from 'react';
+
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import Toolbar from '@mui/material/Toolbar';
+import MuiDrawer from '@mui/material/Drawer';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { SectionsConfig } from './SectionsConfig';
-
+import ListItemButton from '@mui/material/ListItemButton';
 // eslint-disable-next-line import/named
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 
-import MuiDrawer from '@mui/material/Drawer';
+import { SectionsArray } from '../configs/sectionsConfig';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 180;
 
@@ -59,15 +60,16 @@ export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
         <Toolbar />
         <Box sx={{ bgcolor: 'primary.main', flexGrow: 1 }}>
           <List>
-            {SectionsConfig.map((section, index) => (
-              <ListItem
-                button
+            {SectionsArray.map((section, index) => (
+              <ListItemButton
+                component={Link}
+                to={section.routePath}
                 key={index}
                 sx={{ color: 'primary.contrastText' }}
-                onClick={() => onItemClick(section.title)}>
+                onClick={() => onItemClick(section.name)}>
                 <ListItemIcon sx={{ color: 'inherit' }}>{section.icon}</ListItemIcon>
-                <ListItemText sx={{ textTransform: 'capitalize' }}>{section.title}</ListItemText>
-              </ListItem>
+                <ListItemText sx={{ textTransform: 'capitalize' }}>{section.name}</ListItemText>
+              </ListItemButton>
             ))}
           </List>
         </Box>
