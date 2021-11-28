@@ -14,7 +14,7 @@ interface Route {
   icon: React.ReactNode;
 }
 
-export const SectionsArray: ReadonlyArray<Route> = [
+export const SectionsConfig: ReadonlyArray<Route> = [
   { name: 'home', routePath: '/', element: <Home />, icon: <HomeIcon /> },
   { name: 'data', routePath: 'data', element: <Data />, icon: <TableViewIcon /> },
   { name: 'graphs', routePath: 'graphs', element: <Graphs />, icon: <BarChartIcon /> },

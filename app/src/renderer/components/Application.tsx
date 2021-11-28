@@ -7,10 +7,10 @@ import { Box, Paper, ThemeProvider } from '@mui/material';
 import { TopBar } from './TopBar';
 import { MenuDrawer } from './MenuDrawer';
 
-import { SectionsArray, theme } from '../config';
+import { SectionsConfig, theme } from '../config';
 
 const Application: React.FC = () => {
-  const [currentSectionTitle, setCurrentSectionTitle] = useState(SectionsArray[0].name);
+  const [currentSectionTitle, setCurrentSectionTitle] = useState(SectionsConfig[0].name);
   const [menuOpen, setMenuOpen] = useState(true);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -26,8 +26,8 @@ const Application: React.FC = () => {
 
             <Paper sx={{ flexGrow: 1, m: 1.5, p: 1 }}>
               <Routes>
-                {SectionsArray.map((route, index) => (
-                  <Route key={index} path={route.routePath} element={route.element} />
+                {SectionsConfig.map((section, index) => (
+                  <Route key={index} path={section.routePath} element={section.element} />
                 ))}
               </Routes>
             </Paper>
