@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { axios } from '@renderer/config';
 
 import {
@@ -18,11 +18,11 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { DataContext } from '.';
 import { RequestState } from '@renderer/misc';
+import { useLocalStorage } from '@renderer/hooks/useLocalStorage';
 
 export const Import: React.FC = () => {
-  const data = useContext(DataContext);
+  const [importPath, setImportPath] = useLocalStorage<string | null>('import-path', null);
   const [dataLoaded, setDataLoaded] = useState<RequestState>(RequestState.None);
   const [doubleCheckOpen, setDoubleCheckOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -32,7 +32,7 @@ export const Import: React.FC = () => {
 
     if (filePath === null) return;
 
-    data.importPath = filePath;
+    setImportPath(filePath);
     setDataLoaded(RequestState.Pending);
 
     axios.get(`/data/import/csv/${filePath}`).then(() => {
@@ -50,7 +50,7 @@ export const Import: React.FC = () => {
   const deleteData = () => {
     setDataLoaded(RequestState.Pending);
     axios.get('/data/delete').then(() => {
-      data.importPath = null;
+      setImportPath(null);
       setDataLoaded(RequestState.None);
       setSnackbarOpen(true);
     });
@@ -72,7 +72,7 @@ export const Import: React.FC = () => {
             <Box component='span' sx={{ color: 'error.main' }}>
               delete
             </Box>{' '}
-            the data imported from <Box component='span' sx={{ color: 'info.main' }}>{`"${data.importPath}"`}</Box>
+            the data imported from <Box component='span' sx={{ color: 'info.main' }}>{`"${importPath}"`}</Box>
             <br />
             Are you sure?
           </DialogContentText>
@@ -96,12 +96,12 @@ export const Import: React.FC = () => {
         )}
       </Box>
 
-      {dataLoaded === RequestState.Solved && (
+      {importPath !== null && (
         <Box>
           <IconButton sx={{ color: 'error.main' }} onClick={triggerDoubleCheck}>
             <DeleteIcon />
           </IconButton>
-          <Chip sx={{ px: 0.7, py: 1.8 }} size='small' color='info' variant='outlined' label={data.importPath} />
+          <Chip sx={{ px: 0.7, py: 1.8 }} size='small' color='info' variant='outlined' label={importPath} />
         </Box>
       )}
 

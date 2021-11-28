@@ -32,12 +32,6 @@ const a11yProps = (index: number) => {
   };
 };
 
-interface IDataContex {
-  importPath: string | null;
-}
-const dataContextState: IDataContex = { importPath: null };
-export const DataContext = React.createContext<IDataContex>(dataContextState);
-
 export const Data: React.FC = () => {
   const [value, setValue] = useState(0);
 
@@ -52,13 +46,11 @@ export const Data: React.FC = () => {
           ))}
         </Tabs>
 
-        <DataContext.Provider value={dataContextState}>
-          {TabsConfig.map((tab, index) => (
-            <TabPanel key={index} value={value} index={index}>
-              {tab.component}
-            </TabPanel>
-          ))}
-        </DataContext.Provider>
+        {TabsConfig.map((tab, index) => (
+          <TabPanel key={index} value={value} index={index}>
+            {tab.component}
+          </TabPanel>
+        ))}
       </Box>
     </Box>
   );
