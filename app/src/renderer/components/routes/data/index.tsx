@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 
 import { Tabs, Tab, Box } from '@mui/material';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import EditIcon from '@mui/icons-material/Edit';
-import TableViewIcon from '@mui/icons-material/TableView';
 
-import { Import } from './Import';
-import { Export } from './Export';
-import { Edit } from './Edit';
-import { View } from './View';
+import { TabsConfig } from './TabsConfig';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,24 +41,16 @@ export const Data: React.FC = () => {
     <Box sx={{ width: '100%' }}>
       <Box>
         <Tabs value={value} onChange={handleChange} aria-label='data tabs'>
-          <Tab icon={<FileUploadIcon />} iconPosition='start' label='Import' {...a11yProps(0)} />
-          <Tab icon={<FileDownloadIcon />} iconPosition='start' label='Export' {...a11yProps(1)} />
-          <Tab icon={<EditIcon />} iconPosition='start' label='Edit' {...a11yProps(2)} />
-          <Tab icon={<TableViewIcon />} iconPosition='start' label='View' {...a11yProps(3)} />
+          {TabsConfig.map((tab, index) => (
+            <Tab key={index} icon={tab.icon} iconPosition='start' label={tab.label} {...a11yProps(index)} />
+          ))}
         </Tabs>
 
-        <TabPanel value={value} index={0}>
-          <Import />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Export />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Edit />
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          <View />
-        </TabPanel>
+        {TabsConfig.map((tab, index) => (
+          <TabPanel key={index} value={value} index={index}>
+            {tab.component}
+          </TabPanel>
+        ))}
       </Box>
     </Box>
   );
