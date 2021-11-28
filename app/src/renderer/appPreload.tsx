@@ -1,3 +1,15 @@
 import { contextBridge } from 'electron';
+import { dialog } from '@electron/remote';
 
-console.log('[Info] : Preload execution started');
+const showOpenCsvDialog = async (): Promise<string | null> => {
+  const value = await dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [{ name: 'Csv', extensions: ['csv'] }],
+  });
+
+  if (value.canceled) return null;
+
+  return value.filePaths[0];
+};
+
+contextBridge.exposeInMainWorld('electronAPI', { showOpenCsvDialog });

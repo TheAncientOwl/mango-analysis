@@ -5,8 +5,6 @@ import { inDev } from '@common/helpers';
 import Application from './components/Application';
 import { CssBaseline } from '@mui/material';
 
-console.log('[Info] : Renderer execution started');
-
 // Render application in DOM
 ReactDOM.render(
   <React.Fragment>
