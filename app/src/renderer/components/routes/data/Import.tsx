@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { axios } from '@renderer/config';
 
-import { Box, Button, Chip, IconButton, CircularProgress } from '@mui/material';
+import { Box, Button, IconButton, CircularProgress, Stack, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { RequestState } from '@renderer/misc';
@@ -93,12 +93,12 @@ export const Import: React.FC = () => {
       </Box>
 
       {importPath !== null && (
-        <Box>
+        <Stack direction='row' alignItems='center' spacing={1}>
           <IconButton sx={{ color: 'error.main' }} onClick={toggleDoubleCheck}>
             <DeleteIcon />
           </IconButton>
-          <Chip sx={{ px: 0.7, py: 1.8 }} size='small' color='info' variant='outlined' label={importPath} />
-        </Box>
+          <Typography variant='body2'>{importPath}</Typography>
+        </Stack>
       )}
 
       {snackbar.element}
