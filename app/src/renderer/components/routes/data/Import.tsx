@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { axios } from '@renderer/config';
 
 import {
   Box,
@@ -10,23 +11,31 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  CircularProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+
 import { DataContext } from '.';
-import { useForceUpdate } from '@renderer/hooks/useForceUpdate';
+import { RequestState } from '@renderer/misc';
 
 export const Import: React.FC = () => {
   const data = useContext(DataContext);
-  const forceUpdate = useForceUpdate();
+  const [dataLoaded, setDataLoaded] = useState<RequestState>(RequestState.None);
   const [doubleCheckOpen, setDoubleCheckOpen] = useState(false);
 
   const importData = async () => {
     const filePath = await window.electronAPI.showOpenCsvDialog();
 
-    if (filePath !== null) {
-      data.importPath = filePath;
-      forceUpdate();
-    }
+    if (filePath === null) return;
+
+    data.importPath = filePath;
+    setDataLoaded(RequestState.Pending);
+
+    axios.get(`/data/import/csv/${filePath}`).then(() => {
+      setTimeout(() => {
+        setDataLoaded(RequestState.Solved);
+      }, 4000);
+    });
   };
 
   const triggerDoubleCheck = () => setDoubleCheckOpen(true);
@@ -70,11 +79,16 @@ export const Import: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      <Button onClick={importData} sx={{ mb: 2, display: 'block' }} variant='contained' size='small' disableElevation>
-        Search
-      </Button>
+      <Box sx={{ display: 'flex' }}>
+        <Button onClick={importData} sx={{ mb: 2, display: 'block' }} variant='contained' size='small' disableElevation>
+          Search
+        </Button>
+        {dataLoaded === RequestState.Pending && (
+          <CircularProgress sx={{ ml: 2 }} size={30} thickness={4} color='info' />
+        )}
+      </Box>
 
-      {data.importPath !== null && (
+      {dataLoaded === RequestState.Solved && (
         <Box>
           <IconButton sx={{ color: 'error.main' }} onClick={triggerDoubleCheck}>
             <DeleteIcon />
