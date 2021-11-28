@@ -21,24 +21,29 @@ export const TopBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
             edge='start'
             color='inherit'
             aria-label='menu'
-            sx={{ mr: 1 }}
+            sx={{ mr: 1, color: 'secondary.main' }}
             onClick={onMenuButtonClick}>
             <MenuIcon />
           </IconButton>
 
-          <Typography variant='h6' component='div' sx={{ mr: 2 }}>
+          <Typography variant='body1' component='div' sx={{ mr: 2 }}>
             DataMaster
           </Typography>
 
           <Spacer />
 
-          <Typography variant='body1' sx={{ textTransform: 'capitalize' }}>
+          <Typography variant='body2' sx={{ textTransform: 'capitalize' }}>
             {title}
           </Typography>
 
           <Spacer />
 
-          <IconButton size='medium' edge='start' color='inherit' aria-label='menu' sx={{ ml: 1 }}>
+          <IconButton
+            size='medium'
+            edge='start'
+            color='inherit'
+            aria-label='menu'
+            sx={{ ml: 1, color: 'secondary.main' }}>
             <SettingsIcon />
           </IconButton>
         </Toolbar>
