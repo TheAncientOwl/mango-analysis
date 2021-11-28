@@ -9,11 +9,11 @@ import { MenuDrawer } from './MenuDrawer';
 
 import { SectionsConfig, theme } from '../config';
 
+import { useSwitch } from '@renderer/hooks/useSwitch';
+
 const Application: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = useState(SectionsConfig[0].name);
-  const [menuOpen, setMenuOpen] = useState(true);
-
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const [menuOpen, toggleMenu] = useSwitch(true);
 
   return (
     <HashRouter>
