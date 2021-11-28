@@ -5,7 +5,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import TableViewIcon from '@mui/icons-material/TableView';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
-import { Home, Data, Graphs, Analysis } from '../routes';
+import { Home, Data, Graphs, Analysis } from '../components/routes';
 
 interface Route {
   name: string;
