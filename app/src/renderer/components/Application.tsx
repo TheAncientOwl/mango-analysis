@@ -18,18 +18,20 @@ const Application: React.FC = () => {
   return (
     <HashRouter>
       <ThemeProvider theme={theme}>
-        <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
+        <Box sx={{ minHeight: '100vh', bgcolor: 'secondary.light' }}>
+          <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
 
-        <Box sx={{ display: 'flex', bgcolor: 'secondary.light', minHeight: '100vh' }}>
-          <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
+          <Box sx={{ display: 'flex' }}>
+            <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
-          <Paper sx={{ flexGrow: 1, m: 1.5, p: 1, height: '100%' }}>
-            <Routes>
-              {SectionsArray.map((route, index) => (
-                <Route key={index} path={route.routePath} element={route.element} />
-              ))}
-            </Routes>
-          </Paper>
+            <Paper sx={{ flexGrow: 1, m: 1.5, p: 1 }}>
+              <Routes>
+                {SectionsArray.map((route, index) => (
+                  <Route key={index} path={route.routePath} element={route.element} />
+                ))}
+              </Routes>
+            </Paper>
+          </Box>
         </Box>
       </ThemeProvider>
     </HashRouter>
