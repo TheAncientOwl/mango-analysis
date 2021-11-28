@@ -35,11 +35,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })
   boxSizing: 'border-box',
   ...(open && {
     ...openedMixin(theme),
-    '& .MuiDrawer-paper': openedMixin(theme),
+    '& .MuiDrawer-paper': {
+      border: 'none',
+      ...openedMixin(theme),
+    },
   }),
   ...(!open && {
     ...closedMixin(theme),
-    '& .MuiDrawer-paper': closedMixin(theme),
+    '& .MuiDrawer-paper': {
+      border: 'none',
+      ...closedMixin(theme),
+    },
   }),
 }));
 
@@ -50,25 +56,23 @@ interface Props {
 
 export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
   return (
-    <Box sx={{ display: 'flex', bgcolor: 'primary.main' }}>
-      <Drawer variant='permanent' open={open}>
-        <Toolbar />
-        <Box sx={{ bgcolor: 'primary.main', flexGrow: 1 }}>
-          <List>
-            {SectionsArray.map((section, index) => (
-              <ListItemButton
-                component={Link}
-                to={section.routePath}
-                key={index}
-                sx={{ color: 'primary.contrastText' }}
-                onClick={() => onItemClick(section.name)}>
-                <ListItemIcon sx={{ color: 'inherit' }}>{section.icon}</ListItemIcon>
-                <ListItemText sx={{ textTransform: 'capitalize' }}>{section.name}</ListItemText>
-              </ListItemButton>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
-    </Box>
+    <Drawer variant='permanent' open={open}>
+      <Toolbar />
+      <Box sx={{ bgcolor: 'primary.main', flexGrow: 1 }}>
+        <List>
+          {SectionsArray.map((section, index) => (
+            <ListItemButton
+              component={Link}
+              to={section.routePath}
+              key={index}
+              sx={{ color: 'primary.contrastText' }}
+              onClick={() => onItemClick(section.name)}>
+              <ListItemIcon sx={{ color: 'secondary.main' }}>{section.icon}</ListItemIcon>
+              <ListItemText sx={{ textTransform: 'capitalize' }}>{section.name}</ListItemText>
+            </ListItemButton>
+          ))}
+        </List>
+      </Box>
+    </Drawer>
   );
 };
