@@ -12,6 +12,9 @@ import {
   DialogContentText,
   DialogActions,
   CircularProgress,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -22,6 +25,7 @@ export const Import: React.FC = () => {
   const data = useContext(DataContext);
   const [dataLoaded, setDataLoaded] = useState<RequestState>(RequestState.None);
   const [doubleCheckOpen, setDoubleCheckOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const importData = async () => {
     const filePath = await window.electronAPI.showOpenCsvDialog();
@@ -32,9 +36,7 @@ export const Import: React.FC = () => {
     setDataLoaded(RequestState.Pending);
 
     axios.get(`/data/import/csv/${filePath}`).then(() => {
-      setTimeout(() => {
-        setDataLoaded(RequestState.Solved);
-      }, 4000);
+      setDataLoaded(RequestState.Solved);
     });
   };
 
@@ -42,14 +44,20 @@ export const Import: React.FC = () => {
   const closeDoubleCheck = () => setDoubleCheckOpen(false);
 
   const cancelDeleteData = () => {
-    console.log('no delete');
     closeDoubleCheck();
   };
 
   const deleteData = () => {
-    console.log('delete');
+    setDataLoaded(RequestState.Pending);
+    axios.get('/data/delete').then(() => {
+      data.importPath = null;
+      setDataLoaded(RequestState.None);
+      setSnackbarOpen(true);
+    });
     closeDoubleCheck();
   };
+
+  const closeSnackbar = () => setSnackbarOpen(false);
 
   return (
     <Box>
@@ -96,6 +104,13 @@ export const Import: React.FC = () => {
           <Chip sx={{ px: 0.7, py: 1.8 }} size='small' color='info' variant='outlined' label={data.importPath} />
         </Box>
       )}
+
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={closeSnackbar}>
+        <Alert severity='success' variant='filled' onClose={closeSnackbar}>
+          <AlertTitle>Success</AlertTitle>
+          Data deleted!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
