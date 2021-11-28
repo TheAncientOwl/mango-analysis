@@ -1,23 +1,14 @@
 import React, { useState } from 'react';
 import { axios } from '@renderer/config';
 
-import {
-  Box,
-  Button,
-  Chip,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  CircularProgress,
-} from '@mui/material';
+import { Box, Button, Chip, IconButton, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { RequestState } from '@renderer/misc';
 import { useLocalStorage } from '@renderer/hooks/useLocalStorage';
 import { useSnackbar } from '@renderer/hooks/useSnackbar';
+
+import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
 export const Import: React.FC = () => {
   const [importPath, setImportPath] = useLocalStorage<string | null>('import-path', null);
@@ -67,13 +58,11 @@ export const Import: React.FC = () => {
 
   return (
     <Box>
-      <Dialog
+      <DoubleCheck
         open={doubleCheckOpen}
-        aria-labelledby='doublecheck-dialog-title'
-        aria-describedby='doublecheck-dialog-description'>
-        <DialogTitle id='doublecheck-dialog-title'>Double check</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
+        title='Double check'
+        text={
+          <React.Fragment>
             This action will{' '}
             <Box component='span' sx={{ color: 'error.main' }}>
               delete
@@ -81,17 +70,19 @@ export const Import: React.FC = () => {
             the data imported from <Box component='span' sx={{ color: 'info.main' }}>{`"${importPath}"`}</Box>
             <br />
             Are you sure?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={deleteData} variant='outlined' color='error'>
-            Delete
-          </Button>
-          <Button onClick={cancelDeleteData} variant='outlined' color='info'>
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+          </React.Fragment>
+        }
+        onAccept={{
+          title: 'Delete',
+          execute: deleteData,
+          buttonColor: 'error',
+        }}
+        onReject={{
+          title: 'Cancel',
+          execute: cancelDeleteData,
+          buttonColor: 'info',
+        }}
+      />
 
       <Box sx={{ display: 'flex' }}>
         <Button onClick={importData} sx={{ mb: 2, display: 'block' }} variant='contained' size='small' disableElevation>
