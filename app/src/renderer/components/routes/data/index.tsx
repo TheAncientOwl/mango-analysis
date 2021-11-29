@@ -15,12 +15,13 @@ const TabPanel = (props: TabPanelProps) => {
 
   return (
     <div
+      style={{ flexGrow: 1 }}
       role='tabpanel'
       hidden={value !== index}
       id={`data-tabpanel-${index}`}
       aria-labelledby={`data-tabpanel-${index}`}
       {...other}>
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>{children}</Box>}
     </div>
   );
 };
@@ -38,20 +39,18 @@ export const Data: React.FC = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box>
-        <Tabs value={value} onChange={handleChange} aria-label='data tabs'>
-          {TabsConfig.map((tab, index) => (
-            <Tab key={index} icon={tab.icon} iconPosition='start' label={tab.label} {...a11yProps(index)} />
-          ))}
-        </Tabs>
-
+    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+      <Tabs value={value} onChange={handleChange} aria-label='data tabs'>
         {TabsConfig.map((tab, index) => (
-          <TabPanel key={index} value={value} index={index}>
-            {tab.component}
-          </TabPanel>
+          <Tab key={index} icon={tab.icon} iconPosition='start' label={tab.label} {...a11yProps(index)} />
         ))}
-      </Box>
+      </Tabs>
+
+      {TabsConfig.map((tab, index) => (
+        <TabPanel key={index} value={value} index={index}>
+          {tab.component}
+        </TabPanel>
+      ))}
     </Box>
   );
 };

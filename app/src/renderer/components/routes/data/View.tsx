@@ -1,8 +1,11 @@
+import React, { useEffect, useRef, useState } from 'react';
+
+import { Box } from '@mui/material';
 // eslint-disable-next-line import/named
 import { DataGrid, GridColDef, GridRowModel } from '@mui/x-data-grid';
+
 import { useLocalStorage } from '@renderer/hooks/useLocalStorage';
 import { RequestState, useRequest } from '@renderer/hooks/useRequest';
-import React, { useEffect, useRef, useState } from 'react';
 
 interface Data {
   columns: GridColDef[];
@@ -43,21 +46,19 @@ export const View: React.FC = () => {
   }, [pageIndex, pageSize]);
 
   return (
-    <React.Fragment>
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={data.rows}
-          columns={data.columns}
-          pagination
-          pageSize={pageSize}
-          rowsPerPageOptions={[25, 50, 75, 100]}
-          rowCount={rowsCountRef.current}
-          paginationMode='server'
-          onPageChange={newPage => setPageIndex(newPage + 1)}
-          onPageSizeChange={newPageSize => setPageSize(newPageSize)}
-          loading={request.state === RequestState.Pending}
-        />
-      </div>
-    </React.Fragment>
+    <Box sx={{ flexGrow: 1 }}>
+      <DataGrid
+        rows={data.rows}
+        columns={data.columns}
+        pagination
+        pageSize={pageSize}
+        rowsPerPageOptions={[25, 50, 75, 100]}
+        rowCount={rowsCountRef.current}
+        paginationMode='server'
+        onPageChange={newPage => setPageIndex(newPage + 1)}
+        onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+        loading={request.state === RequestState.Pending}
+      />
+    </Box>
   );
 };
