@@ -51,7 +51,7 @@ export const Import: React.FC = () => {
   };
 
   return (
-    <Box>
+    <React.Fragment>
       <DoubleCheck
         open={doubleCheckSwitch}
         title='Double check'
@@ -100,6 +100,6 @@ export const Import: React.FC = () => {
       )}
 
       {snackbar.element}
-    </Box>
+    </React.Fragment>
   );
 };
