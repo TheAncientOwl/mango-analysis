@@ -83,7 +83,7 @@ export const Import: React.FC = () => {
           onClick={importData}
           sx={{ mb: 2, mr: 2, display: 'block' }}
           variant='contained'
-          size='small'
+          size='medium'
           disableElevation>
           Search
         </Button>
