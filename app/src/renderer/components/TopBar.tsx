@@ -48,7 +48,6 @@ export const TopBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Toolbar />
     </Box>
   );
 };

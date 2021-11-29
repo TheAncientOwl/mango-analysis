@@ -2,7 +2,7 @@ import { hot } from 'react-hot-loader';
 import React, { useState } from 'react';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 
-import { Box, Paper, ThemeProvider } from '@mui/material';
+import { Box, Paper, ThemeProvider, Toolbar } from '@mui/material';
 
 import { TopBar } from './TopBar';
 import { MenuDrawer } from './MenuDrawer';
@@ -18,13 +18,14 @@ const Application: React.FC = () => {
   return (
     <HashRouter>
       <ThemeProvider theme={theme}>
-        <Box sx={{ minHeight: '100vh', bgcolor: 'secondary.light' }}>
-          <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
+        <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
 
-          <Box sx={{ display: 'flex' }}>
-            <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
+        <Box sx={{ height: '100vh', display: 'flex', bgcolor: 'secondary.light' }}>
+          <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
-            <Paper sx={{ flexGrow: 1, m: 1.5, p: 1 }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Toolbar />
+            <Paper sx={{ height: '100%', m: 1.5, p: 1, overflow: 'auto' }}>
               <Routes>
                 {SectionsConfig.map((section, index) => (
                   <Route key={index} path={section.routePath} element={section.element} />
