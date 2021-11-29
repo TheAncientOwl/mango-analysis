@@ -72,7 +72,7 @@ class DataTest(TestBase):
         json_data = response.get_json()
 
         self.assertBasics(response, json_data)
-        self.assertFalse(json_data[tokens.success])
+        self.assertTrue(json_data[tokens.success])
 
     def test_get_rows_end_out_of_bounds(self):
         self.readDataFrame()
@@ -81,7 +81,7 @@ class DataTest(TestBase):
         json_data = response.get_json()
 
         self.assertBasics(response, json_data)
-        self.assertFalse(json_data[tokens.success])
+        self.assertTrue(json_data[tokens.success])
 
     def test_get_rows(self):
         self.readDataFrame()

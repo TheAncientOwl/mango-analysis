@@ -60,18 +60,16 @@ def export_csv(fileName, dirPath):
 # * Get rows in range [start:end) ~ start inclusive, end exclusive.
 # * @param start -> row start index
 # * @param end   -> row end index
-# * @return jsonify(success, message, ?dataframe)
+# * @return jsonify(success, message, dataframe)
 @data.get('/data/rows-between/<int:start>/<int:end>')
 def rows_between(start, end):
-    # check if given range is valid <=> 0 <= start <= end < nRow(dataframe)
     if end < start:
-        return flask.jsonify(success=False, message='End cannot be less than Start')
-
-    if start < 0:
-        return flask.jsonify(success=False, message='Start cannot be less than 0')
-
-    if end > sv.dataFrame.shape[0]:
-        return flask.jsonify(success=False, message='End cannot be greater than rows number')
+        aux = end
+        end = start
+        start = aux
+    
+    start = max(0, start)
+    end = min(sv.dataFrame.shape[0], end)
 
     # get json from requested rows
     df_json = sv.dataFrame[start:end].to_json(orient='split')
