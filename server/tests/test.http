@@ -24,3 +24,12 @@ Content-Type: application/json
   "yLab": "EAM_lab",
   "title": "Test plot"
 }
+
+### Read data
+GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/Date.csv
+
+### get rows
+GET http://localhost:5000/data/rows-between/0/20
+
+### get page
+GET http://localhost:5000/data/page/1/page-size/3

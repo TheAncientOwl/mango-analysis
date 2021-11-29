@@ -52,7 +52,7 @@ class DataTest(TestBase):
         json_data = response.get_json()
 
         self.assertBasics(response, json_data)
-        self.assertFalse(json_data[tokens.success])
+        self.assertTrue(json_data[tokens.success])
 
     def test_export_csv(self):
         self.readDataFrame()
@@ -66,25 +66,9 @@ class DataTest(TestBase):
     # * -----------------------------------------------------------------------------------------------------
     # * >> Get rows between route
     # * -----------------------------------------------------------------------------------------------------
-    def test_get_rows_range_not_ints(self):
-        self.readDataFrame()
-        response = self.client.get('/data/rows-between/dasd/fr')
-        json_data = response.get_json()
-
-        self.assertBasics(response, json_data)
-        self.assertFalse(json_data[tokens.success])
-
     def test_get_rows_invalid_range(self):
         self.readDataFrame()
         response = self.client.get('/data/rows-between/10/5')
-        json_data = response.get_json()
-
-        self.assertBasics(response, json_data)
-        self.assertFalse(json_data[tokens.success])
-
-    def test_get_rows_neative_start(self):
-        self.readDataFrame()
-        response = self.client.get('/data/rows-between/-10/5')
         json_data = response.get_json()
 
         self.assertBasics(response, json_data)

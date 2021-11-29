@@ -17,6 +17,8 @@ def printhead():
 
 # * Delete dataframe
 # * @return jsonify(success, message)
+
+
 @data.get('/data/delete')
 def delete_dataframe():
     sv.dataFrame = pd.DataFrame()
@@ -25,6 +27,8 @@ def delete_dataframe():
 # * Imports data from csv file into server's dataframe
 # * @param filePath -> csv file path to be imported
 # * @return jsonify(success, message)
+
+
 @data.get('/data/import/csv/<path:filePath>')
 def import_csv(filePath):
     if not path.exists(filePath):
@@ -57,15 +61,8 @@ def export_csv(fileName, dirPath):
 # * @param start -> row start index
 # * @param end   -> row end index
 # * @return jsonify(success, message, ?dataframe)
-@data.get('/data/rows-between/<start>/<end>')
+@data.get('/data/rows-between/<int:start>/<int:end>')
 def rows_between(start, end):
-    # convert range to int
-    try:
-        start = int(start)
-        end = int(end)
-    except Exception as e:
-        return flask.jsonify(success=False, message=str(e))
-
     # check if given range is valid <=> 0 <= start <= end < nRow(dataframe)
     if end < start:
         return flask.jsonify(success=False, message='End cannot be less than Start')
@@ -79,7 +76,18 @@ def rows_between(start, end):
     # get json from requested rows
     df_json = sv.dataFrame[start:end].to_json(orient='split')
 
-    return flask.jsonify(success=True, message='Success', dataframe=df_json)
+    requestedDf = sv.dataFrame[start:end]
+
+    resultMap = {'columns': [], 'rows': []}
+    for column in requestedDf.columns:
+        resultMap['columns'].append({'field': column})
+
+    for index, row in requestedDf.iterrows():
+        row_dict = row.to_dict()
+        row_dict['id'] = index
+        resultMap['rows'].append(row_dict)
+
+    return flask.jsonify(success=True, message='Success', dataframe=json.dumps(resultMap))
 
 
 # * Drop columns by labels
@@ -210,3 +218,18 @@ def summary():
 
     return flask.jsonify(success=True, message='Success', dataframe=df_json,
                          unknownLabels=unknownLabels, nonNumeric=nonNumeric)
+
+
+# * Get page.
+# * @param pageIndex -> requested page index
+# * @param pageSize  -> size of a page
+# * @return jsonify(success, message, dataframe)
+@data.get('/data/page/<int:pageIndex>/page-size/<int:pageSize>')
+def get_page(pageIndex, pageSize):
+    rowsCount = sv.dataFrame.shape[0]
+    pagesCount = rowsCount / pageSize
+
+    startIndex = (pageIndex - 1) * pageSize
+    endIndex = startIndex + pageSize
+
+    return rows_between(startIndex, endIndex)
