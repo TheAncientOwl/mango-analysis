@@ -80,7 +80,7 @@ def rows_between(start, end):
 
     resultMap = {'columns': [], 'rows': []}
     for column in requestedDf.columns:
-        resultMap['columns'].append({'field': column})
+        resultMap['columns'].append(column)
 
     for index, row in requestedDf.iterrows():
         row_dict = row.to_dict()
