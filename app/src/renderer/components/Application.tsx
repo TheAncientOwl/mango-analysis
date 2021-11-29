@@ -25,7 +25,7 @@ const Application: React.FC = () => {
 
           <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
             <Toolbar />
-            <Paper sx={{ height: '100%', m: 1.5, p: 1, overflow: 'auto' }}>
+            <Paper sx={{ height: '100%', m: 1.5, overflow: 'auto' }}>
               <Routes>
                 {SectionsConfig.map((section, index) => (
                   <Route key={index} path={section.routePath} element={section.element} />
