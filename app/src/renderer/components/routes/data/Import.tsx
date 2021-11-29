@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Button, IconButton, CircularProgress, Stack, Typography } from '@mui/material';
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useLocalStorage } from '@renderer/hooks/useLocalStorage';
@@ -9,6 +9,7 @@ import { useSwitch } from '@renderer/hooks/useSwitch';
 import { useRequest, RequestState } from '@renderer/hooks/useRequest';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
+import { CircularPendingRequest } from '@renderer/components/CircularPendingRequest';
 
 export const Import: React.FC = () => {
   const [importPath, setImportPath] = useLocalStorage<string | null>('import-path', null);
@@ -78,12 +79,15 @@ export const Import: React.FC = () => {
       />
 
       <Box sx={{ display: 'flex' }}>
-        <Button onClick={importData} sx={{ mb: 2, display: 'block' }} variant='contained' size='small' disableElevation>
+        <Button
+          onClick={importData}
+          sx={{ mb: 2, mr: 2, display: 'block' }}
+          variant='contained'
+          size='small'
+          disableElevation>
           Search
         </Button>
-        {dataRequest.state === RequestState.Pending && (
-          <CircularProgress sx={{ ml: 2 }} size={30} thickness={4} color='info' />
-        )}
+        {dataRequest.state === RequestState.Pending && <CircularPendingRequest />}
       </Box>
 
       {importPath !== null && (
