@@ -56,6 +56,11 @@ def export_csv(fileName, dirPath):
 
     return flask.jsonify(success=True, message='File saved successfully')
 
+# * Get dataframe rows count
+@data.get('/data/rows-count')
+def rows_count():
+    return flask.jsonify(success=True, rowscount=sv.dataFrame.shape[0])
+
 
 # * Get rows in range [start:end) ~ start inclusive, end exclusive.
 # * @param start -> row start index

@@ -33,3 +33,6 @@ GET http://localhost:5000/data/rows-between/0/20
 
 ### get page
 GET http://localhost:5000/data/page/1/page-size/3
+
+###
+GET http://localhost:5000/data/rows-count
