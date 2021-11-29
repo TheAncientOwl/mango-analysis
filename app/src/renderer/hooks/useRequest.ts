@@ -13,26 +13,24 @@ interface Request {
   url: string;
 }
 
-type ExecuteRequestFn = (req: Request, callback: (res: AxiosResponse<unknown>) => void) => void;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ExecuteRequestFn = (req: Request, callback: (res: AxiosResponse<any>) => void) => void;
 
 interface RequestResult {
   state: RequestState;
-  result: AxiosResponse<unknown>;
   execute: ExecuteRequestFn;
 }
 
 export const useRequest = (): RequestResult => {
   const [state, setState] = React.useState(RequestState.None);
-  const [result, setResult] = React.useState<AxiosResponse<unknown, unknown>>(null);
 
   const execute: ExecuteRequestFn = (req, callback) => {
     setState(RequestState.Pending);
     axios.request(req).then(res => {
       setState(RequestState.Solved);
-      setResult(res);
       callback(res);
     });
   };
 
-  return { state, result, execute };
+  return { state, execute };
 };
