@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import { axios } from '@renderer/config';
+import React from 'react';
 
 import { Box, Button, IconButton, CircularProgress, Stack, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { RequestState } from '@renderer/misc';
 import { useLocalStorage } from '@renderer/hooks/useLocalStorage';
 import { useSnackbar } from '@renderer/hooks/useSnackbar';
 import { useSwitch } from '@renderer/hooks/useSwitch';
+import { useRequest, RequestState } from '@renderer/hooks/useRequest';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
 export const Import: React.FC = () => {
   const [importPath, setImportPath] = useLocalStorage<string | null>('import-path', null);
-  const [dataLoaded, setDataLoaded] = useState<RequestState>(RequestState.None);
   const [doubleCheckSwitch, toggleDoubleCheck] = useSwitch(false);
+  const request = useRequest();
 
   const snackbar = useSnackbar({
     title: 'Success',
@@ -28,11 +27,8 @@ export const Import: React.FC = () => {
 
     if (filePath === null) return;
 
-    setImportPath(filePath);
-    setDataLoaded(RequestState.Pending);
-
-    axios.get(`/data/import/csv/${filePath}`).then(() => {
-      setDataLoaded(RequestState.Solved);
+    request.execute({ method: 'get', url: `/data/import/csv/${filePath}` }, () => {
+      setImportPath(filePath);
 
       snackbar.setMessage('Data loaded!');
       snackbar.open();
@@ -44,10 +40,8 @@ export const Import: React.FC = () => {
   };
 
   const deleteData = () => {
-    setDataLoaded(RequestState.Pending);
-    axios.get('/data/delete').then(() => {
+    request.execute({ method: 'get', url: '/data/delete' }, () => {
       setImportPath(null);
-      setDataLoaded(RequestState.None);
 
       snackbar.setMessage('Data deleted!');
       snackbar.open();
@@ -87,7 +81,7 @@ export const Import: React.FC = () => {
         <Button onClick={importData} sx={{ mb: 2, display: 'block' }} variant='contained' size='small' disableElevation>
           Search
         </Button>
-        {dataLoaded === RequestState.Pending && (
+        {request.state === RequestState.Pending && (
           <CircularProgress sx={{ ml: 2 }} size={30} thickness={4} color='info' />
         )}
       </Box>
