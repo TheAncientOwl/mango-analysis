@@ -12,4 +12,14 @@ const showOpenCsvDialog = async (): Promise<string | null> => {
   return value.filePaths[0];
 };
 
-contextBridge.exposeInMainWorld('electronAPI', { showOpenCsvDialog });
+const showOpenDirectoryDialog = async (): Promise<string | null> => {
+  const value = await dialog.showOpenDialog({
+    properties: ['openDirectory'],
+  });
+
+  if (value.canceled) return null;
+
+  return value.filePaths[0];
+};
+
+contextBridge.exposeInMainWorld('electronAPI', { showOpenCsvDialog, showOpenDirectoryDialog });
