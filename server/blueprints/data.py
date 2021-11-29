@@ -45,8 +45,8 @@ def export_csv(fileName, dirPath):
     if not path.isdir(dirPath):
         return flask.jsonify(success=False, message='Directory does not exist')
 
-    if sv.dataFrame.empty:
-        return flask.jsonify(success=False, message='Nothing to save, dataframe empty')
+    # if sv.dataFrame.empty:
+    #     return flask.jsonify(success=False, message='Nothing to save, dataframe empty')
 
     sv.dataFrame.to_csv(path_or_buf=path.join(dirPath, fileName), index=False)
 
