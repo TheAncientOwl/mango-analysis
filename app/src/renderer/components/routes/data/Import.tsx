@@ -13,7 +13,7 @@ import { DoubleCheck } from '@renderer/components/DoubleCheck';
 export const Import: React.FC = () => {
   const [importPath, setImportPath] = useLocalStorage<string | null>('import-path', null);
   const [doubleCheckSwitch, toggleDoubleCheck] = useSwitch(false);
-  const request = useRequest();
+  const dataRequest = useRequest();
 
   const snackbar = useSnackbar({
     title: 'Success',
@@ -27,7 +27,7 @@ export const Import: React.FC = () => {
 
     if (filePath === null) return;
 
-    request.execute({ method: 'get', url: `/data/import/csv/${filePath}` }, () => {
+    dataRequest.execute({ method: 'get', url: `/data/import/csv/${filePath}` }, () => {
       setImportPath(filePath);
 
       snackbar.setMessage('Data loaded!');
@@ -40,7 +40,7 @@ export const Import: React.FC = () => {
   };
 
   const deleteData = () => {
-    request.execute({ method: 'get', url: '/data/delete' }, () => {
+    dataRequest.execute({ method: 'get', url: '/data/delete' }, () => {
       setImportPath(null);
 
       snackbar.setMessage('Data deleted!');
@@ -81,7 +81,7 @@ export const Import: React.FC = () => {
         <Button onClick={importData} sx={{ mb: 2, display: 'block' }} variant='contained' size='small' disableElevation>
           Search
         </Button>
-        {request.state === RequestState.Pending && (
+        {dataRequest.state === RequestState.Pending && (
           <CircularProgress sx={{ ml: 2 }} size={30} thickness={4} color='info' />
         )}
       </Box>
