@@ -23,7 +23,7 @@ const Application: React.FC = () => {
         <Stack direction='row' sx={{ height: '100vh' }}>
           <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
-          <Stack direction='column' sx={{ flexGrow: 1, bgcolor: 'secondary.main' }}>
+          <Stack direction='column' sx={{ flexGrow: 1, bgcolor: 'secondary.main', minWidth: 0, minHeight: 0 }}>
             <Toolbar />
             <Paper sx={{ flexGrow: 1, m: 1.5 }}>
               <Routes>
