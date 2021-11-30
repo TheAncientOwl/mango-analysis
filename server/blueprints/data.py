@@ -79,18 +79,18 @@ def rows_between(start, end):
     # get json from requested rows
     df_json = sv.dataFrame[start:end].to_json(orient='split')
 
-    requestedDf = sv.dataFrame[start:end]
+    # requestedDf = sv.dataFrame[start:end]
 
-    resultMap = {'columns': [], 'rows': []}
-    for column in requestedDf.columns:
-        resultMap['columns'].append(column)
+    # resultMap = {'columns': [], 'rows': []}
+    # for column in requestedDf.columns:
+    #     resultMap['columns'].append(column)
 
-    for index, row in requestedDf.iterrows():
-        row_dict = row.to_dict()
-        row_dict['id'] = index
-        resultMap['rows'].append(row_dict)
+    # for index, row in requestedDf.iterrows():
+    #     row_dict = row.to_dict()
+    #     row_dict['id'] = index
+    #     resultMap['rows'].append(row_dict)
 
-    return flask.jsonify(success=True, message='Success', dataframe=json.dumps(resultMap))
+    return flask.jsonify(success=True, message='Success', dataframe=df_json)
 
 
 # * Drop columns by labels
