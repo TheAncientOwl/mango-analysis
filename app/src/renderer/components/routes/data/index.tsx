@@ -15,13 +15,12 @@ const TabPanel = (props: TabPanelProps) => {
 
   return (
     <div
-      style={{ flexGrow: 1 }}
       role='tabpanel'
       hidden={value !== index}
       id={`data-tabpanel-${index}`}
       aria-labelledby={`data-tabpanel-${index}`}
       {...other}>
-      {value === index && <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
     </div>
   );
 };
@@ -39,7 +38,7 @@ export const Data: React.FC = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);
 
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{}}>
       <Tabs value={value} onChange={handleChange} aria-label='data tabs'>
         {TabsConfig.map((tab, index) => (
           <Tab key={index} icon={tab.icon} iconPosition='start' label={tab.label} {...a11yProps(index)} />
