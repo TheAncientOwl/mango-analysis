@@ -2,12 +2,12 @@ import React from 'react';
 
 import { Button, Stack, TextField } from '@mui/material';
 import { CircularPendingRequest } from '@renderer/components/CircularPendingRequest';
-import { useLocalStorage } from '@renderer/hooks/useLocalStorage';
+import { useCache } from '@renderer/hooks/useCache';
 import { RequestState, useRequest } from '@renderer/hooks/useRequest';
 import { useSnackbar } from '@renderer/hooks/useSnackbar';
 
 export const Export: React.FC = () => {
-  const [fileName, setFileName] = useLocalStorage('file-name-save', `Data-${Date.now()}.csv`);
+  const [fileName, setFileName] = useCache('file-name-save', `Data-${Date.now()}.csv`);
   const saveDataRequest = useRequest();
   const snackbar = useSnackbar({
     title: 'Success',

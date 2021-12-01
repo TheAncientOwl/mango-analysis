@@ -3,12 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import { DataFrame, DataConfig } from '@renderer/components/DataFrame';
 
-import { useLocalStorage } from '@renderer/hooks/useLocalStorage';
+import { useCache } from '@renderer/hooks/useCache';
 import { RequestState, useRequest } from '@renderer/hooks/useRequest';
 
 export const View: React.FC = () => {
-  const [pageIndex, setPageIndex] = useLocalStorage('data-page-index', 1);
-  const [pageSize, setPageSize] = useLocalStorage('data-page-size', 25);
+  const [pageIndex, setPageIndex] = useCache('data-page-index', 1);
+  const [pageSize, setPageSize] = useCache('data-page-size', 25);
   const request = useRequest();
   const [data, setData] = useState<DataConfig>({ columns: [], rows: [] });
   const rowsCountRef = useRef<number>(1);
