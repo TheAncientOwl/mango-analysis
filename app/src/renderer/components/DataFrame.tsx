@@ -8,7 +8,10 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  CircularProgress,
+  Typography,
 } from '@mui/material';
+import { alpha } from '@mui/system';
 
 export interface Column {
   label: string;
@@ -22,12 +25,12 @@ interface Obj {
 export interface DataConfig {
   columns: Column[];
   rows: Obj[];
+  totalRows: number;
 }
 
 export interface DataFrameProps {
   loading: boolean;
   currentData: DataConfig;
-  fullDataRowsCount: number;
   currentPage: number;
   rowsPerPage: number;
   onPageChange: (newPage: number) => void;
@@ -37,19 +40,28 @@ export interface DataFrameProps {
 export const DataFrame: React.FC<DataFrameProps> = ({
   loading,
   currentData,
-  fullDataRowsCount,
   currentPage,
   rowsPerPage,
   onPageChange,
   onPageSizeChange,
 }) => {
-  const { rows, columns } = currentData;
-  console.warn(`>> DataFrame length: ${fullDataRowsCount}`);
+  const { rows, columns, totalRows } = currentData;
+  console.warn(`>> DataFrame length: ${totalRows}`);
 
   return (
-    <Paper sx={{ height: '100%' }}>
-      <TableContainer sx={{ maxHeight: '90%', minHeight: '90%' }}>
-        {loading && <div>LOADING...</div>}
+    <Paper sx={{ height: '100%', position: 'relative' }}>
+      <TableContainer
+        sx={{
+          maxHeight: '85%',
+          minHeight: '85%',
+          transition: theme =>
+            theme.transitions.create('width', {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+          position: 'relative',
+          overflow: loading ? 'hidden' : 'auto',
+        }}>
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
@@ -80,14 +92,39 @@ export const DataFrame: React.FC<DataFrameProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
+
       <TablePagination
         rowsPerPageOptions={[3, 10, 25, 50, 100]}
         component='div'
-        count={fullDataRowsCount}
+        count={loading || totalRows === 0 ? 1 : totalRows}
         rowsPerPage={rowsPerPage}
-        page={currentPage}
+        page={loading ? 0 : currentPage}
         onRowsPerPageChange={event => onPageSizeChange(+event.target.value)}
-        onPageChange={(event, newPage) => onPageChange(newPage)}></TablePagination>
+        onPageChange={(event, newPage) => onPageChange(newPage)}
+      />
+
+      <Paper
+        sx={{
+          position: 'absolute',
+          left: '50%',
+          bottom: 10,
+          zIndex: 'tooltip',
+          alignItems: 'center',
+          display: 'flex',
+          gap: 2,
+          px: 1.5,
+          py: 1,
+          // visibility: loading ? 'visible' : 'hidden',
+          transition: theme =>
+            theme.transitions.create('visibility', {
+              easing: theme.transitions.easing.sharp,
+              duration: loading ? theme.transitions.duration.enteringScreen : theme.transitions.duration.leavingScreen,
+            }),
+          backgroundColor: theme => alpha(theme.palette.grey[900], 0.5),
+        }}>
+        <CircularProgress color='info' size={15} />
+        <Typography variant='body2'>Loading...</Typography>
+      </Paper>
     </Paper>
   );
 };

@@ -10,14 +10,7 @@ export const View: React.FC = () => {
   const [pageIndex, setPageIndex] = useCache('data-page-index', 1);
   const [pageSize, setPageSize] = useCache('data-page-size', 25);
   const request = useRequest();
-  const [data, setData] = useState<DataConfig>({ columns: [], rows: [] });
-  const rowsCountRef = useRef<number>(1);
-
-  useEffect(() => {
-    request.execute({ method: 'get', url: '/data/rows-count' }, res => {
-      rowsCountRef.current = res.data.rowscount;
-    });
-  }, []);
+  const [data, setData] = useState<DataConfig>({ columns: [], rows: [], totalRows: 0 });
 
   useEffect(() => {
     let active = true;
@@ -41,7 +34,6 @@ export const View: React.FC = () => {
       <DataFrame
         loading={request.state === RequestState.Pending}
         currentData={data}
-        fullDataRowsCount={rowsCountRef.current}
         currentPage={pageIndex}
         rowsPerPage={pageSize}
         onPageChange={newPageIndex => setPageIndex(newPageIndex)}
