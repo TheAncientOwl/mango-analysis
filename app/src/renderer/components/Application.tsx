@@ -23,9 +23,9 @@ const Application: React.FC = () => {
         <Stack direction='row' sx={{ height: '100vh' }}>
           <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
-          <Stack direction='column' sx={{ flexGrow: 1, bgcolor: 'secondary.main', minWidth: 0, minHeight: 0 }}>
+          <Stack direction='column' sx={{ width: '100%', overflow: 'hidden', bgcolor: 'secondary.main' }}>
             <Toolbar variant='dense' />
-            <Paper sx={{ flexGrow: 1, m: 1.5 }}>
+            <Paper sx={{ m: 1.5, height: '100%', overflow: 'hidden' }}>
               <Routes>
                 {SectionsConfig.map((section, index) => (
                   <Route key={index} path={section.routePath} element={section.element} />
