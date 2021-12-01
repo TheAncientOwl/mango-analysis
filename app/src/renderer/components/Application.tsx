@@ -24,7 +24,7 @@ const Application: React.FC = () => {
           <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
           <Stack direction='column' sx={{ flexGrow: 1, bgcolor: 'secondary.main', minWidth: 0, minHeight: 0 }}>
-            <Toolbar />
+            <Toolbar variant='dense' />
             <Paper sx={{ flexGrow: 1, m: 1.5 }}>
               <Routes>
                 {SectionsConfig.map((section, index) => (

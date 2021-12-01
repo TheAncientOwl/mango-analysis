@@ -15,7 +15,7 @@ export const TopBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='fixed' sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
-        <Toolbar>
+        <Toolbar variant='dense'>
           <IconButton
             size='medium'
             edge='start'
