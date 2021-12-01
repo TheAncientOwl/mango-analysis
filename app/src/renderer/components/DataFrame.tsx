@@ -25,18 +25,35 @@ export interface DataConfig {
 }
 
 export interface DataFrameProps {
-  data: DataConfig;
+  loading: boolean;
+  currentData: DataConfig;
+  fullDataRowsCount: number;
+  currentPage: number;
+  rowsPerPage: number;
+  onPageChange: (newPage: number) => void;
+  onPageSizeChange: (newPageSize: number) => void;
 }
 
-export const DataFrame: React.FC<DataFrameProps> = ({ data }) => {
-  const { rows, columns } = data;
+export const DataFrame: React.FC<DataFrameProps> = ({
+  loading,
+  currentData,
+  fullDataRowsCount,
+  currentPage,
+  rowsPerPage,
+  onPageChange,
+  onPageSizeChange,
+}) => {
+  const { rows, columns } = currentData;
+  console.warn(`>> DataFrame length: ${fullDataRowsCount}`);
 
   return (
     <Paper sx={{ height: '100%' }}>
-      <TableContainer sx={{ maxHeight: '90%' }}>
+      <TableContainer sx={{ maxHeight: '90%', minHeight: '90%' }}>
+        {loading && <div>LOADING...</div>}
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
+              <TableCell align='center'>ID</TableCell>
               {columns.map((column, index) => (
                 <TableCell key={index} align='center'>
                   {column.label}
@@ -48,10 +65,15 @@ export const DataFrame: React.FC<DataFrameProps> = ({ data }) => {
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index} role='checkbox' tabIndex={-1}>
+                <TableCell align='right'>{row.__id + 1}</TableCell>
                 {columns.map((column, index) => {
                   const value = row[column.label];
 
-                  return <TableCell key={index}>{value}</TableCell>;
+                  return (
+                    <TableCell key={index} align={typeof value === 'number' ? 'right' : 'left'}>
+                      {value}
+                    </TableCell>
+                  );
                 })}
               </TableRow>
             ))}
@@ -59,18 +81,13 @@ export const DataFrame: React.FC<DataFrameProps> = ({ data }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[3, 10, 25, 50, 100]}
         component='div'
-        count={rows.length}
-        rowsPerPage={25}
-        page={1}
-        onPageChange={() => {
-          console.log('page changed');
-        }}
-        onRowsPerPageChange={() => {
-          console.log('rows per page changed');
-        }}
-      />
+        count={fullDataRowsCount}
+        rowsPerPage={rowsPerPage}
+        page={currentPage}
+        onRowsPerPageChange={event => onPageSizeChange(+event.target.value)}
+        onPageChange={(event, newPage) => onPageChange(newPage)}></TablePagination>
     </Paper>
   );
 };
