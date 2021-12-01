@@ -232,7 +232,7 @@ def get_page(pageIndex, pageSize):
     rowsCount = sv.dataFrame.shape[0]
     pagesCount = rowsCount / pageSize
 
-    startIndex = (pageIndex - 1) * pageSize
+    startIndex = pageIndex * pageSize
     endIndex = startIndex + pageSize
 
     return rows_between(startIndex, endIndex)
