@@ -46,22 +46,13 @@ export const DataFrame: React.FC<DataFrameProps> = ({
   onPageSizeChange,
 }) => {
   const { rows, columns, totalRows } = currentData;
-  console.warn(`>> DataFrame length: ${totalRows}`);
+
+  const importPath = window.sessionStorage.getItem('import-path');
+  if (importPath == null || importPath === 'null') return <Typography>No data loaded...</Typography>;
 
   return (
-    <Paper sx={{ height: '100%', position: 'relative' }}>
-      <TableContainer
-        sx={{
-          maxHeight: '85%',
-          minHeight: '85%',
-          transition: theme =>
-            theme.transitions.create('width', {
-              easing: theme.transitions.easing.sharp,
-              duration: theme.transitions.duration.enteringScreen,
-            }),
-          position: 'relative',
-          overflow: loading ? 'hidden' : 'auto',
-        }}>
+    <Paper sx={{ height: '90%', position: 'relative' }}>
+      <TableContainer sx={{ maxHeight: '90%', minHeight: '90%' }}>
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
@@ -96,7 +87,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
       <TablePagination
         rowsPerPageOptions={[3, 10, 25, 50, 100]}
         component='div'
-        count={loading || totalRows === 0 ? 1 : totalRows}
+        count={loading || totalRows === 0 ? -1 : totalRows}
         rowsPerPage={rowsPerPage}
         page={loading ? 0 : currentPage}
         onRowsPerPageChange={event => onPageSizeChange(+event.target.value)}
@@ -106,15 +97,18 @@ export const DataFrame: React.FC<DataFrameProps> = ({
       <Paper
         sx={{
           position: 'absolute',
-          left: '50%',
-          bottom: 10,
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%',
           zIndex: 'tooltip',
-          alignItems: 'center',
           display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           gap: 2,
           px: 1.5,
           py: 1,
-          // visibility: loading ? 'visible' : 'hidden',
+          visibility: loading ? 'visible' : 'hidden',
           transition: theme =>
             theme.transitions.create('visibility', {
               easing: theme.transitions.easing.sharp,
@@ -122,8 +116,8 @@ export const DataFrame: React.FC<DataFrameProps> = ({
             }),
           backgroundColor: theme => alpha(theme.palette.grey[900], 0.5),
         }}>
-        <CircularProgress color='info' size={15} />
-        <Typography variant='body2'>Loading...</Typography>
+        <CircularProgress color='info' size={40} />
+        <Typography variant='h4'>Loading...</Typography>
       </Paper>
     </Paper>
   );
