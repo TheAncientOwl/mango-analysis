@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box } from '@mui/material';
 import { DataFrame, DataConfig } from '@renderer/components/DataFrame';
