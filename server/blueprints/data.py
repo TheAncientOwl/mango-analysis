@@ -78,14 +78,14 @@ def rows_between(start, end):
 
     requestedDf = sv.dataFrame[start:end]
 
-    resultMap = {'columns': [], 'rows': []}
+    resultMap = {'columns': [], 'rows': [], 'totalRows': sv.dataFrame.shape[0]}
     for column in requestedDf.columns:
         resultMap['columns'].append({'label': column})
 
     for index, row in requestedDf.iterrows():
         row_dict = row.to_dict()
         row_dict['__id'] = index
-        
+
         resultMap['rows'].append(row_dict)
 
     return flask.jsonify(success=True, message='Success', dataframe=resultMap)
