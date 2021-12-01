@@ -20,10 +20,6 @@ export const View: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  useEffect(() => {
     let active = true;
 
     request.execute({ method: 'get', url: `/data/page/${pageIndex}/page-size/${pageSize}` }, res => {
@@ -31,7 +27,6 @@ export const View: React.FC = () => {
 
       if ('dataframe' in res.data) {
         const dataFrame = res.data.dataframe;
-        console.log(dataFrame);
         setData(dataFrame);
       }
     });

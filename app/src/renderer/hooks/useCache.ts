@@ -14,6 +14,5 @@ export const useCache = <T>(key: string, def: T): [T, React.Dispatch<T>] => {
 useCache.KeysSet = new Set<string>();
 
 useCache.Clear = () => {
-  console.info('>> Clear cache...');
   sessionStorage.clear();
 };
