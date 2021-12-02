@@ -61,7 +61,7 @@ export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
   return (
     <Drawer variant='permanent' open={open}>
       <Toolbar variant='dense' />
-      <Box sx={{ bgcolor: 'primary.main', flexGrow: 1 }}>
+      <Box sx={{ bgcolor: 'grey.900', flexGrow: 1 }}>
         <List>
           {SectionsConfig.map((section, index) => (
             <ListItemButton
