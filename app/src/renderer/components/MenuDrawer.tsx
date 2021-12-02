@@ -8,28 +8,31 @@ import { Box, List, Toolbar, ListItemIcon, ListItemText, ListItemButton } from '
 
 import { SectionsConfig } from '../config';
 
-const drawerWidth = 180;
+const DrawerWidth = {
+  opened: 180,
+  closed: 57,
+};
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width: DrawerWidth.opened,
+  overflowX: 'hidden',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: 'hidden',
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
+  width: DrawerWidth.closed,
+  overflowX: 'hidden',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
 });
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
-  width: drawerWidth,
+  width: DrawerWidth.opened,
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',

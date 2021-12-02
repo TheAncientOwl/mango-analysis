@@ -47,12 +47,20 @@ export const DataFrame: React.FC<DataFrameProps> = ({
 }) => {
   const { rows, columns, totalRows } = currentData;
 
-  const importPath = window.sessionStorage.getItem('import-path');
-  if (importPath == null || importPath === 'null') return <Typography>No data loaded...</Typography>;
-
   return (
-    <Paper sx={{ height: '90%', position: 'relative' }}>
-      <TableContainer sx={{ maxHeight: '90%', minHeight: '90%' }}>
+    <Paper
+      sx={{
+        flex: 1,
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        '> *': {
+          minWidth: 0,
+          minHeight: 0,
+        },
+      }}>
+      <TableContainer sx={{ flex: 1 }}>
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
@@ -117,7 +125,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
           backgroundColor: theme => alpha(theme.palette.grey[900], 0.5),
         }}>
         <CircularProgress color='info' size={40} />
-        <Typography variant='h4'>Loading...</Typography>
+        <Typography variant='h5'>Loading...</Typography>
       </Paper>
     </Paper>
   );

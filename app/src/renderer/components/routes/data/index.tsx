@@ -15,12 +15,18 @@ const TabPanel = (props: TabPanelProps) => {
 
   return (
     <div
+      style={{
+        flex: 1,
+        display: value === index ? 'flex' : 'none',
+        flexDirection: 'column',
+        boxSizing: 'border-box',
+        padding: '16px',
+      }}
       role='tabpanel'
-      hidden={value !== index}
       id={`data-tabpanel-${index}`}
       aria-labelledby={`data-tabpanel-${index}`}
       {...other}>
-      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
+      {value === index && children}
     </div>
   );
 };
@@ -38,7 +44,7 @@ export const Data: React.FC = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);
 
   return (
-    <Box sx={{}}>
+    <React.Fragment>
       <Tabs value={value} onChange={handleChange} aria-label='data tabs'>
         {TabsConfig.map((tab, index) => (
           <Tab key={index} icon={tab.icon} iconPosition='start' label={tab.label} {...a11yProps(index)} />
@@ -50,6 +56,6 @@ export const Data: React.FC = () => {
           {tab.component}
         </TabPanel>
       ))}
-    </Box>
+    </React.Fragment>
   );
 };
