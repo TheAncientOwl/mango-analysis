@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Tabs, Tab, Box } from '@mui/material';
+import { Tabs, Tab } from '@mui/material';
 
 import { TabsConfig } from './TabsConfig';
 

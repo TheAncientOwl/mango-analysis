@@ -2,7 +2,7 @@ import { hot } from 'react-hot-loader';
 import React, { useState } from 'react';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 
-import { Paper, ThemeProvider, Toolbar, Stack, Typography, Box } from '@mui/material';
+import { Paper, ThemeProvider, Toolbar, Stack } from '@mui/material';
 
 import { TopBar } from './TopBar';
 import { MenuDrawer } from './MenuDrawer';

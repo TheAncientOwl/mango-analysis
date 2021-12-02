@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { DataFrame, DataConfig } from '@renderer/components/DataFrame';
 
 import { useCache } from '@renderer/hooks/useCache';
