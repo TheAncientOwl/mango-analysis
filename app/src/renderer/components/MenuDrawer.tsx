@@ -68,7 +68,7 @@ export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
               component={Link}
               to={section.routePath}
               key={index}
-              sx={{ color: 'primary.contrastText' }}
+              sx={{ color: 'text.primary' }}
               onClick={() => onItemClick(section.name)}>
               <ListItemIcon sx={{ color: 'secondary.main' }}>{section.icon}</ListItemIcon>
               <ListItemText sx={{ textTransform: 'capitalize' }}>{section.name}</ListItemText>
