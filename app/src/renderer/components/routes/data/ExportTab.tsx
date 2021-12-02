@@ -19,7 +19,7 @@ export const ExportTab: React.FC = () => {
   const handleFileNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFileName = event.target.value;
 
-    if (newFileName.endsWith('/') || newFileName.endsWith('\\')) return;
+    if (newFileName.includes('/') || newFileName.includes('\\')) return;
 
     setFileName(event.target.value);
   };
