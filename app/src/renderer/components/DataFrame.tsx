@@ -47,19 +47,8 @@ export const DataFrame: React.FC<DataFrameProps> = ({
   const { rows, columns, totalRows } = currentData;
 
   return (
-    <Paper
-      sx={{
-        flex: 1,
-        position: 'relative',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        '> *': {
-          minWidth: 0,
-          minHeight: 0,
-        },
-      }}>
-      <TableContainer sx={{ flex: 1 }}>
+    <React.Fragment>
+      <TableContainer component={Paper} sx={{ flex: 1 }}>
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
@@ -104,6 +93,6 @@ export const DataFrame: React.FC<DataFrameProps> = ({
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={loading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-    </Paper>
+    </React.Fragment>
   );
 };
