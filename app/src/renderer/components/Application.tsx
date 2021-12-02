@@ -11,6 +11,26 @@ import { SectionsConfig, theme } from '../config';
 
 import { useSwitch } from '@renderer/hooks/useSwitch';
 
+/**
+ * @layout
+ * <app>
+ * * >> fixed.
+ *  <app-bar />
+ *
+ * * >> provide 100vw & 100vh app layout and merge a toolbar to compensate app-bar height.
+ *  <stack column>
+ *    <toolbar />
+ *
+ * * >> merge menu & app routes.
+ *    <stack row>
+ *      <menu />
+ *      <paper>
+ *        <app-routes/>
+ *      </paper>
+ *    </stack>
+ *  </stack>
+ * </app>
+ */
 const Application: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = useState(SectionsConfig[0].name);
   const [menuOpen, toggleMenu] = useSwitch(false);
@@ -19,6 +39,7 @@ const Application: React.FC = () => {
     <HashRouter>
       <ThemeProvider theme={theme}>
         <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
+
         <Stack direction='column' sx={{ width: '100vw', height: '100vh' }}>
           <Toolbar variant='dense' />
 
