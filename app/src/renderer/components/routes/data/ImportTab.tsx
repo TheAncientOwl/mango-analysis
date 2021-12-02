@@ -11,7 +11,7 @@ import { useRequest, RequestState } from '@renderer/hooks/useRequest';
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 import { CircularPendingRequest } from '@renderer/components/CircularPendingRequest';
 
-export const Import: React.FC = () => {
+export const ImportTab: React.FC = () => {
   const [importPath, setImportPath] = useCache<string | null>('import-path', null);
   const [doubleCheckSwitch, toggleDoubleCheck] = useSwitch(false);
   const dataRequest = useRequest();

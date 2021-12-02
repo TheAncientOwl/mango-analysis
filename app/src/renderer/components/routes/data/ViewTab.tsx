@@ -6,7 +6,7 @@ import { DataFrame, DataConfig } from '@renderer/components/DataFrame';
 import { useCache } from '@renderer/hooks/useCache';
 import { RequestState, useRequest } from '@renderer/hooks/useRequest';
 
-export const View: React.FC = () => {
+export const ViewTab: React.FC = () => {
   const [pageIndex, setPageIndex] = useCache('data-page-index', 1);
   const [pageSize, setPageSize] = useCache('data-page-size', 25);
   const request = useRequest();

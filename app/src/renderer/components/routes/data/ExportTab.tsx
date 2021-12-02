@@ -6,7 +6,7 @@ import { useCache } from '@renderer/hooks/useCache';
 import { RequestState, useRequest } from '@renderer/hooks/useRequest';
 import { useSnackbar } from '@renderer/hooks/useSnackbar';
 
-export const Export: React.FC = () => {
+export const ExportTab: React.FC = () => {
   const [fileName, setFileName] = useCache('file-name-save', `Data-${Date.now()}.csv`);
   const saveDataRequest = useRequest();
   const snackbar = useSnackbar({

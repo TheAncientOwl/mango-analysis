@@ -5,10 +5,10 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import EditIcon from '@mui/icons-material/Edit';
 import TableViewIcon from '@mui/icons-material/TableView';
 
-import { Import } from './Import';
-import { Export } from './Export';
-import { Edit } from './Edit';
-import { View } from './View';
+import { ImportTab } from './ImportTab';
+import { ExportTab } from './ExportTab';
+import { EditTab } from './EditTab';
+import { ViewTab } from './ViewTab';
 
 interface Feature {
   label: string;
@@ -17,8 +17,8 @@ interface Feature {
 }
 
 export const TabsConfig: ReadonlyArray<Feature> = [
-  { label: 'Import', icon: <FileUploadIcon />, component: <Import /> },
-  { label: 'Export', icon: <FileDownloadIcon />, component: <Export /> },
-  { label: 'Edit', icon: <EditIcon />, component: <Edit /> },
-  { label: 'View', icon: <TableViewIcon />, component: <View /> },
+  { label: 'Import', icon: <FileUploadIcon />, component: <ImportTab /> },
+  { label: 'Export', icon: <FileDownloadIcon />, component: <ExportTab /> },
+  { label: 'Edit', icon: <EditIcon />, component: <EditTab /> },
+  { label: 'View', icon: <TableViewIcon />, component: <ViewTab /> },
 ];

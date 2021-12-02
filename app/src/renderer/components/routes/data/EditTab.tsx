@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const Edit: React.FC = () => {
+export const EditTab: React.FC = () => {
   return <div>Edit</div>;
 };
