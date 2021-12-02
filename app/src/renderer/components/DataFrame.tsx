@@ -9,9 +9,9 @@ import {
   TableRow,
   TablePagination,
   CircularProgress,
+  Backdrop,
   Typography,
 } from '@mui/material';
-import { alpha } from '@mui/system';
 
 export interface Column {
   label: string;
@@ -64,7 +64,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
-              <TableCell align='center'>ID</TableCell>
+              {columns.length > 0 && <TableCell align='center'>ID</TableCell>}
               {columns.map((column, index) => (
                 <TableCell key={index} align='center'>
                   {column.label}
@@ -102,31 +102,9 @@ export const DataFrame: React.FC<DataFrameProps> = ({
         onPageChange={(event, newPage) => onPageChange(newPage)}
       />
 
-      <Paper
-        sx={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 'tooltip',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 2,
-          px: 1.5,
-          py: 1,
-          visibility: loading ? 'visible' : 'hidden',
-          transition: theme =>
-            theme.transitions.create('visibility', {
-              easing: theme.transitions.easing.sharp,
-              duration: loading ? theme.transitions.duration.enteringScreen : theme.transitions.duration.leavingScreen,
-            }),
-          backgroundColor: theme => alpha(theme.palette.grey[900], 0.5),
-        }}>
-        <CircularProgress color='info' size={40} />
-        <Typography variant='h5'>Loading...</Typography>
-      </Paper>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={loading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
     </Paper>
   );
 };
