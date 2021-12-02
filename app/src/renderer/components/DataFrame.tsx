@@ -10,7 +10,6 @@ import {
   TablePagination,
   CircularProgress,
   Backdrop,
-  Typography,
 } from '@mui/material';
 
 export interface Column {
