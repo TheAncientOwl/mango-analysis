@@ -25,7 +25,7 @@ export const ExportTab: React.FC = () => {
   };
 
   const saveDataFile = async () => {
-    const directoryPath = await window.electron.showOpenDirectoryDialog();
+    const directoryPath = await window.electron.getExportCsvDirectoryPath();
 
     if (directoryPath === null) return;
 

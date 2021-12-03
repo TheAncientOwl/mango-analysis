@@ -79,4 +79,14 @@ const registerMainIPC = (): void => {
 
     return value.filePaths[0];
   });
+
+  ipcMain.handle('get-export-csv-directory-path', async (): Promise<string | null> => {
+    const value = await dialog.showOpenDialog({
+      properties: ['openDirectory'],
+    });
+
+    if (value.canceled) return null;
+
+    return value.filePaths[0];
+  });
 };
