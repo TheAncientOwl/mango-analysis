@@ -1,5 +1,4 @@
 import { app, ipcMain, BrowserWindow, dialog } from 'electron';
-require('@electron/remote/main').initialize();
 
 // Electron Forge automatically creates these entry points
 declare const APP_WINDOW_WEBPACK_ENTRY: string;
@@ -29,7 +28,6 @@ export const createAppWindow = (): BrowserWindow => {
       preload: APP_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
-  require('@electron/remote/main').enable(appWindow.webContents);
 
   // Load the index.html of the app window.
   appWindow.loadURL(APP_WINDOW_WEBPACK_ENTRY);
