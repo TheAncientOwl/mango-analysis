@@ -48,7 +48,7 @@ const Application: React.FC = () => {
 
             <Paper
               sx={{
-                m: 1.5,
+                m: 1,
                 flex: 1,
                 overflow: 'hidden',
                 display: 'flex',
