@@ -34,10 +34,23 @@ const closeAppWindow = () => {
   ipcRenderer.invoke('window-close');
 };
 
-contextBridge.exposeInMainWorld('electronAPI', {
+contextBridge.exposeInMainWorld('electron', {
   showOpenCsvDialog,
   showOpenDirectoryDialog,
   minimizeAppWindow,
   toggleMaximizeAppWindow,
   closeAppWindow,
 });
+
+export {};
+declare global {
+  interface Window {
+    electron: {
+      showOpenCsvDialog: () => Promise<string | null>;
+      showOpenDirectoryDialog: () => Promise<string | null>;
+      minimizeAppWindow: () => void;
+      toggleMaximizeAppWindow: () => void;
+      closeAppWindow: () => void;
+    };
+  }
+}

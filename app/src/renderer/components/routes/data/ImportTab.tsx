@@ -24,7 +24,7 @@ export const ImportTab: React.FC = () => {
   });
 
   const importData = async () => {
-    const filePath = await window.electronAPI.showOpenCsvDialog();
+    const filePath = await window.electron.showOpenCsvDialog();
 
     if (filePath === null) return;
 
