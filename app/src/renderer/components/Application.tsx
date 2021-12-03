@@ -4,7 +4,7 @@ import { Routes, Route, HashRouter } from 'react-router-dom';
 
 import { Paper, ThemeProvider, Toolbar, Stack } from '@mui/material';
 
-import { TopBar } from './TopBar';
+import { AppTitleBar } from './AppTitleBar';
 import { MenuDrawer } from './MenuDrawer';
 
 import { SectionsConfig, theme } from '../config';
@@ -15,7 +15,7 @@ import { useSwitch } from '@renderer/hooks/useSwitch';
  * @layout
  * <app>
  * * >> fixed.
- *  <app-bar />
+ *  <app-title-bar />
  *
  * * >> provide 100vw & 100vh app layout and merge a toolbar to compensate app-bar height.
  *  <stack column>
@@ -38,7 +38,7 @@ const Application: React.FC = () => {
   return (
     <HashRouter>
       <ThemeProvider theme={theme}>
-        <TopBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
+        <AppTitleBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
 
         <Stack direction='column' sx={{ width: '100vw', height: '100vh' }}>
           <Toolbar variant='dense' />

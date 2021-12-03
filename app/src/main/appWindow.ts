@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 require('@electron/remote/main').initialize();
 
 // Electron Forge automatically creates these entry points
@@ -18,6 +18,7 @@ export const createAppWindow = (): BrowserWindow => {
     height: 600,
     minWidth: 700,
     minHeight: 600,
+    titleBarStyle: 'hidden',
     webPreferences: {
       sandbox: true,
       nodeIntegration: false,
@@ -36,14 +37,14 @@ export const createAppWindow = (): BrowserWindow => {
   // Show window when its ready to
   appWindow.on('ready-to-show', () => appWindow.show());
 
-  // Register Inter Process Communication for main process
-  registerMainIPC();
-
   // Close all windows when main window is closed
   appWindow.on('close', () => {
     appWindow = null;
     app.quit();
   });
+
+  // Register Inter Process Communication for main process
+  registerMainIPC();
 
   return appWindow;
 };
@@ -52,8 +53,19 @@ export const createAppWindow = (): BrowserWindow => {
  * Register Inter Process Communication
  */
 const registerMainIPC = (): void => {
-  /**
-   * Here you can assign IPC related codes for the application window
-   * to Communicate asynchronously from the main process to renderer processes.
-   */
+  ipcMain.handle('window-minimize', () => {
+    appWindow.minimize();
+  });
+
+  ipcMain.handle('window-toggle-maximize', () => {
+    if (appWindow.isMaximized()) {
+      appWindow.unmaximize();
+    } else {
+      appWindow.maximize();
+    }
+  });
+
+  ipcMain.handle('window-close', () => {
+    appWindow.close();
+  });
 };

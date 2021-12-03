@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 // eslint-disable-next-line import/no-unresolved
 import { inDev } from '@common/helpers';
 
+import './app.css';
+
 import { CssBaseline } from '@mui/material';
 
 import Application from './components/Application';

@@ -1,4 +1,4 @@
-import { contextBridge } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 import { dialog } from '@electron/remote';
 
 const showOpenCsvDialog = async (): Promise<string | null> => {
@@ -22,4 +22,22 @@ const showOpenDirectoryDialog = async (): Promise<string | null> => {
   return value.filePaths[0];
 };
 
-contextBridge.exposeInMainWorld('electronAPI', { showOpenCsvDialog, showOpenDirectoryDialog });
+const minimizeAppWindow = () => {
+  ipcRenderer.invoke('window-minimize');
+};
+
+const toggleMaximizeAppWindow = () => {
+  ipcRenderer.invoke('window-toggle-maximize');
+};
+
+const closeAppWindow = () => {
+  ipcRenderer.invoke('window-close');
+};
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  showOpenCsvDialog,
+  showOpenDirectoryDialog,
+  minimizeAppWindow,
+  toggleMaximizeAppWindow,
+  closeAppWindow,
+});
