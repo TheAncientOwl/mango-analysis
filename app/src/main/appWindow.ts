@@ -1,4 +1,4 @@
-import { app, ipcMain, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow, dialog } from 'electron';
 require('@electron/remote/main').initialize();
 
 // Electron Forge automatically creates these entry points
@@ -67,5 +67,16 @@ const registerMainIPC = (): void => {
 
   ipcMain.handle('window-close', () => {
     appWindow.close();
+  });
+
+  ipcMain.handle('get-import-csv-path', async (): Promise<string | null> => {
+    const value = await dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [{ name: 'Csv', extensions: ['csv'] }],
+    });
+
+    if (value.canceled) return null;
+
+    return value.filePaths[0];
   });
 };
