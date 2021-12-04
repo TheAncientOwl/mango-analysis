@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, session } from 'electron';
 import { createAppWindow } from './appWindow';
 
 /** Handle creating/removing shortcuts on Windows when installing/uninstalling. */
@@ -11,7 +11,13 @@ if (require('electron-squirrel-startup')) {
  * initialization and is ready to create browser windows.
  * Some APIs can only be used after this event occurs.
  */
-app.on('ready', createAppWindow);
+app.whenReady().then(async () => {
+  createAppWindow();
+
+  await session.defaultSession.loadExtension(
+    'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.21.0_0'
+  );
+});
 
 /**
  * Emitted when the application is activated. Various actions can
