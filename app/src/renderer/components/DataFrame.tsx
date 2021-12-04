@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 
 export interface Column {
+  __id: number;
   label: string;
 }
 
@@ -53,8 +54,8 @@ export const DataFrame: React.FC<DataFrameProps> = ({
           <TableHead>
             <TableRow>
               {columns.length > 0 && <TableCell align='center'>ID</TableCell>}
-              {columns.map((column, index) => (
-                <TableCell key={index} align='center'>
+              {columns.map(column => (
+                <TableCell key={column.__id} align='center'>
                   {column.label}
                 </TableCell>
               ))}
@@ -62,8 +63,8 @@ export const DataFrame: React.FC<DataFrameProps> = ({
           </TableHead>
 
           <TableBody>
-            {rows.map((row, index) => (
-              <TableRow key={index} role='checkbox' tabIndex={-1}>
+            {rows.map(row => (
+              <TableRow key={row.__id} role='checkbox' tabIndex={-1}>
                 <TableCell align='right'>{row.__id + 1}</TableCell>
                 {columns.map((column, index) => {
                   const value = row[column.label];
