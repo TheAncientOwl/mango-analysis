@@ -79,8 +79,10 @@ def rows_between(start, end):
     requestedDf = sv.dataFrame[start:end]
 
     resultMap = {'columns': [], 'rows': [], 'totalRows': sv.dataFrame.shape[0]}
+    idx = 0
     for column in requestedDf.columns:
-        resultMap['columns'].append({'label': column})
+        idx = idx + 1
+        resultMap['columns'].append({'label': column, '__id': idx})
 
     for index, row in requestedDf.iterrows():
         row_dict = row.to_dict()
