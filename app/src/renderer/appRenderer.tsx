@@ -1,14 +1,17 @@
+import './app.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter } from 'react-router-dom';
+
 // eslint-disable-next-line import/no-unresolved
 import { inDev } from '@common/helpers';
 
-import './app.css';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
-import { CssBaseline } from '@mui/material';
-
-import Application from './components/Application';
+import { theme } from './config';
 import { useCache } from './hooks/useCache';
+import Application from './components/Application';
 
 useCache.Clear();
 
@@ -16,7 +19,11 @@ useCache.Clear();
 ReactDOM.render(
   <React.Fragment>
     <CssBaseline />
-    <Application />
+    <HashRouter>
+      <ThemeProvider theme={theme}>
+        <Application />
+      </ThemeProvider>
+    </HashRouter>
   </React.Fragment>,
   document.getElementById('app')
 );

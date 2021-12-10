@@ -1,12 +1,12 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import { Routes, Route, HashRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-import { Paper, ThemeProvider, Toolbar, Stack } from '@mui/material';
+import { Paper, Toolbar, Stack } from '@mui/material';
 
 import { MenuDrawer } from './MenuDrawer';
 import { AppTitleBar } from './AppTitleBar';
-import { SectionsConfig, theme } from '../config';
+import { SectionsConfig } from '../config';
 import { useSwitch } from '@renderer/hooks/useSwitch';
 
 const Application: React.FC = () => {
@@ -14,38 +14,36 @@ const Application: React.FC = () => {
   const [menuOpen, toggleMenu] = useSwitch(false);
 
   return (
-    <HashRouter>
-      <ThemeProvider theme={theme}>
-        <AppTitleBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
+    <React.Fragment>
+      <AppTitleBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
 
-        <Stack direction='column' sx={{ width: '100vw', height: '100vh' }}>
-          <Toolbar variant='dense' />
+      <Stack direction='column' sx={{ width: '100vw', height: '100vh' }}>
+        <Toolbar variant='dense' />
 
-          <Stack direction='row' sx={{ flex: 1, minWidth: 0, minHeight: 0, bgcolor: 'secondary.main' }}>
-            <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
+        <Stack direction='row' sx={{ flex: 1, minWidth: 0, minHeight: 0, bgcolor: 'secondary.main' }}>
+          <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
-            <Paper
-              sx={{
-                m: 1,
-                flex: 1,
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                '> *': {
-                  minWidth: 0,
-                  minHeight: 0,
-                },
-              }}>
-              <Routes>
-                {SectionsConfig.map((section, index) => (
-                  <Route key={index} path={section.routePath} element={section.element} />
-                ))}
-              </Routes>
-            </Paper>
-          </Stack>
+          <Paper
+            sx={{
+              m: 1,
+              flex: 1,
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              '> *': {
+                minWidth: 0,
+                minHeight: 0,
+              },
+            }}>
+            <Routes>
+              {SectionsConfig.map((section, index) => (
+                <Route key={index} path={section.routePath} element={section.element} />
+              ))}
+            </Routes>
+          </Paper>
         </Stack>
-      </ThemeProvider>
-    </HashRouter>
+      </Stack>
+    </React.Fragment>
   );
 };
 
