@@ -1,6 +1,6 @@
 import React from 'react';
 import { axios } from '@renderer/config';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 export enum RequestState {
   None,
@@ -8,13 +8,8 @@ export enum RequestState {
   Solved,
 }
 
-interface Request {
-  method: 'get' | 'post';
-  url: string;
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ExecuteRequestFn = (req: Request, callback: (res: AxiosResponse<any>) => void) => void;
+type ExecuteRequestFn = (req: AxiosRequestConfig<any>, callback: (res: AxiosResponse<any>) => void) => void;
 
 interface RequestResult {
   state: RequestState;
@@ -23,6 +18,7 @@ interface RequestResult {
 
 export const useRequest = (): RequestResult => {
   const [state, setState] = React.useState(RequestState.None);
+  axios.request({});
 
   const execute: ExecuteRequestFn = (req, callback) => {
     setState(RequestState.Pending);
