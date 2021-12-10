@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Button, Stack, TextField } from '@mui/material';
-import { CircularPendingRequest } from '@renderer/components/CircularPendingRequest';
+import { Button, Stack, TextField, CircularProgress } from '@mui/material';
 import { useCache } from '@renderer/hooks/useCache';
 import { RequestState, useRequest } from '@renderer/hooks/useRequest';
 import { useSnackbar } from '@renderer/hooks/useSnackbar';
@@ -54,7 +53,7 @@ export const ExportTab: React.FC = () => {
         <Button onClick={saveDataFile} sx={{ display: 'block' }} variant='contained' size='medium' disableElevation>
           Save
         </Button>
-        {saveDataRequest.state === RequestState.Pending && <CircularPendingRequest />}
+        {saveDataRequest.state === RequestState.Pending && <CircularProgress size={30} thickness={4} color='info' />}
       </Stack>
 
       {snackbar.element}

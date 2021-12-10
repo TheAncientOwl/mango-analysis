@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Button, IconButton, Stack, Typography, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useCache } from '@renderer/hooks/useCache';
@@ -9,7 +9,6 @@ import { useSwitch } from '@renderer/hooks/useSwitch';
 import { useRequest, RequestState } from '@renderer/hooks/useRequest';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { CircularPendingRequest } from '@renderer/components/CircularPendingRequest';
 
 export const ImportTab: React.FC = () => {
   const [importPath, setImportPath] = useCache<string | null>('import-path', null);
@@ -87,7 +86,7 @@ export const ImportTab: React.FC = () => {
           disableElevation>
           Search
         </Button>
-        {dataRequest.state === RequestState.Pending && <CircularPendingRequest />}
+        {dataRequest.state === RequestState.Pending && <CircularProgress size={30} thickness={4} color='info' />}
       </Box>
 
       {importPath !== null && (
