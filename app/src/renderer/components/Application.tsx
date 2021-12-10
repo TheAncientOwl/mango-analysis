@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader';
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 
 import { Paper, ThemeProvider, Toolbar, Stack } from '@mui/material';
@@ -32,7 +32,7 @@ import { useSwitch } from '@renderer/hooks/useSwitch';
  * </app>
  */
 const Application: React.FC = () => {
-  const [currentSectionTitle, setCurrentSectionTitle] = useState(SectionsConfig[0].name);
+  const [currentSectionTitle, setCurrentSectionTitle] = React.useState(SectionsConfig[0].name);
   const [menuOpen, toggleMenu] = useSwitch(false);
 
   return (

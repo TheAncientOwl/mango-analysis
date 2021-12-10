@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Tabs, Tab } from '@mui/material';
 
@@ -39,7 +39,7 @@ const a11yProps = (index: number) => {
 };
 
 export const Data: React.FC = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);
 
