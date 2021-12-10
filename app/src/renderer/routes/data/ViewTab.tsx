@@ -6,7 +6,6 @@ import { CacheSystem } from '@renderer/CacheSystem';
 
 import { DataFrame, DataConfig } from '@renderer/components/DataFrame';
 
-import { RequestState } from '@renderer/hooks/useRequest';
 import { axios } from '@renderer/config';
 import { ImportPathKey } from './ImportTab';
 
@@ -14,7 +13,7 @@ interface State {
   pageIndex: number;
   pageSize: number;
   data: DataConfig;
-  requestState: RequestState;
+  loadingData: boolean;
 }
 
 enum ActionType {
@@ -39,7 +38,7 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         pageIndex: action.payload as number,
-        requestState: RequestState.Pending,
+        loadingData: true,
       };
     }
     case ActionType.ChangePageSize: {
@@ -49,24 +48,24 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         pageIndex: 0,
         pageSize: action.payload as number,
-        requestState: RequestState.Pending,
+        loadingData: true,
       };
     }
     case ActionType.RequestDataSuccess: {
       return {
         ...state,
         data: action.payload as DataConfig,
-        requestState: RequestState.Solved,
+        loadingData: false,
       };
     }
   }
 };
 
 export const ViewTab: React.FC = () => {
-  const [{ pageIndex, pageSize, data, requestState }, dispatch] = React.useReducer(reducer, {
+  const [{ pageIndex, pageSize, data, loadingData }, dispatch] = React.useReducer(reducer, {
     pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
     pageSize: CacheSystem.GetItemOrDefault<number>(DataPageSizeKey, 25),
-    requestState: RequestState.Pending,
+    loadingData: true,
     data: { columns: [], rows: [], totalRows: 0 },
   });
 
@@ -91,7 +90,7 @@ export const ViewTab: React.FC = () => {
 
   return (
     <DataFrame
-      loading={requestState === RequestState.Pending}
+      loading={loadingData}
       currentData={data}
       currentPage={pageIndex}
       rowsPerPage={pageSize}
