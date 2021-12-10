@@ -18,7 +18,6 @@ interface RequestResult {
 
 export const useRequest = (): RequestResult => {
   const [state, setState] = React.useState(RequestState.None);
-  axios.request({});
 
   const execute: ExecuteRequestFn = (req, callback) => {
     setState(RequestState.Pending);
