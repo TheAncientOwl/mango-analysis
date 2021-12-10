@@ -1,18 +1,13 @@
 import React from 'react';
 
+import { CacheSystem } from '../CacheSystem';
+
 export const useCache = <T>(key: string, def: T): [T, React.Dispatch<T>] => {
-  const [value, setValue] = React.useState(JSON.parse(window.sessionStorage.getItem(key)) || def);
-  useCache.KeysSet.add(key);
+  const [value, setValue] = React.useState(CacheSystem.GetItemOrDefault(key, def));
 
   React.useEffect(() => {
-    window.sessionStorage.setItem(key, JSON.stringify(value));
+    CacheSystem.SetItem<T>(key, value);
   }, [value]);
 
   return [value, setValue];
-};
-
-useCache.KeysSet = new Set<string>();
-
-useCache.Clear = () => {
-  sessionStorage.clear();
 };
