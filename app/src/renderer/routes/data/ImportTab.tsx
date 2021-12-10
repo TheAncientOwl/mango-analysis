@@ -10,8 +10,10 @@ import { useRequest, RequestState } from '@renderer/hooks/useRequest';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
+export const ImportPathKey = 'import-path';
+
 export const ImportTab: React.FC = () => {
-  const [importPath, setImportPath] = useCache<string | null>('import-path', null);
+  const [importPath, setImportPath] = useCache<string | null>(ImportPathKey, null);
   const [doubleCheckSwitch, toggleDoubleCheck] = useSwitch(false);
   const dataRequest = useRequest();
 
