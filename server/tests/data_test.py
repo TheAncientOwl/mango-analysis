@@ -5,9 +5,7 @@ import server_data as sv
 
 
 class DataTest(TestBase):
-    # * -----------------------------------------------------------------------------------------------------
-    # * >> Delete dataframe
-    # * -----------------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------------
     def test_delete_dataframe(self):
         response = self.client.get('/data/delete')
         json_data = response.get_json()
@@ -16,9 +14,7 @@ class DataTest(TestBase):
         self.assertTrue(json_data[tokens.success])
         self.assertTrue(sv.dataFrame.shape[0] == 0)
 
-    # * -----------------------------------------------------------------------------------------------------
-    # * >> Import csv route
-    # * -----------------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------------
     def test_import_unexisting_csv(self):
         response = self.client.get(
             f'/data/import/csv/{tokens.working_dir}/Datedasd.csv')
@@ -35,9 +31,7 @@ class DataTest(TestBase):
         self.assertBasics(response, json_data)
         self.assertTrue(json_data[tokens.success])
 
-    # * -----------------------------------------------------------------------------------------------------
-    # * >> Export csv route
-    # * -----------------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------------
     def test_export_csv_directory_does_not_exist(self):
         response = self.client.get(
             f'/data/export/csv/name/DateExported.csv/path/{tokens.working_dir}/non-existing/wdkjdjkjw')
@@ -63,9 +57,7 @@ class DataTest(TestBase):
         self.assertBasics(response, json_data)
         self.assertTrue(json_data[tokens.success])
 
-    # * -----------------------------------------------------------------------------------------------------
-    # * >> Get rows between route
-    # * -----------------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------------
     def test_get_rows_invalid_range(self):
         self.readDataFrame()
         response = self.client.get('/data/rows-between/10/5')
@@ -93,9 +85,7 @@ class DataTest(TestBase):
         self.assertTrue('dataframe' in json_data,
                         "Missing 'dataframe' key in json response.")
 
-    # * -----------------------------------------------------------------------------------------------------
-    # * >> Drop columns by label
-    # * -----------------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------------
     def test_drop_columns_by_label(self):
         self.readDataFrame()
 
@@ -117,9 +107,7 @@ class DataTest(TestBase):
         self.assertTrue(len(remainingDropLabels) == 0,
                         f"Some labels were not deleted... '{str(remainingDropLabels)}'")
 
-    # * -----------------------------------------------------------------------------------------------------
-    # * >> Drop rows by index
-    # * -----------------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------------
     def test_drop_rows_by_index(self):
         self.readDataFrame()
         initialRowsNum = sv.dataFrame.shape[0]
@@ -132,15 +120,10 @@ class DataTest(TestBase):
 
         self.assertBasics(response, json_data)
         self.assertTrue(json_data[tokens.success])
-        self.assertTrue('invalidIndexCount' in json_data)
-        self.assertTrue(json_data['invalidIndexCount'] == 3,
-                        'Wrong count of invalid index detected.')
         self.assertTrue(sv.dataFrame.shape[0] + 4 == initialRowsNum,
                         'Not all rows were dropped.')
 
-    # * -----------------------------------------------------------------------------------------------------
-    # * >> Transpose
-    # * -----------------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------------
     def test_transpose(self):
         self.readDataFrame()
         initialRowsNum = sv.dataFrame.shape[0]
@@ -154,25 +137,6 @@ class DataTest(TestBase):
         self.assertTrue(sv.dataFrame.shape[0] == initialColsNum and
                         sv.dataFrame.shape[1] == initialRowsNum,
                         'Dataframe not transposed')
-
-    # * -----------------------------------------------------------------------------------------------------
-    # * >> Summary
-    # * -----------------------------------------------------------------------------------------------------
-    def test_summary(self):
-        self.readDataFrame()
-        requestLabels = ['EA', 'EAM', 'CP', 'IDK', 'CP', 'Country']
-        response = self.client.post('/data/summary', json={
-            'labels': requestLabels
-        })
-        json_data = response.get_json()
-
-        self.assertBasics(response, json_data)
-        self.assertTrue(json_data[tokens.success])
-        self.assertTrue('dataframe' in json_data)
-        self.assertTrue('unknownLabels' in json_data)
-        self.assertTrue('nonNumeric' in json_data)
-        self.assertTrue(json_data['unknownLabels'] == 1)
-        self.assertTrue(json_data['nonNumeric'] == 1)
 
 
 if __name__ == '__main__':
