@@ -53,6 +53,29 @@ export const ImportTab: React.FC = () => {
 
   return (
     <React.Fragment>
+      <Box sx={{ display: 'flex' }}>
+        <Button
+          onClick={importData}
+          sx={{ mb: 2, mr: 2, display: 'block' }}
+          variant='contained'
+          size='medium'
+          disableElevation>
+          Search
+        </Button>
+        {dataRequest.state === RequestState.Pending && <CircularProgress size={30} thickness={4} color='info' />}
+      </Box>
+
+      {importPath !== null && (
+        <Stack direction='row' alignItems='center' spacing={1}>
+          <IconButton sx={{ color: 'error.main' }} onClick={toggleDoubleCheck}>
+            <DeleteIcon />
+          </IconButton>
+          <Typography variant='body2'>{importPath}</Typography>
+        </Stack>
+      )}
+
+      {snackbar.element}
+
       <DoubleCheck
         open={doubleCheckSwitch}
         title='Double check'
@@ -78,29 +101,6 @@ export const ImportTab: React.FC = () => {
           buttonColor: 'info',
         }}
       />
-
-      <Box sx={{ display: 'flex' }}>
-        <Button
-          onClick={importData}
-          sx={{ mb: 2, mr: 2, display: 'block' }}
-          variant='contained'
-          size='medium'
-          disableElevation>
-          Search
-        </Button>
-        {dataRequest.state === RequestState.Pending && <CircularProgress size={30} thickness={4} color='info' />}
-      </Box>
-
-      {importPath !== null && (
-        <Stack direction='row' alignItems='center' spacing={1}>
-          <IconButton sx={{ color: 'error.main' }} onClick={toggleDoubleCheck}>
-            <DeleteIcon />
-          </IconButton>
-          <Typography variant='body2'>{importPath}</Typography>
-        </Stack>
-      )}
-
-      {snackbar.element}
     </React.Fragment>
   );
 };
