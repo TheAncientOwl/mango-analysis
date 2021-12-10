@@ -1,36 +1,14 @@
-import { hot } from 'react-hot-loader';
 import React from 'react';
+import { hot } from 'react-hot-loader';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 
 import { Paper, ThemeProvider, Toolbar, Stack } from '@mui/material';
 
-import { AppTitleBar } from './AppTitleBar';
 import { MenuDrawer } from './MenuDrawer';
-
+import { AppTitleBar } from './AppTitleBar';
 import { SectionsConfig, theme } from '../config';
-
 import { useSwitch } from '@renderer/hooks/useSwitch';
 
-/**
- * @layout
- * <app>
- * * >> fixed.
- *  <app-title-bar />
- *
- * * >> provide 100vw & 100vh app layout and merge a toolbar to compensate app-bar height.
- *  <stack column>
- *    <toolbar />
- *
- * * >> merge menu & app routes.
- *    <stack row>
- *      <menu />
- *      <paper>
- *        <app-routes/>
- *      </paper>
- *    </stack>
- *  </stack>
- * </app>
- */
 const Application: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = React.useState(SectionsConfig[0].name);
   const [menuOpen, toggleMenu] = useSwitch(false);
@@ -72,3 +50,24 @@ const Application: React.FC = () => {
 };
 
 export default hot(module)(Application);
+
+/**
+ * @layout
+ * <app>
+ * * >> fixed.
+ *  <app-title-bar />
+ *
+ * * >> provide 100vw & 100vh app layout and merge a toolbar to compensate app-bar height.
+ *  <stack column>
+ *    <toolbar />
+ *
+ * * >> merge menu & app routes.
+ *    <stack row>
+ *      <menu />
+ *      <paper>
+ *        <app-routes/>
+ *      </paper>
+ *    </stack>
+ *  </stack>
+ * </app>
+ */

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Box, List, Toolbar, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 // eslint-disable-next-line import/named
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import { Box, List, Toolbar, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 
 import { SectionsConfig } from '../config';
 

@@ -26,7 +26,9 @@ const WindowControls: ReadonlyArray<WindowControl> = [
   },
 ];
 
-const Spacer = () => <Box sx={{ flexGrow: 1 }} />;
+const Spacer = React.memo(function Spacer() {
+  return <Box sx={{ flexGrow: 1 }} />;
+});
 
 interface Props {
   title: string;
