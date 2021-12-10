@@ -10,10 +10,10 @@ import { inDev } from '@common/helpers';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { theme } from './config';
-import { useCache } from './hooks/useCache';
+import { CacheSystem } from './CacheSystem';
 import Application from './components/Application';
 
-useCache.Clear();
+CacheSystem.Clear();
 
 // Render application in DOM
 ReactDOM.render(
