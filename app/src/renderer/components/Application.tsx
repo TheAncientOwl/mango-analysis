@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Routes, Route } from 'react-router-dom';
