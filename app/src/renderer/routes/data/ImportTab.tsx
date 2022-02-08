@@ -42,7 +42,7 @@ export const ImportTab: React.FC = () => {
   };
 
   const deleteData = () => {
-    dataRequest.execute({ method: 'get', url: '/data/delete' }, () => {
+    dataRequest.execute({ method: 'post', url: '/data/drop-all' }, () => {
       setImportPath(null);
 
       snackbar.setMessage('Data deleted!');

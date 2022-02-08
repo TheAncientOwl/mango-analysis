@@ -31,7 +31,7 @@ export const ExportTab: React.FC = () => {
     const saveFileName = fileName.endsWith('.csv') ? fileName : `${fileName}.csv`;
 
     saveDataRequest.execute(
-      { method: 'get', url: `/data/export/csv/name/${saveFileName}/path/${directoryPath}` },
+      { method: 'post', url: `/data/export/csv/name/${saveFileName}/path/${directoryPath}` },
       () => {
         snackbar.open();
       }
