@@ -1,32 +1,20 @@
-### Save data
-GET http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/data-analysis-tool/backend
+### Read data
+GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/Date.csv
 
 ### Print server's dataframe head
 GET http://localhost:5000/printhead 
 
+### Save data
+POST http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/ddata-analysis-tool/server
+
+
+
+
+
 ### Delete dataframe
-GET http://localhost:5000/data/delete
+POST http://localhost:5000/data/drop-all
 
-### Read data
-GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/Date.csv
 
-###
-GET http://localhost:5000/data/summary
-
-###
-POST http://localhost:5000/data/plots/plot
-Content-Type: application/json
-
-{
-  "x": "EA",
-  "y": "EAM",
-  "xLab": "EA_lab",
-  "yLab": "EAM_lab",
-  "title": "Test plot"
-}
-
-### Read data
-GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/Date.csv
 
 ### get rows
 GET http://localhost:5000/data/rows-between/0/20
