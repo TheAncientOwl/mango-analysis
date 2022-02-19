@@ -26,7 +26,7 @@ export const AppTitleBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
 
   const logo = (
     <Typography variant='body1' component='div' sx={{ mr: 2 }}>
-      DataMaster
+      Mango
     </Typography>
   );
 
