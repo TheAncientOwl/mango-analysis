@@ -10,14 +10,14 @@ interface WindowControl {
 export const WindowControls: ReadonlyArray<WindowControl> = [
   {
     icon: <KeyboardArrowDownIcon />,
-    action: window.electron.minimizeAppWindow,
+    action: window.electron.appWindow.minimize,
   },
   {
     icon: <KeyboardArrowDownIcon sx={{ transform: 'rotate(180deg)' }} />,
-    action: window.electron.toggleMaximizeAppWindow,
+    action: window.electron.appWindow.toggleMaximize,
   },
   {
     icon: <CloseIcon sx={{ transform: 'scale(0.9)' }} />,
-    action: window.electron.closeAppWindow,
+    action: window.electron.appWindow.close,
   },
 ];

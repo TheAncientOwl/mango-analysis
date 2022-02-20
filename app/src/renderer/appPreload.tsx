@@ -3,18 +3,23 @@ import { contextBridge, ipcRenderer } from 'electron';
 interface ElectronAPI {
   getImportCsvPath: () => Promise<string | null>;
   getExportCsvDirectoryPath: () => Promise<string | null>;
-  minimizeAppWindow: () => void;
-  toggleMaximizeAppWindow: () => void;
-  closeAppWindow: () => void;
+
+  appWindow: {
+    minimize: () => void;
+    toggleMaximize: () => void;
+    close: () => void;
+  };
 }
 
 const electron: ElectronAPI = {
   getImportCsvPath: () => ipcRenderer.invoke('get-import-csv-path'),
   getExportCsvDirectoryPath: () => ipcRenderer.invoke('get-export-csv-directory-path'),
 
-  minimizeAppWindow: () => ipcRenderer.invoke('window-minimize'),
-  toggleMaximizeAppWindow: () => ipcRenderer.invoke('window-toggle-maximize'),
-  closeAppWindow: () => ipcRenderer.invoke('window-close'),
+  appWindow: {
+    minimize: () => ipcRenderer.invoke('window-minimize'),
+    toggleMaximize: () => ipcRenderer.invoke('window-toggle-maximize'),
+    close: () => ipcRenderer.invoke('window-close'),
+  },
 };
 
 contextBridge.exposeInMainWorld('electron', electron);
