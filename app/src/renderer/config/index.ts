@@ -1,4 +1,3 @@
-export { theme } from './theme';
-export { SectionsConfig } from './SectionsConfig';
-export { axios } from './axiosAppApi';
-export { WindowControls } from './WindowControlsConfig';
+export { theme } from './theme.config';
+export { AppRoutes } from './AppRoutes.config';
+export { axios } from './axios.config';

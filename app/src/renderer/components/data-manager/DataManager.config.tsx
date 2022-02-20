@@ -16,7 +16,7 @@ interface Feature {
   component: React.ReactNode;
 }
 
-export const TabsConfig: ReadonlyArray<Feature> = [
+export const DataManagerConfig: ReadonlyArray<Feature> = [
   { label: 'Import', icon: <FileUploadIcon />, component: <ImportTab /> },
   { label: 'Export', icon: <FileDownloadIcon />, component: <ExportTab /> },
   { label: 'Edit', icon: <EditIcon />, component: <EditTab /> },

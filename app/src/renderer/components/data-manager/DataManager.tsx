@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Tabs, Tab } from '@mui/material';
 
-import { TabsConfig } from './TabsConfig';
+import { DataManagerConfig } from './DataManager.config';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -38,7 +38,7 @@ const a11yProps = (index: number) => {
   };
 };
 
-export const Data: React.FC = () => {
+export const DataManager: React.FC = () => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => setValue(newValue);
@@ -46,12 +46,12 @@ export const Data: React.FC = () => {
   return (
     <React.Fragment>
       <Tabs value={value} onChange={handleChange} aria-label='data tabs'>
-        {TabsConfig.map((tab, index) => (
+        {DataManagerConfig.map((tab, index) => (
           <Tab key={index} icon={tab.icon} iconPosition='start' label={tab.label} {...a11yProps(index)} />
         ))}
       </Tabs>
 
-      {TabsConfig.map((tab, index) => (
+      {DataManagerConfig.map((tab, index) => (
         <TabPanel key={index} value={value} index={index}>
           {tab.component}
         </TabPanel>

@@ -6,7 +6,7 @@ import { Box, List, Toolbar, ListItemIcon, ListItemText, ListItemButton } from '
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 
-import { SectionsConfig } from '../config';
+import { AppRoutes } from '../config';
 
 const DrawerWidth = {
   opened: 180,
@@ -63,7 +63,7 @@ export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
       <Toolbar variant='dense' />
       <Box sx={{ bgcolor: 'grey.900', flexGrow: 1 }}>
         <List>
-          {SectionsConfig.map((section, index) => (
+          {AppRoutes.map((section, index) => (
             <ListItemButton
               component={Link}
               to={section.routePath}

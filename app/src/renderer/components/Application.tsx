@@ -6,12 +6,12 @@ import { Routes, Route } from 'react-router-dom';
 import { Paper, Toolbar, Stack } from '@mui/material';
 
 import { MenuDrawer } from './MenuDrawer';
-import { AppTitleBar } from './AppTitleBar';
-import { SectionsConfig } from '../config';
+import { AppTitleBar } from './app-title-bar/AppTitleBar';
+import { AppRoutes } from '../config';
 import { useSwitch } from '@renderer/hooks/useSwitch';
 
 const Application: React.FC = () => {
-  const [currentSectionTitle, setCurrentSectionTitle] = React.useState(SectionsConfig[0].name);
+  const [currentSectionTitle, setCurrentSectionTitle] = React.useState(AppRoutes[0].name);
   const [menuOpen, toggleMenu] = useSwitch(false);
 
   return (
@@ -37,7 +37,7 @@ const Application: React.FC = () => {
               },
             }}>
             <Routes>
-              {SectionsConfig.map((section, index) => (
+              {AppRoutes.map((section, index) => (
                 <Route key={index} path={section.routePath} element={section.element} />
               ))}
             </Routes>
