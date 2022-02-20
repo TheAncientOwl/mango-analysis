@@ -1,7 +1,7 @@
 import React from 'react';
-import './app-title-bar.css';
+import './app-bar.css';
 
-import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
+import { AppBar as MuiAppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { WindowControls } from './WindowControls.config';
@@ -11,7 +11,7 @@ interface Props {
   onMenuButtonClick: () => void;
 }
 
-export const AppTitleBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
+export const AppBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
   const menuIcon = (
     <IconButton
       className='non-draggable'
@@ -55,7 +55,7 @@ export const AppTitleBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='fixed' className='draggable' sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
+      <MuiAppBar position='fixed' className='draggable' sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
         <Toolbar variant='dense'>
           {menuIcon}
           {logo}
@@ -64,7 +64,7 @@ export const AppTitleBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
           {spacer}
           {controls}
         </Toolbar>
-      </AppBar>
+      </MuiAppBar>
     </Box>
   );
 };
