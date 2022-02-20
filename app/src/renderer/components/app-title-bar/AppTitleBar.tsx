@@ -1,5 +1,5 @@
 import React from 'react';
-import './title-bar.css';
+import './app-title-bar.css';
 
 import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 
