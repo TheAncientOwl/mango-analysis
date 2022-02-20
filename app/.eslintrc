@@ -20,12 +20,10 @@
       },
       "alias": {
         "map": [
-          ["@renderer", "./src/renderer"],
+          ["@src", "./src"],
           ["@common", "./src/common"],
           ["@main", "./src/main"],
-          ["@src", "./src"],
-          ["@misc", "./misc"],
-          ["@assets", "./assets"]
+          ["@renderer", "./src/renderer"]
         ],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CacheSystem } from '../CacheSystem';
+import { CacheSystem } from '@renderer/api/CacheSystem';
 
 export const useCache = <T>(key: string, def: T): [T, React.Dispatch<T>] => {
   const [value, setValue] = React.useState(CacheSystem.GetItemOrDefault(key, def));

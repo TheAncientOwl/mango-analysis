@@ -3,10 +3,7 @@ import React from 'react';
 import { Box, Button, IconButton, Stack, Typography, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { useCache } from '@renderer/hooks/useCache';
-import { useSnackbar } from '@renderer/hooks/useSnackbar';
-import { useSwitch } from '@renderer/hooks/useSwitch';
-import { useRequest, RequestState } from '@renderer/hooks/useRequest';
+import { useCache, RequestState, useRequest, useSnackbar, useSwitch } from '@renderer/hooks/index';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 

@@ -1,16 +1,15 @@
-/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Routes, Route } from 'react-router-dom';
 
 import { Paper, Toolbar, Stack } from '@mui/material';
 
-import { MenuDrawer } from './MenuDrawer';
-import { AppTitleBar } from './app-title-bar/AppTitleBar';
-import { AppRoutes } from '../config';
-import { useSwitch } from '@renderer/hooks/useSwitch';
+import { MenuDrawer } from '@renderer/components/MenuDrawer';
+import { AppTitleBar } from '@renderer/components/app-title-bar/AppTitleBar';
+import { AppRoutes } from '@renderer/config';
+import { useSwitch } from '@renderer/hooks';
 
-const Application: React.FC = () => {
+const App: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = React.useState(AppRoutes[0].name);
   const [menuOpen, toggleMenu] = useSwitch(false);
 
@@ -48,7 +47,7 @@ const Application: React.FC = () => {
   );
 };
 
-export default hot(module)(Application);
+export default hot(module)(App);
 
 /**
  * @layout

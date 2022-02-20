@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Typography } from '@mui/material';
 
-import { CacheSystem } from '@renderer/CacheSystem';
+import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
 import { DataFrame, DataConfig } from '@renderer/components/DataFrame';
 
