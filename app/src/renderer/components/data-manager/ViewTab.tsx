@@ -121,8 +121,10 @@ export const ViewTab: React.FC = () => {
   const [{ pageIndex, pageSize, data, loadingData, selectedColumns, selectedRows, dropping }, dispatch] =
     React.useReducer(reducer, defaultState);
 
+  // >> Return empty if no data is loaded.
   if (!CacheSystem.GetItem(ImportPathKey)) return <Typography>No data loaded...</Typography>;
 
+  // >> Fetch data.
   React.useEffect(() => {
     let active = true;
 
@@ -140,6 +142,7 @@ export const ViewTab: React.FC = () => {
     };
   }, [pageIndex, pageSize, dropping]);
 
+  // >> Handle drop rows & columns
   const handleDrop = () => {
     dispatch({ type: ActionType.RequestDropData });
 
@@ -151,6 +154,7 @@ export const ViewTab: React.FC = () => {
       .then(() => dispatch({ type: ActionType.DropDataSuccess }));
   };
 
+  // >> Return JSX.
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
