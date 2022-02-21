@@ -24,3 +24,12 @@ GET http://localhost:5000/data/page/1/page-size/3
 
 ###
 GET http://localhost:5000/data/rows-count
+
+###
+POST http://localhost:5000/data/drop/rows+cols
+Content-Type: application/json
+
+{
+  "labels": ["EA", "EAM", "EAF"],
+  "index": [0, 1, 2, 5]
+}

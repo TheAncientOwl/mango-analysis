@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -10,6 +11,7 @@ import {
   TablePagination,
   CircularProgress,
   Backdrop,
+  Checkbox,
 } from '@mui/material';
 
 export interface Column {
@@ -35,8 +37,21 @@ export interface DataFrameProps {
   rowsPerPage: number;
   onPageChange: (newPage: number) => void;
   onPageSizeChange: (newPageSize: number) => void;
+  selectable?: boolean;
+  onColumnSelect?: (columnHeader: string) => void;
+  onRowSelect?: (rowIndex: number) => void;
+  selectedColumns?: Set<string>;
+  selectedRows?: Set<number>;
 }
 
+const HIGHLIGHTED_CELL = {
+  bgcolor: 'primary.main',
+  color: 'text.disabled',
+} as const;
+
+const preventUndefinedCall = () => {
+  throw new Error('Undefined function was called');
+};
 export const DataFrame: React.FC<DataFrameProps> = ({
   loading,
   currentData,
@@ -44,6 +59,11 @@ export const DataFrame: React.FC<DataFrameProps> = ({
   rowsPerPage,
   onPageChange,
   onPageSizeChange,
+  selectable = false,
+  onColumnSelect = preventUndefinedCall,
+  onRowSelect = preventUndefinedCall,
+  selectedColumns = new Set<string>(),
+  selectedRows = new Set<number>(),
 }) => {
   const { rows, columns, totalRows } = currentData;
 
@@ -54,29 +74,62 @@ export const DataFrame: React.FC<DataFrameProps> = ({
           <TableHead>
             <TableRow>
               {columns.length > 0 && <TableCell align='center'>ID</TableCell>}
-              {columns.map(column => (
-                <TableCell key={column.__id} align='center'>
-                  {column.label}
-                </TableCell>
-              ))}
+              {columns.map(column => {
+                const isSelected = selectedColumns.has(column.label);
+
+                return (
+                  <TableCell sx={isSelected ? HIGHLIGHTED_CELL : {}} key={column.__id} align='center'>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      {selectable && (
+                        <Checkbox
+                          color='secondary'
+                          inputProps={{ 'aria-label': 'Header checkbox' }}
+                          onChange={() => onColumnSelect(column.label)}
+                          checked={isSelected}
+                        />
+                      )}
+                      {column.label}
+                    </Box>
+                  </TableCell>
+                );
+              })}
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.__id} role='checkbox' tabIndex={-1}>
-                <TableCell align='right'>{row.__id + 1}</TableCell>
-                {columns.map(column => {
-                  const value = row[column.label];
+            {rows.map(row => {
+              const isRowSelected = selectedRows.has(row.__id);
 
-                  return (
-                    <TableCell key={`${row.__id}-${column.__id}`} align={typeof value === 'number' ? 'right' : 'left'}>
-                      {value}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))}
+              return (
+                <TableRow sx={isRowSelected ? HIGHLIGHTED_CELL : {}} key={row.__id} role='checkbox' tabIndex={-1}>
+                  <TableCell align='right'>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      {selectable && (
+                        <Checkbox
+                          color='secondary'
+                          checked={isRowSelected}
+                          inputProps={{ 'aria-label': 'Row checkbox' }}
+                          onChange={() => onRowSelect(row.__id)}
+                        />
+                      )}
+                      {row.__id + 1}
+                    </Box>
+                  </TableCell>
+                  {columns.map(column => {
+                    const value = row[column.label];
+
+                    return (
+                      <TableCell
+                        sx={selectedColumns.has(column.label) ? HIGHLIGHTED_CELL : {}}
+                        key={`${row.__id}-${column.__id}`}
+                        align={typeof value === 'number' ? 'right' : 'left'}>
+                        {value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
