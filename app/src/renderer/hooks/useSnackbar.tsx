@@ -29,7 +29,7 @@ export const useSnackbar = ({ title = '', message = '', severity = 'info', varia
   const close = () => setOpen(false);
 
   const element = (
-    <Snackbar open={_open} autoHideDuration={6000} onClose={close}>
+    <Snackbar open={_open} autoHideDuration={5500} onClose={close}>
       <Alert severity={severity} variant={variant} onClose={close}>
         <AlertTitle>{title}</AlertTitle>
         {_message}
