@@ -44,12 +44,12 @@ class DataDropTest(TestBase):
 
         dropIndex = [0, 1, 2, 6999, -100, 500, 30]
         response = self.client.post('/data/drop/rows', json={
-            'index': dropIndex
+            'mangoIDs': dropIndex
         })
 
         self.assertStatusCodeCorrect(response, 200)
         self.assertContentTypeJSON(response)
         self.assertHasMessage(response)
 
-        self.assertTrue(server.dataFrame.shape[0] + 4 == initialRowsNum,
+        self.assertTrue(server.dataFrame.shape[0] + 3 == initialRowsNum,
                         'Not all rows were dropped.')

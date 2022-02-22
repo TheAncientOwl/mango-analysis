@@ -15,6 +15,7 @@ class TestBase(unittest.TestCase):
     # dataframe read & empty
     def readDataFrame(self):
         server.dataFrame = pandas.read_csv(f'{tokens.working_dir}/Date.csv')
+        server.dataFrame.insert(0, '_mango_id', range(1, len(server.dataFrame) + 1))
 
     def emptyDataFrame(self):
         server.dataFrame = pandas.DataFrame()
