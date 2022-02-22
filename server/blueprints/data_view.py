@@ -24,15 +24,11 @@ def rows_between(start, end):
 
     requestedDf = server.dataFrame[start:end]
 
-    resultMap = {'columns': [], 'rows': [],
-                 'totalRows': server.dataFrame.shape[0]}
-    idx = 0
-    for column in requestedDf.columns:
-        idx = idx + 1
-        resultMap['columns'].append({'label': column, '__id': idx})
-
-    for index, row in requestedDf.iterrows():
-        resultMap['rows'].append(row.to_dict())
+    resultMap = {
+        'labels': list(requestedDf.columns),
+        'totalRows': server.dataFrame.shape[0],
+        'rows': requestedDf.to_numpy().tolist()
+    }
 
     return flask.jsonify(dataframe=resultMap), 200
 

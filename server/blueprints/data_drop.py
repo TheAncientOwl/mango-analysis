@@ -44,29 +44,21 @@ def drop_columns():
 # Drop rows by index
 # @request-data-format:
 # {
-#   'index': [index1, index2, ...]
+#   'mangoIDs': [index1, index2, ...]
 # }
 # @return jsonify(success, message)
-def drop_rows_impl(index):
-    # create valid index set. (index valid if between 0:nRows)
-    dropIndex = set()
-    nRows = server.dataFrame.shape[0]
-    for idx in index:
-        if idx >= 0 and idx < nRows:
-            dropIndex.add(idx)
-
-    # drop rows
-    server.dataFrame = server.dataFrame.drop(
-        server.dataFrame.index[list(dropIndex)], axis=0)
+def drop_rows_impl(mangoIDs):
+    server.dataFrame.drop(server.dataFrame[server.dataFrame['_mango_id'].isin(
+        mangoIDs)].index, axis=0, inplace=True)
 
 
 @data_drop.post('/data/drop/rows')
 def drop_rows():
     # get index from request
     data = json.loads(flask.request.data)
-    index = data['index']
+    mangoIDs = data['mangoIDs']
 
-    drop_rows_impl(index)
+    drop_rows_impl(mangoIDs)
 
     return flask.jsonify(message='Rows dropped'), 200
 
@@ -75,7 +67,7 @@ def drop_rows():
 # @request-data-format:
 # {
 #   'labels': ['label1', 'label2', ...],
-#   'index': [index1, index2, ...]
+#   'mangoIDs': [mangoID1, mangoID2, ...]
 # }
 # @return jsonify(success, message)
 @data_drop.post('/data/drop/rows+cols')
@@ -83,9 +75,9 @@ def drop_rows_cols():
     # drop rows
     # get index from request
     data = json.loads(flask.request.data)
-    index = data['index']
+    mangoIDs = data['mangoIDs']
 
-    drop_rows_impl(index)
+    drop_rows_impl(mangoIDs)
 
     # drop columns
     # get labels from request

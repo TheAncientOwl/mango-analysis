@@ -5,6 +5,18 @@ GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analy
 GET http://localhost:5000/printhead 
 
 ###
+POST http://localhost:5000/data/drop/rows+cols
+Content-Type: application/json
+
+{
+  "labels": ["EA", "EAM", "EAF"],
+  "mangoIDs": [4, 7, 2]
+}
+
+### get rows
+GET http://localhost:5000/data/rows-between/0/20
+
+###
 POST http://localhost:5000/data/scale
 Content-Type: application/json
 
@@ -52,20 +64,9 @@ POST http://localhost:5000/data/drop-all
 ### Save data
 POST http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/ddata-analysis-tool/server
 
-### get rows
-GET http://localhost:5000/data/rows-between/0/20
-
 ### get page
 GET http://localhost:5000/data/page/1/page-size/3
 
 ###
 GET http://localhost:5000/data/rows-count
 
-###
-POST http://localhost:5000/data/drop/rows+cols
-Content-Type: application/json
-
-{
-  "labels": ["EA", "EAM", "EAF"],
-  "index": [0, 1, 2]
-}

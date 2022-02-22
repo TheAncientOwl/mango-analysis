@@ -4,7 +4,7 @@ import { Button, Typography, Box } from '@mui/material';
 
 import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
-import { DataFrame, DataConfig } from '@renderer/components/DataFrame';
+import { DataFrame, Data } from '@renderer/components/DataFrame';
 
 import { axios } from '@renderer/config';
 import { ImportPathKey } from './ImportTab';
@@ -12,9 +12,9 @@ import { ImportPathKey } from './ImportTab';
 interface State {
   pageIndex: number;
   pageSize: number;
-  data: DataConfig;
+  data: Data;
   loadingData: boolean;
-  selectedColumns: Set<string>;
+  selectedLabels: Set<string>;
   selectedRows: Set<number>;
   dropping: boolean;
 }
@@ -26,9 +26,9 @@ const defaultState: State = {
   pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
   pageSize: CacheSystem.GetItemOrDefault<number>(DataPageSizeKey, 25),
   loadingData: true,
-  selectedColumns: new Set<string>(),
+  selectedLabels: new Set<string>(),
   selectedRows: new Set<number>(),
-  data: { columns: [], rows: [], totalRows: 0 },
+  data: { labels: [], totalRows: 0, rows: [] },
   dropping: false,
 };
 
@@ -44,7 +44,7 @@ enum ActionType {
 
 interface Action {
   type: ActionType;
-  payload?: string | number | DataConfig;
+  payload?: string | number | Data;
 }
 
 const reducer = (state: State, action: Action): State => {
@@ -71,12 +71,12 @@ const reducer = (state: State, action: Action): State => {
     case ActionType.RequestDataSuccess: {
       return {
         ...state,
-        data: action.payload as DataConfig,
+        data: action.payload as Data,
         loadingData: false,
       };
     }
     case ActionType.SelectColumn: {
-      const newSet = new Set(state.selectedColumns);
+      const newSet = new Set(state.selectedLabels);
       const selectedColumn = action.payload as string;
 
       if (newSet.has(selectedColumn)) newSet.delete(selectedColumn);
@@ -84,7 +84,7 @@ const reducer = (state: State, action: Action): State => {
 
       return {
         ...state,
-        selectedColumns: newSet,
+        selectedLabels: newSet,
       };
     }
     case ActionType.SelectRow: {
@@ -110,7 +110,7 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         dropping: false,
         pageIndex: 0,
-        selectedColumns: new Set<string>(),
+        selectedLabels: new Set<string>(),
         selectedRows: new Set<number>(),
       };
     }
@@ -118,7 +118,7 @@ const reducer = (state: State, action: Action): State => {
 };
 
 export const ViewTab: React.FC = () => {
-  const [{ pageIndex, pageSize, data, loadingData, selectedColumns, selectedRows, dropping }, dispatch] =
+  const [{ pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, dropping }, dispatch] =
     React.useReducer(reducer, defaultState);
 
   // >> Return empty if no data is loaded.
@@ -148,8 +148,8 @@ export const ViewTab: React.FC = () => {
 
     axios
       .post('/data/drop/rows+cols', {
-        labels: new Array(...selectedColumns),
-        index: new Array(...selectedRows),
+        labels: Array.from(selectedLabels),
+        mangoIDs: Array.from(selectedRows),
       })
       .then(() => dispatch({ type: ActionType.DropDataSuccess }));
   };
@@ -158,7 +158,12 @@ export const ViewTab: React.FC = () => {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
-        <Button sx={{ mb: 1 }} disabled={dropping} variant='contained' size='small' onClick={handleDrop}>
+        <Button
+          sx={{ mb: 1 }}
+          disabled={dropping || (selectedLabels.size == 0 && selectedRows.size == 0)}
+          variant='contained'
+          size='small'
+          onClick={handleDrop}>
           Drop selected rows and columns
         </Button>
       </Box>
@@ -170,9 +175,9 @@ export const ViewTab: React.FC = () => {
         onPageChange={newPageIndex => dispatch({ type: ActionType.ChangePageIndex, payload: newPageIndex })}
         onPageSizeChange={newPageSize => dispatch({ type: ActionType.ChangePageSize, payload: newPageSize })}
         selectable={true}
-        onColumnSelect={selectedColumn => dispatch({ type: ActionType.SelectColumn, payload: selectedColumn })}
+        onLabelSelect={selectedLabel => dispatch({ type: ActionType.SelectColumn, payload: selectedLabel })}
         onRowSelect={selectedRow => dispatch({ type: ActionType.SelectRow, payload: selectedRow })}
-        selectedColumns={selectedColumns}
+        selectedLabels={selectedLabels}
         selectedRows={selectedRows}
       />
     </React.Fragment>

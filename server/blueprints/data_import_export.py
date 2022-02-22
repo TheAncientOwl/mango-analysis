@@ -20,7 +20,7 @@ def import_csv(filePath):
         return flask.jsonify(message='File does not exist'), 404
 
     server.dataFrame = pandas.read_csv(filePath)
-    server.dataFrame.insert(0, '__id', range(0, len(server.dataFrame)))
+    server.dataFrame.insert(0, '_mango_id', range(1, len(server.dataFrame) + 1))
 
     return flask.jsonify(message='Success'), 200
 

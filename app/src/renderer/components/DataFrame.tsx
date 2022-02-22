@@ -14,33 +14,28 @@ import {
   Checkbox,
 } from '@mui/material';
 
-export interface Column {
-  __id: number;
-  label: string;
-}
-
-interface Obj {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
-
-export interface DataConfig {
-  columns: Column[];
-  rows: Obj[];
+export interface Data {
+  labels: string[];
   totalRows: number;
+  rows: (string | number)[][];
 }
 
 export interface DataFrameProps {
   loading: boolean;
-  currentData: DataConfig;
+
+  currentData: Data;
   currentPage: number;
   rowsPerPage: number;
+
   onPageChange: (newPage: number) => void;
   onPageSizeChange: (newPageSize: number) => void;
+
   selectable?: boolean;
-  onColumnSelect?: (columnHeader: string) => void;
-  onRowSelect?: (rowIndex: number) => void;
-  selectedColumns?: Set<string>;
+
+  onLabelSelect?: (selectedLabel: string) => void;
+  onRowSelect?: (selectedRow: number) => void;
+
+  selectedLabels?: Set<string>;
   selectedRows?: Set<number>;
 }
 
@@ -52,6 +47,7 @@ const HIGHLIGHTED_CELL = {
 const preventUndefinedCall = () => {
   throw new Error('Undefined function was called');
 };
+
 export const DataFrame: React.FC<DataFrameProps> = ({
   loading,
   currentData,
@@ -60,13 +56,15 @@ export const DataFrame: React.FC<DataFrameProps> = ({
   onPageChange,
   onPageSizeChange,
   selectable = false,
-  onColumnSelect = preventUndefinedCall,
+  onLabelSelect = preventUndefinedCall,
   onRowSelect = preventUndefinedCall,
-  selectedColumns = new Set<string>(),
+  selectedLabels = new Set<string>(),
   selectedRows = new Set<number>(),
 }) => {
-  const { rows, columns, totalRows } = currentData;
-  const displayColumns = columns.slice(1);
+  const { rows, labels, totalRows } = currentData;
+  if (!(rows.length && labels.length)) return <></>;
+
+  const displayLabels = labels.slice(1); // remove first label (_mango_id)
 
   return (
     <React.Fragment>
@@ -74,22 +72,22 @@ export const DataFrame: React.FC<DataFrameProps> = ({
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
-              {displayColumns.length > 0 && <TableCell align='center'>ID</TableCell>}
-              {displayColumns.map(column => {
-                const isSelected = selectedColumns.has(column.label);
+              {displayLabels.length > 0 && <TableCell align='center'>ID</TableCell>}
+              {displayLabels.map((label, index) => {
+                const isSelected = selectedLabels.has(label);
 
                 return (
-                  <TableCell sx={isSelected ? HIGHLIGHTED_CELL : {}} key={column.__id} align='center'>
+                  <TableCell sx={isSelected ? HIGHLIGHTED_CELL : {}} key={`${label}_${index}`} align='center'>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       {selectable && (
                         <Checkbox
                           color='secondary'
                           inputProps={{ 'aria-label': 'Header checkbox' }}
-                          onChange={() => onColumnSelect(column.label)}
+                          onChange={() => onLabelSelect(label)}
                           checked={isSelected}
                         />
                       )}
-                      {column.label}
+                      {label}
                     </Box>
                   </TableCell>
                 );
@@ -99,10 +97,11 @@ export const DataFrame: React.FC<DataFrameProps> = ({
 
           <TableBody>
             {rows.map(row => {
-              const isRowSelected = selectedRows.has(row.__id);
+              const rowID = row[0] as number;
+              const isRowSelected = selectedRows.has(rowID);
 
               return (
-                <TableRow sx={isRowSelected ? HIGHLIGHTED_CELL : {}} key={row.__id} role='checkbox' tabIndex={-1}>
+                <TableRow sx={isRowSelected ? HIGHLIGHTED_CELL : {}} key={rowID} role='checkbox' tabIndex={-1}>
                   <TableCell align='right'>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       {selectable && (
@@ -110,19 +109,20 @@ export const DataFrame: React.FC<DataFrameProps> = ({
                           color='secondary'
                           checked={isRowSelected}
                           inputProps={{ 'aria-label': 'Row checkbox' }}
-                          onChange={() => onRowSelect(row.__id)}
+                          onChange={() => onRowSelect(rowID)}
                         />
                       )}
-                      {row.__id + 1}
+                      {rowID}
                     </Box>
                   </TableCell>
-                  {displayColumns.map(column => {
-                    const value = row[column.label];
+
+                  {row.slice(1).map((value, index) => {
+                    const columnLabel = labels[index + 1];
 
                     return (
                       <TableCell
-                        sx={selectedColumns.has(column.label) ? HIGHLIGHTED_CELL : {}}
-                        key={`${row.__id}-${column.__id}`}
+                        sx={selectedLabels.has(columnLabel) ? HIGHLIGHTED_CELL : {}}
+                        key={`${rowID}-${columnLabel}`}
                         align={typeof value === 'number' ? 'right' : 'left'}>
                         {value}
                       </TableCell>
