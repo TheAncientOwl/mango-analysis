@@ -62,9 +62,6 @@ export const DataFrame: React.FC<DataFrameProps> = ({
   selectedRows = new Set<number>(),
 }) => {
   const { rows, labels, totalRows } = currentData;
-  if (!(rows.length && labels.length)) return <></>;
-
-  const displayLabels = labels.slice(1); // remove first label (_mango_id)
 
   return (
     <React.Fragment>
@@ -72,8 +69,8 @@ export const DataFrame: React.FC<DataFrameProps> = ({
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
-              {displayLabels.length > 0 && <TableCell align='center'>ID</TableCell>}
-              {displayLabels.map((label, index) => {
+              {labels.length > 1 && <TableCell align='center'>ID</TableCell>}
+              {labels.slice(1).map((label, index) => {
                 const isSelected = selectedLabels.has(label);
 
                 return (

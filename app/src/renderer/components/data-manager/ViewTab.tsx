@@ -22,16 +22,6 @@ interface State {
 export const DataPageIndexKey = 'data-page-index';
 export const DataPageSizeKey = 'data-page-size';
 
-const defaultState: State = {
-  pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
-  pageSize: CacheSystem.GetItemOrDefault<number>(DataPageSizeKey, 25),
-  loadingData: true,
-  selectedLabels: new Set<string>(),
-  selectedRows: new Set<number>(),
-  data: { labels: [], totalRows: 0, rows: [] },
-  dropping: false,
-};
-
 enum ActionType {
   ChangePageSize = 'CHANGE_PAGE_SIZE',
   ChangePageIndex = 'CHANGE_PAGE_INDEX',
@@ -119,7 +109,15 @@ const reducer = (state: State, action: Action): State => {
 
 export const ViewTab: React.FC = () => {
   const [{ pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, dropping }, dispatch] =
-    React.useReducer(reducer, defaultState);
+    React.useReducer(reducer, {
+      pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
+      pageSize: CacheSystem.GetItemOrDefault<number>(DataPageSizeKey, 25),
+      loadingData: true,
+      selectedLabels: new Set<string>(),
+      selectedRows: new Set<number>(),
+      data: { labels: [], totalRows: 0, rows: [] },
+      dropping: false,
+    });
 
   // >> Return empty if no data is loaded.
   if (!CacheSystem.GetItem(ImportPathKey)) return <Typography>No data loaded...</Typography>;
