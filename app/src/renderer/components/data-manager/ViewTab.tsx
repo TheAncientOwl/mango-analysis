@@ -4,112 +4,16 @@ import { Button, Typography, Box } from '@mui/material';
 
 import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
-import { DataFrame, Data } from '@renderer/components/DataFrame';
+import { DataFrame } from '@renderer/components/DataFrame';
 
 import { axios } from '@renderer/config';
 import { ImportPathKey } from './ImportTab';
 
-interface State {
-  pageIndex: number;
-  pageSize: number;
-  data: Data;
-  loadingData: boolean;
-  selectedLabels: Set<string>;
-  selectedRows: Set<number>;
-  dropping: boolean;
-}
-
-export const DataPageIndexKey = 'data-page-index';
-export const DataPageSizeKey = 'data-page-size';
-
-enum ActionType {
-  ChangePageSize = 'CHANGE_PAGE_SIZE',
-  ChangePageIndex = 'CHANGE_PAGE_INDEX',
-  RequestDataSuccess = 'REQUEST_DATA_SUCCESS',
-  SelectColumn = 'SELECT_COLUMN',
-  SelectRow = 'SELECT_ROW',
-  RequestDropData = 'REQUEST_DROP_DATA',
-  DropDataSuccess = 'DROP_DATA_SUCCESS',
-}
-
-interface Action {
-  type: ActionType;
-  payload?: string | number | Data;
-}
-
-const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case ActionType.ChangePageIndex: {
-      CacheSystem.SetItem(DataPageIndexKey, action.payload);
-
-      return {
-        ...state,
-        pageIndex: action.payload as number,
-        loadingData: true,
-      };
-    }
-    case ActionType.ChangePageSize: {
-      CacheSystem.SetItem(DataPageSizeKey, action.payload);
-
-      return {
-        ...state,
-        pageIndex: 0,
-        pageSize: action.payload as number,
-        loadingData: true,
-      };
-    }
-    case ActionType.RequestDataSuccess: {
-      return {
-        ...state,
-        data: action.payload as Data,
-        loadingData: false,
-      };
-    }
-    case ActionType.SelectColumn: {
-      const newSet = new Set(state.selectedLabels);
-      const selectedColumn = action.payload as string;
-
-      if (newSet.has(selectedColumn)) newSet.delete(selectedColumn);
-      else newSet.add(selectedColumn);
-
-      return {
-        ...state,
-        selectedLabels: newSet,
-      };
-    }
-    case ActionType.SelectRow: {
-      const newSet = new Set(state.selectedRows);
-      const selectedRow = action.payload as number;
-
-      if (newSet.has(selectedRow)) newSet.delete(selectedRow);
-      else newSet.add(selectedRow);
-
-      return {
-        ...state,
-        selectedRows: newSet,
-      };
-    }
-    case ActionType.RequestDropData: {
-      return {
-        ...state,
-        dropping: true,
-      };
-    }
-    case ActionType.DropDataSuccess: {
-      return {
-        ...state,
-        dropping: false,
-        pageIndex: 0,
-        selectedLabels: new Set<string>(),
-        selectedRows: new Set<number>(),
-      };
-    }
-  }
-};
+import { viewTabReducer, DataPageIndexKey, DataPageSizeKey, ActionType } from './viewTabStateReducer';
 
 export const ViewTab: React.FC = () => {
   const [{ pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, dropping }, dispatch] =
-    React.useReducer(reducer, {
+    React.useReducer(viewTabReducer, {
       pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
       pageSize: CacheSystem.GetItemOrDefault<number>(DataPageSizeKey, 25),
       loadingData: true,
