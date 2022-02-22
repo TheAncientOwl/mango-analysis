@@ -66,6 +66,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
   selectedRows = new Set<number>(),
 }) => {
   const { rows, columns, totalRows } = currentData;
+  const displayColumns = columns.slice(1);
 
   return (
     <React.Fragment>
@@ -73,8 +74,8 @@ export const DataFrame: React.FC<DataFrameProps> = ({
         <Table stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
-              {columns.length > 0 && <TableCell align='center'>ID</TableCell>}
-              {columns.map(column => {
+              {displayColumns.length > 0 && <TableCell align='center'>ID</TableCell>}
+              {displayColumns.map(column => {
                 const isSelected = selectedColumns.has(column.label);
 
                 return (
@@ -115,7 +116,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
                       {row.__id + 1}
                     </Box>
                   </TableCell>
-                  {columns.map(column => {
+                  {displayColumns.map(column => {
                     const value = row[column.label];
 
                     return (

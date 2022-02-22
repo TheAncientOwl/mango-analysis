@@ -95,9 +95,5 @@ def drop_rows_cols():
     drop_columns_impl(labels)
 
     idk = flask.request.get_json()
-    print(idk)
-
-    print(index)
-    print(labels)
 
     return flask.jsonify(message='Rows & columns dropped'), 200

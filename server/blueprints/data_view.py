@@ -32,10 +32,7 @@ def rows_between(start, end):
         resultMap['columns'].append({'label': column, '__id': idx})
 
     for index, row in requestedDf.iterrows():
-        row_dict = row.to_dict()
-        row_dict['__id'] = index
-
-        resultMap['rows'].append(row_dict)
+        resultMap['rows'].append(row.to_dict())
 
     return flask.jsonify(dataframe=resultMap), 200
 

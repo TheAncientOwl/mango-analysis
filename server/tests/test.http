@@ -67,5 +67,5 @@ Content-Type: application/json
 
 {
   "labels": ["EA", "EAM", "EAF"],
-  "index": [0, 1, 2, 5]
+  "index": [0, 1, 2]
 }
