@@ -17,5 +17,5 @@ interface Feature {
 export const DataManagerConfig: ReadonlyArray<Feature> = [
   { label: 'Import', icon: <FileUploadIcon />, component: <ImportTab /> },
   { label: 'Export', icon: <FileDownloadIcon />, component: <ExportTab /> },
-  { label: 'View', icon: <TableViewIcon />, component: <ViewTab /> },
+  { label: 'Table', icon: <TableViewIcon />, component: <ViewTab /> },
 ];
