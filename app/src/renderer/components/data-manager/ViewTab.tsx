@@ -4,24 +4,33 @@ import { Button, Typography, Box } from '@mui/material';
 
 import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
+import { DoubleCheck } from '@renderer/components/DoubleCheck';
 import { DataFrame } from '@renderer/components/DataFrame';
 
 import { axios } from '@renderer/config';
 import { ImportPathKey } from './ImportTab';
 
 import { viewTabReducer, DataPageIndexKey, DataPageSizeKey, ActionType } from './viewTabStateReducer';
+import { useSnackbar, useSwitch } from '@src/renderer/hooks';
 
 export const ViewTab: React.FC = () => {
-  const [{ pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, dropping }, dispatch] =
-    React.useReducer(viewTabReducer, {
-      pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
-      pageSize: CacheSystem.GetItemOrDefault<number>(DataPageSizeKey, 25),
-      loadingData: true,
-      selectedLabels: new Set<string>(),
-      selectedRows: new Set<number>(),
-      data: { labels: [], totalRows: 0, rows: [] },
-      dropping: false,
-    });
+  const [state, dispatch] = React.useReducer(viewTabReducer, {
+    pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
+    pageSize: CacheSystem.GetItemOrDefault<number>(DataPageSizeKey, 25),
+    loadingData: true,
+    selectedLabels: new Set<string>(),
+    selectedRows: new Set<number>(),
+    data: { labels: [], totalRows: 0, rows: [] },
+    dropping: false,
+  });
+  const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, dropping } = state;
+  const [doubleCheckSwitch, toggleDoubleCheckSwitch] = useSwitch();
+  const snackbar = useSnackbar({
+    title: 'Success',
+    message: 'Rows & columns dropped',
+    severity: 'success',
+    variant: 'filled',
+  });
 
   // >> Return empty if no data is loaded.
   if (!CacheSystem.GetItem(ImportPathKey)) return <Typography>No data loaded...</Typography>;
@@ -46,6 +55,7 @@ export const ViewTab: React.FC = () => {
 
   // >> Handle drop rows & columns
   const handleDrop = () => {
+    toggleDoubleCheckSwitch();
     dispatch({ type: ActionType.RequestDropData });
 
     axios
@@ -53,7 +63,14 @@ export const ViewTab: React.FC = () => {
         labels: Array.from(selectedLabels),
         mangoIDs: Array.from(selectedRows),
       })
-      .then(() => dispatch({ type: ActionType.DropDataSuccess }));
+      .then(() => {
+        dispatch({ type: ActionType.DropDataSuccess });
+        snackbar.open();
+      });
+  };
+
+  const cancelDrop = () => {
+    toggleDoubleCheckSwitch();
   };
 
   // >> Return JSX.
@@ -65,10 +82,39 @@ export const ViewTab: React.FC = () => {
           disabled={dropping || (selectedLabels.size == 0 && selectedRows.size == 0)}
           variant='contained'
           size='small'
-          onClick={handleDrop}>
+          onClick={toggleDoubleCheckSwitch}>
           Drop selected rows and columns
         </Button>
       </Box>
+
+      <DoubleCheck
+        open={doubleCheckSwitch}
+        title='Double check'
+        text={
+          <React.Fragment>
+            This action will{' '}
+            <Box component='span' sx={{ color: 'error.main' }}>
+              drop
+            </Box>{' '}
+            selected rows and columns.
+            <br />
+            Are you sure?
+          </React.Fragment>
+        }
+        onAccept={{
+          title: 'Drop',
+          execute: handleDrop,
+          buttonColor: 'error',
+        }}
+        onReject={{
+          title: 'Cancel',
+          execute: cancelDrop,
+          buttonColor: 'info',
+        }}
+      />
+
+      {snackbar.element}
+
       <DataFrame
         loading={loadingData || dropping}
         currentData={data}
