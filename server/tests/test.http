@@ -4,17 +4,53 @@ GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analy
 ### Print server's dataframe head
 GET http://localhost:5000/printhead 
 
-### Save data
-POST http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/ddata-analysis-tool/server
+###
+POST http://localhost:5000/data/scale
+Content-Type: application/json
 
+{
+  "method": "maximum_absolute_scaling"
+}
 
+###
+POST http://localhost:5000/data/scale
+Content-Type: application/json
 
+{
+  "method": "min_max_scaling"
+}
+
+###
+POST http://localhost:5000/data/scale
+Content-Type: application/json
+
+{
+  "method": "z_score_scaling"
+}
+
+###
+POST http://localhost:5000/data/scale
+Content-Type: application/json
+
+{
+  "method": "robust_scaling"
+}
+
+###
+POST http://localhost:5000/data/scale
+Content-Type: application/json
+
+{
+  "method": "wdawdw"
+}
 
 
 ### Delete dataframe
 POST http://localhost:5000/data/drop-all
 
 
+### Save data
+POST http://localhost:5000/data/export/csv/name/DateExported.csv/path/C:/Users/TheAncientOwl/Code/ddata-analysis-tool/server
 
 ### get rows
 GET http://localhost:5000/data/rows-between/0/20
