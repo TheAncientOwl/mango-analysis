@@ -21,9 +21,8 @@ export const ViewTab: React.FC = () => {
     selectedLabels: new Set<string>(),
     selectedRows: new Set<number>(),
     data: { labels: [], totalRows: 0, rows: [] },
-    dropping: false,
   });
-  const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, dropping } = state;
+  const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows } = state;
   const [doubleCheckSwitch, toggleDoubleCheckSwitch] = useSwitch();
   const snackbar = useSnackbar({
     title: 'Success',
@@ -36,22 +35,20 @@ export const ViewTab: React.FC = () => {
   if (!CacheSystem.GetItem(ImportPathKey)) return <Typography>No data loaded...</Typography>;
 
   // >> Fetch data.
-  React.useEffect(() => {
+  const fetchData = () => {
     let active = true;
 
     axios.get(`/data/page/${pageIndex}/page-size/${pageSize}`).then(res => {
       if (!active) return;
 
-      if ('dataframe' in res.data) {
-        const dataFrame = res.data.dataframe;
-        dispatch({ type: ActionType.RequestDataSuccess, payload: dataFrame });
-      }
+      if ('dataframe' in res.data) dispatch({ type: ActionType.RequestDataSuccess, payload: res.data.dataframe });
     });
 
     return () => {
       active = false;
     };
-  }, [pageIndex, pageSize, dropping]);
+  };
+  React.useEffect(fetchData, [pageIndex, pageSize]);
 
   // >> Handle drop rows & columns
   const handleDrop = () => {
@@ -65,12 +62,9 @@ export const ViewTab: React.FC = () => {
       })
       .then(() => {
         dispatch({ type: ActionType.DropDataSuccess });
+        fetchData();
         snackbar.open();
       });
-  };
-
-  const cancelDrop = () => {
-    toggleDoubleCheckSwitch();
   };
 
   // >> Return JSX.
@@ -79,7 +73,7 @@ export const ViewTab: React.FC = () => {
       <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
         <Button
           sx={{ mb: 1 }}
-          disabled={dropping || (selectedLabels.size == 0 && selectedRows.size == 0)}
+          disabled={loadingData || (selectedLabels.size == 0 && selectedRows.size == 0)}
           variant='contained'
           size='small'
           onClick={toggleDoubleCheckSwitch}>
@@ -108,7 +102,7 @@ export const ViewTab: React.FC = () => {
         }}
         onReject={{
           title: 'Cancel',
-          execute: cancelDrop,
+          execute: toggleDoubleCheckSwitch,
           buttonColor: 'info',
         }}
       />
@@ -116,7 +110,7 @@ export const ViewTab: React.FC = () => {
       {snackbar.element}
 
       <DataFrame
-        loading={loadingData || dropping}
+        loading={loadingData}
         currentData={data}
         currentPage={pageIndex}
         rowsPerPage={pageSize}

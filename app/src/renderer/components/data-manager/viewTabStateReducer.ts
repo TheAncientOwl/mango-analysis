@@ -21,7 +21,6 @@ interface State {
   loadingData: boolean;
   selectedLabels: Set<string>;
   selectedRows: Set<number>;
-  dropping: boolean;
 }
 
 interface Action {
@@ -89,14 +88,14 @@ export const viewTabReducer = (state: State, action: Action): State => {
     case ActionType.RequestDropData: {
       return {
         ...state,
-        dropping: true,
+        loadingData: true,
       };
     }
 
     case ActionType.DropDataSuccess: {
       return {
         ...state,
-        dropping: false,
+        loadingData: false,
         pageIndex: 0,
         selectedLabels: new Set<string>(),
         selectedRows: new Set<number>(),
