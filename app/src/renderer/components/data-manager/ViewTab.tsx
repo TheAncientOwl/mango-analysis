@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Button, Typography, Box } from '@mui/material';
+import { Button, Typography, Box, Stack } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import RestoreIcon from '@mui/icons-material/Restore';
 
 import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
@@ -32,7 +34,7 @@ export const ViewTab: React.FC = () => {
   });
 
   // >> Return empty if no data is loaded.
-  if (!CacheSystem.GetItem(ImportPathKey)) return <Typography>No data loaded...</Typography>;
+  // if (!CacheSystem.GetItem(ImportPathKey)) return <Typography>No data loaded...</Typography>;
 
   // >> Fetch data.
   const fetchData = () => {
@@ -70,16 +72,20 @@ export const ViewTab: React.FC = () => {
   // >> Return JSX.
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
+      <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
         <Button
-          sx={{ mb: 1 }}
           disabled={loadingData || (selectedLabels.size == 0 && selectedRows.size == 0)}
           variant='contained'
           size='small'
-          onClick={toggleDoubleCheckSwitch}>
-          Drop selected rows and columns
+          onClick={toggleDoubleCheckSwitch}
+          startIcon={<DeleteIcon />}>
+          Drop
         </Button>
-      </Box>
+
+        <Button variant='contained' size='small' startIcon={<RestoreIcon />}>
+          Restore
+        </Button>
+      </Stack>
 
       <DoubleCheck
         open={doubleCheckSwitch}
