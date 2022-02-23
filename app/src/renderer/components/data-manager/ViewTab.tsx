@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Typography, Box, Stack } from '@mui/material';
+import { Button, Box, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RestoreIcon from '@mui/icons-material/Restore';
 
@@ -10,7 +10,6 @@ import { DoubleCheck } from '@renderer/components/DoubleCheck';
 import { DataFrame } from '@renderer/components/DataFrame';
 
 import { axios } from '@renderer/config';
-import { ImportPathKey } from './ImportTab';
 
 import { viewTabReducer, DataPageIndexKey, DataPageSizeKey, ActionType } from './viewTabStateReducer';
 import { useSnackbar, useSwitch } from '@src/renderer/hooks';
