@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Box, Stack, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { CacheSystem } from '@src/renderer/api/CacheSystem';
+import { CacheSystem } from '@renderer/api/CacheSystem';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 import { DataFrame } from '@renderer/components/DataFrame';
