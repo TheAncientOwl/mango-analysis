@@ -67,23 +67,21 @@ export const ViewTab: React.FC = () => {
       });
   };
 
+  if (data.totalRows === 0 && !loadingData) return <Typography>No data loaded...</Typography>;
+
   // >> Return JSX.
   return (
     <React.Fragment>
-      {data.totalRows === 0 && !loadingData ? (
-        <Typography>No data loaded...</Typography>
-      ) : (
-        <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
-          <Button
-            disabled={loadingData || (selectedLabels.size == 0 && selectedRows.size == 0)}
-            variant='contained'
-            size='small'
-            onClick={toggleDoubleCheckSwitch}
-            startIcon={<DeleteIcon />}>
-            Drop
-          </Button>
-        </Stack>
-      )}
+      <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
+        <Button
+          disabled={loadingData || (selectedLabels.size == 0 && selectedRows.size == 0)}
+          variant='contained'
+          size='small'
+          onClick={toggleDoubleCheckSwitch}
+          startIcon={<DeleteIcon />}>
+          Drop
+        </Button>
+      </Stack>
 
       <DoubleCheck
         open={doubleCheckSwitch}
