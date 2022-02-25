@@ -5,20 +5,22 @@ export const DataPageIndexKey = 'data-page-index';
 export const DataPageSizeKey = 'data-page-size';
 
 export enum ActionType {
+  FetchData = 'FETCH_DATA',
+  FetchDataCancel = 'FETCH_DATA_CANCEL',
+  FetchDataSuccess = 'FETCH_DATA_SUCCESS',
   ChangePageSize = 'CHANGE_PAGE_SIZE',
   ChangePageIndex = 'CHANGE_PAGE_INDEX',
-  RequestDataSuccess = 'REQUEST_DATA_SUCCESS',
   SelectColumn = 'SELECT_COLUMN',
   SelectRow = 'SELECT_ROW',
-  RequestDropData = 'REQUEST_DROP_DATA',
+  DropData = 'DROP_DATA',
   DropDataSuccess = 'DROP_DATA_SUCCESS',
 }
 
 interface State {
+  loadingData: boolean;
   pageIndex: number;
   pageSize: number;
   data: Data;
-  loadingData: boolean;
   selectedLabels: Set<string>;
   selectedRows: Set<number>;
 }
@@ -30,13 +32,25 @@ interface Action {
 
 export const viewTabReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case ActionType.ChangePageIndex: {
-      CacheSystem.SetItem(DataPageIndexKey, action.payload);
-
+    case ActionType.FetchData: {
       return {
         ...state,
-        pageIndex: action.payload as number,
         loadingData: true,
+      };
+    }
+
+    case ActionType.FetchDataCancel: {
+      return {
+        ...state,
+        loadingData: true,
+      };
+    }
+
+    case ActionType.FetchDataSuccess: {
+      return {
+        ...state,
+        loadingData: false,
+        data: action.payload as Data,
       };
     }
 
@@ -47,15 +61,15 @@ export const viewTabReducer = (state: State, action: Action): State => {
         ...state,
         pageIndex: 0,
         pageSize: action.payload as number,
-        loadingData: true,
       };
     }
 
-    case ActionType.RequestDataSuccess: {
+    case ActionType.ChangePageIndex: {
+      CacheSystem.SetItem(DataPageIndexKey, action.payload);
+
       return {
         ...state,
-        data: action.payload as Data,
-        loadingData: false,
+        pageIndex: action.payload as number,
       };
     }
 
@@ -85,7 +99,7 @@ export const viewTabReducer = (state: State, action: Action): State => {
       };
     }
 
-    case ActionType.RequestDropData: {
+    case ActionType.DropData: {
       return {
         ...state,
         loadingData: true,

@@ -33,15 +33,18 @@ export const ViewTab: React.FC = () => {
 
   // >> Fetch data.
   const fetchData = () => {
+    dispatch({ type: ActionType.FetchData });
+
     let active = true;
 
     axios.get(`/data/page/${pageIndex}/page-size/${pageSize}`).then(res => {
       if (!active) return;
 
-      if ('dataframe' in res.data) dispatch({ type: ActionType.RequestDataSuccess, payload: res.data.dataframe });
+      if ('dataframe' in res.data) dispatch({ type: ActionType.FetchDataSuccess, payload: res.data.dataframe });
     });
 
     return () => {
+      dispatch({ type: ActionType.FetchDataCancel });
       active = false;
     };
   };
@@ -50,7 +53,7 @@ export const ViewTab: React.FC = () => {
   // >> Handle drop rows & columns
   const handleDrop = () => {
     toggleDoubleCheckSwitch();
-    dispatch({ type: ActionType.RequestDropData });
+    dispatch({ type: ActionType.DropData });
 
     axios
       .post('/data/drop/rows+cols', {
