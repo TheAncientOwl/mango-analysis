@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Button, Box, Stack } from '@mui/material';
+import { Button, Box, Stack, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import RestoreIcon from '@mui/icons-material/Restore';
 
 import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
@@ -31,9 +30,6 @@ export const ViewTab: React.FC = () => {
     severity: 'success',
     variant: 'filled',
   });
-
-  // >> Return empty if no data is loaded.
-  // if (!CacheSystem.GetItem(ImportPathKey)) return <Typography>No data loaded...</Typography>;
 
   // >> Fetch data.
   const fetchData = () => {
@@ -71,20 +67,20 @@ export const ViewTab: React.FC = () => {
   // >> Return JSX.
   return (
     <React.Fragment>
-      <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
-        <Button
-          disabled={loadingData || (selectedLabels.size == 0 && selectedRows.size == 0)}
-          variant='contained'
-          size='small'
-          onClick={toggleDoubleCheckSwitch}
-          startIcon={<DeleteIcon />}>
-          Drop
-        </Button>
-
-        <Button variant='contained' size='small' startIcon={<RestoreIcon />}>
-          Restore
-        </Button>
-      </Stack>
+      {data.totalRows === 0 ? (
+        <Typography>No data loaded...</Typography>
+      ) : (
+        <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
+          <Button
+            disabled={loadingData || (selectedLabels.size == 0 && selectedRows.size == 0)}
+            variant='contained'
+            size='small'
+            onClick={toggleDoubleCheckSwitch}
+            startIcon={<DeleteIcon />}>
+            Drop
+          </Button>
+        </Stack>
+      )}
 
       <DoubleCheck
         open={doubleCheckSwitch}
