@@ -42,7 +42,7 @@ export const viewTabReducer = (state: State, action: Action): State => {
     case ActionType.FetchDataCancel: {
       return {
         ...state,
-        loadingData: true,
+        loadingData: false,
       };
     }
 
