@@ -67,7 +67,7 @@ export const ViewTab: React.FC = () => {
   // >> Return JSX.
   return (
     <React.Fragment>
-      {data.totalRows === 0 ? (
+      {data.totalRows === 0 && !loadingData ? (
         <Typography>No data loaded...</Typography>
       ) : (
         <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
