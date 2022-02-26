@@ -2,17 +2,13 @@ import React from 'react';
 
 import { Button, Stack, TextField, CircularProgress } from '@mui/material';
 
-import { useCache, RequestState, useRequest, useSnackbar } from '@renderer/hooks/index';
+import { SuccessSnack } from '@renderer/components/SuccessSnack';
+import { useCache, RequestState, useRequest, useSwitch } from '@renderer/hooks/index';
 
 export const ExportTab: React.FC = () => {
   const [fileName, setFileName] = useCache('file-name-save', `Data-${Date.now()}.csv`);
   const saveDataRequest = useRequest();
-  const snackbar = useSnackbar({
-    title: 'Success',
-    message: 'Saved data!',
-    severity: 'success',
-    variant: 'filled',
-  });
+  const [snackSwitch, toggleSnack] = useSwitch();
 
   const handleFileNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFileName = event.target.value;
@@ -31,9 +27,7 @@ export const ExportTab: React.FC = () => {
 
     saveDataRequest.execute(
       { method: 'post', url: `/data/export/csv/name/${saveFileName}/path/${directoryPath}` },
-      () => {
-        snackbar.open();
-      }
+      toggleSnack
     );
   };
 
@@ -55,7 +49,9 @@ export const ExportTab: React.FC = () => {
         {saveDataRequest.state === RequestState.Pending && <CircularProgress size={30} thickness={4} color='info' />}
       </Stack>
 
-      {snackbar.element}
+      <SuccessSnack open={snackSwitch} onClose={toggleSnack}>
+        Saved data!
+      </SuccessSnack>
     </React.Fragment>
   );
 };

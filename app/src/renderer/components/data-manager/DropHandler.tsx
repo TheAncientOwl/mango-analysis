@@ -5,8 +5,9 @@ import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
+import { SuccessSnack } from '@renderer/components/SuccessSnack';
 import { axios } from '@src/renderer/config';
-import { useSnackbar, useSwitch } from '@src/renderer/hooks';
+import { useSwitch } from '@src/renderer/hooks';
 
 import { ActionType, ViewTabDispatcher } from './viewTabStateReducer';
 import { DataFetcher } from './ViewTab';
@@ -21,12 +22,7 @@ interface Props {
 
 export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData, labels, mangoIDs }) => {
   const [doubleCheckSwitch, toggleDoubleCheckSwitch] = useSwitch();
-  const snackbar = useSnackbar({
-    title: 'Success',
-    message: 'Rows & columns dropped',
-    severity: 'success',
-    variant: 'filled',
-  });
+  const [snackSwitch, toggleSnack] = useSwitch();
 
   const handleDrop = () => {
     toggleDoubleCheckSwitch();
@@ -40,7 +36,7 @@ export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData,
       .then(() => {
         dispatch({ type: ActionType.DropDataSuccess });
         fetchData();
-        snackbar.open();
+        toggleSnack();
       });
   };
 
@@ -81,7 +77,9 @@ export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData,
         }}
       />
 
-      {snackbar.element}
+      <SuccessSnack open={snackSwitch} onClose={toggleSnack}>
+        Rows & columns dropped
+      </SuccessSnack>
     </React.Fragment>
   );
 };

@@ -6,8 +6,9 @@ import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } 
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
+import { SuccessSnack } from '@renderer/components/SuccessSnack';
 import { axios } from '@src/renderer/config';
-import { useSnackbar, useSwitch } from '@src/renderer/hooks';
+import { useSwitch } from '@src/renderer/hooks';
 
 import { ActionType, ScalingMethodType, ViewTabDispatcher } from './viewTabStateReducer';
 import { DataFetcher } from './ViewTab';
@@ -54,12 +55,7 @@ const ScalingMethods: ReadonlyArray<ScalingMethodConfig> = [
 
 export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetchData }) => {
   const [doubleCheckSwitch, toggleDoubleCheckSwitch] = useSwitch();
-  const snackbar = useSnackbar({
-    title: 'Success',
-    message: 'Scaled data!',
-    severity: 'success',
-    variant: 'filled',
-  });
+  const [snackSwitch, toggleSnack] = useSwitch();
 
   const handleChange = (event: SelectChangeEvent) => {
     dispatch({ type: ActionType.ChangeScalingMethod, payload: event.target.value as ScalingMethodType });
@@ -76,7 +72,7 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
       .then(() => {
         dispatch({ type: ActionType.ScaleDataSuccess });
         fetchData();
-        snackbar.open();
+        toggleSnack();
       });
   };
 
@@ -133,7 +129,9 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
         }}
       />
 
-      {snackbar.element}
+      <SuccessSnack open={snackSwitch} onClose={toggleSnack}>
+        Scaled data!
+      </SuccessSnack>
     </React.Fragment>
   );
 };
