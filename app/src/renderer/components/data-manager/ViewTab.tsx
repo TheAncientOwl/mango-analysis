@@ -66,6 +66,7 @@ export const ViewTab: React.FC = () => {
         currentData={data}
         currentPage={pageIndex}
         rowsPerPage={pageSize}
+        decimals={4}
         onPageChange={newPageIndex => dispatch({ type: ActionType.ChangePageIndex, payload: newPageIndex })}
         onPageSizeChange={newPageSize => dispatch({ type: ActionType.ChangePageSize, payload: newPageSize })}
         selectable={true}

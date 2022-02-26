@@ -32,11 +32,11 @@ export interface DataFrameProps {
   onPageChange: (newPage: number) => void;
   onPageSizeChange: (newPageSize: number) => void;
 
-  selectable?: boolean;
+  decimals?: number | 'default';
 
+  selectable?: boolean;
   onLabelSelect?: (selectedLabel: string) => void;
   onRowSelect?: (selectedRow: number) => void;
-
   selectedLabels?: Set<string>;
   selectedRows?: Set<number>;
 }
@@ -69,6 +69,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
   onRowSelect = preventUndefinedCall,
   selectedLabels = new Set<string>(),
   selectedRows = new Set<number>(),
+  decimals = 'default',
 }) => {
   const { rows, labels, totalRows } = currentData;
 
@@ -137,7 +138,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
                         sx={{ ...CELL_TRANSITION, ...(selectedLabels.has(columnLabel) ? HIGHLIGHTED_CELL : {}) }}
                         key={`${rowID}-${columnLabel}`}
                         align={typeof value === 'number' ? 'right' : 'left'}>
-                        {value}
+                        {typeof value === 'number' && decimals !== 'default' ? value.toFixed(decimals) : value}
                       </TableCell>
                     );
                   })}
