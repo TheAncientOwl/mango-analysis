@@ -8,7 +8,7 @@ import { useCache, RequestState, useRequest, useSwitch } from '@renderer/hooks/i
 export const ExportTab: React.FC = () => {
   const [fileName, setFileName] = useCache('file-name-save', `Data-${Date.now()}.csv`);
   const saveDataRequest = useRequest();
-  const [snackSwitch, toggleSnack] = useSwitch();
+  const snackSwitch = useSwitch();
 
   const handleFileNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFileName = event.target.value;
@@ -27,7 +27,7 @@ export const ExportTab: React.FC = () => {
 
     saveDataRequest.execute(
       { method: 'post', url: `/data/export/csv/name/${saveFileName}/path/${directoryPath}` },
-      toggleSnack
+      snackSwitch.on
     );
   };
 
@@ -49,7 +49,7 @@ export const ExportTab: React.FC = () => {
         {saveDataRequest.state === RequestState.Pending && <CircularProgress size={30} thickness={4} color='info' />}
       </Stack>
 
-      <Snackbar open={snackSwitch} onClose={toggleSnack}>
+      <Snackbar open={snackSwitch.value} onClose={snackSwitch.off}>
         Saved data!
       </Snackbar>
     </React.Fragment>

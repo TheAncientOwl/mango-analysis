@@ -1,9 +1,23 @@
 import React from 'react';
 
-export const useSwitch = (defaultValue = false): [boolean, () => void] => {
+interface Switch {
+  value: boolean;
+  on: () => void;
+  off: () => void;
+  toggle: () => void;
+}
+
+export const useSwitch = (defaultValue = false): Switch => {
   const [value, setValue] = React.useState(defaultValue);
 
-  const toggle = () => setValue(!value);
+  const logics = React.useMemo(
+    () => ({
+      on: () => setValue(true),
+      off: () => setValue(false),
+      toggle: () => setValue(!value),
+    }),
+    [setValue]
+  );
 
-  return [value, toggle];
+  return { value, ...logics };
 };

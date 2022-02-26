@@ -12,7 +12,7 @@ import { useSwitch } from '@renderer/hooks';
 
 const App: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = React.useState(AppRoutes[0].name);
-  const [menuOpen, toggleMenu] = useSwitch(false);
+  const { value: menuOpen, toggle: toggleMenu } = useSwitch(false);
 
   return (
     <React.Fragment>

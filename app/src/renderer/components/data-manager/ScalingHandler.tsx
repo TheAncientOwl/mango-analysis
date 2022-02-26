@@ -54,15 +54,15 @@ const ScalingMethods: ReadonlyArray<ScalingMethodConfig> = [
 ];
 
 export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetchData }) => {
-  const [doubleCheckSwitch, toggleDoubleCheckSwitch] = useSwitch();
-  const [snackSwitch, toggleSnack] = useSwitch();
+  const doubleCheckSwitch = useSwitch();
+  const snackSwitch = useSwitch();
 
   const handleChange = (event: SelectChangeEvent) => {
     dispatch({ type: ActionType.ChangeScalingMethod, payload: event.target.value as ScalingMethodType });
   };
 
   const handleScale = () => {
-    toggleDoubleCheckSwitch();
+    doubleCheckSwitch.off();
     dispatch({ type: ActionType.BeginLoading });
 
     axios
@@ -72,7 +72,7 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
       .then(() => {
         dispatch({ type: ActionType.ScaleDataSuccess });
         fetchData();
-        toggleSnack();
+        snackSwitch.on();
       });
   };
 
@@ -98,20 +98,20 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
         disabled={scalingMethod === 'none'}
         variant='contained'
         size='small'
-        onClick={toggleDoubleCheckSwitch}
+        onClick={doubleCheckSwitch.on}
         startIcon={<LinearScaleIcon />}>
         Scale
       </Button>
 
       <DoubleCheck
-        open={doubleCheckSwitch}
+        open={doubleCheckSwitch.value}
         onAccept={{
           title: 'Scale',
           execute: handleScale,
         }}
         onReject={{
           title: 'Cancel',
-          execute: toggleDoubleCheckSwitch,
+          execute: doubleCheckSwitch.off,
         }}>
         This action will
         <Box component='span' sx={{ color: 'error.main' }}>
@@ -122,7 +122,7 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
         Are you sure?
       </DoubleCheck>
 
-      <Snackbar open={snackSwitch} onClose={toggleSnack}>
+      <Snackbar open={snackSwitch.value} onClose={snackSwitch.off}>
         Scaled data!
       </Snackbar>
     </React.Fragment>

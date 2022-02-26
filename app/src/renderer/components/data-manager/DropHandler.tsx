@@ -21,11 +21,11 @@ interface Props {
 }
 
 export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData, labels, mangoIDs }) => {
-  const [doubleCheckSwitch, toggleDoubleCheckSwitch] = useSwitch();
-  const [snackSwitch, toggleSnack] = useSwitch();
+  const doubleCheckSwitch = useSwitch();
+  const snackSwitch = useSwitch();
 
   const handleDrop = () => {
-    toggleDoubleCheckSwitch();
+    doubleCheckSwitch.off();
     dispatch({ type: ActionType.BeginLoading });
 
     axios
@@ -36,7 +36,7 @@ export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData,
       .then(() => {
         dispatch({ type: ActionType.DropDataSuccess });
         fetchData();
-        toggleSnack();
+        snackSwitch.on();
       });
   };
 
@@ -46,20 +46,20 @@ export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData,
         disabled={loadingData || (labels.length === 0 && mangoIDs.length === 0)}
         variant='contained'
         size='small'
-        onClick={toggleDoubleCheckSwitch}
+        onClick={doubleCheckSwitch.on}
         startIcon={<DeleteIcon />}>
         Drop
       </Button>
 
       <DoubleCheck
-        open={doubleCheckSwitch}
+        open={doubleCheckSwitch.value}
         onAccept={{
           title: 'Drop',
           execute: handleDrop,
         }}
         onReject={{
           title: 'Cancel',
-          execute: toggleDoubleCheckSwitch,
+          execute: doubleCheckSwitch.off,
         }}>
         This action will
         <Box component='span' sx={{ color: 'error.main' }}>
@@ -70,7 +70,7 @@ export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData,
         Are you sure?
       </DoubleCheck>
 
-      <Snackbar open={snackSwitch} onClose={toggleSnack}>
+      <Snackbar open={snackSwitch.value} onClose={snackSwitch.off}>
         Rows & columns dropped
       </Snackbar>
     </React.Fragment>

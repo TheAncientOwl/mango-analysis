@@ -11,7 +11,7 @@ export const ImportPathKey = 'import-path';
 
 export const ImportTab: React.FC = () => {
   const [importPath, setImportPath] = useCache<string | null>(ImportPathKey, null);
-  const [doubleCheckSwitch, toggleDoubleCheck] = useSwitch(false);
+  const doubleCheckSwitch = useSwitch();
   const dataRequest = useRequest();
   const snackbar = useSnackbar({
     title: 'Success',
@@ -40,7 +40,7 @@ export const ImportTab: React.FC = () => {
       snackbar.setMessage('Data deleted!');
       snackbar.open();
     });
-    toggleDoubleCheck();
+    doubleCheckSwitch.off();
   };
 
   return (
@@ -59,7 +59,7 @@ export const ImportTab: React.FC = () => {
 
       {importPath !== null && (
         <Stack direction='row' alignItems='center' spacing={1}>
-          <IconButton sx={{ color: 'error.main' }} onClick={toggleDoubleCheck}>
+          <IconButton sx={{ color: 'error.main' }} onClick={doubleCheckSwitch.on}>
             <DeleteIcon />
           </IconButton>
           <Typography variant='body2'>{importPath}</Typography>
@@ -67,14 +67,14 @@ export const ImportTab: React.FC = () => {
       )}
 
       <DoubleCheck
-        open={doubleCheckSwitch}
+        open={doubleCheckSwitch.value}
         onAccept={{
           title: 'Delete',
           execute: deleteData,
         }}
         onReject={{
           title: 'Cancel',
-          execute: toggleDoubleCheck,
+          execute: doubleCheckSwitch.off,
         }}>
         This action will
         <Box component='span' sx={{ color: 'error.main' }}>
