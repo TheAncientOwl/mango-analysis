@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Button, Box, Stack, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import { CacheSystem } from '@renderer/api/CacheSystem';
 
@@ -11,8 +10,8 @@ import { DataFrame } from '@renderer/components/DataFrame';
 import { axios } from '@renderer/config';
 
 import { viewTabReducer, DataPageIndexKey, DataPageSizeKey, ActionType } from './viewTabStateReducer';
-import { useSnackbar, useSwitch } from '@src/renderer/hooks';
 import { ScalingHandler } from './ScalingHandler';
+import { DropHandler } from './DropHandler';
 
 export const ViewTab: React.FC = () => {
   const [state, dispatch] = React.useReducer(viewTabReducer, {
@@ -25,13 +24,6 @@ export const ViewTab: React.FC = () => {
     scalingMethod: 'none',
   });
   const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod } = state;
-  const [doubleCheckSwitch, toggleDoubleCheckSwitch] = useSwitch();
-  const snackbar = useSnackbar({
-    title: 'Success',
-    message: 'Rows & columns dropped',
-    severity: 'success',
-    variant: 'filled',
-  });
 
   // >> Fetch data.
   const fetchData = () => {
@@ -52,23 +44,6 @@ export const ViewTab: React.FC = () => {
   };
   React.useEffect(fetchData, [pageIndex, pageSize]);
 
-  // >> Handle drop rows & columns
-  const handleDrop = () => {
-    toggleDoubleCheckSwitch();
-    dispatch({ type: ActionType.DropData });
-
-    axios
-      .post('/data/drop/rows+cols', {
-        labels: Array.from(selectedLabels),
-        mangoIDs: Array.from(selectedRows),
-      })
-      .then(() => {
-        dispatch({ type: ActionType.DropDataSuccess });
-        fetchData();
-        snackbar.open();
-      });
-  };
-
   if (data.totalRows === 0 && !loadingData) return <Typography>No data loaded...</Typography>;
 
   // >> Return JSX.
@@ -76,43 +51,14 @@ export const ViewTab: React.FC = () => {
     <React.Fragment>
       <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
         <ScalingHandler scalingMethod={scalingMethod} dispatch={dispatch} fetchData={fetchData} />
-        <Button
-          disabled={loadingData || (selectedLabels.size == 0 && selectedRows.size == 0)}
-          variant='contained'
-          size='small'
-          onClick={toggleDoubleCheckSwitch}
-          startIcon={<DeleteIcon />}>
-          Drop
-        </Button>
+        <DropHandler
+          loadingData={loadingData}
+          dispatch={dispatch}
+          fetchData={fetchData}
+          labels={Array.from(selectedLabels)}
+          mangoIDs={Array.from(selectedRows)}
+        />
       </Stack>
-
-      <DoubleCheck
-        open={doubleCheckSwitch}
-        title='Double check'
-        text={
-          <React.Fragment>
-            This action will{' '}
-            <Box component='span' sx={{ color: 'error.main' }}>
-              drop
-            </Box>{' '}
-            selected rows and columns.
-            <br />
-            Are you sure?
-          </React.Fragment>
-        }
-        onAccept={{
-          title: 'Drop',
-          execute: handleDrop,
-          buttonColor: 'error',
-        }}
-        onReject={{
-          title: 'Cancel',
-          execute: toggleDoubleCheckSwitch,
-          buttonColor: 'info',
-        }}
-      />
-
-      {snackbar.element}
 
       <DataFrame
         loading={loadingData}
