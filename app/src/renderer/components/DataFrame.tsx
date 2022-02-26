@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 // eslint-disable-next-line import/named
 import { Theme } from '@mui/material/styles';
-import { logRender } from '@src/common/logRender';
 
 export interface Data {
   labels: string[];
@@ -75,7 +74,6 @@ const _DataFrame: React.FC<DataFrameProps> = ({
   decimals = 'default',
 }) => {
   const { rows, labels, totalRows } = currentData;
-  logRender('DataFrame');
 
   return (
     <React.Fragment>
