@@ -10,14 +10,9 @@ interface Switch {
 export const useSwitch = (defaultValue = false): Switch => {
   const [value, setValue] = React.useState(defaultValue);
 
-  const logics = React.useMemo(
-    () => ({
-      on: () => setValue(true),
-      off: () => setValue(false),
-      toggle: () => setValue(!value),
-    }),
-    [setValue]
-  );
+  const on = React.useCallback(() => setValue(true), [setValue]);
+  const off = React.useCallback(() => setValue(false), [setValue]);
+  const toggle = () => setValue(!value);
 
-  return { value, ...logics };
+  return { value, on, off, toggle };
 };
