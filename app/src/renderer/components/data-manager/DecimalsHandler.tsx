@@ -33,8 +33,6 @@ const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
   }),
 ];
 
-console.log(DecimalsOptions);
-
 export const DecimalsHandler: React.FC<Props> = ({ value, dispatch }) => {
   const handleChange = (event: SelectChangeEvent) => {
     dispatch({ type: ActionType.ChangeDecimals, payload: event.target.value as Decimals });
