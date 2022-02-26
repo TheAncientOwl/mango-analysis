@@ -5,6 +5,7 @@ import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
 export const DataPageIndexKey = 'data-page-index';
 export const DataPageSizeKey = 'data-page-size';
+export const DataframeDecimalsKey = 'dataframe-decimals';
 
 export enum ActionType {
   BeginLoading = 'BEGIN_LOADING',
@@ -142,6 +143,8 @@ export const viewTabReducer = (state: State, action: Action): State => {
     }
 
     case ActionType.ChangeDecimals: {
+      CacheSystem.SetItem(DataframeDecimalsKey, action.payload);
+
       return {
         ...state,
         decimals: action.payload as Decimals,

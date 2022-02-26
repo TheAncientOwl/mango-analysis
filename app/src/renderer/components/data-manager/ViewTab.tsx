@@ -4,11 +4,17 @@ import { Stack, Typography } from '@mui/material';
 
 import { CacheSystem } from '@renderer/api/CacheSystem';
 
-import { DataFrame } from '@renderer/components/DataFrame';
+import { DataFrame, Decimals } from '@renderer/components/DataFrame';
 
 import { axios } from '@renderer/config';
 
-import { viewTabReducer, DataPageIndexKey, DataPageSizeKey, ActionType } from './viewTabStateReducer';
+import {
+  viewTabReducer,
+  DataPageIndexKey,
+  DataPageSizeKey,
+  DataframeDecimalsKey,
+  ActionType,
+} from './viewTabStateReducer';
 import { ScalingHandler } from './ScalingHandler';
 import { DropHandler } from './DropHandler';
 import { DecimalsHandler } from './DecimalsHandler';
@@ -26,7 +32,7 @@ export const ViewTab: React.FC = () => {
     selectedRows: new Set<number>(),
     data: { labels: [], totalRows: 0, rows: [] },
     scalingMethod: 'none',
-    decimals: 4,
+    decimals: CacheSystem.GetItemOrDefault<number>(DataframeDecimalsKey, 4) as Decimals,
   });
   const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod, decimals } = state;
 
