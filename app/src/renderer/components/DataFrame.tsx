@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 // eslint-disable-next-line import/named
 import { Theme } from '@mui/material/styles';
+import { logRender } from '@src/common/logRender';
 
 export interface Data {
   labels: string[];
@@ -59,7 +60,7 @@ const preventUndefinedCall = () => {
   throw new Error('Undefined function was called');
 };
 
-export const DataFrame: React.FC<DataFrameProps> = ({
+const _DataFrame: React.FC<DataFrameProps> = ({
   loading,
   currentData,
   currentPage,
@@ -74,6 +75,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
   decimals = 'default',
 }) => {
   const { rows, labels, totalRows } = currentData;
+  logRender('DataFrame');
 
   return (
     <React.Fragment>
@@ -167,3 +169,5 @@ export const DataFrame: React.FC<DataFrameProps> = ({
     </React.Fragment>
   );
 };
+
+export const DataFrame = React.memo(_DataFrame);

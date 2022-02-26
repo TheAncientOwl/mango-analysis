@@ -49,6 +49,16 @@ export const ViewTab: React.FC = () => {
 
   if (data.totalRows === 0 && !loadingData) return <Typography>No data loaded...</Typography>;
 
+  const handle = React.useMemo(
+    () => ({
+      pageChange: (newPageIndex: number) => dispatch({ type: ActionType.ChangePageIndex, payload: newPageIndex }),
+      pageSizeChange: (newPageSize: number) => dispatch({ type: ActionType.ChangePageSize, payload: newPageSize }),
+      labelSelect: (selectedLabel: string) => dispatch({ type: ActionType.SelectColumn, payload: selectedLabel }),
+      rowSelect: (selectedRow: number) => dispatch({ type: ActionType.SelectRow, payload: selectedRow }),
+    }),
+    [dispatch]
+  );
+
   // >> Return JSX.
   return (
     <React.Fragment>
@@ -70,11 +80,11 @@ export const ViewTab: React.FC = () => {
         currentPage={pageIndex}
         rowsPerPage={pageSize}
         decimals={decimals}
-        onPageChange={newPageIndex => dispatch({ type: ActionType.ChangePageIndex, payload: newPageIndex })}
-        onPageSizeChange={newPageSize => dispatch({ type: ActionType.ChangePageSize, payload: newPageSize })}
+        onPageChange={handle.pageChange}
+        onPageSizeChange={handle.pageSizeChange}
         selectable={true}
-        onLabelSelect={selectedLabel => dispatch({ type: ActionType.SelectColumn, payload: selectedLabel })}
-        onRowSelect={selectedRow => dispatch({ type: ActionType.SelectRow, payload: selectedRow })}
+        onLabelSelect={handle.labelSelect}
+        onRowSelect={handle.rowSelect}
         selectedLabels={selectedLabels}
         selectedRows={selectedRows}
       />
