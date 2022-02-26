@@ -15,6 +15,8 @@ import { DecimalsHandler } from './DecimalsHandler';
 
 export type DataFetcher = () => void;
 
+const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
+
 export const ViewTab: React.FC = () => {
   const [state, dispatch] = React.useReducer(viewTabReducer, {
     pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
@@ -64,6 +66,7 @@ export const ViewTab: React.FC = () => {
     <React.Fragment>
       <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
         <ScalingHandler scalingMethod={scalingMethod} dispatch={dispatch} fetchData={fetchData} />
+        {VerticalLine}
         <DropHandler
           loadingData={loadingData}
           dispatch={dispatch}
@@ -71,6 +74,7 @@ export const ViewTab: React.FC = () => {
           labels={Array.from(selectedLabels)}
           mangoIDs={Array.from(selectedRows)}
         />
+        {VerticalLine}
         <DecimalsHandler value={decimals} dispatch={dispatch} />
       </Stack>
 
