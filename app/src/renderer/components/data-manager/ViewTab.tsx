@@ -12,6 +12,7 @@ import { axios } from '@renderer/config';
 
 import { viewTabReducer, DataPageIndexKey, DataPageSizeKey, ActionType } from './viewTabStateReducer';
 import { useSnackbar, useSwitch } from '@src/renderer/hooks';
+import { ScalingHandler } from './ScalingHandler';
 
 export const ViewTab: React.FC = () => {
   const [state, dispatch] = React.useReducer(viewTabReducer, {
@@ -21,8 +22,9 @@ export const ViewTab: React.FC = () => {
     selectedLabels: new Set<string>(),
     selectedRows: new Set<number>(),
     data: { labels: [], totalRows: 0, rows: [] },
+    scalingMethod: 'none',
   });
-  const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows } = state;
+  const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod } = state;
   const [doubleCheckSwitch, toggleDoubleCheckSwitch] = useSwitch();
   const snackbar = useSnackbar({
     title: 'Success',
@@ -73,6 +75,7 @@ export const ViewTab: React.FC = () => {
   return (
     <React.Fragment>
       <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
+        <ScalingHandler scalingMethod={scalingMethod} dispatch={dispatch} fetchData={fetchData} />
         <Button
           disabled={loadingData || (selectedLabels.size == 0 && selectedRows.size == 0)}
           variant='contained'

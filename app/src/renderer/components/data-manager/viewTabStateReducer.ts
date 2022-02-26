@@ -14,7 +14,17 @@ export enum ActionType {
   SelectRow = 'SELECT_ROW',
   DropData = 'DROP_DATA',
   DropDataSuccess = 'DROP_DATA_SUCCESS',
+  ChangeScalingMethod = 'CHANGE_SCALING_METHOD',
+  ScaleData = 'SCALE_DATA',
+  ScaleDataSuccess = 'SCALE_DATA_SUCCESS',
 }
+
+export type ScalingMethodType =
+  | 'none'
+  | 'maximum_absolute_scaling'
+  | 'min_max_scaling'
+  | 'z_score_scaling'
+  | 'robust_scaling';
 
 interface State {
   loadingData: boolean;
@@ -23,11 +33,12 @@ interface State {
   data: Data;
   selectedLabels: Set<string>;
   selectedRows: Set<number>;
+  scalingMethod: ScalingMethodType;
 }
 
-interface Action {
+export interface Action {
   type: ActionType;
-  payload?: string | number | Data;
+  payload?: string | number | Data | ScalingMethodType;
 }
 
 export const viewTabReducer = (state: State, action: Action): State => {
@@ -113,6 +124,28 @@ export const viewTabReducer = (state: State, action: Action): State => {
         pageIndex: 0,
         selectedLabels: new Set<string>(),
         selectedRows: new Set<number>(),
+      };
+    }
+
+    case ActionType.ChangeScalingMethod: {
+      return {
+        ...state,
+        scalingMethod: action.payload as ScalingMethodType,
+      };
+    }
+
+    case ActionType.ScaleData: {
+      return {
+        ...state,
+        loadingData: true,
+      };
+    }
+
+    case ActionType.ScaleDataSuccess: {
+      return {
+        ...state,
+        loadingData: false,
+        scalingMethod: 'none',
       };
     }
   }
