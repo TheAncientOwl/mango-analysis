@@ -7,6 +7,10 @@ from pandas.api.types import is_numeric_dtype as pandas_is_numeric
 data_scale = flask.Blueprint('data_scale', __name__)
 
 
+def should_scale(column):
+    return pandas_is_numeric(server.dataFrame[column]) and column != '_mango_id'
+
+
 # >> rescales each feature between -1 and 1 by
 # dividing every observation by its maximum absolute value
 def maximum_absolute_scaling(df):
@@ -14,7 +18,7 @@ def maximum_absolute_scaling(df):
 
     # apply maximum absolute scaling
     for column in df_scaled.columns:
-        if pandas_is_numeric(df_scaled[column]):
+        if should_scale(column):
             df_scaled[column] = df_scaled[column] / \
                 df_scaled[column].abs().max()
 
@@ -28,7 +32,7 @@ def min_max_scaling(df):
 
     # apply min-max scaling
     for column in df_scaled.columns:
-        if pandas_is_numeric(df_scaled[column]):
+        if should_scale(column):
             col_min = df_scaled[column].min()
             col_max = df_scaled[column].max()
 
@@ -46,7 +50,7 @@ def z_score_scaling(df):
 
     # apply z-score method
     for column in df_scaled.columns:
-        if pandas_is_numeric(df_scaled[column]):
+        if should_scale(column):
             df_scaled[column] = (
                 df_scaled[column] - df_scaled[column].mean()) / df_scaled[column].std(ddof=0)
 
@@ -61,7 +65,7 @@ def robust_scaling(df):
 
     # applu robust scaling
     for column in df_scaled.columns:
-        if pandas_is_numeric(df_scaled[column]):
+        if should_scale(column):
             iqr = df_scaled[column].quantile(
                 0.75) - df_scaled[column].quantile(0.25)
 
