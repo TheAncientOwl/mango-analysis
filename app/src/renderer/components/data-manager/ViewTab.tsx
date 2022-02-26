@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Button, Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import { CacheSystem } from '@renderer/api/CacheSystem';
 
-import { DoubleCheck } from '@renderer/components/DoubleCheck';
 import { DataFrame } from '@renderer/components/DataFrame';
 
 import { axios } from '@renderer/config';
