@@ -13,6 +13,8 @@ import {
   Backdrop,
   Checkbox,
 } from '@mui/material';
+// eslint-disable-next-line import/named
+import { Theme } from '@mui/material/styles';
 
 export interface Data {
   labels: string[];
@@ -42,6 +44,13 @@ export interface DataFrameProps {
 const HIGHLIGHTED_CELL = {
   bgcolor: 'primary.main',
   color: 'text.disabled',
+} as const;
+
+const CELL_TRANSITION = {
+  transition: (theme: Theme) =>
+    theme.transitions.create('background-color', {
+      duration: theme.transitions.duration.shortest,
+    }),
 } as const;
 
 const preventUndefinedCall = () => {
@@ -74,7 +83,10 @@ export const DataFrame: React.FC<DataFrameProps> = ({
                 const isSelected = selectedLabels.has(label);
 
                 return (
-                  <TableCell sx={isSelected ? HIGHLIGHTED_CELL : {}} key={`${label}_${index}`} align='center'>
+                  <TableCell
+                    sx={{ ...CELL_TRANSITION, ...(isSelected ? HIGHLIGHTED_CELL : {}) }}
+                    key={`${label}_${index}`}
+                    align='center'>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       {selectable && (
                         <Checkbox
@@ -98,7 +110,11 @@ export const DataFrame: React.FC<DataFrameProps> = ({
               const isRowSelected = selectedRows.has(rowID);
 
               return (
-                <TableRow sx={isRowSelected ? HIGHLIGHTED_CELL : {}} key={rowID} role='checkbox' tabIndex={-1}>
+                <TableRow
+                  sx={{ ...CELL_TRANSITION, ...(isRowSelected ? HIGHLIGHTED_CELL : {}) }}
+                  key={rowID}
+                  role='checkbox'
+                  tabIndex={-1}>
                   <TableCell align='right'>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       {selectable && (
@@ -118,7 +134,7 @@ export const DataFrame: React.FC<DataFrameProps> = ({
 
                     return (
                       <TableCell
-                        sx={selectedLabels.has(columnLabel) ? HIGHLIGHTED_CELL : {}}
+                        sx={{ ...CELL_TRANSITION, ...(selectedLabels.has(columnLabel) ? HIGHLIGHTED_CELL : {}) }}
                         key={`${rowID}-${columnLabel}`}
                         align={typeof value === 'number' ? 'right' : 'left'}>
                         {value}
