@@ -47,6 +47,8 @@ export interface Action {
 
 export type ViewTabDispatcher = React.Dispatch<Action>;
 
+// !! Don't change loadingData back to false when a fetchData is coming next
+// !! in order to avoid re-renders of the dataframe.
 export const viewTabReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.FetchData: {
@@ -126,7 +128,6 @@ export const viewTabReducer = (state: State, action: Action): State => {
     case ActionType.DropDataSuccess: {
       return {
         ...state,
-        loadingData: false,
         pageIndex: 0,
         selectedLabels: new Set<string>(),
         selectedRows: new Set<number>(),
@@ -150,7 +151,6 @@ export const viewTabReducer = (state: State, action: Action): State => {
     case ActionType.ScaleDataSuccess: {
       return {
         ...state,
-        loadingData: false,
         scalingMethod: 'none',
       };
     }

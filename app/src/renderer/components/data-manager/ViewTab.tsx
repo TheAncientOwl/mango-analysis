@@ -29,9 +29,9 @@ export const ViewTab: React.FC = () => {
   const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod, decimals } = state;
 
   // >> Fetch data.
+  // ! before calling this func, you should dispatch a FetchData action
+  // ! or at least the loadingData should be set to true.
   const fetchData: DataFetcher = () => {
-    dispatch({ type: ActionType.FetchData });
-
     let active = true;
 
     axios.get(`/data/page/${pageIndex}/page-size/${pageSize}`).then(res => {
