@@ -13,7 +13,6 @@ export const ImportTab: React.FC = () => {
   const [importPath, setImportPath] = useCache<string | null>(ImportPathKey, null);
   const [doubleCheckSwitch, toggleDoubleCheck] = useSwitch(false);
   const dataRequest = useRequest();
-
   const snackbar = useSnackbar({
     title: 'Success',
     message: 'Data deleted!',
@@ -32,10 +31,6 @@ export const ImportTab: React.FC = () => {
       snackbar.setMessage('Data loaded!');
       snackbar.open();
     });
-  };
-
-  const cancelDeleteData = () => {
-    toggleDoubleCheck();
   };
 
   const deleteData = () => {
@@ -79,7 +74,7 @@ export const ImportTab: React.FC = () => {
         }}
         onReject={{
           title: 'Cancel',
-          execute: cancelDeleteData,
+          execute: toggleDoubleCheck,
         }}>
         This action will
         <Box component='span' sx={{ color: 'error.main' }}>
