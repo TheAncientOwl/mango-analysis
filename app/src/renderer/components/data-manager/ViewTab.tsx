@@ -11,6 +11,7 @@ import { axios } from '@renderer/config';
 import { viewTabReducer, DataPageIndexKey, DataPageSizeKey, ActionType } from './viewTabStateReducer';
 import { ScalingHandler } from './ScalingHandler';
 import { DropHandler } from './DropHandler';
+import { DecimalsHandler } from './DecimalsHandler';
 
 export type DataFetcher = () => void;
 
@@ -23,8 +24,9 @@ export const ViewTab: React.FC = () => {
     selectedRows: new Set<number>(),
     data: { labels: [], totalRows: 0, rows: [] },
     scalingMethod: 'none',
+    decimals: 'default',
   });
-  const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod } = state;
+  const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod, decimals } = state;
 
   // >> Fetch data.
   const fetchData: DataFetcher = () => {
@@ -59,6 +61,7 @@ export const ViewTab: React.FC = () => {
           labels={Array.from(selectedLabels)}
           mangoIDs={Array.from(selectedRows)}
         />
+        <DecimalsHandler value={decimals} dispatch={dispatch} />
       </Stack>
 
       <DataFrame
@@ -66,7 +69,7 @@ export const ViewTab: React.FC = () => {
         currentData={data}
         currentPage={pageIndex}
         rowsPerPage={pageSize}
-        decimals={4}
+        decimals={decimals}
         onPageChange={newPageIndex => dispatch({ type: ActionType.ChangePageIndex, payload: newPageIndex })}
         onPageSizeChange={newPageSize => dispatch({ type: ActionType.ChangePageSize, payload: newPageSize })}
         selectable={true}

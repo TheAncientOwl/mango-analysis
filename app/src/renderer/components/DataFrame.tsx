@@ -22,6 +22,8 @@ export interface Data {
   rows: (string | number)[][];
 }
 
+export type Decimals = number | 'default';
+
 export interface DataFrameProps {
   loading: boolean;
 
@@ -32,7 +34,7 @@ export interface DataFrameProps {
   onPageChange: (newPage: number) => void;
   onPageSizeChange: (newPageSize: number) => void;
 
-  decimals?: number | 'default';
+  decimals?: Decimals;
 
   selectable?: boolean;
   onLabelSelect?: (selectedLabel: string) => void;

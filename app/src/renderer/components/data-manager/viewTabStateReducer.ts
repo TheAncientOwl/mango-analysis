@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Data } from '@renderer/components/DataFrame';
+import { Data, Decimals } from '@renderer/components/DataFrame';
 import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
 export const DataPageIndexKey = 'data-page-index';
@@ -19,6 +19,7 @@ export enum ActionType {
   ChangeScalingMethod = 'CHANGE_SCALING_METHOD',
   ScaleData = 'SCALE_DATA',
   ScaleDataSuccess = 'SCALE_DATA_SUCCESS',
+  ChangeDecimals = 'CHANGE_DECIMALS',
 }
 
 export type ScalingMethodType =
@@ -36,11 +37,12 @@ interface State {
   selectedLabels: Set<string>;
   selectedRows: Set<number>;
   scalingMethod: ScalingMethodType;
+  decimals: Decimals;
 }
 
 export interface Action {
   type: ActionType;
-  payload?: string | number | Data | ScalingMethodType;
+  payload?: string | number | Data | ScalingMethodType | Decimals;
 }
 
 export type ViewTabDispatcher = React.Dispatch<Action>;
@@ -150,6 +152,13 @@ export const viewTabReducer = (state: State, action: Action): State => {
         ...state,
         loadingData: false,
         scalingMethod: 'none',
+      };
+    }
+
+    case ActionType.ChangeDecimals: {
+      return {
+        ...state,
+        decimals: action.payload as Decimals,
       };
     }
   }
