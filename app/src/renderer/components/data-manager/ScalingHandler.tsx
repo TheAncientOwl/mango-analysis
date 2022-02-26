@@ -1,13 +1,15 @@
 import React from 'react';
 
-import { Action, ActionType, ScalingMethodType } from './viewTabStateReducer';
+import { Box } from '@mui/system';
 // eslint-disable-next-line import/named
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { useSnackbar, useSwitch } from '@src/renderer/hooks';
-import { DoubleCheck } from '../DoubleCheck';
-import { Box } from '@mui/system';
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
+
+import { DoubleCheck } from '@renderer/components/DoubleCheck';
+import { Action, ActionType, ScalingMethodType } from './viewTabStateReducer';
+
 import { axios } from '@src/renderer/config';
+import { useSnackbar, useSwitch } from '@src/renderer/hooks';
 
 interface Props {
   scalingMethod: ScalingMethodType;

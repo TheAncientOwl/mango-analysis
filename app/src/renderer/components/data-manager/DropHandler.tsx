@@ -1,11 +1,14 @@
+import React from 'react';
+
+import { Box } from '@mui/system';
 import { Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import { DoubleCheck } from '@renderer/components/DoubleCheck';
+import { Action, ActionType } from './viewTabStateReducer';
+
 import { axios } from '@src/renderer/config';
 import { useSnackbar, useSwitch } from '@src/renderer/hooks';
-import React from 'react';
-import { Action, ActionType } from './viewTabStateReducer';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { DoubleCheck } from '../DoubleCheck';
-import { Box } from '@mui/system';
 
 interface Props {
   loadingData: boolean;
