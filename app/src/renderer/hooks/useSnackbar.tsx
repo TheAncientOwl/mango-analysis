@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { Snackbar, Alert, AlertTitle } from '@mui/material';
-
-type Severity = 'error' | 'warning' | 'info' | 'success';
-type Variant = 'outlined' | 'filled' | 'standard';
+import { Snackbar, Severity, Variant } from '@src/renderer/components/Snackbar';
 
 interface Props {
   title?: string;
@@ -19,7 +16,12 @@ interface Snack {
   setMessage: (arg: string) => void;
 }
 
-export const useSnackbar = ({ title = '', message = '', severity = 'info', variant = 'standard' }: Props): Snack => {
+export const useSnackbar = ({
+  title = 'Success',
+  message = '',
+  severity = 'success',
+  variant = 'filled',
+}: Props): Snack => {
   const [_open, setOpen] = React.useState(false);
   const [_message, setMessage] = React.useState<string>();
 
@@ -29,11 +31,8 @@ export const useSnackbar = ({ title = '', message = '', severity = 'info', varia
   const close = () => setOpen(false);
 
   const element = (
-    <Snackbar open={_open} autoHideDuration={5500} onClose={close}>
-      <Alert severity={severity} variant={variant} onClose={close}>
-        <AlertTitle>{title}</AlertTitle>
-        {_message}
-      </Alert>
+    <Snackbar title={title} severity={severity} variant={variant} open={_open} onClose={close}>
+      {_message}
     </Snackbar>
   );
 

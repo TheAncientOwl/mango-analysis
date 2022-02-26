@@ -6,7 +6,7 @@ import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } 
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { SuccessSnack } from '@renderer/components/SuccessSnack';
+import { Snackbar } from '@src/renderer/components/Snackbar';
 import { axios } from '@src/renderer/config';
 import { useSwitch } from '@src/renderer/hooks';
 
@@ -122,9 +122,9 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
         Are you sure?
       </DoubleCheck>
 
-      <SuccessSnack open={snackSwitch} onClose={toggleSnack}>
+      <Snackbar open={snackSwitch} onClose={toggleSnack}>
         Scaled data!
-      </SuccessSnack>
+      </Snackbar>
     </React.Fragment>
   );
 };

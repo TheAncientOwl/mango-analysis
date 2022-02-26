@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { SuccessSnack } from '@renderer/components/SuccessSnack';
+import { Snackbar } from '@src/renderer/components/Snackbar';
 import { axios } from '@src/renderer/config';
 import { useSwitch } from '@src/renderer/hooks';
 
@@ -70,9 +70,9 @@ export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData,
         Are you sure?
       </DoubleCheck>
 
-      <SuccessSnack open={snackSwitch} onClose={toggleSnack}>
+      <Snackbar open={snackSwitch} onClose={toggleSnack}>
         Rows & columns dropped
-      </SuccessSnack>
+      </Snackbar>
     </React.Fragment>
   );
 };

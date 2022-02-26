@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Stack, TextField, CircularProgress } from '@mui/material';
 
-import { SuccessSnack } from '@renderer/components/SuccessSnack';
+import { Snackbar } from '@src/renderer/components/Snackbar';
 import { useCache, RequestState, useRequest, useSwitch } from '@renderer/hooks/index';
 
 export const ExportTab: React.FC = () => {
@@ -49,9 +49,9 @@ export const ExportTab: React.FC = () => {
         {saveDataRequest.state === RequestState.Pending && <CircularProgress size={30} thickness={4} color='info' />}
       </Stack>
 
-      <SuccessSnack open={snackSwitch} onClose={toggleSnack}>
+      <Snackbar open={snackSwitch} onClose={toggleSnack}>
         Saved data!
-      </SuccessSnack>
+      </Snackbar>
     </React.Fragment>
   );
 };
