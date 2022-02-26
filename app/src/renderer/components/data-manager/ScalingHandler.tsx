@@ -6,15 +6,16 @@ import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } 
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { Action, ActionType, ScalingMethodType } from './viewTabStateReducer';
-
 import { axios } from '@src/renderer/config';
 import { useSnackbar, useSwitch } from '@src/renderer/hooks';
 
+import { ActionType, ScalingMethodType, ViewTabDispatcher } from './viewTabStateReducer';
+import { DataFetcher } from './ViewTab';
+
 interface Props {
   scalingMethod: ScalingMethodType;
-  dispatch: React.Dispatch<Action>;
-  fetchData: () => void;
+  dispatch: ViewTabDispatcher;
+  fetchData: DataFetcher;
 }
 
 interface ScalingMethodConfig {

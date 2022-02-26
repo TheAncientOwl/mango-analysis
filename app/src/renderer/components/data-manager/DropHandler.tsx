@@ -5,15 +5,16 @@ import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { Action, ActionType } from './viewTabStateReducer';
-
 import { axios } from '@src/renderer/config';
 import { useSnackbar, useSwitch } from '@src/renderer/hooks';
 
+import { ActionType, ViewTabDispatcher } from './viewTabStateReducer';
+import { DataFetcher } from './ViewTab';
+
 interface Props {
   loadingData: boolean;
-  dispatch: React.Dispatch<Action>;
-  fetchData: () => void;
+  dispatch: ViewTabDispatcher;
+  fetchData: DataFetcher;
   labels: Array<string>;
   mangoIDs: Array<number>;
 }

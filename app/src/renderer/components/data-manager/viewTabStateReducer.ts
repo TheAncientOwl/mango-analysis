@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Data } from '@renderer/components/DataFrame';
 import { CacheSystem } from '@src/renderer/api/CacheSystem';
 
@@ -40,6 +42,8 @@ export interface Action {
   type: ActionType;
   payload?: string | number | Data | ScalingMethodType;
 }
+
+export type ViewTabDispatcher = React.Dispatch<Action>;
 
 export const viewTabReducer = (state: State, action: Action): State => {
   switch (action.type) {

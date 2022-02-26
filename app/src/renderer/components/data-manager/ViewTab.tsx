@@ -12,6 +12,8 @@ import { viewTabReducer, DataPageIndexKey, DataPageSizeKey, ActionType } from '.
 import { ScalingHandler } from './ScalingHandler';
 import { DropHandler } from './DropHandler';
 
+export type DataFetcher = () => void;
+
 export const ViewTab: React.FC = () => {
   const [state, dispatch] = React.useReducer(viewTabReducer, {
     pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
@@ -25,7 +27,7 @@ export const ViewTab: React.FC = () => {
   const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod } = state;
 
   // >> Fetch data.
-  const fetchData = () => {
+  const fetchData: DataFetcher = () => {
     dispatch({ type: ActionType.FetchData });
 
     let active = true;
