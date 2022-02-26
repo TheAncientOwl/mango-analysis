@@ -26,7 +26,7 @@ export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData,
 
   const handleDrop = () => {
     toggleDoubleCheckSwitch();
-    dispatch({ type: ActionType.DropData });
+    dispatch({ type: ActionType.BeginLoading });
 
     axios
       .post('/data/drop/rows+cols', {

@@ -63,7 +63,7 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
 
   const handleScale = () => {
     toggleDoubleCheckSwitch();
-    dispatch({ type: ActionType.ScaleData });
+    dispatch({ type: ActionType.BeginLoading });
 
     axios
       .post('/data/scale', {

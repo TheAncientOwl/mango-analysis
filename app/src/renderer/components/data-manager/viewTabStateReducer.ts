@@ -7,17 +7,15 @@ export const DataPageIndexKey = 'data-page-index';
 export const DataPageSizeKey = 'data-page-size';
 
 export enum ActionType {
-  FetchData = 'FETCH_DATA',
+  BeginLoading = 'BEGIN_LOADING',
   FetchDataCancel = 'FETCH_DATA_CANCEL',
   FetchDataSuccess = 'FETCH_DATA_SUCCESS',
   ChangePageSize = 'CHANGE_PAGE_SIZE',
   ChangePageIndex = 'CHANGE_PAGE_INDEX',
   SelectColumn = 'SELECT_COLUMN',
   SelectRow = 'SELECT_ROW',
-  DropData = 'DROP_DATA',
   DropDataSuccess = 'DROP_DATA_SUCCESS',
   ChangeScalingMethod = 'CHANGE_SCALING_METHOD',
-  ScaleData = 'SCALE_DATA',
   ScaleDataSuccess = 'SCALE_DATA_SUCCESS',
   ChangeDecimals = 'CHANGE_DECIMALS',
 }
@@ -51,7 +49,9 @@ export type ViewTabDispatcher = React.Dispatch<Action>;
 // !! in order to avoid re-renders of the dataframe.
 export const viewTabReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case ActionType.FetchData: {
+    case ActionType.BeginLoading: {
+      if (state.loadingData === true) return state;
+
       return {
         ...state,
         loadingData: true,
@@ -118,13 +118,6 @@ export const viewTabReducer = (state: State, action: Action): State => {
       };
     }
 
-    case ActionType.DropData: {
-      return {
-        ...state,
-        loadingData: true,
-      };
-    }
-
     case ActionType.DropDataSuccess: {
       return {
         ...state,
@@ -138,13 +131,6 @@ export const viewTabReducer = (state: State, action: Action): State => {
       return {
         ...state,
         scalingMethod: action.payload as ScalingMethodType,
-      };
-    }
-
-    case ActionType.ScaleData: {
-      return {
-        ...state,
-        loadingData: true,
       };
     }
 
