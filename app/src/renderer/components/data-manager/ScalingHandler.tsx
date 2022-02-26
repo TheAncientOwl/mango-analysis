@@ -3,7 +3,7 @@ import React from 'react';
 import { Box } from '@mui/system';
 // eslint-disable-next-line import/named
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import LinearScaleIcon from '@mui/icons-material/LinearScale';
+import AlignVerticalBottomIcon from '@mui/icons-material/AlignVerticalBottom';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 import { Snackbar } from '@src/renderer/components/Snackbar';
@@ -99,7 +99,7 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
         variant='contained'
         size='small'
         onClick={doubleCheckSwitch.on}
-        startIcon={<LinearScaleIcon />}>
+        startIcon={<AlignVerticalBottomIcon />}>
         Scale
       </Button>
 
