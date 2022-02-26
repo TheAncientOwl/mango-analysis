@@ -26,7 +26,7 @@ export const ViewTab: React.FC = () => {
     selectedRows: new Set<number>(),
     data: { labels: [], totalRows: 0, rows: [] },
     scalingMethod: 'none',
-    decimals: 'default',
+    decimals: 4,
   });
   const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod, decimals } = state;
 
