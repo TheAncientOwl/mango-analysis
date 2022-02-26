@@ -92,7 +92,7 @@ const _DataFrame: React.FC<DataFrameProps> = ({
                     sx={{ ...CELL_TRANSITION, ...(isSelected ? HIGHLIGHTED_CELL : {}) }}
                     key={`${label}_${index}`}
                     align='center'>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       {selectable && (
                         <Checkbox
                           color='secondary'
