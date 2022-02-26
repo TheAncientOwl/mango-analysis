@@ -53,29 +53,22 @@ export const DropHandler: React.FC<Props> = ({ loadingData, dispatch, fetchData,
 
       <DoubleCheck
         open={doubleCheckSwitch}
-        title='Double check'
-        text={
-          <React.Fragment>
-            This action will{' '}
-            <Box component='span' sx={{ color: 'error.main' }}>
-              drop
-            </Box>{' '}
-            selected rows and columns.
-            <br />
-            Are you sure?
-          </React.Fragment>
-        }
         onAccept={{
           title: 'Drop',
           execute: handleDrop,
-          buttonColor: 'error',
         }}
         onReject={{
           title: 'Cancel',
           execute: toggleDoubleCheckSwitch,
-          buttonColor: 'info',
-        }}
-      />
+        }}>
+        This action will
+        <Box component='span' sx={{ color: 'error.main' }}>
+          {' drop '}
+        </Box>
+        selected rows and columns.
+        <br />
+        Are you sure?
+      </DoubleCheck>
 
       <SuccessSnack open={snackSwitch} onClose={toggleSnack}>
         Rows & columns dropped

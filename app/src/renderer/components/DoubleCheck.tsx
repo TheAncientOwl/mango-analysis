@@ -5,29 +5,26 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, B
 interface Action {
   title: string;
   execute: () => void;
-  buttonColor: 'error' | 'warning' | 'info' | 'success' | 'inherit' | 'primary' | 'secondary';
 }
 
 interface Props {
   open: boolean;
-  title?: string;
-  text?: React.ReactNode;
   onAccept: Action;
   onReject: Action;
 }
 
-export const DoubleCheck: React.FC<Props> = ({ open, title, text, onAccept, onReject }) => {
+export const DoubleCheck: React.FC<Props> = ({ open, onAccept, onReject, children }) => {
   return (
     <Dialog open={open} aria-labelledby='doublecheck-dialog-title' aria-describedby='doublecheck-dialog-description'>
-      <DialogTitle id='doublecheck-dialog-title'>{title}</DialogTitle>
+      <DialogTitle id='doublecheck-dialog-title'>Double Check</DialogTitle>
       <DialogContent>
-        <DialogContentText>{text}</DialogContentText>
+        <DialogContentText>{children}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onAccept.execute} variant='outlined' color={onAccept.buttonColor}>
+        <Button onClick={onAccept.execute} variant='outlined' color={'error'}>
           {onAccept.title}
         </Button>
-        <Button onClick={onReject.execute} variant='outlined' color={onReject.buttonColor}>
+        <Button onClick={onReject.execute} variant='outlined' color='info'>
           {onReject.title}
         </Button>
       </DialogActions>

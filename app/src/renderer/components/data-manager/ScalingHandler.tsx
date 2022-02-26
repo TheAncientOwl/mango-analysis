@@ -105,29 +105,22 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
 
       <DoubleCheck
         open={doubleCheckSwitch}
-        title='Double check'
-        text={
-          <React.Fragment>
-            This action will{' '}
-            <Box component='span' sx={{ color: 'error.main' }}>
-              scale
-            </Box>{' '}
-            the dataframe.
-            <br />
-            Are you sure?
-          </React.Fragment>
-        }
         onAccept={{
           title: 'Scale',
           execute: handleScale,
-          buttonColor: 'error',
         }}
         onReject={{
           title: 'Cancel',
           execute: toggleDoubleCheckSwitch,
-          buttonColor: 'info',
-        }}
-      />
+        }}>
+        This action will
+        <Box component='span' sx={{ color: 'error.main' }}>
+          {' scale '}
+        </Box>
+        the dataframe.
+        <br />
+        Are you sure?
+      </DoubleCheck>
 
       <SuccessSnack open={snackSwitch} onClose={toggleSnack}>
         Scaled data!

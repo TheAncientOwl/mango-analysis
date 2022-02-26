@@ -71,33 +71,26 @@ export const ImportTab: React.FC = () => {
         </Stack>
       )}
 
-      {snackbar.element}
-
       <DoubleCheck
         open={doubleCheckSwitch}
-        title='Double check'
-        text={
-          <React.Fragment>
-            This action will{' '}
-            <Box component='span' sx={{ color: 'error.main' }}>
-              delete
-            </Box>{' '}
-            the data imported from <Box component='span' sx={{ color: 'info.main' }}>{`"${importPath}"`}</Box>
-            <br />
-            Are you sure?
-          </React.Fragment>
-        }
         onAccept={{
           title: 'Delete',
           execute: deleteData,
-          buttonColor: 'error',
         }}
         onReject={{
           title: 'Cancel',
           execute: cancelDeleteData,
-          buttonColor: 'info',
-        }}
-      />
+        }}>
+        This action will
+        <Box component='span' sx={{ color: 'error.main' }}>
+          {' delete '}
+        </Box>
+        the data imported from <Box component='span' sx={{ color: 'info.main' }}>{`"${importPath}"`}</Box>
+        <br />
+        Are you sure?
+      </DoubleCheck>
+
+      {snackbar.element}
     </React.Fragment>
   );
 };
