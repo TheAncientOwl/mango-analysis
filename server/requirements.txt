@@ -1,6 +1,7 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
 # platform: win-64
+autopep8=1.6.0=pyhd8ed1ab_1
 bzip2=1.0.8=h8ffe710_4
 ca-certificates=2021.10.8=h5b45459_0
 click=8.0.4=py310h5588dad_0
@@ -21,6 +22,7 @@ numpy=1.22.3=py310hcae7c84_0
 openssl=3.0.0=h8ffe710_2
 pandas=1.4.1=py310hf5e1058_0
 pip=22.0.4=pyhd8ed1ab_0
+pycodestyle=2.8.0=pyhd8ed1ab_0
 python=3.10.2=hcf16a7b_4_cpython
 python-dateutil=2.8.2=pyhd8ed1ab_0
 python_abi=3.10=2_cp310
@@ -30,6 +32,7 @@ six=1.16.0=pyh6c4a22f_0
 sqlite=3.37.0=h8ffe710_0
 tbb=2021.5.0=h2d74725_0
 tk=8.6.12=h8ffe710_0
+toml=0.10.2=pyhd8ed1ab_0
 tzdata=2021e=he74cb21_0
 ucrt=10.0.20348.0=h57928b3_0
 vc=14.2=hb210afc_6
