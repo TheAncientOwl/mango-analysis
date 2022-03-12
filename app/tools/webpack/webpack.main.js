@@ -1,3 +1,5 @@
+const CopyPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   /**
    * This is the main entry point for your application, it's the first file
@@ -5,6 +7,11 @@ module.exports = {
    */
   entry: ['./src/main/app.ts'],
   // Put your normal webpack config below here
+  plugins: [
+    new CopyPlugin({
+      patterns: [{ from: 'src/main/python-build', to: 'python-build' }],
+    }),
+  ],
   module: {
     rules: require('./webpack.rules'),
   },

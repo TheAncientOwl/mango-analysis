@@ -1,5 +1,6 @@
 import { app, BrowserWindow, session } from 'electron';
 import { createAppWindow } from './appWindow';
+import { setupPythonServer } from './spawnPythonServer';
 
 /** Handle creating/removing shortcuts on Windows when installing/uninstalling. */
 if (require('electron-squirrel-startup')) {
@@ -47,3 +48,8 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+/**
+ * Handle python server spawning.
+ */
+setupPythonServer();
