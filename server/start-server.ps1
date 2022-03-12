@@ -1,1 +1,1 @@
-& C:/Users/TheAncientOwl/anaconda3/envs/data-analysis-tool-backend-env/python.exe c:/Users/TheAncientOwl/Code/data-analysis-tool/server/main/driver.py
+& C:/Users/TheAncientOwl/anaconda3/envs/mango-backend/python.exe c:/Users/TheAncientOwl/Code/data-analysis-tool/server/main/driver.py
