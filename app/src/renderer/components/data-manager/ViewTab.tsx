@@ -55,7 +55,7 @@ export const ViewTab: React.FC = () => {
   };
   React.useEffect(fetchData, [pageIndex, pageSize]);
 
-  if (data.totalRows === 0 && !loadingData) return <Typography>No data loaded...</Typography>;
+  // if (data.totalRows === 0 && !loadingData) return ;
 
   const handle = React.useMemo(
     () => ({
@@ -67,37 +67,55 @@ export const ViewTab: React.FC = () => {
     [dispatch]
   );
 
+  const toolbar = (
+    <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
+      <ScalingHandler scalingMethod={scalingMethod} dispatch={dispatch} fetchData={fetchData} />
+      {VerticalLine}
+      <DropHandler
+        loadingData={loadingData}
+        dispatch={dispatch}
+        fetchData={fetchData}
+        labels={Array.from(selectedLabels)}
+        mangoIDs={Array.from(selectedRows)}
+      />
+      {VerticalLine}
+      <DecimalsHandler value={decimals} dispatch={dispatch} />
+    </Stack>
+  );
+
   // >> Return JSX.
   return (
     <React.Fragment>
-      <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
-        <ScalingHandler scalingMethod={scalingMethod} dispatch={dispatch} fetchData={fetchData} />
-        {VerticalLine}
-        <DropHandler
-          loadingData={loadingData}
-          dispatch={dispatch}
-          fetchData={fetchData}
-          labels={Array.from(selectedLabels)}
-          mangoIDs={Array.from(selectedRows)}
-        />
-        {VerticalLine}
-        <DecimalsHandler value={decimals} dispatch={dispatch} />
-      </Stack>
+      {data.totalRows === 0 && (
+        <Typography
+          sx={{
+            height: '100%',
+            pt: '10%',
+            textAlign: 'center',
+          }}>
+          No data loaded...
+        </Typography>
+      )}
 
-      <DataFrame
-        loading={loadingData}
-        currentData={data}
-        currentPage={pageIndex}
-        rowsPerPage={pageSize}
-        decimals={decimals}
-        onPageChange={handle.pageChange}
-        onPageSizeChange={handle.pageSizeChange}
-        selectable={true}
-        onLabelSelect={handle.labelSelect}
-        onRowSelect={handle.rowSelect}
-        selectedLabels={selectedLabels}
-        selectedRows={selectedRows}
-      />
+      {data.totalRows > 0 && (
+        <>
+          {toolbar}
+          <DataFrame
+            loading={loadingData}
+            currentData={data}
+            currentPage={pageIndex}
+            rowsPerPage={pageSize}
+            decimals={decimals}
+            onPageChange={handle.pageChange}
+            onPageSizeChange={handle.pageSizeChange}
+            selectable={true}
+            onLabelSelect={handle.labelSelect}
+            onRowSelect={handle.rowSelect}
+            selectedLabels={selectedLabels}
+            selectedRows={selectedRows}
+          />
+        </>
+      )}
     </React.Fragment>
   );
 };
