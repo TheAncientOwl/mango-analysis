@@ -78,7 +78,7 @@ const _DataFrame: React.FC<DataFrameProps> = ({
   return (
     <React.Fragment>
       <TableContainer component={Paper} sx={{ flex: 1 }}>
-        <Table stickyHeader aria-label='dataframe-table'>
+        <Table size='small' stickyHeader aria-label='dataframe-table'>
           <TableHead>
             <TableRow>
               {labels.length > 1 && <TableCell align='center'>ID</TableCell>}
