@@ -55,7 +55,7 @@ export const AppBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <MuiAppBar position='fixed' className='draggable' sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
+      <MuiAppBar position='fixed' className='draggable' sx={{ zIndex: theme => theme.zIndex.tooltip + 100 }}>
         <Toolbar variant='dense'>
           {menuIcon}
           {logo}
