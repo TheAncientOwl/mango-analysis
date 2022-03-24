@@ -9,8 +9,6 @@ import {
   TableHead,
   TableRow,
   TablePagination,
-  CircularProgress,
-  Backdrop,
   Checkbox,
 } from '@mui/material';
 // eslint-disable-next-line import/named
@@ -160,10 +158,6 @@ const _DataFrame: React.FC<DataFrameProps> = ({
         onRowsPerPageChange={event => onPageSizeChange(+event.target.value)}
         onPageChange={(event, newPage) => onPageChange(newPage)}
       />
-
-      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color='inherit' />
-      </Backdrop>
     </React.Fragment>
   );
 };
