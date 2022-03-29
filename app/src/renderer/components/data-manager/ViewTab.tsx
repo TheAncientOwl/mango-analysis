@@ -4,7 +4,8 @@ import { Stack, Typography } from '@mui/material';
 
 import { CacheSystem } from '@renderer/api/CacheSystem';
 
-import { DataFrame, Decimals } from '@renderer/components/DataFrame';
+import { DataFrameViewer } from './data-frame-viewer';
+import { DecimalsPrecision } from './data-frame-viewer/types';
 
 import { axios } from '@renderer/config';
 
@@ -28,13 +29,14 @@ export const ViewTab: React.FC = () => {
     pageIndex: CacheSystem.GetItemOrDefault<number>(DataPageIndexKey, 0),
     pageSize: CacheSystem.GetItemOrDefault<number>(DataPageSizeKey, 25),
     loadingData: true,
-    selectedLabels: new Set<string>(),
-    selectedRows: new Set<number>(),
+    checkedLabels: new Set<string>(),
+    checkedRows: new Set<number>(),
     data: { labels: [], totalRows: 0, rows: [] },
     scalingMethod: 'none',
-    decimals: CacheSystem.GetItemOrDefault<number>(DataframeDecimalsKey, 4) as Decimals,
+    decimalsPrecision: CacheSystem.GetItemOrDefault<number>(DataframeDecimalsKey, 4) as DecimalsPrecision,
   });
-  const { pageIndex, pageSize, data, loadingData, selectedLabels, selectedRows, scalingMethod, decimals } = state;
+  const { pageIndex, pageSize, data, loadingData, checkedLabels, checkedRows, scalingMethod, decimalsPrecision } =
+    state;
 
   // >> Fetch data.
   // ! before calling this func, you should dispatch a FetchData action
@@ -75,11 +77,11 @@ export const ViewTab: React.FC = () => {
         loadingData={loadingData}
         dispatch={dispatch}
         fetchData={fetchData}
-        labels={Array.from(selectedLabels)}
-        mangoIDs={Array.from(selectedRows)}
+        labels={Array.from(checkedLabels)}
+        mangoIDs={Array.from(checkedRows)}
       />
       {VerticalLine}
-      <DecimalsHandler value={decimals} dispatch={dispatch} />
+      <DecimalsHandler value={decimalsPrecision} dispatch={dispatch} />
     </Stack>
   );
 
@@ -100,19 +102,17 @@ export const ViewTab: React.FC = () => {
       {data.totalRows > 0 && (
         <>
           {toolbar}
-          <DataFrame
-            loading={loadingData}
-            currentData={data}
-            currentPage={pageIndex}
-            rowsPerPage={pageSize}
-            decimals={decimals}
+          <DataFrameViewer
+            dataFrame={data}
+            page={pageIndex}
+            pageSize={pageSize}
+            decimalsPrecision={decimalsPrecision}
             onPageChange={handle.pageChange}
             onPageSizeChange={handle.pageSizeChange}
-            selectable={true}
-            onLabelSelect={handle.labelSelect}
-            onRowSelect={handle.rowSelect}
-            selectedLabels={selectedLabels}
-            selectedRows={selectedRows}
+            onLabelCheck={handle.labelSelect}
+            onRowCheck={handle.rowSelect}
+            checkedLabels={checkedLabels}
+            checkedRows={checkedRows}
           />
         </>
       )}

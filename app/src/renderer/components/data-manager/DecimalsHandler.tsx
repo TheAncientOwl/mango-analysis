@@ -1,19 +1,19 @@
 import React from 'react';
 
-import { Decimals } from '@renderer/components/DataFrame';
+import { DecimalsPrecision } from './data-frame-viewer/types';
 // eslint-disable-next-line import/named
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { ActionType, ViewTabDispatcher } from './viewTabStateReducer';
 
 interface Props {
-  value: Decimals;
+  value: DecimalsPrecision;
   dispatch: ViewTabDispatcher;
 }
 
 interface DecimalsOptionConfig {
   id: number;
   display: string;
-  value: Decimals;
+  value: DecimalsPrecision;
 }
 
 const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
@@ -28,14 +28,14 @@ const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
     return {
       id: value as number,
       display: value.toString(),
-      value: value as Decimals,
+      value: value as DecimalsPrecision,
     } as DecimalsOptionConfig;
   }),
 ];
 
 export const DecimalsHandler: React.FC<Props> = ({ value, dispatch }) => {
   const handleChange = (event: SelectChangeEvent) => {
-    dispatch({ type: ActionType.ChangeDecimals, payload: event.target.value as Decimals });
+    dispatch({ type: ActionType.ChangeDecimals, payload: event.target.value as DecimalsPrecision });
   };
 
   return (

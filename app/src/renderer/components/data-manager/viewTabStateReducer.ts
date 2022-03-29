@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Data, Decimals } from '@renderer/components/DataFrame';
 import { CacheSystem } from '@src/renderer/api/CacheSystem';
+
+import { DataFrame, DecimalsPrecision } from './data-frame-viewer/types';
 
 export const DataPageIndexKey = 'data-page-index';
 export const DataPageSizeKey = 'data-page-size';
@@ -32,16 +33,16 @@ interface State {
   loadingData: boolean;
   pageIndex: number;
   pageSize: number;
-  data: Data;
-  selectedLabels: Set<string>;
-  selectedRows: Set<number>;
+  data: DataFrame;
+  checkedLabels: Set<string>;
+  checkedRows: Set<number>;
   scalingMethod: ScalingMethodType;
-  decimals: Decimals;
+  decimalsPrecision: DecimalsPrecision;
 }
 
 export interface Action {
   type: ActionType;
-  payload?: string | number | Data | ScalingMethodType | Decimals;
+  payload?: string | number | DataFrame | ScalingMethodType | DecimalsPrecision;
 }
 
 export type ViewTabDispatcher = React.Dispatch<Action>;
@@ -70,7 +71,7 @@ export const viewTabReducer = (state: State, action: Action): State => {
       return {
         ...state,
         loadingData: false,
-        data: action.payload as Data,
+        data: action.payload as DataFrame,
       };
     }
 
@@ -94,7 +95,7 @@ export const viewTabReducer = (state: State, action: Action): State => {
     }
 
     case ActionType.SelectColumn: {
-      const newSet = new Set(state.selectedLabels);
+      const newSet = new Set(state.checkedLabels);
       const selectedColumn = action.payload as string;
 
       if (newSet.has(selectedColumn)) newSet.delete(selectedColumn);
@@ -102,12 +103,12 @@ export const viewTabReducer = (state: State, action: Action): State => {
 
       return {
         ...state,
-        selectedLabels: newSet,
+        checkedLabels: newSet,
       };
     }
 
     case ActionType.SelectRow: {
-      const newSet = new Set(state.selectedRows);
+      const newSet = new Set(state.checkedRows);
       const selectedRow = action.payload as number;
 
       if (newSet.has(selectedRow)) newSet.delete(selectedRow);
@@ -115,7 +116,7 @@ export const viewTabReducer = (state: State, action: Action): State => {
 
       return {
         ...state,
-        selectedRows: newSet,
+        checkedRows: newSet,
       };
     }
 
@@ -123,8 +124,8 @@ export const viewTabReducer = (state: State, action: Action): State => {
       return {
         ...state,
         pageIndex: 0,
-        selectedLabels: new Set<string>(),
-        selectedRows: new Set<number>(),
+        checkedLabels: new Set<string>(),
+        checkedRows: new Set<number>(),
       };
     }
 
@@ -147,7 +148,7 @@ export const viewTabReducer = (state: State, action: Action): State => {
 
       return {
         ...state,
-        decimals: action.payload as Decimals,
+        decimalsPrecision: action.payload as DecimalsPrecision,
       };
     }
   }
