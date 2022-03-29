@@ -8,6 +8,18 @@ interface DataManagerState extends DataFrameConfig {
   feedbackMessageOpen: boolean;
 }
 
+export const getDefaultDataManagerState = (): DataManagerState => ({
+  loading: false,
+  dataFrame: { labels: [], totalRows: 0, rows: [] },
+  page: 0,
+  pageSize: 25,
+  checkedLabels: new Set<string>(),
+  checkedRows: new Set<number>(),
+  decimalsPrecision: 3,
+  feedbackMessage: '',
+  feedbackMessageOpen: false,
+});
+
 export enum ActionType {
   Loading = 'LOADING',
   EndLoading = 'END_LOADING',

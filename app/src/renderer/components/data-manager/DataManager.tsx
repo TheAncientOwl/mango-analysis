@@ -1,23 +1,19 @@
 import React from 'react';
 
 import { Box, Button, Backdrop, CircularProgress, Stack, Typography } from '@mui/material';
-import { ActionType, dataManagerReducer } from './dataManagerReducer';
-import { axios } from '@src/renderer/config';
+import { ActionType, dataManagerReducer, getDefaultDataManagerState } from './dataManagerReducer';
+import { axios } from '@renderer/config';
 import { DataFrameViewer } from './data-frame-viewer';
 import { Snackbar } from '@renderer/components/Snackbar';
 
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useSwitch } from '@renderer/hooks';
+import { DoubleCheck } from '@renderer/components/DoubleCheck';
+
 export const DataManager: React.FC = () => {
-  const [state, dispatch] = React.useReducer(dataManagerReducer, {
-    loading: false,
-    dataFrame: { labels: [], totalRows: 0, rows: [] },
-    page: 0,
-    pageSize: 25,
-    checkedLabels: new Set<string>(),
-    checkedRows: new Set<number>(),
-    decimalsPrecision: 3,
-    feedbackMessage: '',
-    feedbackMessageOpen: false,
-  });
+  const [state, dispatch] = React.useReducer(dataManagerReducer, getDefaultDataManagerState());
+  const doubleCheckSwitch = useSwitch();
 
   const fetchData = () => {
     dispatch({ type: ActionType.Loading });
@@ -49,6 +45,7 @@ export const DataManager: React.FC = () => {
 
     axios.post('/data/drop-all').then(() => {
       dispatch({ type: ActionType.DataframeDropped });
+      doubleCheckSwitch.off();
     });
   };
 
@@ -71,10 +68,15 @@ export const DataManager: React.FC = () => {
   return (
     <>
       <Stack sx={{ p: 2, gap: 1 }} direction='row'>
-        <Button onClick={importData} variant='contained' size='medium' disableElevation>
+        <Button onClick={importData} startIcon={<FileUploadIcon />} variant='contained' size='medium' disableElevation>
           Import
         </Button>
-        <Button onClick={dropDataFrame} variant='contained' size='medium' disableElevation>
+        <Button
+          onClick={doubleCheckSwitch.on}
+          startIcon={<DeleteIcon />}
+          variant='contained'
+          size='medium'
+          disableElevation>
           Delete
         </Button>
       </Stack>
@@ -123,6 +125,24 @@ export const DataManager: React.FC = () => {
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={state.loading}>
         <CircularProgress color='inherit' />
       </Backdrop>
+
+      <DoubleCheck
+        open={doubleCheckSwitch.value}
+        onAccept={{
+          title: 'Delete',
+          execute: dropDataFrame,
+        }}
+        onReject={{
+          title: 'Cancel',
+          execute: doubleCheckSwitch.off,
+        }}>
+        This action will
+        <Box component='span' sx={{ color: 'error.main' }}>
+          {' delete the Dataframe'}
+        </Box>
+        <br />
+        Are you sure?
+      </DoubleCheck>
     </>
   );
 };
