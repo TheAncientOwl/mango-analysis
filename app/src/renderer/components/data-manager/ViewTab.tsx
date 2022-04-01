@@ -16,8 +16,6 @@ import {
   DataframeDecimalsKey,
   ActionType,
 } from './viewTabStateReducer';
-import { ScalingHandler } from './ScalingHandler';
-import { DropHandler } from './DropHandler';
 import { DecimalsHandler } from './DecimalsHandler';
 
 export type DataFetcher = () => void;
@@ -35,8 +33,7 @@ export const ViewTab: React.FC = () => {
     scalingMethod: 'none',
     decimalsPrecision: CacheSystem.GetItemOrDefault<number>(DataframeDecimalsKey, 4) as DecimalsPrecision,
   });
-  const { pageIndex, pageSize, data, loadingData, checkedLabels, checkedRows, scalingMethod, decimalsPrecision } =
-    state;
+  const { pageIndex, pageSize, data, checkedLabels, checkedRows, scalingMethod, decimalsPrecision } = state;
 
   // >> Fetch data.
   // ! before calling this func, you should dispatch a FetchData action
@@ -71,17 +68,9 @@ export const ViewTab: React.FC = () => {
 
   const toolbar = (
     <Stack sx={{ p: 1.4, pt: 0 }} direction='row' spacing={2}>
-      <ScalingHandler scalingMethod={scalingMethod} dispatch={dispatch} fetchData={fetchData} />
       {VerticalLine}
-      <DropHandler
-        loadingData={loadingData}
-        dispatch={dispatch}
-        fetchData={fetchData}
-        labels={Array.from(checkedLabels)}
-        mangoIDs={Array.from(checkedRows)}
-      />
+
       {VerticalLine}
-      <DecimalsHandler value={decimalsPrecision} dispatch={dispatch} />
     </Stack>
   );
 

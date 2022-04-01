@@ -3,12 +3,8 @@ import React from 'react';
 import { DecimalsPrecision } from './data-frame-viewer/types';
 // eslint-disable-next-line import/named
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { ActionType, ViewTabDispatcher } from './viewTabStateReducer';
-
-interface Props {
-  value: DecimalsPrecision;
-  dispatch: ViewTabDispatcher;
-}
+import { ActionType } from './dataManagerReducer';
+import { DataManagerContext } from './DataManagerContext';
 
 interface DecimalsOptionConfig {
   id: number;
@@ -33,7 +29,9 @@ const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
   }),
 ];
 
-export const DecimalsHandler: React.FC<Props> = ({ value, dispatch }) => {
+export const DecimalsHandler: React.FC = () => {
+  const { dispatch, state } = React.useContext(DataManagerContext);
+
   const handleChange = (event: SelectChangeEvent) => {
     dispatch({ type: ActionType.ChangeDecimals, payload: event.target.value as DecimalsPrecision });
   };
@@ -44,7 +42,7 @@ export const DecimalsHandler: React.FC<Props> = ({ value, dispatch }) => {
       <Select
         labelId='select-decimals-label'
         id='select-decimals'
-        value={value as string}
+        value={state.decimalsPrecision as string}
         label='Display Decimals'
         onChange={handleChange}>
         {DecimalsOptions.map(option => (

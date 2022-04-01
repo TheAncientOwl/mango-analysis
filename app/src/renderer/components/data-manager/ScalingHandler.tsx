@@ -10,13 +10,12 @@ import AlignVerticalBottomIcon from '@mui/icons-material/AlignVerticalBottom';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { Snackbar } from '@src/renderer/components/Snackbar';
 import { axios } from '@src/renderer/config';
 import { useSwitch } from '@src/renderer/hooks';
 import InfoIcon from '@mui/icons-material/Info';
 
-import { ActionType, ScalingMethodType, ViewTabDispatcher } from './viewTabStateReducer';
-import { DataFetcher } from './ViewTab';
+import { ActionType, ScalingMethodType } from './dataManagerReducer';
+import { DataManagerContext } from './DataManagerContext';
 
 const ScaleMethodTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -30,12 +29,6 @@ const ScaleMethodTooltip = styled(({ className, ...props }: TooltipProps) => (
     padding: 10,
   },
 }));
-
-interface Props {
-  scalingMethod: ScalingMethodType;
-  dispatch: ViewTabDispatcher;
-  fetchData: DataFetcher;
-}
 
 interface ScalingMethodConfig {
   id: number;
@@ -121,27 +114,27 @@ const ScalingMethods: ReadonlyArray<ScalingMethodConfig> = [
   },
 ];
 
-export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetchData }) => {
-  const doubleCheckSwitch = useSwitch();
-  const snackSwitch = useSwitch();
+export const ScalingHandler: React.FC = () => {
+  const { state, dispatch, fetchData } = React.useContext(DataManagerContext);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const doubleCheckSwitch = useSwitch();
+
+  const handleMethodChange = (event: SelectChangeEvent) => {
     dispatch({ type: ActionType.ChangeScalingMethod, payload: event.target.value as ScalingMethodType });
   };
 
-  const handleScale = () => {
+  const handleScale = async () => {
     doubleCheckSwitch.off();
-    dispatch({ type: ActionType.BeginLoading });
 
-    axios
-      .post('/data/scale', {
-        method: scalingMethod,
-      })
-      .then(() => {
-        dispatch({ type: ActionType.ScaleDataSuccess });
-        fetchData();
-        snackSwitch.on();
-      });
+    dispatch({ type: ActionType.Loading });
+
+    await axios.post('/data/scale', {
+      method: state.scalingMethod,
+    });
+
+    dispatch({ type: ActionType.ScaleDataSuccess });
+
+    fetchData();
   };
 
   return (
@@ -151,9 +144,9 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
         <Select
           labelId='select-scaling-method-label'
           id='select-scaling-method'
-          value={scalingMethod}
+          value={state.scalingMethod}
           label='Scaling Method'
-          onChange={handleChange}>
+          onChange={handleMethodChange}>
           {ScalingMethods.map(method => (
             <MenuItem key={method.id} value={method.type}>
               <Stack direction='row' gap={1}>
@@ -168,7 +161,7 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
       </FormControl>
 
       <Button
-        disabled={scalingMethod === 'none'}
+        disabled={state.scalingMethod === 'none'}
         variant='contained'
         size='small'
         onClick={doubleCheckSwitch.on}
@@ -194,10 +187,6 @@ export const ScalingHandler: React.FC<Props> = ({ scalingMethod, dispatch, fetch
         <br />
         Are you sure?
       </DoubleCheck>
-
-      <Snackbar open={snackSwitch.value} onClose={snackSwitch.off}>
-        Scaled data!
-      </Snackbar>
     </React.Fragment>
   );
 };

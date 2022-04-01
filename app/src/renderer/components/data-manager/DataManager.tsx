@@ -1,19 +1,39 @@
 import React from 'react';
 
-import { Box, Button, Backdrop, CircularProgress, Stack, Typography } from '@mui/material';
+import { Box, Backdrop, CircularProgress, Stack, Typography } from '@mui/material';
 import { ActionType, dataManagerReducer, getDefaultDataManagerState } from './dataManagerReducer';
 import { axios } from '@renderer/config';
 import { DataFrameViewer } from './data-frame-viewer';
 import { Snackbar } from '@renderer/components/Snackbar';
 
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useSwitch } from '@renderer/hooks';
-import { DoubleCheck } from '@renderer/components/DoubleCheck';
+import { DataManagerContextProvider } from './DataManagerContext';
+import { ImportButton } from './ImportButton';
+import { DropDataFrameButton } from './DropDataFrameButton';
+import { DropCheckedButton } from './DropCheckedButton';
+import { ScalingHandler } from './ScalingHandler';
+import { DecimalsHandler } from './DecimalsHandler';
+
+const noDataLoadedMessageStyles = {
+  height: '100%',
+  p: 2,
+  pt: '5%',
+  display: 'flex',
+  justifyContent: 'center',
+} as const;
+
+const dataFrameWrapperStyles = {
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  boxSizing: 'border-box',
+  p: 1.5,
+  pt: 0,
+} as const;
+
+const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
 export const DataManager: React.FC = () => {
   const [state, dispatch] = React.useReducer(dataManagerReducer, getDefaultDataManagerState());
-  const doubleCheckSwitch = useSwitch();
 
   const fetchData = () => {
     dispatch({ type: ActionType.Loading });
@@ -21,31 +41,6 @@ export const DataManager: React.FC = () => {
     axios.get(`/data/page/${state.page}/page-size/${state.pageSize}`).then(res => {
       if ('dataframe' in res.data) dispatch({ type: ActionType.DataFetched, payload: res.data.dataframe });
       else dispatch({ type: ActionType.EndLoading });
-    });
-  };
-
-  const importData = async () => {
-    dispatch({ type: ActionType.Loading });
-
-    const filePath = await window.electron.getImportCsvPath();
-
-    if (filePath === null) {
-      dispatch({ type: ActionType.EndLoading });
-      return;
-    }
-
-    axios.get(`/data/import/csv/${filePath}`).then(() => {
-      fetchData();
-      dispatch({ type: ActionType.DataImported });
-    });
-  };
-
-  const dropDataFrame = async () => {
-    dispatch({ type: ActionType.Loading });
-
-    axios.post('/data/drop-all').then(() => {
-      dispatch({ type: ActionType.DataframeDropped });
-      doubleCheckSwitch.off();
     });
   };
 
@@ -66,43 +61,21 @@ export const DataManager: React.FC = () => {
   }, [state.page, state.pageSize]);
 
   return (
-    <>
+    <DataManagerContextProvider value={{ dispatch, state, fetchData }}>
       <Stack sx={{ p: 2, gap: 1 }} direction='row'>
-        <Button onClick={importData} startIcon={<FileUploadIcon />} variant='contained' size='medium' disableElevation>
-          Import
-        </Button>
-        <Button
-          onClick={doubleCheckSwitch.on}
-          startIcon={<DeleteIcon />}
-          variant='contained'
-          size='medium'
-          disableElevation>
-          Delete
-        </Button>
+        <ImportButton />
+        <DropDataFrameButton />
+        <DropCheckedButton />
+        {VerticalLine}
+        <ScalingHandler />
+        {VerticalLine}
+        <DecimalsHandler />
       </Stack>
 
-      {state.dataFrame.totalRows === 0 && (
-        <Typography
-          sx={{
-            height: '100%',
-            p: 2,
-            pt: '5%',
-            display: 'flex',
-            justifyContent: 'center',
-          }}>
-          No data loaded...
-        </Typography>
-      )}
+      {state.dataFrame.totalRows === 0 && <Typography sx={noDataLoadedMessageStyles}>No data loaded...</Typography>}
+
       {state.dataFrame.totalRows > 0 && (
-        <Box
-          sx={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            boxSizing: 'border-box',
-            p: 1.5,
-            pt: 0,
-          }}>
+        <Box sx={dataFrameWrapperStyles}>
           <DataFrameViewer
             dataFrame={state.dataFrame}
             page={state.page}
@@ -125,24 +98,6 @@ export const DataManager: React.FC = () => {
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={state.loading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-
-      <DoubleCheck
-        open={doubleCheckSwitch.value}
-        onAccept={{
-          title: 'Delete',
-          execute: dropDataFrame,
-        }}
-        onReject={{
-          title: 'Cancel',
-          execute: doubleCheckSwitch.off,
-        }}>
-        This action will
-        <Box component='span' sx={{ color: 'error.main' }}>
-          {' delete the Dataframe'}
-        </Box>
-        <br />
-        Are you sure?
-      </DoubleCheck>
-    </>
+    </DataManagerContextProvider>
   );
 };

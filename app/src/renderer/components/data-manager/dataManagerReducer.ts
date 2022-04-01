@@ -1,11 +1,19 @@
 import React from 'react';
 
-import { DataFrameConfig, DataFrame } from './data-frame-viewer/types';
+import { DataFrameConfig, DataFrame, DecimalsPrecision } from './data-frame-viewer/types';
 
-interface DataManagerState extends DataFrameConfig {
+export type ScalingMethodType =
+  | 'none'
+  | 'maximum_absolute_scaling'
+  | 'min_max_scaling'
+  | 'z_score_scaling'
+  | 'robust_scaling';
+
+export interface DataManagerState extends DataFrameConfig {
   loading: boolean;
   feedbackMessage: string;
   feedbackMessageOpen: boolean;
+  scalingMethod: ScalingMethodType;
 }
 
 export const getDefaultDataManagerState = (): DataManagerState => ({
@@ -18,6 +26,7 @@ export const getDefaultDataManagerState = (): DataManagerState => ({
   decimalsPrecision: 3,
   feedbackMessage: '',
   feedbackMessageOpen: false,
+  scalingMethod: 'none',
 });
 
 export enum ActionType {
@@ -32,6 +41,12 @@ export enum ActionType {
   ChangePageSize = 'CHANGE_PAGE_SIZE',
   CheckRow = 'CHECK_ROW',
   CheckLabel = 'CHECK_LABEL',
+
+  DropDataSuccess = 'DROP_DATA_SUCCESS',
+  ChangeScalingMethod = 'CHANGE_SCALING_METHOD',
+  ScaleDataSuccess = 'SCALE_DATA_SUCCESS',
+
+  ChangeDecimals = 'CHANGE_DECIMALS',
 }
 
 interface Action {
@@ -66,6 +81,7 @@ export const dataManagerReducer = (state: DataManagerState, action: Action): Dat
         ...state,
         feedbackMessage: 'Data imported!',
         feedbackMessageOpen: true,
+        page: 0,
       };
     }
 
@@ -115,12 +131,12 @@ export const dataManagerReducer = (state: DataManagerState, action: Action): Dat
     }
 
     case ActionType.CheckLabel: {
-      const selectedColumn = action.payload as string;
+      const checkedLabel = action.payload as string;
 
       const newSet = new Set(state.checkedLabels);
 
-      if (newSet.has(selectedColumn)) newSet.delete(selectedColumn);
-      else newSet.add(selectedColumn);
+      if (newSet.has(checkedLabel)) newSet.delete(checkedLabel);
+      else newSet.add(checkedLabel);
 
       return {
         ...state,
@@ -129,16 +145,49 @@ export const dataManagerReducer = (state: DataManagerState, action: Action): Dat
     }
 
     case ActionType.CheckRow: {
-      const selectedRow = action.payload as number;
+      const checkedRow = action.payload as number;
 
       const newSet = new Set(state.checkedRows);
 
-      if (newSet.has(selectedRow)) newSet.delete(selectedRow);
-      else newSet.add(selectedRow);
+      if (newSet.has(checkedRow)) newSet.delete(checkedRow);
+      else newSet.add(checkedRow);
 
       return {
         ...state,
         checkedRows: newSet,
+      };
+    }
+
+    case ActionType.DropDataSuccess: {
+      return {
+        ...state,
+        checkedLabels: new Set<string>(),
+        checkedRows: new Set<number>(),
+        feedbackMessage: 'Rows & Columns dropped!',
+        feedbackMessageOpen: true,
+      };
+    }
+
+    case ActionType.ChangeScalingMethod: {
+      return {
+        ...state,
+        scalingMethod: action.payload as ScalingMethodType,
+      };
+    }
+
+    case ActionType.ScaleDataSuccess: {
+      return {
+        ...state,
+        scalingMethod: 'none',
+        feedbackMessage: 'Dataframe scaled!',
+        feedbackMessageOpen: true,
+      };
+    }
+
+    case ActionType.ChangeDecimals: {
+      return {
+        ...state,
+        decimalsPrecision: action.payload as DecimalsPrecision,
       };
     }
 

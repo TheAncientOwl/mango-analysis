@@ -9,7 +9,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import { AppRoutes } from '@renderer/config';
 
 const DrawerWidth = {
-  opened: 180,
+  opened: 195,
   closed: 57,
 };
 

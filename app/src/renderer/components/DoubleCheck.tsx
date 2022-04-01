@@ -7,13 +7,13 @@ interface Action {
   execute: () => void;
 }
 
-interface Props {
+export interface DoubleCheckProps {
   open: boolean;
   onAccept: Action;
   onReject: Action;
 }
 
-export const DoubleCheck: React.FC<Props> = ({ open, onAccept, onReject, children }) => {
+export const DoubleCheck: React.FC<DoubleCheckProps> = ({ open, onAccept, onReject, children }) => {
   return (
     <Dialog open={open} aria-labelledby='doublecheck-dialog-title' aria-describedby='doublecheck-dialog-description'>
       <DialogTitle id='doublecheck-dialog-title'>Double Check</DialogTitle>

@@ -3,7 +3,6 @@ import React from 'react';
 import TableViewIcon from '@mui/icons-material/TableView';
 
 import { DataManager } from '@renderer/components/data-manager/DataManager';
-// import { Data } from '@renderer/components/data/Data';
 
 interface Route {
   name: string;
@@ -13,5 +12,5 @@ interface Route {
 }
 
 export const AppRoutes: ReadonlyArray<Route> = [
-  { name: 'data', routePath: '/', element: <DataManager />, icon: <TableViewIcon /> },
+  { name: 'data manager', routePath: '/', element: <DataManager />, icon: <TableViewIcon /> },
 ];
