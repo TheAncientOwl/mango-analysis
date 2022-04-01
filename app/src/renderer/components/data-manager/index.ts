@@ -1,3 +1,1 @@
-import { DataManager } from './DataManager';
-
-export { DataManager };
+export { DataManager } from './DataManager';
