@@ -10,6 +10,8 @@ import { Snackbar } from '@renderer/components/Snackbar';
 import { DataManagerContextProvider } from './context';
 
 import { DataFrameViewer } from './data-frame-viewer';
+import { DataFrameViewerPagination } from './data-frame-viewer/DataFrameViewerPagination';
+
 import { ImportButton } from './components/ImportButton';
 import { DropDataFrameButton } from './components/DropDataFrameButton';
 import { DropCheckedButton } from './components/DropCheckedButton';
@@ -81,13 +83,16 @@ export const DataManager: React.FC = () => {
         <Box sx={dataFrameWrapperStyles}>
           <DataFrameViewer
             dataFrame={state.dataFrame}
-            page={state.page}
-            pageSize={state.pageSize}
             decimalsPrecision={state.decimalsPrecision}
             checkedLabels={state.checkedLabels}
             checkedRows={state.checkedRows}
             onLabelCheck={handle.labelCheck}
             onRowCheck={handle.rowCheck}
+          />
+          <DataFrameViewerPagination
+            totalRows={state.dataFrame.totalRows}
+            pageSize={state.pageSize}
+            page={state.page}
             onPageChange={handle.pageChange}
             onPageSizeChange={handle.pageSizeChange}
           />

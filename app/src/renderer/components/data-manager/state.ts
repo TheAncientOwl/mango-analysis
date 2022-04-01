@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DataFrameConfig, DataFrame, DecimalsPrecision } from './data-frame-viewer/types';
+import { DataFrameState, DataFrame, DecimalsPrecision } from './data-frame-viewer/types';
 
 export type ScalingMethodType =
   | 'none'
@@ -9,11 +9,13 @@ export type ScalingMethodType =
   | 'z_score_scaling'
   | 'robust_scaling';
 
-export interface DataManagerState extends DataFrameConfig {
+export interface DataManagerState extends DataFrameState {
   loading: boolean;
   feedbackMessage: string;
   feedbackMessageOpen: boolean;
   scalingMethod: ScalingMethodType;
+  pageSize: number;
+  page: number;
 }
 
 export const getDefaultDataManagerState = (): DataManagerState => ({

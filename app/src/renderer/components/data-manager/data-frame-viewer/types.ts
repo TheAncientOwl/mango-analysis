@@ -6,20 +6,16 @@ export interface DataFrame {
 
 export type DecimalsPrecision = number | 'default';
 
-export interface DataFrameConfig {
+export interface DataFrameState {
   dataFrame: DataFrame;
-  page: number;
-  pageSize: number;
   checkedLabels: Set<string>;
   checkedRows: Set<number>;
   decimalsPrecision: DecimalsPrecision;
 }
 
 interface DataFrameEvents {
-  onPageChange: (newPage: number) => void;
-  onPageSizeChange: (newPageSize: number) => void;
   onLabelCheck: (checkedLabel: string) => void;
   onRowCheck: (checkedRow: number) => void;
 }
 
-export type DataFrameViewerProps = DataFrameConfig & DataFrameEvents;
+export type DataFrameViewerProps = DataFrameState & DataFrameEvents;

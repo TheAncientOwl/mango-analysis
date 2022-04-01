@@ -1,35 +1,23 @@
 import React from 'react';
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TablePagination,
-} from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 import { CheckBox } from './CheckBox';
 import { getCellStyle } from './styles';
 import { DataFrameViewerProps } from './types';
-
-const paginationOptions = [5, 10, 25, 50, 100];
+import { logRender } from '@src/common/logRender';
 
 export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
   dataFrame,
 
-  page,
-  pageSize,
   checkedLabels,
   checkedRows,
   decimalsPrecision = 'default',
 
-  onPageChange,
-  onPageSizeChange,
   onLabelCheck,
   onRowCheck,
 }) => {
+  logRender('DataFrame');
+
   const labelsRow = (
     <TableRow>
       <TableCell align='center'>ID</TableCell>
@@ -87,16 +75,6 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
           <TableBody>{tableRows}</TableBody>
         </Table>
       </TableContainer>
-
-      <TablePagination
-        rowsPerPageOptions={paginationOptions}
-        component='div'
-        count={dataFrame.totalRows}
-        rowsPerPage={pageSize}
-        page={page}
-        onRowsPerPageChange={event => onPageSizeChange(+event.target.value)}
-        onPageChange={(event, newPage) => onPageChange(newPage)}
-      />
     </React.Fragment>
   );
 };
