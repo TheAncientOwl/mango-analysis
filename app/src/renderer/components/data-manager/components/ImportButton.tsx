@@ -1,10 +1,12 @@
-import { Button } from '@mui/material';
-import { axios } from '@renderer/config';
 import React from 'react';
-import { DataManagerContext } from './DataManagerContext';
-import { ActionType } from './dataManagerReducer';
 
+import { Button } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+
+import { axios } from '@renderer/config';
+
+import { ActionType } from '../state';
+import { DataManagerContext } from '../context';
 
 export const ImportButton: React.FC = () => {
   const { dispatch, fetchData } = React.useContext(DataManagerContext);

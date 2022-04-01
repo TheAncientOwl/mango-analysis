@@ -1,21 +1,24 @@
 import React from 'react';
 
 import { Box } from '@mui/system';
+import { styled } from '@mui/material/styles';
+
 // eslint-disable-next-line import/named
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from '@mui/material';
-import { styled } from '@mui/material/styles';
 // eslint-disable-next-line import/named
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+
 import AlignVerticalBottomIcon from '@mui/icons-material/AlignVerticalBottom';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
-
-import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { axios } from '@src/renderer/config';
-import { useSwitch } from '@src/renderer/hooks';
 import InfoIcon from '@mui/icons-material/Info';
 
-import { ActionType, ScalingMethodType } from './dataManagerReducer';
-import { DataManagerContext } from './DataManagerContext';
+import { DoubleCheck } from '@renderer/components/DoubleCheck';
+
+import { axios } from '@src/renderer/config';
+import { useSwitch } from '@src/renderer/hooks';
+
+import { ScalingMethodType, ActionType } from '../state';
+import { DataManagerContext } from '../context';
 
 const ScaleMethodTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />

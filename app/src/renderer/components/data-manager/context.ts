@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataManagerDispatcher, DataManagerState } from './dataManagerReducer';
+import { DataManagerDispatcher, DataManagerState } from './state';
 
 interface IDataManagerContext {
   state: DataManagerState;

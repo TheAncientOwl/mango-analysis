@@ -56,7 +56,7 @@ interface Action {
 
 export type DataManagerDispatcher = React.Dispatch<Action>;
 
-export const dataManagerReducer = (state: DataManagerState, action: Action): DataManagerState => {
+export const dataManagerStateReducer = (state: DataManagerState, action: Action): DataManagerState => {
   switch (action.type) {
     case ActionType.Loading: {
       if (state.loading) return state;

@@ -1,12 +1,15 @@
-import { Box, Button } from '@mui/material';
-import { axios } from '@renderer/config';
 import React from 'react';
-import { DataManagerContext } from './DataManagerContext';
-import { ActionType } from './dataManagerReducer';
+
+import { Box, Button } from '@mui/material';
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
+
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
+
+import { axios } from '@renderer/config';
 import { useSwitch } from '@renderer/hooks';
 
-import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
+import { ActionType } from '../state';
+import { DataManagerContext } from '../context';
 
 export const DropCheckedButton: React.FC = () => {
   const { dispatch, state, fetchData } = React.useContext(DataManagerContext);

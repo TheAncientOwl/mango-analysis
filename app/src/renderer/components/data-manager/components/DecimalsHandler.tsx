@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { DecimalsPrecision } from './data-frame-viewer/types';
 // eslint-disable-next-line import/named
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { ActionType } from './dataManagerReducer';
-import { DataManagerContext } from './DataManagerContext';
+
+import { DecimalsPrecision } from '../data-frame-viewer/types';
+
+import { ActionType } from '../state';
+import { DataManagerContext } from '../context';
 
 interface DecimalsOptionConfig {
   id: number;
@@ -32,7 +34,7 @@ const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
 export const DecimalsHandler: React.FC = () => {
   const { dispatch, state } = React.useContext(DataManagerContext);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleValueChange = (event: SelectChangeEvent) => {
     dispatch({ type: ActionType.ChangeDecimals, payload: event.target.value as DecimalsPrecision });
   };
 
@@ -44,7 +46,7 @@ export const DecimalsHandler: React.FC = () => {
         id='select-decimals'
         value={state.decimalsPrecision as string}
         label='Display Decimals'
-        onChange={handleChange}>
+        onChange={handleValueChange}>
         {DecimalsOptions.map(option => (
           <MenuItem key={option.id} value={option.value}>
             {option.display}

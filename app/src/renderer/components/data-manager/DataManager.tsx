@@ -1,17 +1,20 @@
 import React from 'react';
 
 import { Box, Backdrop, CircularProgress, Stack, Typography } from '@mui/material';
-import { ActionType, dataManagerReducer, getDefaultDataManagerState } from './dataManagerReducer';
+
+import { ActionType, dataManagerStateReducer, getDefaultDataManagerState } from './state';
+
 import { axios } from '@renderer/config';
-import { DataFrameViewer } from './data-frame-viewer';
 import { Snackbar } from '@renderer/components/Snackbar';
 
-import { DataManagerContextProvider } from './DataManagerContext';
-import { ImportButton } from './ImportButton';
-import { DropDataFrameButton } from './DropDataFrameButton';
-import { DropCheckedButton } from './DropCheckedButton';
-import { ScalingHandler } from './ScalingHandler';
-import { DecimalsHandler } from './DecimalsHandler';
+import { DataManagerContextProvider } from './context';
+
+import { DataFrameViewer } from './data-frame-viewer';
+import { ImportButton } from './components/ImportButton';
+import { DropDataFrameButton } from './components/DropDataFrameButton';
+import { DropCheckedButton } from './components/DropCheckedButton';
+import { ScalingHandler } from './components/ScalingHandler';
+import { DecimalsHandler } from './components/DecimalsHandler';
 
 const noDataLoadedMessageStyles = {
   height: '100%',
@@ -33,7 +36,7 @@ const dataFrameWrapperStyles = {
 const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
 export const DataManager: React.FC = () => {
-  const [state, dispatch] = React.useReducer(dataManagerReducer, getDefaultDataManagerState());
+  const [state, dispatch] = React.useReducer(dataManagerStateReducer, getDefaultDataManagerState());
 
   const fetchData = () => {
     dispatch({ type: ActionType.Loading });

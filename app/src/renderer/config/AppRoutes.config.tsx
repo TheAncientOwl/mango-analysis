@@ -2,7 +2,7 @@ import React from 'react';
 
 import TableViewIcon from '@mui/icons-material/TableView';
 
-import { DataManager } from '@renderer/components/data-manager/DataManager';
+import { DataManager } from '@renderer/components/data-manager';
 
 interface Route {
   name: string;

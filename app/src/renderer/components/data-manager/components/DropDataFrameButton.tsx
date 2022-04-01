@@ -1,12 +1,15 @@
-import { Box, Button } from '@mui/material';
-import { axios } from '@renderer/config';
 import React from 'react';
-import { DataManagerContext } from './DataManagerContext';
-import { ActionType } from './dataManagerReducer';
+
+import { Box, Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
+
+import { axios } from '@renderer/config';
 import { useSwitch } from '@renderer/hooks';
 
-import DeleteIcon from '@mui/icons-material/Delete';
+import { ActionType } from '../state';
+import { DataManagerContext } from '../context';
 
 export const DropDataFrameButton: React.FC = () => {
   const { dispatch, state } = React.useContext(DataManagerContext);
