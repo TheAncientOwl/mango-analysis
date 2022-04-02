@@ -164,7 +164,7 @@ export const ScalingHandler: React.FC = () => {
       </FormControl>
 
       <Button
-        disabled={state.scalingMethod === 'none'}
+        disabled={state.scalingMethod === 'none' || state.dataFrame.totalRows === 0}
         variant='contained'
         size='small'
         onClick={doubleCheckSwitch.on}
