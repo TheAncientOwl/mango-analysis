@@ -17,8 +17,8 @@ interface DecimalsOptionConfig {
 const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
   {
     id: 0,
-    display: 'default',
-    value: 'default',
+    display: 'all',
+    value: 'all',
   },
   ...new Array(5).fill(0).map((item, index) => {
     const value = index + 1;
@@ -39,7 +39,7 @@ export const DecimalsHandler: React.FC = () => {
   };
 
   return (
-    <FormControl sx={{ minWidth: '6.5em' }}>
+    <FormControl sx={{ minWidth: '5em' }}>
       <InputLabel id='select-decimals-label'>Decimals</InputLabel>
       <Select
         labelId='select-decimals-label'

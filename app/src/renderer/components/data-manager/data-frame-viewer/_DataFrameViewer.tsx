@@ -11,7 +11,7 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
 
   checkedLabels,
   checkedRows,
-  decimalsPrecision = 'default',
+  decimalsPrecision = 'all',
 
   onLabelCheck,
   onRowCheck,
@@ -50,7 +50,7 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
               const columnLabel = dataFrame.labels[index + 1];
               const cellChecked = checkedLabels.has(columnLabel);
               const formatedValue =
-                typeof value === 'number' && decimalsPrecision !== 'default' ? value.toFixed(decimalsPrecision) : value;
+                typeof value === 'number' && decimalsPrecision !== 'all' ? value.toFixed(decimalsPrecision) : value;
 
               return (
                 <TableCell

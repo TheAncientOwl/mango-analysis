@@ -4,7 +4,7 @@ export interface DataFrame {
   rows: (string | number)[][];
 }
 
-export type DecimalsPrecision = number | 'default';
+export type DecimalsPrecision = number | 'all';
 
 export interface DataFrameState {
   dataFrame: DataFrame;
