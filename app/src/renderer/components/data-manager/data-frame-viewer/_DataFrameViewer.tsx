@@ -4,7 +4,6 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { CheckBox } from './CheckBox';
 import { getCellStyle } from './styles';
 import { DataFrameViewerProps } from './types';
-import { logRender } from '@src/common/logRender';
 
 export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
   dataFrame,
@@ -16,8 +15,6 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
   onLabelCheck,
   onRowCheck,
 }) => {
-  logRender('DataFrame');
-
   const labelsRow = (
     <TableRow>
       <TableCell align='center'>ID</TableCell>
