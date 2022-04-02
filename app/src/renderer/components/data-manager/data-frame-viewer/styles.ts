@@ -15,7 +15,6 @@ const notCheckedStyle = {
 const checkedStyle = {
   ...cellTransition,
   bgcolor: 'primary.main',
-  color: 'text.disabled',
 } as const;
 
 export const getCellStyle = (checked: boolean) => {
