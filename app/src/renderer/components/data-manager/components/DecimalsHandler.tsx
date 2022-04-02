@@ -20,7 +20,7 @@ const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
     display: 'all',
     value: 'all',
   },
-  ...new Array(5).fill(0).map((item, index) => {
+  ...new Array(7).fill(0).map((item, index) => {
     const value = index + 1;
 
     return {
