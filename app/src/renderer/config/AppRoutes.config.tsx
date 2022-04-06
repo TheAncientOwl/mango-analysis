@@ -8,15 +8,17 @@ import { PrincipalComponentsAnalysis } from '@renderer/components/pca/PrincipalC
 
 interface Route {
   name: string;
+  alias: string;
   routePath: string;
   element: React.ReactElement<unknown, string | React.JSXElementConstructor<unknown>>;
   icon: React.ReactNode;
 }
 
 export const AppRoutes: ReadonlyArray<Route> = [
-  { name: 'data manager', routePath: '/', element: <DataManager />, icon: <TableViewIcon /> },
+  { name: 'data manager', alias: 'data manager', routePath: '/', element: <DataManager />, icon: <TableViewIcon /> },
   {
     name: 'principal components analysis',
+    alias: 'PCA',
     routePath: '/pca',
     element: <PrincipalComponentsAnalysis />,
     icon: <SettingsInputComponentIcon />,

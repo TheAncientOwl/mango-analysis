@@ -71,7 +71,7 @@ export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
               sx={{ color: 'text.primary' }}
               onClick={() => onItemClick(section.name)}>
               <ListItemIcon sx={{ color: 'secondary.main' }}>{section.icon}</ListItemIcon>
-              <ListItemText sx={{ textTransform: 'capitalize' }}>{section.name}</ListItemText>
+              <ListItemText sx={{ textTransform: 'capitalize' }}>{section.alias}</ListItemText>
             </ListItemButton>
           ))}
         </List>
