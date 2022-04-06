@@ -22,7 +22,6 @@ export const DataManagerToolbar: React.FC = () => {
       if (entries.length === 0) return;
 
       const container = entries[0];
-      console.log(container);
 
       setSmall(container.contentRect.width < 655);
     });
