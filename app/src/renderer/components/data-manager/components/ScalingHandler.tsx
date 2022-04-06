@@ -142,35 +142,37 @@ export const ScalingHandler: React.FC = () => {
 
   return (
     <React.Fragment>
-      <FormControl sx={{ minWidth: '14em' }}>
-        <InputLabel id='select-scaling-method-label'>Scaling Method</InputLabel>
-        <Select
-          labelId='select-scaling-method-label'
-          id='select-scaling-method'
-          value={state.scalingMethod}
-          label='Scaling Method'
-          onChange={handleMethodChange}>
-          {ScalingMethods.map(method => (
-            <MenuItem key={method.id} value={method.type}>
-              <Stack direction='row' gap={1}>
-                <ScaleMethodTooltip title={method.tooltip} placement='right'>
-                  <InfoIcon sx={{ color: 'grey.500' }} />
-                </ScaleMethodTooltip>
-                {method.display}
-              </Stack>
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Stack direction='row' sx={{ gap: 1.5 }}>
+        <FormControl sx={{ minWidth: '14em' }}>
+          <InputLabel id='select-scaling-method-label'>Scaling Method</InputLabel>
+          <Select
+            labelId='select-scaling-method-label'
+            id='select-scaling-method'
+            value={state.scalingMethod}
+            label='Scaling Method'
+            onChange={handleMethodChange}>
+            {ScalingMethods.map(method => (
+              <MenuItem key={method.id} value={method.type}>
+                <Stack direction='row' gap={1}>
+                  <ScaleMethodTooltip title={method.tooltip} placement='right'>
+                    <InfoIcon sx={{ color: 'grey.500' }} />
+                  </ScaleMethodTooltip>
+                  {method.display}
+                </Stack>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-      <Button
-        disabled={state.scalingMethod === 'none' || state.dataFrame.totalRows === 0}
-        variant='contained'
-        size='small'
-        onClick={doubleCheckSwitch.on}
-        startIcon={<AlignVerticalBottomIcon />}>
-        Scale
-      </Button>
+        <Button
+          disabled={state.scalingMethod === 'none' || state.dataFrame.totalRows === 0}
+          variant='contained'
+          size='small'
+          onClick={doubleCheckSwitch.on}
+          startIcon={<AlignVerticalBottomIcon />}>
+          Scale
+        </Button>
+      </Stack>
 
       <DoubleCheck
         open={doubleCheckSwitch.value}
