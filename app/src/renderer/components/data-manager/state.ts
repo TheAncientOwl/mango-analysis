@@ -1,3 +1,4 @@
+import { CacheSystem } from '@src/renderer/api/CacheSystem';
 import React from 'react';
 
 import { DataFrameState, DataFrame, DecimalsPrecision } from './data-frame-viewer/types';
@@ -18,17 +19,26 @@ export interface DataManagerState extends DataFrameState {
   page: number;
 }
 
+const DataManagerCacheKeys = Object.freeze({
+  Page: 'data-manager-page',
+  PageSize: 'data-manager-page-size',
+  CheckedLabels: 'data-manager-checked-labels',
+  CheckedRows: 'data-manager-checked-rows',
+  DecimalsPrecision: 'data-manager-decimals-precision',
+  ScalingMethod: 'data-manager-scaling-method',
+});
+
 export const getDefaultDataManagerState = (): DataManagerState => ({
   loading: false,
   dataFrame: { labels: [], totalRows: 0, rows: [] },
-  page: 0,
-  pageSize: 25,
-  checkedLabels: new Set<string>(),
-  checkedRows: new Set<number>(),
-  decimalsPrecision: 3,
+  page: CacheSystem.GetItemOrDefault(DataManagerCacheKeys.Page, 0),
+  pageSize: CacheSystem.GetItemOrDefault(DataManagerCacheKeys.PageSize, 25),
+  checkedLabels: new Set<string>(CacheSystem.GetItemOrDefault(DataManagerCacheKeys.CheckedLabels, [])),
+  checkedRows: new Set<number>(CacheSystem.GetItemOrDefault(DataManagerCacheKeys.CheckedRows, [])),
+  decimalsPrecision: CacheSystem.GetItemOrDefault(DataManagerCacheKeys.DecimalsPrecision, 3),
   feedbackMessage: '',
   feedbackMessageOpen: false,
-  scalingMethod: 'none',
+  scalingMethod: CacheSystem.GetItemOrDefault(DataManagerCacheKeys.ScalingMethod, 'none'),
 });
 
 export enum ActionType {
@@ -118,6 +128,8 @@ export const dataManagerStateReducer = (state: DataManagerState, action: Action)
     }
 
     case ActionType.ChangePage: {
+      CacheSystem.SetItem(DataManagerCacheKeys.Page, action.payload);
+
       return {
         ...state,
         page: action.payload as number,
@@ -125,6 +137,8 @@ export const dataManagerStateReducer = (state: DataManagerState, action: Action)
     }
 
     case ActionType.ChangePageSize: {
+      CacheSystem.SetItem(DataManagerCacheKeys.PageSize, action.payload);
+
       return {
         ...state,
         page: 0,
@@ -140,6 +154,8 @@ export const dataManagerStateReducer = (state: DataManagerState, action: Action)
       if (newSet.has(checkedLabel)) newSet.delete(checkedLabel);
       else newSet.add(checkedLabel);
 
+      CacheSystem.SetItem(DataManagerCacheKeys.CheckedLabels, Array.from(newSet));
+
       return {
         ...state,
         checkedLabels: newSet,
@@ -153,6 +169,8 @@ export const dataManagerStateReducer = (state: DataManagerState, action: Action)
 
       if (newSet.has(checkedRow)) newSet.delete(checkedRow);
       else newSet.add(checkedRow);
+
+      CacheSystem.SetItem(DataManagerCacheKeys.CheckedRows, Array.from(newSet));
 
       return {
         ...state,
@@ -171,6 +189,8 @@ export const dataManagerStateReducer = (state: DataManagerState, action: Action)
     }
 
     case ActionType.ChangeScalingMethod: {
+      CacheSystem.SetItem(DataManagerCacheKeys.ScalingMethod, action.payload);
+
       return {
         ...state,
         scalingMethod: action.payload as ScalingMethodType,
@@ -187,6 +207,8 @@ export const dataManagerStateReducer = (state: DataManagerState, action: Action)
     }
 
     case ActionType.ChangeDecimals: {
+      CacheSystem.SetItem(DataManagerCacheKeys.DecimalsPrecision, action.payload);
+
       return {
         ...state,
         decimalsPrecision: action.payload as DecimalsPrecision,
