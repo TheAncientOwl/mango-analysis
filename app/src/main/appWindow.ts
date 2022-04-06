@@ -9,9 +9,9 @@ let appWindow: BrowserWindow;
 
 export const createAppWindow = (): BrowserWindow => {
   appWindow = new BrowserWindow({
-    width: 1000,
+    width: 850,
     height: 700,
-    minWidth: 1000,
+    minWidth: 850,
     minHeight: 600,
     show: false,
     titleBarStyle: 'hidden',
