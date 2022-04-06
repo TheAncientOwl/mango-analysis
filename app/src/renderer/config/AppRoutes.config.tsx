@@ -1,8 +1,10 @@
 import React from 'react';
 
 import TableViewIcon from '@mui/icons-material/TableView';
+import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
 
 import { DataManager } from '@renderer/components/data-manager';
+import { PrincipalComponentsAnalysis } from '@renderer/components/pca/PrincipalComponentsAnalysis';
 
 interface Route {
   name: string;
@@ -13,4 +15,10 @@ interface Route {
 
 export const AppRoutes: ReadonlyArray<Route> = [
   { name: 'data manager', routePath: '/', element: <DataManager />, icon: <TableViewIcon /> },
+  {
+    name: 'principal components analysis',
+    routePath: '/pca',
+    element: <PrincipalComponentsAnalysis />,
+    icon: <SettingsInputComponentIcon />,
+  },
 ];
