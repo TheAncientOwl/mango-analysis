@@ -25,7 +25,7 @@ def get_possible_targets_features():
         else:
             targets.append(label)
 
-    return flask.jsonify(targets, features), 200
+    return flask.jsonify(targets=targets, features=features), 200
 
 
 @pca.post('/pca/set/target&features')
@@ -79,7 +79,7 @@ def get_components_count_hints():
 
     eigenvalues_g1 = server.pca.eigenvalues_g1().to_dict(orient='split')
 
-    return flask.jsonify(kaiser_path, threshold70, eigenvalues_g1), 200
+    return flask.jsonify(kaiserPath=kaiser_path, threshold70=threshold70, eigenvaluesG1=eigenvalues_g1), 200
 
 
 @pca.get('/pca/plot/loadings-matrix')
