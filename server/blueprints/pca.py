@@ -5,6 +5,13 @@ from pandas.api.types import is_numeric_dtype as pandas_is_numeric
 pca = flask.Blueprint('pca', __name__)
 
 
+@pca.post('/pca/new')
+def create_new_pca():
+    server.new_pca()
+
+    return flask.jsonify(message='New PCA created!')
+
+
 @pca.get('/pca/possible/targets&features')
 def get_possible_targets_features():
     targets = []

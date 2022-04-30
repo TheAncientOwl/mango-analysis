@@ -1,12 +1,19 @@
 from flask_cors import CORS
 from flask import Flask
 import pandas
-import blueprints
 
+import blueprints
 import api
+
 
 dataFrame = pandas.DataFrame()
 pca = api.PCA()
+
+
+def new_pca():
+    global pca
+    pca = api.PCA()
+
 
 app = Flask(__name__)
 CORS(app)

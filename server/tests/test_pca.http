@@ -55,3 +55,6 @@ Content-Type: application/json
   "annot": true,
   "legend": false
 }
+
+### New PCA
+POST {{local_host}}/pca/new
