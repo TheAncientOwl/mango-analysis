@@ -3,7 +3,10 @@ from flask import Flask
 import pandas
 import blueprints
 
+import api
+
 dataFrame = pandas.DataFrame()
+pca = api.PCA()
 
 app = Flask(__name__)
 CORS(app)

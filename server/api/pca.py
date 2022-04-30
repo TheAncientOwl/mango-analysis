@@ -33,6 +33,8 @@ class PCA:
         self.pca = skPCA()
         self.pca_df = pd.DataFrame()
 
+        self.scaled_data = False
+
     def set_target(self, target):
         if target not in server.dataFrame.columns:
             raise 'Unknown target'
@@ -53,6 +55,7 @@ class PCA:
 
     def standardize_data(self):
         self.features_values = StandardScaler().fit_transform(self.features_values)
+        self.scaled_data = True
 
     def plot_correlation_matrix(self):
         corr_matrix = pd.DataFrame(
@@ -108,18 +111,22 @@ class PCA:
         out_sum = np.cumsum(explained_variance_ratio)
 
         variance_ratio_df = pd.DataFrame(
-            data={'Proportion of Variance Explained': list(explained_variance_ratio),
-                  'Cumulative Proportion of Variance Explained': list(out_sum)},
-            columns=['Proportion of Variance Explained',
-                     'Cumulative Proportion of Variance Explained'],
+            data={
+                'Proportion of Variance Explained': list(explained_variance_ratio),
+                'Cumulative Proportion of Variance Explained': list(out_sum)},
+            columns=[
+                'Proportion of Variance Explained',
+                'Cumulative Proportion of Variance Explained'],
             index=self.pca_labels)
 
         return variance_ratio_df
 
     def eigenvalues_g1(self):
         variance_ratio_df = pd.DataFrame(
-            data={'Explained Variance': list(self.pca.explained_variance_)},
-            columns=['Explained Variance'],
+            data={
+                'Explained Variance': list(self.pca.explained_variance_)},
+            columns=[
+                'Explained Variance'],
             index=self.pca_labels)
 
         return variance_ratio_df

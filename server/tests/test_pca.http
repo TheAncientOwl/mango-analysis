@@ -1,0 +1,57 @@
+@local_host = http://localhost:5000
+
+### Read data
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/Date.csv
+
+### Print server's dataframe head
+GET {{local_host}}/printhead 
+
+### Get possible targets and features
+GET {{local_host}}/pca/possible/targets&features
+
+### Set target & features
+POST {{local_host}}/pca/set/target&features
+Content-Type: application/json
+
+{
+  "target": "Country",
+  "features": ["EA", "EAM", "EAF", "AFF", "ANE", "AME", "CY", "SA", "CP", "LA", "LCP", "ARL", "AGL"]
+}
+
+### Check scaled data
+GET {{local_host}}/pca/was-data-scaled
+
+### Scale data
+POST {{local_host}}/pca/scale-data
+
+### Plot correlation matrix
+GET {{local_host}}/pca/plot/correlation-matrix
+
+### Default pca
+POST {{local_host}}/pca/analyze
+
+### PCA with components count
+POST {{local_host}}/pca/analyze
+Content-Type: application/json
+
+{
+  "componentsCount": 4
+}
+
+### PCA get components count hints
+GET {{local_host}}/pca/components-count-hints
+
+### PCA plot loadings matrix
+GET {{local_host}}/pca/plot/loadings-matrix
+
+### PCA plot PC1 & PC2
+POST {{local_host}}/pca/plot/2D
+Content-Type: application/json
+
+{
+  "pcX": "PC1",
+  "pcY": "PC2",
+  "targets": ["Romania", "United Kingdom", "Norway", "Andorra", "Lebanon"],
+  "annot": true,
+  "legend": false
+}
