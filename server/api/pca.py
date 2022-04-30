@@ -67,11 +67,11 @@ class PCA:
                     vmax=1, vmin=-1, center=0,
                     cmap=self.cmap, mask=mask)
 
-        figname = os.path.join(
+        figpath = os.path.join(
             app_data_path, os.sep, f'CorrelationMatrix.{make_uuid()}.jpg')
-        plt.savefig(figname)
+        plt.savefig(figpath)
 
-        return figname
+        return figpath
 
     def analyze(self, components_count='all'):
         if components_count == 'all':
@@ -100,11 +100,11 @@ class PCA:
         plt.ylabel('Proportion of Variance Explained')
         plt.xticks(range(1, self.pca.n_components + 1))
 
-        figname = os.path.join(
+        figpath = os.path.join(
             app_data_path, os.sep, f'Kaiser-ScreePlot.{make_uuid()}.jpg')
-        plt.savefig(figname)
+        plt.savefig(figpath)
 
-        return figname
+        return figpath
 
     def threshold70(self):
         explained_variance_ratio = self.pca.explained_variance_ratio_ * 100
@@ -151,11 +151,11 @@ class PCA:
                     vmax=1, vmin=-1, center=0,
                     cmap=self.cmap)
 
-        figname = os.path.join(app_data_path, os.sep,
+        figpath = os.path.join(app_data_path, os.sep,
                                f'LoadingsMatrix.{make_uuid()}.jpg')
-        plt.savefig(figname)
+        plt.savefig(figpath)
 
-        return figname
+        return figpath
 
     def plot_two_components(self, pc_x, pc_y, targets, annot=False, legend=False):
         fig = plt.figure(figsize=(8, 8))
@@ -179,10 +179,11 @@ class PCA:
             if legend:
                 ax.legend(targets)
 
-        figname = f'PCA-Plot-{pc_x}-{pc_y}.{make_uuid()}.jpg'
-        plt.savefig(os.path.join(app_data_path, os.sep, figname))
+        figpath = os.path.join(app_data_path, os.sep,
+                               f'PCA-Plot-{pc_x}-{pc_y}.{make_uuid()}.jpg')
+        plt.savefig(figpath)
 
-        return figname
+        return figpath
 
 
 if __name__ == '__main__':
