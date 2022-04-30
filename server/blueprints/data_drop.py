@@ -1,5 +1,4 @@
 import main.server as server
-import json
 import pandas
 import flask
 
@@ -33,7 +32,7 @@ def drop_columns_impl(labels):
 @data_drop.post('/data/drop/columns')
 def drop_columns():
     # get labels from request
-    data = json.loads(flask.request.data)
+    data = flask.request.get_json()
     labels = data['labels']
 
     drop_columns_impl(labels)
@@ -55,7 +54,7 @@ def drop_rows_impl(mangoIDs):
 @data_drop.post('/data/drop/rows')
 def drop_rows():
     # get index from request
-    data = json.loads(flask.request.data)
+    data = flask.request.get_json()
     mangoIDs = data['mangoIDs']
 
     drop_rows_impl(mangoIDs)
@@ -72,18 +71,14 @@ def drop_rows():
 # @return jsonify(success, message)
 @data_drop.post('/data/drop/rows+cols')
 def drop_rows_cols():
-    # drop rows
-    # get index from request
-    data = json.loads(flask.request.data)
-    mangoIDs = data['mangoIDs']
+    data = flask.request.get_json()
 
+    # drop rows
+    mangoIDs = data['mangoIDs']
     drop_rows_impl(mangoIDs)
 
     # drop columns
-    # get labels from request
-    data = json.loads(flask.request.data)
     labels = data['labels']
-
     drop_columns_impl(labels)
 
     idk = flask.request.get_json()

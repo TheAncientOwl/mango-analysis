@@ -1,5 +1,4 @@
 import main.server as server
-import json
 import pandas
 import flask
 from pandas.api.types import is_numeric_dtype as pandas_is_numeric
@@ -83,7 +82,7 @@ def robust_scaling(df):
 # @return jsonify(success, message)
 @data_scale.post('/data/scale')
 def scale():
-    data = json.loads(flask.request.data)
+    data = flask.request.get_json()
     scale_method = data['method']
 
     if scale_method == 'maximum_absolute_scaling':
