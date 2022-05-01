@@ -20,6 +20,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 import { ActionType } from './state';
 import { PCA_Context } from './context';
+import { AnalysisStepLogic } from '../AnalysisStep';
 
 interface PossibleValues {
   targets: string[];
@@ -47,6 +48,15 @@ export const TargetAndFeaturesPicker: React.FC = () => {
     features: [],
   });
 
+  // check if the analyze can continue (target and some features are selected)
+  React.useEffect(() => {
+    dispatch({
+      type: ActionType.ChangeCanStep,
+      payload: { index: 2, value: state.target !== '' && state.features.size > 0 },
+    });
+  }, [state.target, state.features]);
+
+  // fetch possible targets & features
   React.useEffect(() => {
     dispatch({ type: ActionType.Loading });
 
@@ -57,39 +67,41 @@ export const TargetAndFeaturesPicker: React.FC = () => {
     });
   }, []);
 
-  const handleTargetChange = (event: SelectChangeEvent) => {
+  // handlers
+  const handleTargetChange = (event: SelectChangeEvent) =>
     dispatch({ type: ActionType.ChangeTarget, payload: event.target.value as string });
-  };
 
-  const handleFeaturesChange = (event: SelectChangeEvent<string[]>) => {
+  const handleFeaturesChange = (event: SelectChangeEvent<string[]>) =>
     dispatch({ type: ActionType.SetFeatures, payload: new Set<string>(event.target.value) });
-  };
 
-  const handleSelectAllClick = () => {
-    if (possibleValues.features.length === state.features.size) dispatch({ type: ActionType.ClearFeatures });
-    else dispatch({ type: ActionType.SetFeatures, payload: new Set<string>(possibleValues.features) });
-  };
+  const handleSelectAllClick = () =>
+    dispatch(
+      possibleValues.features.length === state.features.size
+        ? { type: ActionType.ClearFeatures }
+        : { type: ActionType.SetFeatures, payload: new Set<string>(possibleValues.features) }
+    );
 
-  return (
-    <Stack direction='row' gap={1}>
-      <FormControl sx={{ minWidth: '6em' }}>
-        <InputLabel id='select-target-label'>Target</InputLabel>
-        <Select
-          labelId='select-target-label'
-          id='select-target'
-          value={possibleValues.targets?.length > 0 ? state.target : ''}
-          label='Display Targets'
-          onChange={handleTargetChange}>
-          {possibleValues.targets.map(target => (
-            <MenuItem key={target} value={target}>
-              {target}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+  // components
+  const selectTarget = (
+    <FormControl sx={{ minWidth: '6em' }}>
+      <InputLabel id='select-target-label'>Target</InputLabel>
+      <Select
+        labelId='select-target-label'
+        id='select-target'
+        value={possibleValues.targets?.length > 0 ? state.target : ''}
+        label='Display Targets'
+        onChange={handleTargetChange}>
+        {possibleValues.targets.map(target => (
+          <MenuItem key={target} value={target}>
+            {target}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
 
-      {VerticalLine}
-
+  const selectFeatures = (
+    <>
       <Button
         variant='contained'
         size='medium'
@@ -121,6 +133,18 @@ export const TargetAndFeaturesPicker: React.FC = () => {
           ))}
         </Select>
       </FormControl>
-    </Stack>
+    </>
+  );
+
+  return (
+    <AnalysisStepLogic>
+      <Stack direction='row' gap={1}>
+        {selectTarget}
+
+        {VerticalLine}
+
+        {selectFeatures}
+      </Stack>
+    </AnalysisStepLogic>
   );
 };

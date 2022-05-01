@@ -1,21 +1,25 @@
 import { CacheSystem } from '@renderer/api/CacheSystem';
 import React from 'react';
+import { TOTAL_STEPS } from './PrincipalComponentsAnalysis';
 
 export interface PrincipalComponentsAnalysisState {
   loading: boolean;
   target: string;
   features: Set<string>;
+  canStep: boolean[];
 }
 
 const PCA_CacheKeys = Object.freeze({
   Target: 'pca-target',
   Features: 'pca-features',
+  CanStep: 'pca-can-step',
 });
 
 export const getDefeaultStatePCA = (): PrincipalComponentsAnalysisState => ({
   loading: false,
   target: CacheSystem.GetItemOrDefault(PCA_CacheKeys.Target, ''),
   features: new Set<string>(CacheSystem.GetItemOrDefault(PCA_CacheKeys.Features, [])),
+  canStep: CacheSystem.GetItemOrDefault(PCA_CacheKeys.CanStep, new Array(TOTAL_STEPS + 1).fill(false)),
 });
 
 export enum ActionType {
@@ -25,11 +29,20 @@ export enum ActionType {
   ChangeTarget = 'CHANGE_TARGET',
   SetFeatures = 'SET_FEATURES',
   ClearFeatures = 'CLEAR_FEATURES',
+
+  EnableStep = 'ENABLE_STEP',
+  DisableStep = 'DISABLE_STEP',
+  ChangeCanStep = 'CHANGE_CAN_STEP',
+}
+
+interface CanStepSlotConfig {
+  index: number;
+  value: boolean;
 }
 
 interface Action {
   type: ActionType;
-  payload?: string | Set<string>;
+  payload?: string | Set<string> | boolean | number | CanStepSlotConfig;
 }
 
 export type PCA_Dispatcher = React.Dispatch<Action>;
@@ -86,6 +99,22 @@ export const pcaStateReducer = (
 
     case ActionType.ClearFeatures: {
       return changeFeatures(state, new Set<string>());
+    }
+
+    case ActionType.ChangeCanStep: {
+      const config = action.payload as CanStepSlotConfig;
+
+      if (state.canStep[config.index] === config.value) return state;
+
+      const newSteps = [...state.canStep];
+      newSteps[config.index] = config.value;
+
+      CacheSystem.SetItem(PCA_CacheKeys.CanStep, newSteps);
+
+      return {
+        ...state,
+        canStep: newSteps,
+      };
     }
 
     default: {
