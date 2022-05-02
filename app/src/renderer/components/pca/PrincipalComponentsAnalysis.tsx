@@ -5,6 +5,7 @@ import { Box, Backdrop, CircularProgress } from '@mui/material';
 import { mapConfigToSteps, StepConfig } from '@renderer/components/AnalysisStep';
 
 import { TargetAndFeaturesPicker } from './TargetAndFeaturesPicker';
+import { ScaleHandler } from './ScaleHandler';
 import {
   getDefeaultStatePCA,
   pcaStateReducer,
@@ -38,7 +39,7 @@ const PCA_Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_
   {
     index: 2,
     title: 'Scale data',
-    content: 'Scale data',
+    content: <ScaleHandler />,
   },
   {
     index: 3,
