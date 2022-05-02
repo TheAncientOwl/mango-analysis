@@ -96,4 +96,5 @@ def scale():
     else:
         return flask.jsonify(message="Method not found"), 404
 
+    server.scaled_data = True
     return flask.jsonify(message="DataFrame scaled"), 200

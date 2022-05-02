@@ -33,8 +33,6 @@ class PCA:
         self.pca = skPCA()
         self.pca_df = pd.DataFrame()
 
-        self.scaled_data = False
-
     def set_target(self, target):
         if target not in server.dataFrame.columns:
             raise 'Unknown target'
@@ -55,7 +53,7 @@ class PCA:
 
     def standardize_data(self):
         self.features_values = StandardScaler().fit_transform(self.features_values)
-        self.scaled_data = True
+        server.scaled_data = True
 
     def plot_correlation_matrix(self):
         corr_matrix = pd.DataFrame(

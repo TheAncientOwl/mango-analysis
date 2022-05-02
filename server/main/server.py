@@ -8,6 +8,7 @@ import api
 
 dataFrame = pandas.DataFrame()
 pca = api.PCA()
+scaled_data = False
 
 
 def new_pca():

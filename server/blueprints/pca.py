@@ -42,7 +42,7 @@ def set_target_and_features():
 
 @pca.get('/pca/was-data-scaled')
 def was_data_scaled():
-    return flask.jsonify(scaledData=server.pca.scaled_data), 200
+    return flask.jsonify(scaledData=server.scaled_data), 200
 
 
 @pca.post('/pca/scale-data')
