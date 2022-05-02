@@ -23,6 +23,7 @@ export const createAppWindow = (): BrowserWindow => {
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
       preload: APP_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      webSecurity: false,
     },
   });
 

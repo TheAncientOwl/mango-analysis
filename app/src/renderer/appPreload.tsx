@@ -2,7 +2,9 @@ import { contextBridge, ipcRenderer } from 'electron';
 
 interface ElectronAPI {
   getImportCsvPath: () => Promise<string | null>;
-  getExportCsvDirectoryPath: () => Promise<string | null>;
+  getCopyAnalysisImageSavePath: () => Promise<string | null>;
+  showSaveDialog: (options: Electron.SaveDialogOptions) => Promise<string | null>;
+  copyFileSync: (src: string, dest: string) => void;
 
   appWindow: {
     minimize: () => void;
@@ -13,7 +15,9 @@ interface ElectronAPI {
 
 const electron: ElectronAPI = {
   getImportCsvPath: () => ipcRenderer.invoke('get-import-csv-path'),
-  getExportCsvDirectoryPath: () => ipcRenderer.invoke('get-export-csv-directory-path'),
+  getCopyAnalysisImageSavePath: () => ipcRenderer.invoke('get-copy-analysis-image-save-path'),
+  showSaveDialog: options => ipcRenderer.invoke('show-save-dialog', options),
+  copyFileSync: (src, dest) => ipcRenderer.invoke('copy-file-sync', src, dest),
 
   appWindow: {
     minimize: () => ipcRenderer.invoke('window-minimize'),
