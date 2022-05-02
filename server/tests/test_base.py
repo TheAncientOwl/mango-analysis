@@ -1,8 +1,11 @@
+import os
+
 import unittest
 import pandas
+
 from main.server import app
 import main.server as server
-import os
+import api
 
 
 class tokens:
@@ -15,7 +18,8 @@ class TestBase(unittest.TestCase):
     # dataframe read & empty
     def readDataFrame(self):
         server.dataFrame = pandas.read_csv(f'{tokens.working_dir}/Date.csv')
-        server.dataFrame.insert(0, '_mango_id', range(1, len(server.dataFrame) + 1))
+        server.dataFrame.insert(
+            0, '_mango_id', range(1, len(server.dataFrame) + 1))
 
     def emptyDataFrame(self):
         server.dataFrame = pandas.DataFrame()
@@ -24,6 +28,9 @@ class TestBase(unittest.TestCase):
     def setUp(self):
         self.emptyDataFrame()
         self.client = app.test_client(self)
+        server.scaled_data = False
+
+        server.pca = api.PCA()
 
     def tearDown(self):
         file = f'{tokens.working_dir}/DateExported.csv'
