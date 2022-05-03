@@ -7,6 +7,7 @@ import { axios } from '@renderer/config';
 
 import { ActionType } from '../state';
 import { DataManagerContext } from '../context';
+import { PCA_clearCache } from '../../pca/state';
 
 export const ImportButton: React.FC = () => {
   const { dispatch, fetchData } = React.useContext(DataManagerContext);
@@ -24,6 +25,8 @@ export const ImportButton: React.FC = () => {
     await axios.get(`/data/import/csv/${filePath}`);
 
     fetchData();
+
+    PCA_clearCache();
 
     dispatch({ type: ActionType.DataImported });
   };

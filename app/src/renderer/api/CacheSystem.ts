@@ -3,6 +3,10 @@ export class CacheSystem {
     sessionStorage.clear();
   };
 
+  static Remove = (key: string): void => {
+    sessionStorage.removeItem(key);
+  };
+
   static SetItem = <T>(key: string, value: T): void => {
     const stringValue = JSON.stringify(value);
 

@@ -19,6 +19,12 @@ export const PCA_CacheKeys = Object.freeze({
   LoadingsMatrixPath: 'pca-loadings-matrix-path',
 });
 
+export const PCA_clearCache = () => {
+  for (const [, cacheKey] of Object.entries(PCA_CacheKeys)) {
+    CacheSystem.Remove(cacheKey);
+  }
+};
+
 export const getDefeaultStatePCA = (): PrincipalComponentsAnalysisState => ({
   loading: false,
   target: CacheSystem.GetItemOrDefault(PCA_CacheKeys.Target, ''),
