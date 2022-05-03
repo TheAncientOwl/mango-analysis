@@ -24,6 +24,7 @@ export interface StepConfig<State, Dispatch> {
   title: string;
   content: React.ReactNode;
   onNext?: (state: State, dispatch: Dispatch) => void;
+  onPrev?: (state: State, dispatch: Dispatch) => void;
 }
 
 // displays logic component and
@@ -164,11 +165,22 @@ export const mapConfigToSteps = <State, Dispatch>(
           totalSteps={totalSteps}
           title={step.title}
           canNext={canStep[step.index + 1]}
-          onNext={() => {
-            nextStep();
-            step?.onNext?.(state, dispatch);
-          }}
-          onBack={prevStep}>
+          onNext={
+            step.onNext
+              ? () => {
+                  nextStep();
+                  step?.onNext?.(state, dispatch);
+                }
+              : nextStep
+          }
+          onBack={
+            step.onPrev
+              ? () => {
+                  prevStep();
+                  step?.onPrev?.(state, dispatch);
+                }
+              : prevStep
+          }>
           {step.content}
         </AnalysisStep>
       ))}
