@@ -51,7 +51,7 @@ export const TargetAndFeaturesPicker: React.FC = () => {
   React.useEffect(() => {
     dispatch({
       type: PCA.ActionType.ChangeCanStep,
-      payload: { index: 2, allowed: state.target !== '' && state.features.size > 0 },
+      payload: { index: 2, allowed: state.target !== '' && state.features.length > 0 },
     });
   }, [state.target, state.features]);
 
@@ -71,15 +71,12 @@ export const TargetAndFeaturesPicker: React.FC = () => {
     dispatch({ type: PCA.ActionType.ChangeTarget, payload: event.target.value as string });
 
   const handleFeaturesChange = (event: SelectChangeEvent<string[]>) =>
-    dispatch({ type: PCA.ActionType.SetFeatures, payload: new Set<string>(event.target.value) });
+    dispatch({ type: PCA.ActionType.SetFeatures, payload: event.target.value });
 
   const handleSelectAllClick = () =>
     dispatch({
       type: PCA.ActionType.SetFeatures,
-      payload:
-        possibleValues.features.length === state.features.size
-          ? new Set<string>()
-          : new Set<string>(possibleValues.features),
+      payload: possibleValues.features.length === state.features.length ? [] : possibleValues.features,
     });
 
   // components
@@ -108,7 +105,7 @@ export const TargetAndFeaturesPicker: React.FC = () => {
         size='medium'
         disableElevation
         startIcon={
-          possibleValues.features.length === state.features.size ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />
+          possibleValues.features.length === state.features.length ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />
         }
         onClick={handleSelectAllClick}>
         all
@@ -128,7 +125,7 @@ export const TargetAndFeaturesPicker: React.FC = () => {
           MenuProps={MenuProps}>
           {possibleValues.features.map(feature => (
             <MenuItem key={feature} value={feature}>
-              <Checkbox checked={state.features.has(feature)} />
+              <Checkbox checked={state.features.indexOf(feature) > -1} />
               <ListItemText primary={feature} />
             </MenuItem>
           ))}

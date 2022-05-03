@@ -19,7 +19,10 @@ export const ComponentsCountPicker: React.FC = () => {
     setCount(+event.target.value);
   };
 
-  const menuItemsDummyArray = React.useMemo(() => new Array(state.features.size).fill(0), [state.features]);
+  const menuItemsDummyArray = React.useMemo(
+    () => new Array(Math.max(0, state.features.length - 1)).fill(0),
+    [state.features]
+  );
 
   const runAnalysis = () => {
     dispatch({ type: PCA.ActionType.Loading });
@@ -42,8 +45,8 @@ export const ComponentsCountPicker: React.FC = () => {
             label='Components'
             onChange={handleChange}>
             {menuItemsDummyArray.map((val, index) => (
-              <MenuItem key={index} value={index}>
-                {index}
+              <MenuItem key={index} value={index + 2}>
+                {index + 2}
               </MenuItem>
             ))}
           </Select>

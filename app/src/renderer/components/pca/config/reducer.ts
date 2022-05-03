@@ -22,7 +22,7 @@ interface StepConfig {
 
 interface Action {
   type: ActionType;
-  payload?: string | Set<string> | boolean | number | StepConfig;
+  payload?: string | string[] | boolean | number | StepConfig;
 }
 
 export type PCA_Dispatcher = React.Dispatch<Action>;
@@ -57,9 +57,9 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     }
 
     case ActionType.SetFeatures: {
-      const newFeatures = action.payload as Set<string>;
+      const newFeatures = action.payload as string[];
 
-      CacheSystem.SetItem(PCA.CacheKeys.Features, Array.from(newFeatures));
+      CacheSystem.SetItem(PCA.CacheKeys.Features, newFeatures);
 
       return {
         ...state,
