@@ -1,6 +1,8 @@
-import { CacheSystem } from '@renderer/api/CacheSystem';
 import React from 'react';
-import { TOTAL_STEPS } from './PrincipalComponentsAnalysis';
+
+import { CacheSystem } from '@renderer/api/CacheSystem';
+
+import { PCA_Steps } from './PCA.steps';
 
 export interface PrincipalComponentsAnalysisState {
   loading: boolean;
@@ -29,7 +31,7 @@ export const getDefeaultStatePCA = (): PrincipalComponentsAnalysisState => ({
   loading: false,
   target: CacheSystem.GetItemOrDefault(PCA_CacheKeys.Target, ''),
   features: new Set<string>(CacheSystem.GetItemOrDefault(PCA_CacheKeys.Features, [])),
-  canStep: CacheSystem.GetItemOrDefault(PCA_CacheKeys.CanStep, new Array(TOTAL_STEPS + 1).fill(false)),
+  canStep: CacheSystem.GetItemOrDefault(PCA_CacheKeys.CanStep, new Array(PCA_Steps.length + 1).fill(false)),
 });
 
 export enum ActionType {

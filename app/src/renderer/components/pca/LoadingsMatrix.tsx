@@ -1,11 +1,15 @@
+import React from 'react';
+
 import { Box, Button, Stack } from '@mui/material';
+
+import { AnalysisImage } from '@renderer/components/AnalysisImage';
+import { AnalysisStepLogic, AnalysisStepResult } from '@renderer/components/AnalysisStep';
+
 import { axios } from '@renderer/config';
 import { useCache } from '@renderer/hooks';
-import React from 'react';
-import { AnalysisImage } from '../AnalysisImage';
-import { AnalysisStepLogic, AnalysisStepResult } from '../AnalysisStep';
-import { PCA_Context } from './context';
+
 import { ActionType, PCA_CacheKeys } from './state';
+import { PCA_Context } from './context';
 
 export const LoadingsMatrix: React.FC = () => {
   const { dispatch } = React.useContext(PCA_Context);

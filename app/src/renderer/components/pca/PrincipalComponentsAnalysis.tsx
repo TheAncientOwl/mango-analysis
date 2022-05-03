@@ -2,79 +2,21 @@ import React from 'react';
 
 import { Box, Backdrop, CircularProgress } from '@mui/material';
 
-import { mapConfigToSteps, StepConfig } from '@renderer/components/AnalysisStep';
-
-import { TargetAndFeaturesPicker } from './TargetAndFeaturesPicker';
-import { ScaleHandler } from './ScaleHandler';
-import {
-  getDefeaultStatePCA,
-  pcaStateReducer,
-  PrincipalComponentsAnalysisState,
-  PCA_Dispatcher,
-  ActionType,
-  PCA_CacheKeys,
-} from './state';
-import { PCA_ContextProvider } from './context';
-import { axios } from '@renderer/config';
-import { CorrelationMatrix } from './CorrelationMatrix';
-import { ComponentsCountPicker } from './ComponentsCountPicker';
+import { mapConfigToSteps } from '@renderer/components/AnalysisStep';
 import { useCachedStepper } from '@renderer/hooks/useCachedStepper';
-import { LoadingsMatrix } from './LoadingsMatrix';
 
-export const TOTAL_STEPS = 6;
-
-const PCA_Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_Dispatcher>> = [
-  {
-    index: 1,
-    title: 'Pick target and features',
-    content: <TargetAndFeaturesPicker />,
-    onNext: (state, dispatch) => {
-      dispatch({ type: ActionType.Loading });
-      axios
-        .post('pca/set/target&features', {
-          target: state.target,
-          features: Array.from(state.features),
-        })
-        .then(() => {
-          dispatch({ type: ActionType.EndLoading });
-        });
-    },
-  },
-  {
-    index: 2,
-    title: 'Scale data',
-    content: <ScaleHandler />,
-  },
-  {
-    index: 3,
-    title: 'Plot correlation matrix',
-    content: <CorrelationMatrix />,
-  },
-  {
-    index: 4,
-    title: 'Pick components count',
-    content: <ComponentsCountPicker />,
-  },
-  {
-    index: 5,
-    title: 'Plot loadings matrix',
-    content: <LoadingsMatrix />,
-  },
-  {
-    index: 6,
-    title: 'Pick target and features',
-    content: 'Plot observations',
-  },
-];
+import { getDefeaultStatePCA, pcaStateReducer, PCA_CacheKeys } from './state';
+import { PCA_ContextProvider } from './context';
+import { PCA_Steps } from './PCA.steps';
 
 export const PrincipalComponentsAnalysis: React.FC = () => {
   const [state, dispatch] = React.useReducer(pcaStateReducer, getDefeaultStatePCA());
-  const { step: currentStep, nextStep, prevStep } = useCachedStepper(PCA_CacheKeys.CurrentStep, TOTAL_STEPS);
+  const { step: currentStep, nextStep, prevStep } = useCachedStepper(PCA_CacheKeys.CurrentStep, PCA_Steps.length);
 
   return (
     <PCA_ContextProvider value={{ dispatch, state }}>
       <Box sx={{ p: 2, overflowY: 'scroll' }}>
-        {mapConfigToSteps(PCA_Steps, nextStep, prevStep, currentStep, TOTAL_STEPS, state.canStep, state, dispatch)}
+        {mapConfigToSteps(PCA_Steps, nextStep, prevStep, currentStep, PCA_Steps.length, state.canStep, state, dispatch)}
       </Box>
 
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={state.loading}>

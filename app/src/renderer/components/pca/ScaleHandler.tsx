@@ -1,9 +1,12 @@
-import { Button, Stack, Typography } from '@mui/material';
-import { axios } from '@renderer/config';
 import React from 'react';
+
+import { Button, Stack, Typography } from '@mui/material';
+
 import { AnalysisStepLogic } from '@renderer/components/AnalysisStep';
-import { PCA_Context } from './context';
+import { axios } from '@renderer/config';
+
 import { ActionType } from './state';
+import { PCA_Context } from './context';
 
 export const ScaleHandler: React.FC = () => {
   const { dispatch } = React.useContext(PCA_Context);

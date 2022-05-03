@@ -1,11 +1,15 @@
+import React from 'react';
+
 // eslint-disable-next-line import/named
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from '@mui/material';
-import { axios } from '@src/renderer/config';
-import { useCache } from '@src/renderer/hooks';
-import React from 'react';
-import { AnalysisStepLogic } from '../AnalysisStep';
-import { PCA_Context } from './context';
+
+import { AnalysisStepLogic } from '@renderer/components/AnalysisStep';
+
+import { axios } from '@renderer/config';
+import { useCache } from '@renderer/hooks';
+
 import { ActionType, PCA_CacheKeys } from './state';
+import { PCA_Context } from './context';
 
 export const ComponentsCountPicker: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA_Context);
