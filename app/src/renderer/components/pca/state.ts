@@ -16,6 +16,7 @@ export const PCA_CacheKeys = Object.freeze({
   ComponentsCount: 'pca-components-count',
   CurrentStep: 'pca-current-step',
   CorrelationMatrixPath: 'pca-correlation-matrix-path',
+  LoadingsMatrixPath: 'pca-loadings-matrix-path',
 });
 
 export const getDefeaultStatePCA = (): PrincipalComponentsAnalysisState => ({

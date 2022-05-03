@@ -19,6 +19,7 @@ import { axios } from '@renderer/config';
 import { CorrelationMatrix } from './CorrelationMatrix';
 import { ComponentsCountPicker } from './ComponentsCountPicker';
 import { useCachedStepper } from '@renderer/hooks/useCachedStepper';
+import { LoadingsMatrix } from './LoadingsMatrix';
 
 export const TOTAL_STEPS = 6;
 
@@ -57,7 +58,7 @@ const PCA_Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_
   {
     index: 5,
     title: 'Plot loadings matrix',
-    content: 'Plot loadings matrix',
+    content: <LoadingsMatrix />,
   },
   {
     index: 6,
