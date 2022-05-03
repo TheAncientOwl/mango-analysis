@@ -12,11 +12,13 @@ import {
   PrincipalComponentsAnalysisState,
   PCA_Dispatcher,
   ActionType,
+  PCA_CacheKeys,
 } from './state';
 import { PCA_ContextProvider } from './context';
-import { useStepper } from '@renderer/hooks';
 import { axios } from '@renderer/config';
 import { CorrelationMatrix } from './CorrelationMatrix';
+import { ComponentsCountPicker } from './ComponentsCountPicker';
+import { useCachedStepper } from '@renderer/hooks/useCachedStepper';
 
 export const TOTAL_STEPS = 6;
 
@@ -50,7 +52,7 @@ const PCA_Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_
   {
     index: 4,
     title: 'Pick components count',
-    content: 'Pick components count',
+    content: <ComponentsCountPicker />,
   },
   {
     index: 5,
@@ -66,7 +68,7 @@ const PCA_Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_
 
 export const PrincipalComponentsAnalysis: React.FC = () => {
   const [state, dispatch] = React.useReducer(pcaStateReducer, getDefeaultStatePCA());
-  const { step: currentStep, nextStep, prevStep } = useStepper(TOTAL_STEPS);
+  const { step: currentStep, nextStep, prevStep } = useCachedStepper(PCA_CacheKeys.CurrentStep, TOTAL_STEPS);
 
   return (
     <PCA_ContextProvider value={{ dispatch, state }}>

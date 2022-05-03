@@ -9,10 +9,13 @@ export interface PrincipalComponentsAnalysisState {
   canStep: boolean[];
 }
 
-const PCA_CacheKeys = Object.freeze({
+export const PCA_CacheKeys = Object.freeze({
   Target: 'pca-target',
   Features: 'pca-features',
   CanStep: 'pca-can-step',
+  ComponentsCount: 'pca-components-count',
+  CurrentStep: 'pca-current-step',
+  CorrelationMatrixPath: 'pca-correlation-matrix-path',
 });
 
 export const getDefeaultStatePCA = (): PrincipalComponentsAnalysisState => ({
