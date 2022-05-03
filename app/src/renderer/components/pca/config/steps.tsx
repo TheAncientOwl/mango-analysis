@@ -1,31 +1,33 @@
 import React from 'react';
 
-import { StepConfig } from '../AnalysisStep';
+import { StepConfig } from '../../AnalysisStep';
 
 import { axios } from '@renderer/config';
 
-import { PrincipalComponentsAnalysisState, PCA_Dispatcher, ActionType } from './state';
+import { PrincipalComponentsAnalysisState } from './state';
+import { PCA_Dispatcher } from './reducer';
+import { PCA } from './index';
 
-import { TargetAndFeaturesPicker } from './TargetAndFeaturesPicker';
-import { ScaleHandler } from './ScaleHandler';
-import { CorrelationMatrix } from './CorrelationMatrix';
-import { ComponentsCountPicker } from './ComponentsCountPicker';
-import { LoadingsMatrix } from './LoadingsMatrix';
+import { TargetAndFeaturesPicker } from '../TargetAndFeaturesPicker';
+import { ScaleHandler } from '../ScaleHandler';
+import { CorrelationMatrix } from '../CorrelationMatrix';
+import { ComponentsCountPicker } from '../ComponentsCountPicker';
+import { LoadingsMatrix } from '../LoadingsMatrix';
 
-export const PCA_Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_Dispatcher>> = [
+export const Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_Dispatcher>> = [
   {
     index: 1,
     title: 'Pick target and features',
     content: <TargetAndFeaturesPicker />,
     onNext: (state, dispatch) => {
-      dispatch({ type: ActionType.Loading });
+      dispatch({ type: PCA.ActionType.Loading });
       axios
         .post('pca/set/target&features', {
           target: state.target,
           features: Array.from(state.features),
         })
         .then(() => {
-          dispatch({ type: ActionType.EndLoading });
+          dispatch({ type: PCA.ActionType.EndLoading });
         });
     },
   },

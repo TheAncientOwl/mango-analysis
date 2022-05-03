@@ -8,17 +8,16 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@renderer/components/Anal
 import { axios } from '@renderer/config';
 import { useCache } from '@renderer/hooks';
 
-import { ActionType, PCA_CacheKeys } from './state';
-import { PCA_Context } from './context';
+import { PCA } from './config';
 
 export const CorrelationMatrix: React.FC = () => {
-  const { dispatch } = React.useContext(PCA_Context);
-  const [imagePath, setImagePath] = useCache(PCA_CacheKeys.CorrelationMatrixPath, '');
+  const { dispatch } = React.useContext(PCA.Context);
+  const [imagePath, setImagePath] = useCache(PCA.CacheKeys.CorrelationMatrixPath, '');
 
-  const allowNext = () => dispatch({ type: ActionType.ChangeCanStep, payload: { index: 4, value: true } });
+  const allowNext = () => dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 4, allowed: true } });
 
   const handlePlot = () => {
-    dispatch({ type: ActionType.Loading });
+    dispatch({ type: PCA.ActionType.Loading });
 
     axios.get('/pca/plot/correlation-matrix').then(res => {
       const path = res.data.imagePath;
@@ -26,7 +25,7 @@ export const CorrelationMatrix: React.FC = () => {
       setImagePath(path);
       allowNext();
 
-      dispatch({ type: ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.EndLoading });
     });
   };
 

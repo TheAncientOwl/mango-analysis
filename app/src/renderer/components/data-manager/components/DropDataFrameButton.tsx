@@ -10,7 +10,8 @@ import { useSwitch } from '@renderer/hooks';
 
 import { ActionType } from '../state';
 import { DataManagerContext } from '../context';
-import { PCA_clearCache } from '../../pca/state';
+
+import { PCA } from '@renderer/components/pca/config';
 
 export const DropDataFrameButton: React.FC = () => {
   const { dispatch, state } = React.useContext(DataManagerContext);
@@ -23,7 +24,7 @@ export const DropDataFrameButton: React.FC = () => {
 
     await axios.post('/data/drop-all');
 
-    PCA_clearCache();
+    PCA.clearCache();
 
     dispatch({ type: ActionType.DataframeDropped });
   };

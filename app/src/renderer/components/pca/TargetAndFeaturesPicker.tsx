@@ -18,9 +18,8 @@ import {
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
-import { ActionType } from './state';
-import { PCA_Context } from './context';
 import { AnalysisStepLogic } from '../AnalysisStep';
+import { PCA } from './config';
 
 interface PossibleValues {
   targets: string[];
@@ -41,7 +40,7 @@ const MenuProps = {
 const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
 export const TargetAndFeaturesPicker: React.FC = () => {
-  const { dispatch, state } = React.useContext(PCA_Context);
+  const { dispatch, state } = React.useContext(PCA.Context);
 
   const [possibleValues, setPossibleValues] = React.useState<PossibleValues>({
     targets: [],
@@ -51,35 +50,37 @@ export const TargetAndFeaturesPicker: React.FC = () => {
   // check if the analyze can continue (target and some features are selected)
   React.useEffect(() => {
     dispatch({
-      type: ActionType.ChangeCanStep,
-      payload: { index: 2, value: state.target !== '' && state.features.size > 0 },
+      type: PCA.ActionType.ChangeCanStep,
+      payload: { index: 2, allowed: state.target !== '' && state.features.size > 0 },
     });
   }, [state.target, state.features]);
 
   // fetch possible targets & features
   React.useEffect(() => {
-    dispatch({ type: ActionType.Loading });
+    dispatch({ type: PCA.ActionType.Loading });
 
     axios.get('/pca/possible/targets&features').then(res => {
       setPossibleValues(res.data);
 
-      dispatch({ type: ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.EndLoading });
     });
   }, []);
 
   // handlers
   const handleTargetChange = (event: SelectChangeEvent) =>
-    dispatch({ type: ActionType.ChangeTarget, payload: event.target.value as string });
+    dispatch({ type: PCA.ActionType.ChangeTarget, payload: event.target.value as string });
 
   const handleFeaturesChange = (event: SelectChangeEvent<string[]>) =>
-    dispatch({ type: ActionType.SetFeatures, payload: new Set<string>(event.target.value) });
+    dispatch({ type: PCA.ActionType.SetFeatures, payload: new Set<string>(event.target.value) });
 
   const handleSelectAllClick = () =>
-    dispatch(
-      possibleValues.features.length === state.features.size
-        ? { type: ActionType.ClearFeatures }
-        : { type: ActionType.SetFeatures, payload: new Set<string>(possibleValues.features) }
-    );
+    dispatch({
+      type: PCA.ActionType.SetFeatures,
+      payload:
+        possibleValues.features.length === state.features.size
+          ? new Set<string>()
+          : new Set<string>(possibleValues.features),
+    });
 
   // components
   const selectTarget = (

@@ -4,10 +4,10 @@ import { Button } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 import { axios } from '@renderer/config';
+import { PCA } from '@renderer/components/pca/config';
 
 import { ActionType } from '../state';
 import { DataManagerContext } from '../context';
-import { PCA_clearCache } from '../../pca/state';
 
 export const ImportButton: React.FC = () => {
   const { dispatch, fetchData } = React.useContext(DataManagerContext);
@@ -26,7 +26,7 @@ export const ImportButton: React.FC = () => {
 
     fetchData();
 
-    PCA_clearCache();
+    PCA.clearCache();
 
     dispatch({ type: ActionType.DataImported });
   };

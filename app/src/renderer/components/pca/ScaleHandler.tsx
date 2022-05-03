@@ -5,37 +5,36 @@ import { Button, Stack, Typography } from '@mui/material';
 import { AnalysisStepLogic } from '@renderer/components/AnalysisStep';
 import { axios } from '@renderer/config';
 
-import { ActionType } from './state';
-import { PCA_Context } from './context';
+import { PCA } from './config';
 
 export const ScaleHandler: React.FC = () => {
-  const { dispatch } = React.useContext(PCA_Context);
+  const { dispatch } = React.useContext(PCA.Context);
 
   const [scaledData, setScaledData] = React.useState(false);
 
   React.useEffect(() => {
-    dispatch({ type: ActionType.ChangeCanStep, payload: { index: 3, value: scaledData } });
+    dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 3, allowed: scaledData } });
   }, [scaledData]);
 
   React.useEffect(() => {
-    dispatch({ type: ActionType.Loading });
+    dispatch({ type: PCA.ActionType.Loading });
 
     axios.get('/pca/was-data-scaled').then(res => {
       const isDataScaled = res.data.scaledData;
 
       if (scaledData !== isDataScaled) setScaledData(res.data.scaledData);
 
-      dispatch({ type: ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.EndLoading });
     });
   }, []);
 
   const scaleData = () => {
-    dispatch({ type: ActionType.Loading });
+    dispatch({ type: PCA.ActionType.Loading });
 
     axios.post('/pca/scale-data').then(() => {
       setScaledData(true);
 
-      dispatch({ type: ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.EndLoading });
     });
   };
 

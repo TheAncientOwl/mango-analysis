@@ -4,7 +4,7 @@ import TableViewIcon from '@mui/icons-material/TableView';
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
 
 import { DataManager } from '@renderer/components/data-manager';
-import { PrincipalComponentsAnalysis } from '@renderer/components/pca/PrincipalComponentsAnalysis';
+import { PrincipalComponentsAnalysis } from '@renderer/components/pca';
 
 interface Route {
   name: string;

@@ -8,13 +8,12 @@ import { AnalysisStepLogic } from '@renderer/components/AnalysisStep';
 import { axios } from '@renderer/config';
 import { useCache } from '@renderer/hooks';
 
-import { ActionType, PCA_CacheKeys } from './state';
-import { PCA_Context } from './context';
+import { PCA } from './config';
 
 export const ComponentsCountPicker: React.FC = () => {
-  const { dispatch, state } = React.useContext(PCA_Context);
+  const { dispatch, state } = React.useContext(PCA.Context);
 
-  const [count, setCount] = useCache(PCA_CacheKeys.ComponentsCount, 2);
+  const [count, setCount] = useCache(PCA.CacheKeys.ComponentsCount, 2);
 
   const handleChange = (event: SelectChangeEvent) => {
     setCount(+event.target.value);
@@ -23,11 +22,11 @@ export const ComponentsCountPicker: React.FC = () => {
   const menuItemsDummyArray = React.useMemo(() => new Array(state.features.size).fill(0), [state.features]);
 
   const runAnalysis = () => {
-    dispatch({ type: ActionType.Loading });
+    dispatch({ type: PCA.ActionType.Loading });
 
     axios.post('/pca/analyze', { componentsCount: count }).then(() => {
-      dispatch({ type: ActionType.ChangeCanStep, payload: { index: 5, value: true } });
-      dispatch({ type: ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 5, allowed: true } });
+      dispatch({ type: PCA.ActionType.EndLoading });
     });
   };
 
