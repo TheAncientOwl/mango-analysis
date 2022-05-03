@@ -16,7 +16,7 @@ import {
 import { PCA_ContextProvider } from './context';
 import { useStepper } from '@renderer/hooks';
 import { axios } from '@renderer/config';
-import { AnalysisImage } from '../AnalysisImage';
+import { CorrelationMatrix } from './CorrelationMatrix';
 
 export const TOTAL_STEPS = 6;
 
@@ -45,7 +45,7 @@ const PCA_Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_
   {
     index: 3,
     title: 'Plot correlation matrix',
-    content: <AnalysisImage src='C:\PCA-Plot-PC1-PC2.f6897e6a-beb5-48a9-ba6b-3fc0e7d13870.jpg' alt='testing' />,
+    content: <CorrelationMatrix />,
   },
   {
     index: 4,
