@@ -39,12 +39,8 @@ export const ScaleHandler: React.FC = () => {
     });
   };
 
-  const skipScaleData = () => {
-    dispatch({
-      type: PCA.ActionType.SetUnlockedStep,
-      payload: { index: PCA.ComponentIndex.ScaleHandler + 1, allowed: true },
-    });
-  };
+  const skipScaleData = () =>
+    dispatch({ type: PCA.ActionType.JumpToStep, payload: PCA.ComponentIndex.ScaleHandler + 1 });
 
   return (
     <AnalysisStepLogic>

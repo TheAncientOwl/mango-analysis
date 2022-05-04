@@ -30,6 +30,7 @@ export const ComponentsCountPicker: React.FC = () => {
         payload: { index: PCA.ComponentIndex.ComponentsCountPicker + 1, allowed: true },
       });
       dispatch({ type: PCA.ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.JumpToStep, payload: PCA.ComponentIndex.ComponentsCountPicker + 1 });
     });
   };
 

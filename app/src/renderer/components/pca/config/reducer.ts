@@ -18,6 +18,7 @@ export enum ActionType {
   SetUnlockedStep = 'CHANGE_CAN_STEP',
   NextStep = 'NEXT_STEP',
   PrevStep = 'PREV_STEP',
+  JumpToStep = 'JUMP_TO_STEP',
 }
 
 interface StepConfig {
@@ -139,6 +140,18 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       return {
         ...state,
         currentStep: state.currentStep - 1,
+      };
+    }
+
+    case ActionType.JumpToStep: {
+      const step = action.payload as number;
+
+      const newSteps = [...state.unlockedSteps];
+      newSteps.fill(true, 1, step + 1);
+
+      return {
+        ...state,
+        currentStep: step,
       };
     }
 

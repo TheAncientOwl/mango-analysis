@@ -31,7 +31,8 @@ export const CorrelationMatrix: React.FC = () => {
     });
   };
 
-  const handleSkip = allowNext;
+  const handleSkip = () =>
+    dispatch({ type: PCA.ActionType.JumpToStep, payload: PCA.ComponentIndex.CorrelationMatrix + 1 });
 
   return (
     <>
@@ -40,9 +41,11 @@ export const CorrelationMatrix: React.FC = () => {
           <Button onClick={handlePlot} variant='contained' size='medium' disableElevation color='info'>
             Plot
           </Button>
-          <Button onClick={handleSkip} variant='contained' size='medium' disableElevation color='warning'>
-            Skip
-          </Button>
+          {state.correlationMatrixPath === '' && (
+            <Button onClick={handleSkip} variant='contained' size='medium' disableElevation color='warning'>
+              Skip
+            </Button>
+          )}
         </Stack>
       </AnalysisStepLogic>
       <AnalysisStepResult>
