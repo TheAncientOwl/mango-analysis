@@ -12,8 +12,6 @@ export const PrincipalComponentsAnalysis: React.FC = () => {
   const nextStep = () => dispatch({ type: PCA.ActionType.NextStep });
   const prevStep = () => dispatch({ type: PCA.ActionType.PrevStep });
 
-  console.log(state);
-
   return (
     <PCA.ContextProvider value={{ dispatch, state }}>
       <Box sx={{ p: 2, overflowY: 'scroll' }}>
