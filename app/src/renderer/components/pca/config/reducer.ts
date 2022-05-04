@@ -15,7 +15,7 @@ export enum ActionType {
   SetLoadingsMatrixPath = 'SET_LOADINGS_MATRIX_PATH',
   SetScaledData = 'SET_SCALED_DATA',
 
-  ChangeCanStep = 'CHANGE_CAN_STEP',
+  SetUnlockedStep = 'CHANGE_CAN_STEP',
 }
 
 interface StepConfig {
@@ -106,19 +106,19 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       };
     }
 
-    case ActionType.ChangeCanStep: {
+    case ActionType.SetUnlockedStep: {
       const config = action.payload as StepConfig;
 
-      if (state.canStep[config.index] === config.allowed) return state;
+      if (state.unlockedSteps[config.index] === config.allowed) return state;
 
-      const newSteps = [...state.canStep];
+      const newSteps = [...state.unlockedSteps];
       newSteps[config.index] = config.allowed;
 
       CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
 
       return {
         ...state,
-        canStep: newSteps,
+        unlockedSteps: newSteps,
       };
     }
 

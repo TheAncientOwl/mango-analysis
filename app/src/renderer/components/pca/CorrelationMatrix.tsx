@@ -14,7 +14,7 @@ export const CorrelationMatrix: React.FC = () => {
 
   const allowNext = () =>
     dispatch({
-      type: PCA.ActionType.ChangeCanStep,
+      type: PCA.ActionType.SetUnlockedStep,
       payload: { index: PCA.ComponentIndex.CorrelationMatrix + 1, allowed: true },
     });
 

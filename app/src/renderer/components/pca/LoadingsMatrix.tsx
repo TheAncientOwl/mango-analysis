@@ -14,7 +14,7 @@ export const LoadingsMatrix: React.FC = () => {
 
   const allowNext = () =>
     dispatch({
-      type: PCA.ActionType.ChangeCanStep,
+      type: PCA.ActionType.SetUnlockedStep,
       payload: { index: PCA.ComponentIndex.LoadingsMatrix + 1, allowed: true },
     });
 

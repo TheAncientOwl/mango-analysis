@@ -50,7 +50,7 @@ export const TargetAndFeaturesPicker: React.FC = () => {
   // check if the analyze can continue (target and some features are selected)
   React.useEffect(() => {
     dispatch({
-      type: PCA.ActionType.ChangeCanStep,
+      type: PCA.ActionType.SetUnlockedStep,
       payload: {
         index: PCA.ComponentIndex.TargetAndFeaturesPicker + 1,
         allowed: state.target !== '' && state.features.length > 0,

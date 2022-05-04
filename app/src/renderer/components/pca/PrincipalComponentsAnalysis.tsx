@@ -14,7 +14,16 @@ export const PrincipalComponentsAnalysis: React.FC = () => {
   return (
     <PCA.ContextProvider value={{ dispatch, state }}>
       <Box sx={{ p: 2, overflowY: 'scroll' }}>
-        {mapConfigToSteps(PCA.Steps, nextStep, prevStep, currentStep, PCA.Steps.length, state.canStep, state, dispatch)}
+        {mapConfigToSteps(
+          PCA.Steps,
+          nextStep,
+          prevStep,
+          currentStep,
+          PCA.Steps.length,
+          state.unlockedSteps,
+          state,
+          dispatch
+        )}
       </Box>
 
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={state.loading}>

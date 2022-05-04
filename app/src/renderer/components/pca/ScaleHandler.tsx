@@ -12,7 +12,7 @@ export const ScaleHandler: React.FC = () => {
 
   React.useEffect(() => {
     dispatch({
-      type: PCA.ActionType.ChangeCanStep,
+      type: PCA.ActionType.SetUnlockedStep,
       payload: { index: PCA.ComponentIndex.ScaleHandler + 1, allowed: state.scaledData },
     });
   }, [state.scaledData]);
