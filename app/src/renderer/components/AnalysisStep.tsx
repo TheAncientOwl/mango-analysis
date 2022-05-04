@@ -43,7 +43,7 @@ export const AnalysisStepLogic: React.FC = ({ children }) => {
           bottom: -15,
           background: alpha(theme.palette.common.black, 0.2),
           borderRadius: theme.shape.borderRadius,
-          zIndex: 99999,
+          zIndex: 20,
         }}></Box>
     </Box>
   );

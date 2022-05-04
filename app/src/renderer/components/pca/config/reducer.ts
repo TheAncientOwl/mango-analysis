@@ -10,6 +10,11 @@ export enum ActionType {
   ChangeTarget = 'CHANGE_TARGET',
   SetFeatures = 'SET_FEATURES',
 
+  SetSelectedComponentsCount = 'SET_SELECTED_COMPONENTS_COUNT',
+  SetCorrelationMatrixPath = 'SET_CORRELATION_MATRIX_PATH',
+  SetLoadingsMatrixPath = 'SET_LOADINGS_MATRIX_PATH',
+  SetScaledData = 'SET_SCALED_DATA',
+
   EnableStep = 'ENABLE_STEP',
   DisableStep = 'DISABLE_STEP',
   ChangeCanStep = 'CHANGE_CAN_STEP',
@@ -64,6 +69,42 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       return {
         ...state,
         features: newFeatures,
+      };
+    }
+
+    case ActionType.SetSelectedComponentsCount: {
+      CacheSystem.SetItem(PCA.CacheKeys.ComponentsCount, action.payload as number);
+
+      return {
+        ...state,
+        selectedComponentsCount: action.payload as number,
+      };
+    }
+
+    case ActionType.SetCorrelationMatrixPath: {
+      CacheSystem.SetItem(PCA.CacheKeys.CorrelationMatrixPath, action.payload as string);
+
+      return {
+        ...state,
+        correlationMatrixPath: action.payload as string,
+      };
+    }
+
+    case ActionType.SetLoadingsMatrixPath: {
+      CacheSystem.SetItem(PCA.CacheKeys.LoadingsMatrixPath, action.payload as string);
+
+      return {
+        ...state,
+        loadingsMatrixPath: action.payload as string,
+      };
+    }
+
+    case ActionType.SetScaledData: {
+      CacheSystem.SetItem(PCA.CacheKeys.ScaledData, action.payload as boolean);
+
+      return {
+        ...state,
+        scaledData: action.payload as boolean,
       };
     }
 

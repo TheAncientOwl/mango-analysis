@@ -8,13 +8,11 @@ import { axios } from '@renderer/config';
 import { PCA } from './config';
 
 export const ScaleHandler: React.FC = () => {
-  const { dispatch } = React.useContext(PCA.Context);
-
-  const [scaledData, setScaledData] = React.useState(false);
+  const { dispatch, state } = React.useContext(PCA.Context);
 
   React.useEffect(() => {
-    dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 3, allowed: scaledData } });
-  }, [scaledData]);
+    dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 3, allowed: state.scaledData } });
+  }, [state.scaledData]);
 
   React.useEffect(() => {
     dispatch({ type: PCA.ActionType.Loading });
@@ -22,7 +20,7 @@ export const ScaleHandler: React.FC = () => {
     axios.get('/pca/was-data-scaled').then(res => {
       const isDataScaled = res.data.scaledData;
 
-      if (scaledData !== isDataScaled) setScaledData(res.data.scaledData);
+      dispatch({ type: PCA.ActionType.SetScaledData, payload: isDataScaled });
 
       dispatch({ type: PCA.ActionType.EndLoading });
     });
@@ -32,20 +30,20 @@ export const ScaleHandler: React.FC = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
     axios.post('/pca/scale-data').then(() => {
-      setScaledData(true);
+      dispatch({ type: PCA.ActionType.SetScaledData, payload: true });
 
       dispatch({ type: PCA.ActionType.EndLoading });
     });
   };
 
   const skipScaleData = () => {
-    setScaledData(true);
+    dispatch({ type: PCA.ActionType.SetScaledData, payload: true });
   };
 
   return (
     <AnalysisStepLogic>
-      {scaledData && <Typography>The data was already scaled!</Typography>}
-      {!scaledData && (
+      {state.scaledData && <Typography>The data was already scaled!</Typography>}
+      {!state.scaledData && (
         <>
           <Typography>In PCA analysis the data should be scaled.</Typography>
           <Stack direction='row' mt={1} gap={1}>

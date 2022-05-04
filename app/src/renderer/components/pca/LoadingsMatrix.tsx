@@ -6,13 +6,11 @@ import { AnalysisImage } from '@renderer/components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@renderer/components/AnalysisStep';
 
 import { axios } from '@renderer/config';
-import { useCache } from '@renderer/hooks';
 
 import { PCA } from './config';
 
 export const LoadingsMatrix: React.FC = () => {
-  const { dispatch } = React.useContext(PCA.Context);
-  const [imagePath, setImagePath] = useCache(PCA.CacheKeys.LoadingsMatrixPath, '');
+  const { dispatch, state } = React.useContext(PCA.Context);
 
   const allowNext = () => dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 6, allowed: true } });
 
@@ -22,7 +20,7 @@ export const LoadingsMatrix: React.FC = () => {
     axios.get('/pca/plot/loadings-matrix').then(res => {
       const path = res.data.imagePath;
 
-      setImagePath(path);
+      dispatch({ type: PCA.ActionType.SetLoadingsMatrixPath, payload: path });
       allowNext();
 
       dispatch({ type: PCA.ActionType.EndLoading });
@@ -45,7 +43,7 @@ export const LoadingsMatrix: React.FC = () => {
       </AnalysisStepLogic>
       <AnalysisStepResult>
         <Box sx={{ mt: 2, maxWidth: 'min(60vh,60vw)' }}>
-          {imagePath !== '' && <AnalysisImage src={imagePath} alt='Loadings Matrix' />}
+          {state.loadingsMatrixPath !== '' && <AnalysisImage src={state.loadingsMatrixPath} alt='Loadings Matrix' />}
         </Box>
       </AnalysisStepResult>
     </>

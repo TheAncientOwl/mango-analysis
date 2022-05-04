@@ -6,17 +6,14 @@ import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, S
 import { AnalysisStepLogic } from '@renderer/components/AnalysisStep';
 
 import { axios } from '@renderer/config';
-import { useCache } from '@renderer/hooks';
 
 import { PCA } from './config';
 
 export const ComponentsCountPicker: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
 
-  const [count, setCount] = useCache(PCA.CacheKeys.ComponentsCount, 2);
-
   const handleChange = (event: SelectChangeEvent) => {
-    setCount(+event.target.value);
+    dispatch({ type: PCA.ActionType.SetSelectedComponentsCount, payload: +event.target.value });
   };
 
   const menuItemsDummyArray = React.useMemo(
@@ -27,7 +24,7 @@ export const ComponentsCountPicker: React.FC = () => {
   const runAnalysis = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
-    axios.post('/pca/analyze', { componentsCount: count }).then(() => {
+    axios.post('/pca/analyze', { componentsCount: state.selectedComponentsCount }).then(() => {
       dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 5, allowed: true } });
       dispatch({ type: PCA.ActionType.EndLoading });
     });
@@ -41,7 +38,7 @@ export const ComponentsCountPicker: React.FC = () => {
           <Select
             labelId='components-count-picker-label'
             id='components-count-picker'
-            value={`${count}`}
+            value={`${state.selectedComponentsCount}`}
             label='Components'
             onChange={handleChange}>
             {menuItemsDummyArray.map((val, index) => (
