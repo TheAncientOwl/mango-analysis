@@ -46,10 +46,10 @@ export const ScaleHandler: React.FC = () => {
             (The data is not scaled!)
           </Typography>
           <Stack direction='row' mt={2} gap={1}>
-            <Button variant='contained' size='medium' disableElevation color='info' onClick={scaleData}>
+            <Button variant='contained' size='small' disableElevation color='info' onClick={scaleData}>
               Scale data
             </Button>
-            <Button variant='contained' size='medium' disableElevation color='error' onClick={skipScaleData}>
+            <Button variant='contained' size='small' disableElevation color='error' onClick={skipScaleData}>
               Continue without scaling
             </Button>
           </Stack>

@@ -27,11 +27,11 @@ export const LoadingsMatrix: React.FC = () => {
     <>
       <AnalysisStepLogic>
         <Stack direction='row' gap={1}>
-          <Button onClick={handlePlot} variant='contained' size='medium' disableElevation color='info'>
+          <Button onClick={handlePlot} variant='contained' size='small' disableElevation color='info'>
             Plot
           </Button>
           {state.loadingsMatrixPath === '' && !state.unlockedSteps[PCA.ComponentIndex.LoadingsMatrix + 1] && (
-            <Button onClick={handleSkip} variant='contained' size='medium' disableElevation color='warning'>
+            <Button onClick={handleSkip} variant='contained' size='small' disableElevation color='warning'>
               Skip
             </Button>
           )}
