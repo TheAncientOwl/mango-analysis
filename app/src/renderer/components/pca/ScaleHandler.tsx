@@ -40,12 +40,15 @@ export const ScaleHandler: React.FC = () => {
   };
 
   const skipScaleData = () => {
-    dispatch({ type: PCA.ActionType.SetScaledData, payload: true });
+    dispatch({
+      type: PCA.ActionType.SetUnlockedStep,
+      payload: { index: PCA.ComponentIndex.ScaleHandler + 1, allowed: true },
+    });
   };
 
   return (
     <AnalysisStepLogic>
-      {state.scaledData && <Typography>The data was already scaled!</Typography>}
+      {state.scaledData && <Typography>The data is scaled!</Typography>}
       {!state.scaledData && (
         <>
           <Typography>In PCA analysis the data should be scaled.</Typography>
