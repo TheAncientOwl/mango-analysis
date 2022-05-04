@@ -14,7 +14,7 @@ export const PrincipalComponentsAnalysis: React.FC = () => {
 
   return (
     <PCA.ContextProvider value={{ dispatch, state }}>
-      <Box sx={{ p: 2, overflowY: 'scroll' }}>
+      <Box sx={{ p: 2, pb: '15em', overflowY: 'scroll' }}>
         {mapConfigToSteps(
           PCA.Steps,
           nextStep,
