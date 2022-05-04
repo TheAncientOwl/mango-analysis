@@ -86,6 +86,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     // update features = payload
     // cache new features
     // update unlocked steps
+    // clear correlationMatrixPath
     case ActionType.SetFeatures: {
       // target not set ? old unlockedSteps : new set with next step unlocked
       const getSteps = () =>
@@ -94,22 +95,26 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
           : newUnlockedStepArray(state.unlockedSteps, PCA.ComponentIndex.TargetAndFeaturesPicker + 1, true);
 
       CacheSystem.SetItem(PCA.CacheKeys.Features, action.payload as string[]);
+      CacheSystem.SetItem(PCA.CacheKeys.CorrelationMatrixPath, '');
 
       return {
         ...state,
         features: action.payload as string[],
         unlockedSteps: getSteps(),
+        correlationMatrixPath: '',
       };
     }
 
     // update selectedComponentsCount = payload
     // cache new selectedComponentsCount
+    // clear loadingsMatrixPath
     case ActionType.SetSelectedComponentsCount: {
       CacheSystem.SetItem(PCA.CacheKeys.ComponentsCount, action.payload as number);
 
       return {
         ...state,
         selectedComponentsCount: action.payload as number,
+        loadingsMatrixPath: '',
       };
     }
 
