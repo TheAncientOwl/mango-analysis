@@ -15,8 +15,6 @@ export enum ActionType {
   SetLoadingsMatrixPath = 'SET_LOADINGS_MATRIX_PATH',
   SetScaledData = 'SET_SCALED_DATA',
 
-  EnableStep = 'ENABLE_STEP',
-  DisableStep = 'DISABLE_STEP',
   ChangeCanStep = 'CHANGE_CAN_STEP',
 }
 
