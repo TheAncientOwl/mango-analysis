@@ -105,7 +105,11 @@ export const TargetAndFeaturesPicker: React.FC = () => {
         size='medium'
         disableElevation
         startIcon={
-          possibleValues.features.length === state.features.length ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />
+          possibleValues.features.length > 0 && possibleValues.features.length === state.features.length ? (
+            <CheckBoxIcon />
+          ) : (
+            <CheckBoxOutlineBlankIcon />
+          )
         }
         onClick={handleSelectAllClick}>
         all
