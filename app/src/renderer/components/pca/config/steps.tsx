@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StepConfig } from '../../AnalysisStep';
+import { StepConfig } from '../../analysis-step';
 
 import { axios } from '@renderer/config';
 

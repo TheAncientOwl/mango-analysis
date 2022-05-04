@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, Backdrop, CircularProgress } from '@mui/material';
 
-import { mapConfigToSteps } from '@renderer/components/AnalysisStep';
+import { mapConfigToSteps } from '@src/renderer/components/analysis-step';
 
 import { PCA } from './config';
 

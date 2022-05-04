@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from '@mui/material';
 
-import { AnalysisStepLogic } from '@renderer/components/AnalysisStep';
+import { AnalysisStepLogic } from '@src/renderer/components/analysis-step';
 
 import { axios } from '@renderer/config';
 
