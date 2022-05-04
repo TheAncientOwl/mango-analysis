@@ -47,15 +47,18 @@ export const TargetAndFeaturesPicker: React.FC = () => {
     features: [],
   });
 
-  // check if the analyze can continue (target and some features are selected)
+  // check if the analysis can continue (target and some features are selected)
   React.useEffect(() => {
-    dispatch({
-      type: PCA.ActionType.SetUnlockedStep,
-      payload: {
-        index: PCA.ComponentIndex.TargetAndFeaturesPicker + 1,
-        allowed: state.target !== '' && state.features.length > 0,
-      },
-    });
+    const allowed = state.target !== '' && state.features.length > 0;
+
+    if (state.unlockedSteps[PCA.ComponentIndex.TargetAndFeaturesPicker + 1] !== allowed)
+      dispatch({
+        type: PCA.ActionType.SetUnlockedStep,
+        payload: {
+          index: PCA.ComponentIndex.TargetAndFeaturesPicker + 1,
+          allowed: allowed,
+        },
+      });
   }, [state.target, state.features]);
 
   // fetch possible targets & features

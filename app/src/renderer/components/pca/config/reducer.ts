@@ -19,6 +19,8 @@ export enum ActionType {
   NextStep = 'NEXT_STEP',
   PrevStep = 'PREV_STEP',
   JumpToStep = 'JUMP_TO_STEP',
+
+  ComponentsAnalysisFinished = 'COMPONENTS_ANALYSIS_FINISHED',
 }
 
 interface StepConfig {
@@ -54,6 +56,23 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     }
 
     case ActionType.ChangeTarget: {
+      // check if features are set
+      if (state.features.length > 1) {
+        // allow the step after TargetAndFeaturesPicker
+        const newSteps = [...state.unlockedSteps];
+        newSteps[PCA.ComponentIndex.TargetAndFeaturesPicker + 1] = true;
+
+        // cache
+        CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+        CacheSystem.SetItem(PCA.CacheKeys.Target, action.payload);
+
+        return {
+          ...state,
+          target: action.payload as string,
+          unlockedSteps: newSteps,
+        };
+      }
+
       CacheSystem.SetItem(PCA.CacheKeys.Target, action.payload);
 
       return {
@@ -63,6 +82,24 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     }
 
     case ActionType.SetFeatures: {
+      // check if target is set
+      if (state.target !== '') {
+        // allow the step after TargetAndFeaturesPicker
+        const newSteps = [...state.unlockedSteps];
+        newSteps[PCA.ComponentIndex.TargetAndFeaturesPicker + 1] = true;
+
+        // cache
+        CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+
+        const newFeatures = action.payload as string[];
+        CacheSystem.SetItem(PCA.CacheKeys.Features, newFeatures);
+
+        return {
+          ...state,
+          features: newFeatures,
+        };
+      }
+
       const newFeatures = action.payload as string[];
 
       CacheSystem.SetItem(PCA.CacheKeys.Features, newFeatures);
@@ -83,29 +120,64 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     }
 
     case ActionType.SetCorrelationMatrixPath: {
+      // allow the step after CorrelationMatrix
+      const newSteps = [...state.unlockedSteps];
+      newSteps[PCA.ComponentIndex.CorrelationMatrix + 1] = true;
+
+      CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
       CacheSystem.SetItem(PCA.CacheKeys.CorrelationMatrixPath, action.payload as string);
 
       return {
         ...state,
         correlationMatrixPath: action.payload as string,
+        unlockedSteps: newSteps,
+        loading: false,
       };
     }
 
     case ActionType.SetLoadingsMatrixPath: {
+      // allow the step after LoadingsMatrix
+      const newSteps = [...state.unlockedSteps];
+      newSteps[PCA.ComponentIndex.LoadingsMatrix + 1] = true;
+
+      CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
       CacheSystem.SetItem(PCA.CacheKeys.LoadingsMatrixPath, action.payload as string);
 
       return {
         ...state,
         loadingsMatrixPath: action.payload as string,
+        loading: false,
+        unlockedSteps: newSteps,
       };
     }
 
     case ActionType.SetScaledData: {
-      CacheSystem.SetItem(PCA.CacheKeys.ScaledData, action.payload as boolean);
+      const isDataScaled = action.payload as boolean;
+
+      // if the data is scaled, allow the step after ScaleHandler
+      if (isDataScaled) {
+        const newSteps = [...state.unlockedSteps];
+        newSteps[PCA.ComponentIndex.ScaleHandler + 1] = true;
+
+        // cache
+        CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+        CacheSystem.SetItem(PCA.CacheKeys.ScaledData, isDataScaled);
+
+        return {
+          ...state,
+          scaledData: isDataScaled,
+          loading: false,
+          unlockedSteps: newSteps,
+          currentStep: PCA.ComponentIndex.ScaleHandler + 1,
+        };
+      }
+
+      CacheSystem.SetItem(PCA.CacheKeys.ScaledData, isDataScaled);
 
       return {
         ...state,
-        scaledData: action.payload as boolean,
+        scaledData: isDataScaled,
+        loading: false,
       };
     }
 
@@ -152,6 +224,21 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       return {
         ...state,
         currentStep: step,
+      };
+    }
+
+    case ActionType.ComponentsAnalysisFinished: {
+      // allow the step after ComponentsCountPicker
+      const newSteps = [...state.unlockedSteps];
+      newSteps[PCA.ComponentIndex.ComponentsCountPicker + 1] = true;
+
+      CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+
+      return {
+        ...state,
+        currentStep: PCA.ComponentIndex.ComponentsCountPicker + 1,
+        loading: false,
+        unlockedSteps: newSteps,
       };
     }
 

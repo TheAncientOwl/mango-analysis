@@ -6,7 +6,7 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { theme } from '../config';
-// import { logRender } from '@src/common/logRender';
+import { logRender } from '@src/common/logRender';
 
 interface Props {
   step: number;
@@ -72,7 +72,7 @@ export const AnalysisStep: React.FC<Props> = ({
   onBack = doNothing,
   children,
 }) => {
-  // logRender(`Step: ${step}`);
+  logRender(`Step: ${step}`);
   const heading = (
     <Stack>
       <Stack direction='row' alignItems='center' pl={1} gap={1}>

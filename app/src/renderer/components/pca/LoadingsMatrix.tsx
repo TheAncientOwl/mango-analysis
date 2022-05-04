@@ -16,16 +16,7 @@ export const LoadingsMatrix: React.FC = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
     axios.get('/pca/plot/loadings-matrix').then(res => {
-      const path = res.data.imagePath;
-
-      dispatch({ type: PCA.ActionType.SetLoadingsMatrixPath, payload: path });
-
-      dispatch({
-        type: PCA.ActionType.SetUnlockedStep,
-        payload: { index: PCA.ComponentIndex.LoadingsMatrix + 1, allowed: true },
-      });
-
-      dispatch({ type: PCA.ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.SetLoadingsMatrixPath, payload: res.data.imagePath });
     });
   };
 
@@ -39,7 +30,7 @@ export const LoadingsMatrix: React.FC = () => {
           <Button onClick={handlePlot} variant='contained' size='medium' disableElevation color='info'>
             Plot
           </Button>
-          {state.loadingsMatrixPath === '' && (
+          {state.loadingsMatrixPath === '' && !state.unlockedSteps[PCA.ComponentIndex.LoadingsMatrix + 1] && (
             <Button onClick={handleSkip} variant='contained' size='medium' disableElevation color='warning'>
               Skip
             </Button>

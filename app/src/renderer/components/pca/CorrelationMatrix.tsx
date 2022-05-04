@@ -12,22 +12,11 @@ import { PCA } from './config';
 export const CorrelationMatrix: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
 
-  const allowNext = () =>
-    dispatch({
-      type: PCA.ActionType.SetUnlockedStep,
-      payload: { index: PCA.ComponentIndex.CorrelationMatrix + 1, allowed: true },
-    });
-
   const handlePlot = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
     axios.get('/pca/plot/correlation-matrix').then(res => {
-      const path = res.data.imagePath;
-
-      dispatch({ type: PCA.ActionType.SetCorrelationMatrixPath, payload: path });
-      allowNext();
-
-      dispatch({ type: PCA.ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.SetCorrelationMatrixPath, payload: res.data.imagePath });
     });
   };
 
@@ -41,7 +30,7 @@ export const CorrelationMatrix: React.FC = () => {
           <Button onClick={handlePlot} variant='contained' size='medium' disableElevation color='info'>
             Plot
           </Button>
-          {state.correlationMatrixPath === '' && (
+          {state.correlationMatrixPath === '' && !state.unlockedSteps[PCA.ComponentIndex.CorrelationMatrix + 1] && (
             <Button onClick={handleSkip} variant='contained' size='medium' disableElevation color='warning'>
               Skip
             </Button>

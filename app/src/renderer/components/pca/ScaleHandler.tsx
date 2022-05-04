@@ -21,11 +21,7 @@ export const ScaleHandler: React.FC = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
     axios.get('/pca/was-data-scaled').then(res => {
-      const isDataScaled = res.data.scaledData;
-
-      dispatch({ type: PCA.ActionType.SetScaledData, payload: isDataScaled });
-
-      dispatch({ type: PCA.ActionType.EndLoading });
+      dispatch({ type: PCA.ActionType.SetScaledData, payload: res.data.scaledData });
     });
   }, []);
 
@@ -34,8 +30,6 @@ export const ScaleHandler: React.FC = () => {
 
     axios.post('/pca/scale-data').then(() => {
       dispatch({ type: PCA.ActionType.SetScaledData, payload: true });
-
-      dispatch({ type: PCA.ActionType.EndLoading });
     });
   };
 
