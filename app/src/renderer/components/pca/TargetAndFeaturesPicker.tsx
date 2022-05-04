@@ -51,7 +51,10 @@ export const TargetAndFeaturesPicker: React.FC = () => {
   React.useEffect(() => {
     dispatch({
       type: PCA.ActionType.ChangeCanStep,
-      payload: { index: 2, allowed: state.target !== '' && state.features.length > 0 },
+      payload: {
+        index: PCA.ComponentIndex.TargetAndFeaturesPicker + 1,
+        allowed: state.target !== '' && state.features.length > 0,
+      },
     });
   }, [state.target, state.features]);
 

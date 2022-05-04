@@ -11,7 +11,10 @@ export const ScaleHandler: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
 
   React.useEffect(() => {
-    dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 3, allowed: state.scaledData } });
+    dispatch({
+      type: PCA.ActionType.ChangeCanStep,
+      payload: { index: PCA.ComponentIndex.ScaleHandler + 1, allowed: state.scaledData },
+    });
   }, [state.scaledData]);
 
   React.useEffect(() => {

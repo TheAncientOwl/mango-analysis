@@ -2,10 +2,11 @@ import { getDefaultState } from './state';
 import { Context } from './context';
 import { CacheKeys, clearCache } from './cacheKeys';
 import { reducer, ActionType } from './reducer';
-import { Steps } from './steps';
+import { Steps, ComponentIndex } from './steps';
 
 export const PCA = Object.freeze({
   Steps,
+  ComponentIndex,
 
   CacheKeys,
   clearCache,

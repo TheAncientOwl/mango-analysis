@@ -12,7 +12,11 @@ import { PCA } from './config';
 export const LoadingsMatrix: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
 
-  const allowNext = () => dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 6, allowed: true } });
+  const allowNext = () =>
+    dispatch({
+      type: PCA.ActionType.ChangeCanStep,
+      payload: { index: PCA.ComponentIndex.LoadingsMatrix + 1, allowed: true },
+    });
 
   const handlePlot = () => {
     dispatch({ type: PCA.ActionType.Loading });

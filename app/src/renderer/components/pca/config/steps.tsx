@@ -14,6 +14,15 @@ import { CorrelationMatrix } from '../CorrelationMatrix';
 import { ComponentsCountPicker } from '../ComponentsCountPicker';
 import { LoadingsMatrix } from '../LoadingsMatrix';
 
+export const ComponentIndex = Object.freeze({
+  TargetAndFeaturesPicker: 1,
+  ScaleHandler: 2,
+  CorrelationMatrix: 3,
+  ComponentsCountPicker: 4,
+  LoadingsMatrix: 5,
+  Plot2D: 6,
+});
+
 export const Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_Dispatcher>> = [
   {
     index: 1,

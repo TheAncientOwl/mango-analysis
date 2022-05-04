@@ -25,7 +25,10 @@ export const ComponentsCountPicker: React.FC = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
     axios.post('/pca/analyze', { componentsCount: state.selectedComponentsCount }).then(() => {
-      dispatch({ type: PCA.ActionType.ChangeCanStep, payload: { index: 5, allowed: true } });
+      dispatch({
+        type: PCA.ActionType.ChangeCanStep,
+        payload: { index: PCA.ComponentIndex.ComponentsCountPicker + 1, allowed: true },
+      });
       dispatch({ type: PCA.ActionType.EndLoading });
     });
   };
