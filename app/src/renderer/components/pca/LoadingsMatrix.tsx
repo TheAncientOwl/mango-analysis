@@ -12,12 +12,6 @@ import { PCA } from './config';
 export const LoadingsMatrix: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
 
-  const allowNext = () =>
-    dispatch({
-      type: PCA.ActionType.SetUnlockedStep,
-      payload: { index: PCA.ComponentIndex.LoadingsMatrix + 1, allowed: true },
-    });
-
   const handlePlot = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
@@ -25,7 +19,11 @@ export const LoadingsMatrix: React.FC = () => {
       const path = res.data.imagePath;
 
       dispatch({ type: PCA.ActionType.SetLoadingsMatrixPath, payload: path });
-      allowNext();
+
+      dispatch({
+        type: PCA.ActionType.SetUnlockedStep,
+        payload: { index: PCA.ComponentIndex.LoadingsMatrix + 1, allowed: true },
+      });
 
       dispatch({ type: PCA.ActionType.EndLoading });
     });
