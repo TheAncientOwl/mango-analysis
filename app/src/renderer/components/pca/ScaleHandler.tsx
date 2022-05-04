@@ -51,12 +51,15 @@ export const ScaleHandler: React.FC = () => {
       {state.scaledData && <Typography>The data is scaled!</Typography>}
       {!state.scaledData && (
         <>
-          <Typography>In PCA analysis the data should be scaled.</Typography>
-          <Stack direction='row' mt={1} gap={1}>
-            <Button variant='contained' size='medium' disableElevation onClick={scaleData}>
+          <Typography>In PCA analysis the data should be scaled. </Typography>
+          <Typography variant='body2' sx={{ color: 'error.main', mt: 1 }}>
+            (The data is not scaled!)
+          </Typography>
+          <Stack direction='row' mt={2} gap={1}>
+            <Button variant='contained' size='medium' disableElevation color='info' onClick={scaleData}>
               Scale data
             </Button>
-            <Button variant='contained' size='medium' disableElevation onClick={skipScaleData}>
+            <Button variant='contained' size='medium' disableElevation color='error' onClick={skipScaleData}>
               Continue without scaling
             </Button>
           </Stack>
