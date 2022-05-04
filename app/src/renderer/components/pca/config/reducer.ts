@@ -63,7 +63,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
         newSteps[PCA.ComponentIndex.TargetAndFeaturesPicker + 1] = true;
 
         // cache
-        CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+        CacheSystem.SetItem(PCA.CacheKeys.UnlockedSteps, newSteps);
         CacheSystem.SetItem(PCA.CacheKeys.Target, action.payload);
 
         return {
@@ -89,7 +89,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
         newSteps[PCA.ComponentIndex.TargetAndFeaturesPicker + 1] = true;
 
         // cache
-        CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+        CacheSystem.SetItem(PCA.CacheKeys.UnlockedSteps, newSteps);
 
         const newFeatures = action.payload as string[];
         CacheSystem.SetItem(PCA.CacheKeys.Features, newFeatures);
@@ -124,7 +124,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       const newSteps = [...state.unlockedSteps];
       newSteps[PCA.ComponentIndex.CorrelationMatrix + 1] = true;
 
-      CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+      CacheSystem.SetItem(PCA.CacheKeys.UnlockedSteps, newSteps);
       CacheSystem.SetItem(PCA.CacheKeys.CorrelationMatrixPath, action.payload as string);
 
       return {
@@ -140,7 +140,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       const newSteps = [...state.unlockedSteps];
       newSteps[PCA.ComponentIndex.LoadingsMatrix + 1] = true;
 
-      CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+      CacheSystem.SetItem(PCA.CacheKeys.UnlockedSteps, newSteps);
       CacheSystem.SetItem(PCA.CacheKeys.LoadingsMatrixPath, action.payload as string);
 
       return {
@@ -160,7 +160,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
         newSteps[PCA.ComponentIndex.ScaleHandler + 1] = true;
 
         // cache
-        CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+        CacheSystem.SetItem(PCA.CacheKeys.UnlockedSteps, newSteps);
         CacheSystem.SetItem(PCA.CacheKeys.ScaledData, isDataScaled);
 
         return {
@@ -189,7 +189,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       const newSteps = [...state.unlockedSteps];
       newSteps[config.index] = config.allowed;
 
-      CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+      CacheSystem.SetItem(PCA.CacheKeys.UnlockedSteps, newSteps);
 
       return {
         ...state,
@@ -232,7 +232,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       const newSteps = [...state.unlockedSteps];
       newSteps[PCA.ComponentIndex.ComponentsCountPicker + 1] = true;
 
-      CacheSystem.SetItem(PCA.CacheKeys.CanStep, newSteps);
+      CacheSystem.SetItem(PCA.CacheKeys.UnlockedSteps, newSteps);
 
       return {
         ...state,
