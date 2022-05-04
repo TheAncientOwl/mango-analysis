@@ -16,7 +16,7 @@ export const CorrelationMatrix: React.FC = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
     axios.get('/pca/plot/correlation-matrix').then(res => {
-      dispatch({ type: PCA.ActionType.SetCorrelationMatrixPath, payload: res.data.imagePath });
+      dispatch({ type: PCA.ActionType.FetchedCorrelationMatrixPath, payload: res.data.imagePath });
     });
   };
 

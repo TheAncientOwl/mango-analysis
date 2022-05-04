@@ -49,9 +49,6 @@ export const Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, P
     index: 3,
     title: 'Plot correlation matrix',
     content: <CorrelationMatrix />,
-    onPrev: (state, dispatch) => {
-      dispatch({ type: PCA.ActionType.SetCorrelationMatrixPath, payload: '' });
-    },
   },
   {
     index: 4,
@@ -62,9 +59,6 @@ export const Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, P
     index: 5,
     title: 'Plot loadings matrix',
     content: <LoadingsMatrix />,
-    onPrev: (state, dispatch) => {
-      dispatch({ type: PCA.ActionType.SetLoadingsMatrixPath, payload: '' });
-    },
   },
   {
     index: 6,

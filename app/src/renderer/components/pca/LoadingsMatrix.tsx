@@ -16,7 +16,7 @@ export const LoadingsMatrix: React.FC = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
     axios.get('/pca/plot/loadings-matrix').then(res => {
-      dispatch({ type: PCA.ActionType.SetLoadingsMatrixPath, payload: res.data.imagePath });
+      dispatch({ type: PCA.ActionType.FetchedLoadingsMatrixPath, payload: res.data.imagePath });
     });
   };
 

@@ -11,11 +11,11 @@ export enum ActionType {
   SetFeatures = 'SET_FEATURES',
 
   SetSelectedComponentsCount = 'SET_SELECTED_COMPONENTS_COUNT',
-  SetCorrelationMatrixPath = 'SET_CORRELATION_MATRIX_PATH',
-  SetLoadingsMatrixPath = 'SET_LOADINGS_MATRIX_PATH',
-  SetScaledData = 'SET_SCALED_DATA',
+  FetchedCorrelationMatrixPath = 'FETCHED_CORRELATION_MATRIX_PATH',
+  FetchedLoadingsMatrixPath = 'FETCHED_LOADINGS_MATRIX_PATH',
+  FetchedScaledDataState = 'FETCHED_SCALED_DATA_STATE',
 
-  SetUnlockedStep = 'CHANGE_CAN_STEP',
+  SetUnlockedStep = 'SET_UNLOCKED_STEP',
   NextStep = 'NEXT_STEP',
   PrevStep = 'PREV_STEP',
   JumpToStep = 'JUMP_TO_STEP',
@@ -117,7 +117,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     // cache new correlationMatrixPath
     // unlock next step
     // stop loading
-    case ActionType.SetCorrelationMatrixPath: {
+    case ActionType.FetchedCorrelationMatrixPath: {
       // unlock the step after CorrelationMatrix
       const newSteps = newUnlockedStepArray(state.unlockedSteps, PCA.ComponentIndex.CorrelationMatrix + 1, true);
 
@@ -135,7 +135,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     // cache new loadingsMatrixPath
     // unlock next step
     // stop loading
-    case ActionType.SetLoadingsMatrixPath: {
+    case ActionType.FetchedLoadingsMatrixPath: {
       // unlock the step after LoadingsMatrix
       const newSteps = newUnlockedStepArray(state.unlockedSteps, PCA.ComponentIndex.LoadingsMatrix + 1, true);
 
@@ -155,7 +155,7 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     //  update currentStep
     //  update unlockedSteps
     // stop loading
-    case ActionType.SetScaledData: {
+    case ActionType.FetchedScaledDataState: {
       const isDataScaled = action.payload as boolean;
 
       const jumpToNextStep = () => {
