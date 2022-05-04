@@ -16,6 +16,8 @@ export enum ActionType {
   SetScaledData = 'SET_SCALED_DATA',
 
   SetUnlockedStep = 'CHANGE_CAN_STEP',
+  NextStep = 'NEXT_STEP',
+  PrevStep = 'PREV_STEP',
 }
 
 interface StepConfig {
@@ -119,6 +121,24 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
       return {
         ...state,
         unlockedSteps: newSteps,
+      };
+    }
+
+    case ActionType.NextStep: {
+      CacheSystem.SetItem(PCA.CacheKeys.CurrentStep, state.currentStep + 1);
+
+      return {
+        ...state,
+        currentStep: state.currentStep + 1,
+      };
+    }
+
+    case ActionType.PrevStep: {
+      CacheSystem.SetItem(PCA.CacheKeys.CurrentStep, state.currentStep - 1);
+
+      return {
+        ...state,
+        currentStep: state.currentStep - 1,
       };
     }
 

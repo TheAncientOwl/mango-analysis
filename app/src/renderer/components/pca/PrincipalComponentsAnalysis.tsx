@@ -3,13 +3,14 @@ import React from 'react';
 import { Box, Backdrop, CircularProgress } from '@mui/material';
 
 import { mapConfigToSteps } from '@renderer/components/AnalysisStep';
-import { useCachedStepper } from '@renderer/hooks/useCachedStepper';
 
 import { PCA } from './config';
 
 export const PrincipalComponentsAnalysis: React.FC = () => {
   const [state, dispatch] = React.useReducer(PCA.reducer, PCA.getDefaultState());
-  const { step: currentStep, nextStep, prevStep } = useCachedStepper(PCA.CacheKeys.CurrentStep, PCA.Steps.length);
+
+  const nextStep = () => dispatch({ type: PCA.ActionType.NextStep });
+  const prevStep = () => dispatch({ type: PCA.ActionType.PrevStep });
 
   return (
     <PCA.ContextProvider value={{ dispatch, state }}>
@@ -18,7 +19,7 @@ export const PrincipalComponentsAnalysis: React.FC = () => {
           PCA.Steps,
           nextStep,
           prevStep,
-          currentStep,
+          state.currentStep,
           PCA.Steps.length,
           state.unlockedSteps,
           state,

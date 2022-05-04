@@ -11,6 +11,7 @@ export interface PrincipalComponentsAnalysisState {
   correlationMatrixPath: string;
   loadingsMatrixPath: string;
   scaledData: boolean;
+  currentStep: number;
 }
 
 export const getDefaultState = (): PrincipalComponentsAnalysisState => ({
@@ -22,4 +23,5 @@ export const getDefaultState = (): PrincipalComponentsAnalysisState => ({
   correlationMatrixPath: CacheSystem.GetItemOrDefault(PCA.CacheKeys.CorrelationMatrixPath, ''),
   loadingsMatrixPath: CacheSystem.GetItemOrDefault(PCA.CacheKeys.LoadingsMatrixPath, ''),
   scaledData: CacheSystem.GetItemOrDefault(PCA.CacheKeys.ScaledData, false),
+  currentStep: CacheSystem.GetItemOrDefault(PCA.CacheKeys.CurrentStep, 1),
 });
