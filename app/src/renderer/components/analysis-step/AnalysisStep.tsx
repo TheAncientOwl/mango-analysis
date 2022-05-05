@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Box, Stack, Typography, Chip, Button } from '@mui/material';
+import { Box, Stack, Typography, Chip, Button, Collapse } from '@mui/material';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import { getStepOverlayProps } from './AnalysisStepLogic';
 // import { logRender } from '@src/common/logRender';
 
 interface Props {
@@ -36,69 +37,42 @@ export const AnalysisStep: React.FC<Props> = ({
   children,
 }) => {
   // logRender(`Step: ${step}`);
-  const heading = (
-    <Stack>
-      <Stack direction='row' alignItems='center' pl={1} gap={1}>
-        {step < currentStep && <BeenhereIcon color='primary' />}
-        <Typography variant='h6' color={step === currentStep ? '' : 'grey.400'}>
-          Step {step} / {totalSteps} ~ {title}
-        </Typography>
-        {optional && <Chip label='optional' color='info' size='small' />}
-      </Stack>
-
-      {separator}
-    </Stack>
-  );
-
-  const buttons = (
-    <Box sx={{ mt: 2 }}>
-      {step > 1 && (
-        <Button
-          startIcon={<NavigateBeforeIcon />}
-          onClick={onBack}
-          variant='contained'
-          size='medium'
-          disableElevation
-          sx={{ mr: 1 }}>
-          Prev
-        </Button>
-      )}
-      {step < totalSteps && (
-        <Button
-          endIcon={<NavigateNextIcon />}
-          onClick={onNext}
-          variant='contained'
-          size='medium'
-          disabled={!canNext}
-          disableElevation>
-          Next
-        </Button>
-      )}
-    </Box>
-  );
-
-  const content = (
-    <React.Fragment>
-      <Box p={1}>
-        {children}
-        {step === currentStep && buttons}
-      </Box>
-
-      {separator}
-    </React.Fragment>
-  );
+  const stepActiveNow = step === currentStep;
 
   return (
-    <Box
-      sx={{
-        mt: 4,
-        '.analysis-step-logic > .analysis-step-logic-overlay': {
-          visibility: step === currentStep ? 'hidden' : 'visible',
-        },
-      }}>
-      {heading}
+    <Box sx={getStepOverlayProps(stepActiveNow)}>
+      <Stack>
+        <Stack direction='row' alignItems='center' pl={1} gap={1}>
+          {step < currentStep && <BeenhereIcon color='primary' />}
+          <Typography variant='h6' color={stepActiveNow ? '' : 'grey.400'}>
+            Step {step} / {totalSteps} ~ {title}
+          </Typography>
+          {optional && <Chip label='optional' color='info' size='small' />}
+        </Stack>
 
-      {step <= currentStep && content}
+        {separator}
+      </Stack>
+
+      <Collapse in={step <= currentStep}>
+        <Box p={1}>
+          {children}
+          {stepActiveNow && (
+            <Box sx={{ mt: 2 }}>
+              {step > 1 && (
+                <Button startIcon={<NavigateBeforeIcon />} onClick={onBack} size='medium' sx={{ mr: 1 }}>
+                  Prev
+                </Button>
+              )}
+              {step < totalSteps && (
+                <Button endIcon={<NavigateNextIcon />} onClick={onNext} size='medium' disabled={!canNext}>
+                  Next
+                </Button>
+              )}
+            </Box>
+          )}
+        </Box>
+        {separator}
+      </Collapse>
     </Box>
   );
 };
