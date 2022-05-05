@@ -66,8 +66,6 @@ export const MenuList: React.FC<Props> = ({ startIcon, title, items }) => {
         aria-controls={open ? 'menu-list' : undefined}
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
-        variant='contained'
-        disableElevation
         onClick={toggleMenu}
         startIcon={startIcon}
         endIcon={<KeyboardArrowDownIcon />}>

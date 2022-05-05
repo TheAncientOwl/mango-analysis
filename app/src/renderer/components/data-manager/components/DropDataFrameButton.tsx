@@ -35,9 +35,7 @@ export const DropDataFrameButton: React.FC = () => {
         disabled={state.dataFrame.totalRows === 0}
         onClick={doubleCheckSwitch.on}
         startIcon={<DeleteIcon />}
-        variant='contained'
-        size='medium'
-        disableElevation>
+        size='medium'>
         Delete
       </Button>
 

@@ -107,9 +107,7 @@ export const TargetAndFeaturesPicker: React.FC = () => {
   const selectFeatures = (
     <>
       <Button
-        variant='contained'
         size='medium'
-        disableElevation
         startIcon={
           possibleValues.features.length > 0 && possibleValues.features.length === state.features.length ? (
             <CheckBoxIcon />

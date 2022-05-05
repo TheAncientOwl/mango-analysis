@@ -166,7 +166,6 @@ export const ScalingHandler: React.FC = () => {
 
         <Button
           disabled={state.scalingMethod === 'none' || state.dataFrame.totalRows === 0}
-          variant='contained'
           size='small'
           onClick={doubleCheckSwitch.on}
           startIcon={<AlignVerticalBottomIcon />}>

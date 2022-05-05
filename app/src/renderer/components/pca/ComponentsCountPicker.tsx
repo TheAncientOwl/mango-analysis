@@ -47,7 +47,7 @@ export const ComponentsCountPicker: React.FC = () => {
             ))}
           </Select>
         </FormControl>
-        <Button onClick={runAnalysis} variant='contained' size='medium' disableElevation>
+        <Button onClick={runAnalysis} size='medium'>
           Run analysis
         </Button>
       </Stack>

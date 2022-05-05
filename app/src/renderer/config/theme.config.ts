@@ -27,6 +27,14 @@ export const theme = createTheme({
       xxl: 3839,
     },
   },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+        variant: 'contained',
+      },
+    },
+  },
 });
 
 declare module '@mui/material/styles' {

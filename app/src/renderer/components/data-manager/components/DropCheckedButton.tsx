@@ -36,9 +36,7 @@ export const DropCheckedButton: React.FC = () => {
         startIcon={<PlaylistRemoveIcon />}
         disabled={state.loading || (state.checkedLabels.size === 0 && state.checkedRows.size === 0)}
         onClick={doubleCheckSwitch.on}
-        variant='contained'
-        size='medium'
-        disableElevation>
+        size='medium'>
         Drop
       </Button>
 

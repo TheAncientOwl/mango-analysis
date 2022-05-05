@@ -32,7 +32,7 @@ export const ImportButton: React.FC = () => {
   };
 
   return (
-    <Button onClick={importData} startIcon={<FileUploadIcon />} variant='contained' size='medium' disableElevation>
+    <Button onClick={importData} startIcon={<FileUploadIcon />} size='medium'>
       Import
     </Button>
   );
