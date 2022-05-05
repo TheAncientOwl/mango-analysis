@@ -44,7 +44,7 @@ export const CorrelationMatrix: React.FC = () => {
       </AnalysisStepLogic>
       <AnalysisStepResult>
         {state.correlationMatrixPath !== '' && (
-          <Paper sx={{ mt: 2 }}>
+          <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
               <AnalysisImage src={state.correlationMatrixPath} alt='Correlation Matrix' />
             </Box>

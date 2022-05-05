@@ -11,9 +11,11 @@ import {
   // eslint-disable-next-line import/named
   SelectChangeEvent,
   Stack,
+  Typography,
 } from '@mui/material';
 
 import { AnalysisStepLogic, AnalysisStepResult } from '@src/renderer/components/analysis-step';
+import { BasicDataFrame } from '@renderer/components/BasicDataFrame';
 import { AnalysisImage } from '@renderer/components/AnalysisImage';
 import { Paper } from '@renderer/components/Paper';
 
@@ -43,26 +45,6 @@ export const ComponentsCountPicker: React.FC = () => {
 
   return (
     <React.Fragment>
-      <AnalysisStepResult>
-        {state.componentsCountHints.kaiserPath !== '' && (
-          <Grid container>
-            <Grid item xs={12} sm={6} lg={4}>
-              <Paper>
-                <Box sx={{ maxWidth: '35em' }}>
-                  <AnalysisImage src={state.componentsCountHints.kaiserPath} alt='Scree Plot ~ Kaiser' />
-                </Box>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-              <Paper>xs=4</Paper>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-              <Paper>xs=4</Paper>
-            </Grid>
-          </Grid>
-        )}
-      </AnalysisStepResult>
-
       <AnalysisStepLogic>
         <Stack mt={1} ml={1} direction='row' gap={1}>
           <FormControl sx={{ minWidth: '7em' }}>
@@ -85,6 +67,41 @@ export const ComponentsCountPicker: React.FC = () => {
           </Button>
         </Stack>
       </AnalysisStepLogic>
+
+      <AnalysisStepResult>
+        {state.componentsCountHints.kaiserPath !== '' && (
+          <Grid container spacing={2} alignItems='center' sx={{ mt: 1 }}>
+            <Grid item xs={8} sm={7} md={4}>
+              <Paper>
+                <Typography variant='h6' sx={{ mb: 1 }}>
+                  Threshold70
+                </Typography>
+                <BasicDataFrame {...state.componentsCountHints.threshold70} maxWidth='35em' />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={4} sm={5} md={4}>
+              <Paper>
+                <Typography variant='h6' sx={{ mb: 1 }}>
+                  Eigenvalues &gt; 1
+                </Typography>
+                <BasicDataFrame {...state.componentsCountHints.eigenvaluesG1} maxWidth='20em' />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={7} md={4}>
+              <Paper>
+                <Typography variant='h6' sx={{ mb: 1 }}>
+                  Scree Plot
+                </Typography>
+                <Box>
+                  <AnalysisImage src={state.componentsCountHints.kaiserPath} alt='Scree Plot ~ Kaiser' />
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
+        )}
+      </AnalysisStepResult>
     </React.Fragment>
   );
 };

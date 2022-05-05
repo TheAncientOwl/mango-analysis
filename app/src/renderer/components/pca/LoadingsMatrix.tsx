@@ -40,7 +40,7 @@ export const LoadingsMatrix: React.FC = () => {
       </AnalysisStepLogic>
       <AnalysisStepResult>
         {state.loadingsMatrixPath !== '' && (
-          <Paper>
+          <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
               <AnalysisImage src={state.loadingsMatrixPath} alt='Loadings Matrix' />
             </Box>

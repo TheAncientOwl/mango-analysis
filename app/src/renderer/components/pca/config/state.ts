@@ -3,16 +3,12 @@ import { CacheKeys } from './cacheKeys';
 
 import { PCA } from './index';
 
-interface HintDataFrame {
-  columns: string[];
-  data: number[][];
-  index: string[];
-}
+import { BasicDataFrameProps } from '@renderer/components/BasicDataFrame';
 
 export interface ComponentsCountHints {
   kaiserPath: string;
-  threshold70: HintDataFrame;
-  eigenvaluesG1: HintDataFrame;
+  threshold70: BasicDataFrameProps;
+  eigenvaluesG1: BasicDataFrameProps;
 }
 
 const HintsKeys = CacheKeys.ComponentsCountHints;
