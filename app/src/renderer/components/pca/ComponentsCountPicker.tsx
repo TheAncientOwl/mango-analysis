@@ -1,9 +1,21 @@
 import React from 'react';
 
-// eslint-disable-next-line import/named
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  // eslint-disable-next-line import/named
+  SelectChangeEvent,
+  Stack,
+} from '@mui/material';
 
-import { AnalysisStepLogic } from '@src/renderer/components/analysis-step';
+import { AnalysisStepLogic, AnalysisStepResult } from '@src/renderer/components/analysis-step';
+import { AnalysisImage } from '@renderer/components/AnalysisImage';
+import { Paper } from '@renderer/components/Paper';
 
 import { axios } from '@renderer/config';
 
@@ -30,27 +42,49 @@ export const ComponentsCountPicker: React.FC = () => {
   };
 
   return (
-    <AnalysisStepLogic>
-      <Stack direction='row' gap={1}>
-        <FormControl sx={{ minWidth: '7em' }}>
-          <InputLabel id='components-count-picker-label'>Components</InputLabel>
-          <Select
-            labelId='components-count-picker-label'
-            id='components-count-picker'
-            value={`${state.selectedComponentsCount}`}
-            label='Components'
-            onChange={handleChange}>
-            {menuItemsDummyArray.map((val, index) => (
-              <MenuItem key={index} value={index + 2}>
-                {index + 2}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button onClick={runAnalysis} size='medium'>
-          Run analysis
-        </Button>
-      </Stack>
-    </AnalysisStepLogic>
+    <React.Fragment>
+      <AnalysisStepResult>
+        {state.componentsCountHints.kaiserPath !== '' && (
+          <Grid container>
+            <Grid item xs={12} sm={6} lg={4}>
+              <Paper>
+                <Box sx={{ maxWidth: '35em' }}>
+                  <AnalysisImage src={state.componentsCountHints.kaiserPath} alt='Scree Plot ~ Kaiser' />
+                </Box>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <Paper>xs=4</Paper>
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <Paper>xs=4</Paper>
+            </Grid>
+          </Grid>
+        )}
+      </AnalysisStepResult>
+
+      <AnalysisStepLogic>
+        <Stack mt={1} ml={1} direction='row' gap={1}>
+          <FormControl sx={{ minWidth: '7em' }}>
+            <InputLabel id='components-count-picker-label'>Components</InputLabel>
+            <Select
+              labelId='components-count-picker-label'
+              id='components-count-picker'
+              value={`${state.selectedComponentsCount}`}
+              label='Components'
+              onChange={handleChange}>
+              {menuItemsDummyArray.map((val, index) => (
+                <MenuItem key={index} value={index + 2}>
+                  {index + 2}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Button onClick={runAnalysis} size='medium'>
+            Run analysis
+          </Button>
+        </Stack>
+      </AnalysisStepLogic>
+    </React.Fragment>
   );
 };

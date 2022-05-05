@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrincipalComponentsAnalysisState } from './state';
+import { cacheComponentsCountHints, ComponentsCountHints, PrincipalComponentsAnalysisState } from './state';
 import { PCA } from './index';
 import { CacheSystem } from '@renderer/api/CacheSystem';
 
@@ -14,6 +14,7 @@ export enum ActionType {
   FetchedCorrelationMatrixPath = 'FETCHED_CORRELATION_MATRIX_PATH',
   FetchedLoadingsMatrixPath = 'FETCHED_LOADINGS_MATRIX_PATH',
   FetchedScaledDataState = 'FETCHED_SCALED_DATA_STATE',
+  FetchedComponentsCountHints = 'FETCHED_COMPONENTS_COUNT_HINTS',
 
   SetUnlockedStep = 'SET_UNLOCKED_STEP',
   NextStep = 'NEXT_STEP',
@@ -30,7 +31,7 @@ interface StepConfig {
 
 interface Action {
   type: ActionType;
-  payload?: string | string[] | boolean | number | StepConfig;
+  payload?: string | string[] | boolean | number | StepConfig | ComponentsCountHints;
 }
 
 export type PCA_Dispatcher = React.Dispatch<Action>;
@@ -264,6 +265,18 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
         currentStep: PCA.ComponentIndex.ComponentsCountPicker + 1,
         loading: false,
         unlockedSteps: newSteps,
+      };
+    }
+
+    // update componentsCountHints = payload
+    // cache componentsCountHints
+    case ActionType.FetchedComponentsCountHints: {
+      cacheComponentsCountHints(action.payload as ComponentsCountHints);
+
+      return {
+        ...state,
+        loading: false,
+        componentsCountHints: action.payload as ComponentsCountHints,
       };
     }
 

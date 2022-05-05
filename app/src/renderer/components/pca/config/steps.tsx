@@ -49,11 +49,27 @@ export const Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, P
     index: 3,
     title: 'Plot correlation matrix',
     content: <CorrelationMatrix />,
+    onNext: (state, dispatch) => {
+      dispatch({ type: PCA.ActionType.Loading });
+
+      axios.post('/pca/analyze').then(() => {
+        axios.get('/pca/components-count-hints').then(res => {
+          console.log(res.data);
+          dispatch({ type: PCA.ActionType.FetchedComponentsCountHints, payload: res.data });
+        });
+      });
+    },
   },
   {
     index: 4,
     title: 'Pick components count',
     content: <ComponentsCountPicker />,
+    onPrev: (state, dispatch) => {
+      dispatch({
+        type: PCA.ActionType.SetUnlockedStep,
+        payload: { index: PCA.ComponentIndex.ComponentsCountPicker + 1, allowed: false },
+      });
+    },
   },
   {
     index: 5,

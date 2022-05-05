@@ -8,6 +8,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@src/renderer/components/
 import { axios } from '@renderer/config';
 
 import { PCA } from './config';
+import { Paper } from '../Paper';
 
 export const LoadingsMatrix: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
@@ -38,9 +39,13 @@ export const LoadingsMatrix: React.FC = () => {
         </Stack>
       </AnalysisStepLogic>
       <AnalysisStepResult>
-        <Box sx={{ mt: 2, maxWidth: 'min(60vh,60vw)' }}>
-          {state.loadingsMatrixPath !== '' && <AnalysisImage src={state.loadingsMatrixPath} alt='Loadings Matrix' />}
-        </Box>
+        {state.loadingsMatrixPath !== '' && (
+          <Paper>
+            <Box sx={{ mt: 2, maxWidth: '35em' }}>
+              <AnalysisImage src={state.loadingsMatrixPath} alt='Loadings Matrix' />
+            </Box>
+          </Paper>
+        )}
       </AnalysisStepResult>
     </>
   );

@@ -1,6 +1,46 @@
 import { CacheSystem } from '@renderer/api/CacheSystem';
+import { CacheKeys } from './cacheKeys';
 
 import { PCA } from './index';
+
+interface HintDataFrame {
+  columns: string[];
+  data: number[][];
+  index: string[];
+}
+
+export interface ComponentsCountHints {
+  kaiserPath: string;
+  threshold70: HintDataFrame;
+  eigenvaluesG1: HintDataFrame;
+}
+
+const HintsKeys = CacheKeys.ComponentsCountHints;
+export const cacheComponentsCountHints = (hints: ComponentsCountHints) => {
+  CacheSystem.SetItem(HintsKeys.KaiserPath, hints.kaiserPath);
+
+  CacheSystem.SetItem(HintsKeys.Threshold70.Columns, hints.threshold70.columns);
+  CacheSystem.SetItem(HintsKeys.Threshold70.Data, hints.threshold70.data);
+  CacheSystem.SetItem(HintsKeys.Threshold70.Index, hints.threshold70.index);
+
+  CacheSystem.SetItem(HintsKeys.EigenValuesG1.Columns, hints.threshold70.columns);
+  CacheSystem.SetItem(HintsKeys.EigenValuesG1.Data, hints.threshold70.data);
+  CacheSystem.SetItem(HintsKeys.EigenValuesG1.Index, hints.threshold70.index);
+};
+
+const getDefaultComponentsCountHints = (): ComponentsCountHints => ({
+  kaiserPath: CacheSystem.GetItemOrDefault(HintsKeys.KaiserPath, ''),
+  threshold70: {
+    columns: CacheSystem.GetItemOrDefault(HintsKeys.Threshold70.Columns, []),
+    data: CacheSystem.GetItemOrDefault(HintsKeys.Threshold70.Data, []),
+    index: CacheSystem.GetItemOrDefault(HintsKeys.Threshold70.Index, []),
+  },
+  eigenvaluesG1: {
+    columns: CacheSystem.GetItemOrDefault(HintsKeys.EigenValuesG1.Columns, []),
+    data: CacheSystem.GetItemOrDefault(HintsKeys.EigenValuesG1.Data, []),
+    index: CacheSystem.GetItemOrDefault(HintsKeys.EigenValuesG1.Index, []),
+  },
+});
 
 export interface PrincipalComponentsAnalysisState {
   loading: boolean;
@@ -8,6 +48,7 @@ export interface PrincipalComponentsAnalysisState {
   features: string[];
   unlockedSteps: boolean[];
   selectedComponentsCount: number;
+  componentsCountHints: ComponentsCountHints | null;
   correlationMatrixPath: string;
   loadingsMatrixPath: string;
   scaledData: boolean;
@@ -24,4 +65,5 @@ export const getDefaultState = (): PrincipalComponentsAnalysisState => ({
   loadingsMatrixPath: CacheSystem.GetItemOrDefault(PCA.CacheKeys.LoadingsMatrixPath, ''),
   scaledData: CacheSystem.GetItemOrDefault(PCA.CacheKeys.ScaledData, false),
   currentStep: CacheSystem.GetItemOrDefault(PCA.CacheKeys.CurrentStep, 1),
+  componentsCountHints: getDefaultComponentsCountHints(),
 });

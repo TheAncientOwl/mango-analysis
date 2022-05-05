@@ -8,6 +8,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@src/renderer/components/
 import { axios } from '@renderer/config';
 
 import { PCA } from './config';
+import { Paper } from '../Paper';
 
 export const CorrelationMatrix: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
@@ -20,8 +21,12 @@ export const CorrelationMatrix: React.FC = () => {
     });
   };
 
-  const handleSkip = () =>
+  const handleSkip = () => {
     dispatch({ type: PCA.ActionType.JumpToStep, payload: PCA.ComponentIndex.CorrelationMatrix + 1 });
+
+    // call onNext to fetch components count hints (even on skip)
+    PCA.Steps[PCA.ComponentIndex.CorrelationMatrix - 1]?.onNext?.(state, dispatch);
+  };
 
   return (
     <>
@@ -38,11 +43,13 @@ export const CorrelationMatrix: React.FC = () => {
         </Stack>
       </AnalysisStepLogic>
       <AnalysisStepResult>
-        <Box sx={{ mt: 2, maxWidth: 'min(60vh,60vw)' }}>
-          {state.correlationMatrixPath !== '' && (
-            <AnalysisImage src={state.correlationMatrixPath} alt='Correlation Matrix' />
-          )}
-        </Box>
+        {state.correlationMatrixPath !== '' && (
+          <Paper sx={{ mt: 2 }}>
+            <Box sx={{ mt: 2, maxWidth: '35em' }}>
+              <AnalysisImage src={state.correlationMatrixPath} alt='Correlation Matrix' />
+            </Box>
+          </Paper>
+        )}
       </AnalysisStepResult>
     </>
   );
