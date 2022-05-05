@@ -54,7 +54,6 @@ export const Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, P
 
       axios.post('/pca/analyze').then(() => {
         axios.get('/pca/components-count-hints').then(res => {
-          console.log(res.data);
           dispatch({ type: PCA.ActionType.FetchedComponentsCountHints, payload: res.data });
         });
       });
