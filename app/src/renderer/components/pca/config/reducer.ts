@@ -67,7 +67,11 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     // update target = payload
     // cache new target
     // update unlocked steps
+    // clear correlationMatrixPath
+    // invalidate scaledData
     case ActionType.ChangeTarget: {
+      if (state.target === (action.payload as string)) return state;
+
       // features not set ? old unlockedSteps : new set with next step unlocked
       const getSteps = () =>
         state.features.length < 2
@@ -75,11 +79,15 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
           : newUnlockedStepArray(state.unlockedSteps, PCA.ComponentIndex.TargetAndFeaturesPicker + 1, true);
 
       CacheSystem.SetItem(PCA.CacheKeys.Target, action.payload);
+      CacheSystem.SetItem(PCA.CacheKeys.CorrelationMatrixPath, '');
+      CacheSystem.SetItem(PCA.CacheKeys.ScaledData, false);
 
       return {
         ...state,
         target: action.payload as string,
         unlockedSteps: getSteps(),
+        correlationMatrixPath: '',
+        scaledData: false,
       };
     }
 
@@ -87,7 +95,10 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
     // cache new features
     // update unlocked steps
     // clear correlationMatrixPath
+    // invalidate scaledData
     case ActionType.SetFeatures: {
+      if (JSON.stringify(state.features) === JSON.stringify(action.payload as string[])) return state;
+
       // target not set ? old unlockedSteps : new set with next step unlocked
       const getSteps = () =>
         state.target === ''
@@ -96,12 +107,14 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
 
       CacheSystem.SetItem(PCA.CacheKeys.Features, action.payload as string[]);
       CacheSystem.SetItem(PCA.CacheKeys.CorrelationMatrixPath, '');
+      CacheSystem.SetItem(PCA.CacheKeys.ScaledData, false);
 
       return {
         ...state,
         features: action.payload as string[],
         unlockedSteps: getSteps(),
         correlationMatrixPath: '',
+        scaledData: false,
       };
     }
 
