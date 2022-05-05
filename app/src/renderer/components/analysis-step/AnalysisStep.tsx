@@ -18,10 +18,6 @@ interface Props {
   onBack?: () => void;
 }
 
-const doNothing = () => {
-  ('');
-};
-
 const separator = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
 // main step component
@@ -32,8 +28,8 @@ export const AnalysisStep: React.FC<Props> = ({
   title,
   optional = false,
   canNext,
-  onNext = doNothing,
-  onBack = doNothing,
+  onNext,
+  onBack,
   children,
 }) => {
   // logRender(`Step: ${step}`);
@@ -41,7 +37,7 @@ export const AnalysisStep: React.FC<Props> = ({
 
   return (
     <Box sx={getStepOverlayProps(stepActiveNow)}>
-      <Stack>
+      <Box>
         <Stack direction='row' alignItems='center' pl={1} gap={1}>
           {step < currentStep && <BeenhereIcon color='primary' />}
           <Typography variant='h6' color={stepActiveNow ? '' : 'grey.400'}>
@@ -51,7 +47,7 @@ export const AnalysisStep: React.FC<Props> = ({
         </Stack>
 
         {separator}
-      </Stack>
+      </Box>
 
       <Collapse in={step <= currentStep}>
         <Box p={1}>
