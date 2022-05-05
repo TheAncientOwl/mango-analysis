@@ -91,6 +91,7 @@ class PCA:
     def plot_kaiser(self):
         pc_values = np.arange(self.pca.n_components_) + 1
 
+        plt.figure(figsize=(8, 8))
         plt.plot(pc_values, self.pca.explained_variance_ratio_,
                  'ro-', linewidth=2)
         plt.title('Scree Plot')
