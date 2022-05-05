@@ -21,6 +21,7 @@ export const CacheKeys = Object.freeze({
       Data: 'pca-hints-egienvaluesg1-data',
       Index: 'pca-hints-egienvaluesg1-index',
     }),
+    Show: 'pca-hints-show',
   }),
 });
 

@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Box,
   Button,
+  Collapse,
   FormControl,
   Grid,
   InputLabel,
@@ -13,18 +14,22 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 import { AnalysisStepLogic, AnalysisStepResult } from '@src/renderer/components/analysis-step';
 import { BasicDataFrame } from '@renderer/components/BasicDataFrame';
 import { AnalysisImage } from '@renderer/components/AnalysisImage';
 import { Paper } from '@renderer/components/Paper';
 
+import { useCache } from '@renderer/hooks';
 import { axios } from '@renderer/config';
 
 import { PCA } from './config';
 
 export const ComponentsCountPicker: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
+  const [showHints, setShowHints] = useCache(PCA.CacheKeys.ComponentsCountHints.Show, false);
 
   const handleChange = (event: SelectChangeEvent) => {
     dispatch({ type: PCA.ActionType.SetSelectedComponentsCount, payload: +event.target.value });
@@ -42,6 +47,8 @@ export const ComponentsCountPicker: React.FC = () => {
       dispatch({ type: PCA.ActionType.ComponentsAnalysisFinished });
     });
   };
+
+  const toggleShowHints = () => setShowHints(!showHints);
 
   return (
     <React.Fragment>
@@ -62,45 +69,55 @@ export const ComponentsCountPicker: React.FC = () => {
               ))}
             </Select>
           </FormControl>
+
           <Button onClick={runAnalysis} size='medium'>
             Run analysis
+          </Button>
+
+          <Button
+            startIcon={showHints ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+            onClick={toggleShowHints}
+            size='medium'>
+            Hints
           </Button>
         </Stack>
       </AnalysisStepLogic>
 
       <AnalysisStepResult>
-        {state.componentsCountHints.kaiserPath !== '' && (
-          <Grid container spacing={2} alignItems='center' sx={{ mt: 1 }}>
-            <Grid item xs={8} sm={7} md={4}>
-              <Paper>
-                <Typography variant='h6' sx={{ mb: 1 }}>
-                  Threshold70
-                </Typography>
-                <BasicDataFrame {...state.componentsCountHints.threshold70} maxWidth='35em' />
-              </Paper>
-            </Grid>
+        <Collapse in={showHints}>
+          {state.componentsCountHints.kaiserPath !== '' && (
+            <Grid container spacing={2} alignItems='center' sx={{ mt: 1 }}>
+              <Grid item xs={8} sm={7} md={4}>
+                <Paper>
+                  <Typography variant='h6' sx={{ mb: 1 }}>
+                    Threshold70
+                  </Typography>
+                  <BasicDataFrame {...state.componentsCountHints.threshold70} maxWidth='35em' />
+                </Paper>
+              </Grid>
 
-            <Grid item xs={4} sm={5} md={4}>
-              <Paper>
-                <Typography variant='h6' sx={{ mb: 1 }}>
-                  Eigenvalues &gt; 1
-                </Typography>
-                <BasicDataFrame {...state.componentsCountHints.eigenvaluesG1} maxWidth='20em' />
-              </Paper>
-            </Grid>
+              <Grid item xs={4} sm={5} md={4}>
+                <Paper>
+                  <Typography variant='h6' sx={{ mb: 1 }}>
+                    Eigenvalues &gt; 1
+                  </Typography>
+                  <BasicDataFrame {...state.componentsCountHints.eigenvaluesG1} maxWidth='20em' />
+                </Paper>
+              </Grid>
 
-            <Grid item xs={7} md={4}>
-              <Paper>
-                <Typography variant='h6' sx={{ mb: 1 }}>
-                  Scree Plot
-                </Typography>
-                <Box>
-                  <AnalysisImage src={state.componentsCountHints.kaiserPath} alt='Scree Plot ~ Kaiser' />
-                </Box>
-              </Paper>
+              <Grid item xs={7} md={4}>
+                <Paper>
+                  <Typography variant='h6' sx={{ mb: 1 }}>
+                    Scree Plot
+                  </Typography>
+                  <Box>
+                    <AnalysisImage src={state.componentsCountHints.kaiserPath} alt='Scree Plot ~ Kaiser' />
+                  </Box>
+                </Paper>
+              </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
+        </Collapse>
       </AnalysisStepResult>
     </React.Fragment>
   );
