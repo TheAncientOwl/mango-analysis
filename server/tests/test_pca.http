@@ -58,3 +58,6 @@ Content-Type: application/json
 
 ### New PCA
 POST {{local_host}}/pca/new
+
+### get labels
+GET {{local_host}}/pca/labels

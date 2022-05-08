@@ -13,6 +13,7 @@ import { ScaleHandler } from '../ScaleHandler';
 import { CorrelationMatrix } from '../CorrelationMatrix';
 import { ComponentsCountPicker } from '../ComponentsCountPicker';
 import { LoadingsMatrix } from '../LoadingsMatrix';
+import { DataVisualizer } from '../DataVisualizer';
 
 export const ComponentIndex = Object.freeze({
   TargetAndFeaturesPicker: 1,
@@ -20,7 +21,7 @@ export const ComponentIndex = Object.freeze({
   CorrelationMatrix: 3,
   ComponentsCountPicker: 4,
   LoadingsMatrix: 5,
-  Plot2D: 6,
+  DataVisualizer: 6,
 });
 
 export const Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, PCA_Dispatcher>> = [
@@ -74,10 +75,17 @@ export const Steps: ReadonlyArray<StepConfig<PrincipalComponentsAnalysisState, P
     index: 5,
     title: 'Plot loadings matrix',
     content: <LoadingsMatrix />,
+    onNext: (state, dispatch) => {
+      dispatch({ type: PCA.ActionType.Loading });
+
+      axios.get('/pca/targets&labels').then(res => {
+        dispatch({ type: PCA.ActionType.FetchedTargetsAndLabels, payload: res.data });
+      });
+    },
   },
   {
     index: 6,
-    title: 'Pick target and features',
-    content: 'Plot observations',
+    title: 'Visualize data',
+    content: <DataVisualizer />,
   },
 ];

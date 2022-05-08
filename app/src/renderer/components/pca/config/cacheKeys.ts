@@ -23,6 +23,11 @@ export const CacheKeys = Object.freeze({
     }),
     Show: 'pca-hints-show',
   }),
+  DataVisualizer: Object.freeze({
+    pcaLabels: 'pca-data-visualizer-labels',
+    targets: 'pca-data-visualizer-targets',
+    plots: 'pca-data-visualizer-plots',
+  }),
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

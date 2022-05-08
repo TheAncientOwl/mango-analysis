@@ -21,8 +21,10 @@ export const LoadingsMatrix: React.FC = () => {
     });
   };
 
-  const handleSkip = () =>
+  const handleSkip = () => {
     dispatch({ type: PCA.ActionType.JumpToStep, payload: PCA.ComponentIndex.LoadingsMatrix + 1 });
+    PCA.Steps[PCA.ComponentIndex.LoadingsMatrix - 1]?.onNext?.(state, dispatch);
+  };
 
   return (
     <>

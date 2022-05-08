@@ -102,3 +102,18 @@ def plot_2D():
     )
 
     return flask.jsonify(imagePath=path), 200
+
+
+@pca.get('/pca/labels')
+def labels():
+    return flask.jsonify(labels=server.pca.pca_labels), 200
+
+
+@pca.get('/pca/targets')
+def targets():
+    return flask.jsonify(targets=server.dataFrame[server.pca.target]), 200
+
+
+@pca.get('/pca/targets&labels')
+def targets_and_labels():
+    return flask.jsonify(targets=list(server.dataFrame[server.pca.target]), labels=server.pca.pca_labels), 200

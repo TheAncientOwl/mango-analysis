@@ -2,6 +2,8 @@ import React from 'react';
 import { cacheComponentsCountHints, ComponentsCountHints, PrincipalComponentsAnalysisState } from './state';
 import { PCA } from './index';
 import { CacheSystem } from '@renderer/api/CacheSystem';
+import { IPlot2D } from '../DataVisualizer';
+import { v4 as uuidv4 } from 'uuid';
 
 export enum ActionType {
   Loading = 'LOADING',
@@ -22,6 +24,11 @@ export enum ActionType {
   JumpToStep = 'JUMP_TO_STEP',
 
   ComponentsAnalysisFinished = 'COMPONENTS_ANALYSIS_FINISHED',
+
+  FetchedTargetsAndLabels = 'FETCHED_TARGETS_AND_LABELS',
+
+  PushDefaultPlot = 'PUSH_DEFAULT_PLOT',
+  ChangePlot = 'CHANGE_PLOT',
 }
 
 interface StepConfig {
@@ -29,9 +36,28 @@ interface StepConfig {
   allowed: boolean;
 }
 
+interface Plot2D {
+  index: number;
+  config: Pick<IPlot2D, 'pcX' | 'pcY' | 'plotSrc'>;
+}
+
+interface TargetsAndLabels {
+  targets: string[];
+  labels: string[];
+}
+
 interface Action {
   type: ActionType;
-  payload?: string | string[] | boolean | number | StepConfig | ComponentsCountHints;
+  payload?:
+    | string
+    | string[]
+    | boolean
+    | number
+    | StepConfig
+    | ComponentsCountHints
+    | IPlot2D[]
+    | Plot2D
+    | TargetsAndLabels;
 }
 
 export type PCA_Dispatcher = React.Dispatch<Action>;
@@ -277,6 +303,44 @@ export const reducer = (state: PrincipalComponentsAnalysisState, action: Action)
         ...state,
         loading: false,
         componentsCountHints: action.payload as ComponentsCountHints,
+      };
+    }
+
+    case ActionType.FetchedTargetsAndLabels: {
+      const { targets, labels } = action.payload as TargetsAndLabels;
+      CacheSystem.SetItem(PCA.CacheKeys.DataVisualizer.pcaLabels, labels);
+      CacheSystem.SetItem(PCA.CacheKeys.DataVisualizer.targets, targets);
+
+      return {
+        ...state,
+        loading: false,
+        pcaLabels: labels,
+        targets: targets,
+      };
+    }
+
+    case ActionType.PushDefaultPlot: {
+      const newPlots = [...state.plots, { id: uuidv4(), pcX: '', pcY: '', plotSrc: '' }];
+
+      CacheSystem.SetItem(PCA.CacheKeys.DataVisualizer.plots, newPlots);
+
+      return {
+        ...state,
+        plots: newPlots as IPlot2D[],
+      };
+    }
+
+    case ActionType.ChangePlot: {
+      const plot2D = action.payload as Plot2D;
+
+      const newPlots = [...state.plots];
+      newPlots[plot2D.index] = { id: state.plots[plot2D.index].id, ...plot2D.config };
+
+      CacheSystem.SetItem(PCA.CacheKeys.DataVisualizer.plots, newPlots);
+
+      return {
+        ...state,
+        plots: newPlots as IPlot2D[],
       };
     }
 

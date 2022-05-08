@@ -4,6 +4,7 @@ import { CacheKeys } from './cacheKeys';
 import { PCA } from './index';
 
 import { BasicDataFrameProps } from '@renderer/components/BasicDataFrame';
+import { IPlot2D } from '../DataVisualizer';
 
 export interface ComponentsCountHints {
   kaiserPath: string;
@@ -49,6 +50,9 @@ export interface PrincipalComponentsAnalysisState {
   loadingsMatrixPath: string;
   scaledData: boolean;
   currentStep: number;
+  pcaLabels: string[];
+  targets: string[];
+  plots: IPlot2D[];
 }
 
 export const getDefaultState = (): PrincipalComponentsAnalysisState => ({
@@ -62,4 +66,7 @@ export const getDefaultState = (): PrincipalComponentsAnalysisState => ({
   scaledData: CacheSystem.GetItemOrDefault(PCA.CacheKeys.ScaledData, false),
   currentStep: CacheSystem.GetItemOrDefault(PCA.CacheKeys.CurrentStep, 1),
   componentsCountHints: getDefaultComponentsCountHints(),
+  pcaLabels: CacheSystem.GetItemOrDefault(PCA.CacheKeys.DataVisualizer.pcaLabels, []),
+  plots: CacheSystem.GetItemOrDefault(PCA.CacheKeys.DataVisualizer.plots, []),
+  targets: CacheSystem.GetItemOrDefault(PCA.CacheKeys.DataVisualizer.targets, []),
 });
