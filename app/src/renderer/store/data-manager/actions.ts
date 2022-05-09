@@ -1,5 +1,5 @@
 import { axios } from '@renderer/config';
-import { DecimalsPrecision } from '@src/renderer/modules/data-manager/data-frame-viewer/types';
+import { DecimalsPrecision } from '@renderer/modules/data-manager/data-frame-viewer/types';
 import { DataManagerDispatch, DataManagerActionTypes, ScalingMethodType } from './types';
 
 const fetchDataFrame = async (dispatch: DataManagerDispatch, page: number, pageSize: number, feedbackMessage = '') => {

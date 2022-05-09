@@ -1,4 +1,4 @@
-import { DataFrameState } from '@src/renderer/modules/data-manager/data-frame-viewer/types';
+import { DataFrameState } from '@renderer/modules/data-manager/data-frame-viewer/types';
 
 import {
   DataManagerActionTypes,
