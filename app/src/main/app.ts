@@ -16,7 +16,7 @@ app.whenReady().then(async () => {
   createAppWindow();
 
   await session.defaultSession.loadExtension(
-    'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.24.0_0'
+    'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.24.3_0'
   );
 });
 
