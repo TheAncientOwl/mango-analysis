@@ -1,52 +1,15 @@
 import React from 'react';
 
+import { Box, Typography } from '@mui/material';
+
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-
-import { Box, Typography } from '@mui/material';
+import { RootState } from '@renderer/store';
+import { changePage, changePageSize, checkLabel, checkRow } from '@renderer/store/data-manager/actions';
 
 import { DataFrameViewer } from './data-frame-viewer';
 import { DataFrameViewerPagination } from './data-frame-viewer/DataFrameViewerPagination';
-
-import { changePage, changePageSize, checkLabel, checkRow } from '@renderer/store/data-manager/actions';
-import { RootState } from '@renderer/store';
-
-const noDataLoadedMessageStyles = {
-  height: '100%',
-  p: 2,
-  pt: '5%',
-  display: 'flex',
-  justifyContent: 'center',
-} as const;
-
-const dataFrameWrapperStyles = {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  boxSizing: 'border-box',
-  p: 1.5,
-  pt: 0,
-} as const;
-
-const mapState = (state: RootState) => ({
-  dataFrame: state.dataManager.dataFrame,
-  decimalsPrecision: state.dataManager.decimalsPrecision,
-  checkedLabels: state.dataManager.checkedLabels,
-  checkedRows: state.dataManager.checkedRows,
-  page: state.dataManager.page,
-  pageSize: state.dataManager.pageSize,
-});
-
-const mapDispatch = {
-  changePage,
-  changePageSize,
-  checkLabel,
-  checkRow,
-};
-
-const connector = connect(mapState, mapDispatch);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import { noDataLoadedMessageStyles, dataFrameWrapperStyles } from './styles';
 
 const DataManagerDataFrame: React.FC<PropsFromRedux> = props => {
   return (
@@ -75,4 +38,25 @@ const DataManagerDataFrame: React.FC<PropsFromRedux> = props => {
   );
 };
 
+// <redux>
+const mapState = (state: RootState) => ({
+  dataFrame: state.dataManager.dataFrame,
+  decimalsPrecision: state.dataManager.decimalsPrecision,
+  checkedLabels: state.dataManager.checkedLabels,
+  checkedRows: state.dataManager.checkedRows,
+  page: state.dataManager.page,
+  pageSize: state.dataManager.pageSize,
+});
+
+const mapDispatch = {
+  changePage,
+  changePageSize,
+  checkLabel,
+  checkRow,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
 export default connector(DataManagerDataFrame);
+// </redux>

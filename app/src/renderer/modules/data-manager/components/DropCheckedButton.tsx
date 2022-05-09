@@ -1,34 +1,15 @@
 import React from 'react';
 
-import { useSwitch } from '@renderer/hooks';
-
 import { Box, Button } from '@mui/material';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
-
-import { DoubleCheck } from '@renderer/components/DoubleCheck';
-
-import { dropRowsAndColumns } from '@renderer/store/data-manager/actions';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@renderer/store';
+import { dropRowsAndColumns } from '@renderer/store/data-manager/actions';
 
-const mapState = (state: RootState) => ({
-  loading: state.dataManager.loading,
-  checkedLabels: state.dataManager.checkedLabels,
-  checkedRows: state.dataManager.checkedRows,
-
-  page: state.dataManager.page,
-  pageSize: state.dataManager.pageSize,
-});
-
-const mapDispatch = {
-  dropRowsAndColumns,
-};
-
-const connector = connect(mapState, mapDispatch);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import { DoubleCheck } from '@renderer/components/DoubleCheck';
+import { useSwitch } from '@renderer/hooks';
 
 const DropCheckedButton: React.FC<PropsFromRedux> = props => {
   const doubleCheckSwitch = useSwitch();
@@ -71,4 +52,22 @@ const DropCheckedButton: React.FC<PropsFromRedux> = props => {
   );
 };
 
+// <redux>
+const mapState = (state: RootState) => ({
+  loading: state.dataManager.loading,
+  checkedLabels: state.dataManager.checkedLabels,
+  checkedRows: state.dataManager.checkedRows,
+
+  page: state.dataManager.page,
+  pageSize: state.dataManager.pageSize,
+});
+
+const mapDispatch = {
+  dropRowsAndColumns,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
 export default connector(DropCheckedButton);
+// </redux>

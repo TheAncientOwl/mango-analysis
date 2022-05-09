@@ -1,37 +1,16 @@
 import React from 'react';
 
-import { loadDataFrame, closeFeedbackMessage } from '@renderer/store/data-manager/actions';
-
 import { Backdrop, CircularProgress } from '@mui/material';
+
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@renderer/store';
+import { loadDataFrame, closeFeedbackMessage } from '@renderer/store/data-manager/actions';
 
 import { Snackbar } from '@renderer/components/Snackbar';
 
 import { DataManagerToolbar } from './DataManagerToolbar';
 import DataManagerDataFrame from './DataManagerDataFrame';
-
-// eslint-disable-next-line import/named
-import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/store';
-
-const mapState = (state: RootState) => ({
-  loading: state.dataManager.loading,
-
-  dataFrame: state.dataManager.dataFrame,
-  page: state.dataManager.page,
-  pageSize: state.dataManager.pageSize,
-
-  feedbackMessage: state.dataManager.feedbackMessage,
-  feedbackMessageOpen: state.dataManager.feedbackMessageOpen,
-});
-
-const mapDispatch = {
-  loadDataFrame,
-  closeFeedbackMessage,
-};
-
-const connector = connect(mapState, mapDispatch);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const DataManager: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {
@@ -55,4 +34,25 @@ const DataManager: React.FC<PropsFromRedux> = props => {
   );
 };
 
+// <redux>
+const mapState = (state: RootState) => ({
+  loading: state.dataManager.loading,
+
+  dataFrame: state.dataManager.dataFrame,
+  page: state.dataManager.page,
+  pageSize: state.dataManager.pageSize,
+
+  feedbackMessage: state.dataManager.feedbackMessage,
+  feedbackMessageOpen: state.dataManager.feedbackMessageOpen,
+});
+
+const mapDispatch = {
+  loadDataFrame,
+  closeFeedbackMessage,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
 export default connector(DataManager);
+// </redux>

@@ -3,48 +3,13 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
-import { DecimalsPrecision } from '../data-frame-viewer/types';
-
-import { changeDecimalsPrecision } from '@renderer/store/data-manager/actions';
-
-interface DecimalsOptionConfig {
-  id: number;
-  display: string;
-  value: DecimalsPrecision;
-}
-
-const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
-  {
-    id: 0,
-    display: 'all',
-    value: 'all',
-  },
-  ...new Array(7).fill(0).map((item, index) => {
-    const value = index + 1;
-
-    return {
-      id: value as number,
-      display: value.toString(),
-      value: value as DecimalsPrecision,
-    } as DecimalsOptionConfig;
-  }),
-];
-
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@renderer/store';
+import { changeDecimalsPrecision } from '@renderer/store/data-manager/actions';
 
-const mapState = (state: RootState) => ({
-  decimalsPrecision: state.dataManager.decimalsPrecision,
-});
-
-const mapDispatch = {
-  changeDecimalsPrecision,
-};
-
-const connector = connect(mapState, mapDispatch);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import { DecimalsOptions } from './DecimalsOptions.config';
+import { DecimalsPrecision } from '../data-frame-viewer/types';
 
 const DecimalsHandler: React.FC<PropsFromRedux> = props => {
   const handleValueChange = (event: SelectChangeEvent) => {
@@ -70,4 +35,17 @@ const DecimalsHandler: React.FC<PropsFromRedux> = props => {
   );
 };
 
+// <redux>
+const mapState = (state: RootState) => ({
+  decimalsPrecision: state.dataManager.decimalsPrecision,
+});
+
+const mapDispatch = {
+  changeDecimalsPrecision,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
 export default connector(DecimalsHandler);
+// </redux>

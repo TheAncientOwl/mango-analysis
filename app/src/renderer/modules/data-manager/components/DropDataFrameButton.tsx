@@ -1,29 +1,15 @@
 import React from 'react';
 
-import { useSwitch } from '@renderer/hooks';
-
 import { Box, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-import { DoubleCheck } from '@renderer/components/DoubleCheck';
-
-import { dropDataFrame } from '@renderer/store/data-manager/actions';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@renderer/store';
+import { dropDataFrame } from '@renderer/store/data-manager/actions';
 
-const mapState = (state: RootState) => ({
-  dataFrame: state.dataManager.dataFrame,
-});
-
-const mapDispatch = {
-  dropDataFrame,
-};
-
-const connector = connect(mapState, mapDispatch);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import { DoubleCheck } from '@renderer/components/DoubleCheck';
+import { useSwitch } from '@renderer/hooks';
 
 const DropDataFrameButton: React.FC<PropsFromRedux> = props => {
   const doubleCheckSwitch = useSwitch();
@@ -65,4 +51,17 @@ const DropDataFrameButton: React.FC<PropsFromRedux> = props => {
   );
 };
 
+// <redux>
+const mapState = (state: RootState) => ({
+  dataFrame: state.dataManager.dataFrame,
+});
+
+const mapDispatch = {
+  dropDataFrame,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
 export default connector(DropDataFrameButton);
+// </redux>
