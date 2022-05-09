@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
-import { importCSV } from '@src/renderer/state/actions/DataManagerActions';
+import { importCSV } from '@src/renderer/state/actions/data-manager/actions';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';

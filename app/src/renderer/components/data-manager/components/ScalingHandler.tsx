@@ -16,8 +16,8 @@ import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
 import { useSwitch } from '@renderer/hooks';
 
-import { changeScalingMethod, scaleData } from '@renderer/state/actions/DataManagerActions';
-import { ScalingMethodType } from '@renderer/state/actions/DataManagerActionTypes';
+import { changeScalingMethod, scaleData } from '@renderer/state/actions/data-manager/actions';
+import { ScalingMethodType } from '@renderer/state/actions/data-manager/types';
 
 const ScaleMethodTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />

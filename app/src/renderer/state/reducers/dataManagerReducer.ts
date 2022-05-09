@@ -1,22 +1,10 @@
 import { DataFrameState } from '@renderer/components/data-manager/data-frame-viewer/types';
 
 import {
-  LOADING,
-  FETCH_DATA_SUCCESS,
+  DataManagerActionTypes,
   DataManagerDispatchTypes,
   ScalingMethodType,
-  CLOSE_FEEDBACK_MESSAGE,
-  CHANGE_PAGE,
-  CHANGE_PAGE_SIZE,
-  CHECK_LABEL,
-  CHECK_ROW,
-  CHANGE_DECIMALS_PRECISION,
-  COLUMNS_ROWS_DROPPED,
-  DATA_FRAME_DROPPED,
-  CSV_IMPORT_CANCELED,
-  CHANGE_SCALING_METHOD,
-  SCALED_DATA,
-} from '../actions/DataManagerActionTypes';
+} from '@renderer/state/actions/data-manager/types';
 
 interface IDefaultState extends DataFrameState {
   loading: boolean;
@@ -52,7 +40,7 @@ export const dataManagerReducer = (
   action: DataManagerDispatchTypes
 ): IDefaultState => {
   switch (action.type) {
-    case LOADING: {
+    case DataManagerActionTypes.Loading: {
       if (state.loading) return state;
 
       return {
@@ -61,7 +49,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case FETCH_DATA_SUCCESS: {
+    case DataManagerActionTypes.FetchDataSuccess: {
       return {
         ...state,
         loading: false,
@@ -71,7 +59,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case CLOSE_FEEDBACK_MESSAGE: {
+    case DataManagerActionTypes.CloseFeedbackMessage: {
       if (!state.feedbackMessageOpen) return state;
 
       return {
@@ -80,14 +68,14 @@ export const dataManagerReducer = (
       };
     }
 
-    case CHANGE_PAGE: {
+    case DataManagerActionTypes.ChangePage: {
       return {
         ...state,
         page: action.payload,
       };
     }
 
-    case CHANGE_PAGE_SIZE: {
+    case DataManagerActionTypes.ChangePageSize: {
       return {
         ...state,
         pageSize: action.payload,
@@ -95,7 +83,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case CHECK_LABEL: {
+    case DataManagerActionTypes.CheckLabel: {
       const checkedLabel = action.payload;
 
       const newSet = new Set(state.checkedLabels);
@@ -109,7 +97,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case CHECK_ROW: {
+    case DataManagerActionTypes.CheckRow: {
       const checkedRow = action.payload;
 
       const newSet = new Set(state.checkedRows);
@@ -123,7 +111,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case CHANGE_DECIMALS_PRECISION: {
+    case DataManagerActionTypes.ChangeDecimalsPrecision: {
       return {
         ...state,
         decimalsPrecision: action.payload,
@@ -131,7 +119,7 @@ export const dataManagerReducer = (
     }
 
     // fetch data after dropping
-    case COLUMNS_ROWS_DROPPED: {
+    case DataManagerActionTypes.ColumnsRowsDropped: {
       return {
         ...state,
         checkedLabels: [],
@@ -139,7 +127,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case DATA_FRAME_DROPPED: {
+    case DataManagerActionTypes.DataFrameDropped: {
       return {
         ...state,
         loading: false,
@@ -149,14 +137,14 @@ export const dataManagerReducer = (
       };
     }
 
-    case CSV_IMPORT_CANCELED: {
+    case DataManagerActionTypes.CSVImportCanceled: {
       return {
         ...state,
         loading: false,
       };
     }
 
-    case CHANGE_SCALING_METHOD: {
+    case DataManagerActionTypes.ChangeScalingMethod: {
       return {
         ...state,
         scalingMethod: action.payload,
@@ -164,7 +152,7 @@ export const dataManagerReducer = (
     }
 
     // fetch data after scaling
-    case SCALED_DATA: {
+    case DataManagerActionTypes.ScaledData: {
       return {
         ...state,
         scalingMethod: 'none',

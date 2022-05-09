@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { loadDataFrame, closeFeedbackMessage } from '@renderer/state/actions/DataManagerActions';
+import { loadDataFrame, closeFeedbackMessage } from '@renderer/state/actions/data-manager/actions';
 
 import { Backdrop, CircularProgress } from '@mui/material';
 

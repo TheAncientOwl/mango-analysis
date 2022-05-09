@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
-import { dropDataFrame } from '@renderer/state/actions/DataManagerActions';
+import { dropDataFrame } from '@renderer/state/actions/data-manager/actions';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';

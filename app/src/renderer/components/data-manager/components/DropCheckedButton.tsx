@@ -7,7 +7,7 @@ import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
-import { dropRowsAndColumns } from '@renderer/state/actions/DataManagerActions';
+import { dropRowsAndColumns } from '@renderer/state/actions/data-manager/actions';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
