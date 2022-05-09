@@ -12,10 +12,24 @@ import { DataManagerContextProvider } from './context';
 import { DataManagerToolbar } from './DataManagerToolbar';
 import { DataManagerDataFrame } from './DataManagerDataFrame';
 
+import { useAppDispatch, useAppSelector } from '@renderer/hooks';
+import { loadDataFrame } from '@src/renderer/state/actions/DataManagerActions';
+
 export const DataManager: React.FC = () => {
   const [state, dispatch] = React.useReducer(dataManagerStateReducer, getDefaultDataManagerState());
 
+  const _dispatch = useAppDispatch();
+  const _state = useAppSelector(appState => ({
+    dataFrame: appState.dataManager.dataFrame,
+  }));
+
+  React.useEffect(() => {
+    console.log(_state.dataFrame);
+  }, [_state.dataFrame]);
+
   const fetchData = () => {
+    _dispatch(loadDataFrame(state.page, state.pageSize));
+
     dispatch({ type: ActionType.Loading });
 
     axios.get(`/data/page/${state.page}/page-size/${state.pageSize}`).then(res => {

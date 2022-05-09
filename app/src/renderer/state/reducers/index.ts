@@ -1,0 +1,1 @@
+export { dataManagerReducer } from './dataManagerReducer';
