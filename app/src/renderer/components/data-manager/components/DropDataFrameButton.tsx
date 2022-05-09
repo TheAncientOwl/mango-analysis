@@ -1,38 +1,43 @@
 import React from 'react';
 
+import { useSwitch } from '@renderer/hooks';
+
 import { Box, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
-import { axios } from '@renderer/config';
-import { useSwitch } from '@renderer/hooks';
+import { dropDataFrame } from '@renderer/state/actions/DataManagerActions';
 
-import { ActionType } from '../state';
-import { DataManagerContext } from '../context';
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@renderer/state/store';
 
-import { PCA } from '@renderer/components/pca/config';
+const mapState = (state: RootState) => ({
+  dataFrame: state.dataManager.dataFrame,
+});
 
-export const DropDataFrameButton: React.FC = () => {
-  const { dispatch, state } = React.useContext(DataManagerContext);
+const mapDispatch = {
+  dropDataFrame,
+};
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const DropDataFrameButton: React.FC<PropsFromRedux> = props => {
   const doubleCheckSwitch = useSwitch();
 
-  const dropDataFrame = async () => {
+  const handleDropDataFrame = () => {
     doubleCheckSwitch.off();
 
-    dispatch({ type: ActionType.Loading });
-
-    await axios.post('/data/drop-all');
-
-    PCA.clearCache();
-
-    dispatch({ type: ActionType.DataframeDropped });
+    props.dropDataFrame();
   };
 
   return (
     <>
       <Button
-        disabled={state.dataFrame.totalRows === 0}
+        disabled={props.dataFrame.totalRows === 0}
         onClick={doubleCheckSwitch.on}
         startIcon={<DeleteIcon />}
         size='medium'>
@@ -43,7 +48,7 @@ export const DropDataFrameButton: React.FC = () => {
         open={doubleCheckSwitch.value}
         onAccept={{
           title: 'Delete',
-          execute: dropDataFrame,
+          execute: handleDropDataFrame,
         }}
         onReject={{
           title: 'Cancel',
@@ -59,3 +64,5 @@ export const DropDataFrameButton: React.FC = () => {
     </>
   );
 };
+
+export default connector(DropDataFrameButton);

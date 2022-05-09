@@ -3,32 +3,28 @@ import React from 'react';
 import { Button } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
-import { axios } from '@renderer/config';
-import { PCA } from '@renderer/components/pca/config';
+import { importCSV } from '@src/renderer/state/actions/DataManagerActions';
 
-import { ActionType } from '../state';
-import { DataManagerContext } from '../context';
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@renderer/state/store';
 
-export const ImportButton: React.FC = () => {
-  const { dispatch, fetchData } = React.useContext(DataManagerContext);
+const mapState = (state: RootState) => ({
+  page: state.dataManager.page,
+  pageSize: state.dataManager.pageSize,
+});
 
-  const importData = async () => {
-    dispatch({ type: ActionType.Loading });
+const mapDispatch = {
+  importCSV,
+};
 
-    const filePath = await window.electron.getImportCsvPath();
+const connector = connect(mapState, mapDispatch);
 
-    if (filePath === null) {
-      dispatch({ type: ActionType.EndLoading });
-      return;
-    }
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
-    await axios.get(`/data/import/csv/${filePath}`);
-
-    fetchData();
-
-    PCA.clearCache();
-
-    dispatch({ type: ActionType.DataImported });
+const ImportButton: React.FC<PropsFromRedux> = props => {
+  const importData = () => {
+    props.importCSV(props.page, props.pageSize);
   };
 
   return (
@@ -37,3 +33,5 @@ export const ImportButton: React.FC = () => {
     </Button>
   );
 };
+
+export default connector(ImportButton);

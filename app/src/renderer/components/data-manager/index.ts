@@ -1,1 +1,1 @@
-export { DataManager } from './DataManager';
+export { default } from './DataManager';

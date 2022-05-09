@@ -8,8 +8,8 @@ export type DecimalsPrecision = number | 'all';
 
 export interface DataFrameState {
   dataFrame: DataFrame;
-  checkedLabels: Set<string>;
-  checkedRows: Set<number>;
+  checkedLabels: string[];
+  checkedRows: number[];
   decimalsPrecision: DecimalsPrecision;
 }
 

@@ -20,7 +20,7 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
       <TableCell align='center'>ID</TableCell>
 
       {dataFrame.labels.slice(1).map(label => {
-        const labelChecked = checkedLabels.has(label);
+        const labelChecked = checkedLabels.indexOf(label) > -1;
 
         return (
           <TableCell sx={getCellStyle(labelChecked)} key={label}>
@@ -35,7 +35,7 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
     <>
       {dataFrame.rows.map(row => {
         const rowID = row[0] as number;
-        const rowChecked = checkedRows.has(rowID);
+        const rowChecked = checkedRows.indexOf(rowID) > -1;
 
         return (
           <TableRow sx={getCellStyle(rowChecked)} key={rowID}>
@@ -45,7 +45,7 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
 
             {row.slice(1).map((value, index) => {
               const columnLabel = dataFrame.labels[index + 1];
-              const cellChecked = checkedLabels.has(columnLabel);
+              const cellChecked = checkedLabels.indexOf(columnLabel) > -1;
               const formatedValue =
                 typeof value === 'number' && decimalsPrecision !== 'all' ? value.toFixed(decimalsPrecision) : value;
 

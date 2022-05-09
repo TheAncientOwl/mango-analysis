@@ -1,40 +1,49 @@
 import React from 'react';
 
+import { useSwitch } from '@renderer/hooks';
+
 import { Box, Button } from '@mui/material';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
-import { axios } from '@renderer/config';
-import { useSwitch } from '@renderer/hooks';
+import { dropRowsAndColumns } from '@renderer/state/actions/DataManagerActions';
 
-import { ActionType } from '../state';
-import { DataManagerContext } from '../context';
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@renderer/state/store';
 
-export const DropCheckedButton: React.FC = () => {
-  const { dispatch, state, fetchData } = React.useContext(DataManagerContext);
+const mapState = (state: RootState) => ({
+  loading: state.dataManager.loading,
+  checkedLabels: state.dataManager.checkedLabels,
+  checkedRows: state.dataManager.checkedRows,
+
+  page: state.dataManager.page,
+  pageSize: state.dataManager.pageSize,
+});
+
+const mapDispatch = {
+  dropRowsAndColumns,
+};
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const DropCheckedButton: React.FC<PropsFromRedux> = props => {
   const doubleCheckSwitch = useSwitch();
 
   const dropChecked = async () => {
     doubleCheckSwitch.off();
 
-    dispatch({ type: ActionType.Loading });
-
-    await axios.post('/data/drop/rows+cols', {
-      labels: Array.from(state.checkedLabels),
-      mangoIDs: Array.from(state.checkedRows),
-    });
-
-    dispatch({ type: ActionType.DropDataSuccess });
-
-    fetchData();
+    props.dropRowsAndColumns(props.checkedRows, props.checkedLabels, props.page, props.pageSize);
   };
 
   return (
     <>
       <Button
         startIcon={<PlaylistRemoveIcon />}
-        disabled={state.loading || (state.checkedLabels.size === 0 && state.checkedRows.size === 0)}
+        disabled={props.loading || (props.checkedLabels.length === 0 && props.checkedRows.length === 0)}
         onClick={doubleCheckSwitch.on}
         size='medium'>
         Drop
@@ -61,3 +70,5 @@ export const DropCheckedButton: React.FC = () => {
     </>
   );
 };
+
+export default connector(DropCheckedButton);

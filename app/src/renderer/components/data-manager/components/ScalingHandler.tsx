@@ -14,11 +14,10 @@ import InfoIcon from '@mui/icons-material/Info';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
-import { axios } from '@src/renderer/config';
-import { useSwitch } from '@src/renderer/hooks';
+import { useSwitch } from '@renderer/hooks';
 
-import { ScalingMethodType, ActionType } from '../state';
-import { DataManagerContext } from '../context';
+import { changeScalingMethod, scaleData } from '@renderer/state/actions/DataManagerActions';
+import { ScalingMethodType } from '@renderer/state/actions/DataManagerActionTypes';
 
 const ScaleMethodTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -117,27 +116,37 @@ const ScalingMethods: ReadonlyArray<ScalingMethodConfig> = [
   },
 ];
 
-export const ScalingHandler: React.FC = () => {
-  const { state, dispatch, fetchData } = React.useContext(DataManagerContext);
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@renderer/state/store';
 
+const mapState = (state: RootState) => ({
+  dataFrame: state.dataManager.dataFrame,
+  page: state.dataManager.page,
+  pageSize: state.dataManager.pageSize,
+  scalingMethod: state.dataManager.scalingMethod,
+});
+
+const mapDispatch = {
+  changeScalingMethod,
+  scaleData,
+};
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const ScalingHandler: React.FC<PropsFromRedux> = props => {
   const doubleCheckSwitch = useSwitch();
 
   const handleMethodChange = (event: SelectChangeEvent) => {
-    dispatch({ type: ActionType.ChangeScalingMethod, payload: event.target.value as ScalingMethodType });
+    props.changeScalingMethod(event.target.value as ScalingMethodType);
   };
 
   const handleScale = async () => {
     doubleCheckSwitch.off();
 
-    dispatch({ type: ActionType.Loading });
-
-    await axios.post('/data/scale', {
-      method: state.scalingMethod,
-    });
-
-    dispatch({ type: ActionType.ScaleDataSuccess });
-
-    fetchData();
+    props.scaleData(props.scalingMethod, props.page, props.pageSize);
   };
 
   return (
@@ -148,7 +157,7 @@ export const ScalingHandler: React.FC = () => {
           <Select
             labelId='select-scaling-method-label'
             id='select-scaling-method'
-            value={state.scalingMethod}
+            value={props.scalingMethod}
             label='Scaling Method'
             onChange={handleMethodChange}>
             {ScalingMethods.map(method => (
@@ -165,7 +174,7 @@ export const ScalingHandler: React.FC = () => {
         </FormControl>
 
         <Button
-          disabled={state.scalingMethod === 'none' || state.dataFrame.totalRows === 0}
+          disabled={props.scalingMethod === 'none' || props.dataFrame.totalRows === 0}
           size='small'
           onClick={doubleCheckSwitch.on}
           startIcon={<AlignVerticalBottomIcon />}>
@@ -194,3 +203,5 @@ export const ScalingHandler: React.FC = () => {
     </React.Fragment>
   );
 };
+
+export default connector(ScalingHandler);

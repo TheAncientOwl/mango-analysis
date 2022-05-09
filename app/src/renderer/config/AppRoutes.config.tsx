@@ -3,7 +3,7 @@ import React from 'react';
 import TableViewIcon from '@mui/icons-material/TableView';
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
 
-import { DataManager } from '@renderer/components/data-manager';
+import DataManager from '@renderer/components/data-manager';
 import { PrincipalComponentsAnalysis } from '@renderer/components/pca';
 
 interface Route {

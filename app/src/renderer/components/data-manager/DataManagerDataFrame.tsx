@@ -1,12 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
+
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
 
 import { Box, Typography } from '@mui/material';
 
-import { ActionType } from './state';
-import { DataManagerContext } from './context';
-
 import { DataFrameViewer } from './data-frame-viewer';
 import { DataFrameViewerPagination } from './data-frame-viewer/DataFrameViewerPagination';
+
+import { changePage, changePageSize, checkLabel, checkRow } from '@renderer/state/actions/DataManagerActions';
+import { RootState } from '@renderer/state/store';
 
 const noDataLoadedMessageStyles = {
   height: '100%',
@@ -25,41 +28,51 @@ const dataFrameWrapperStyles = {
   pt: 0,
 } as const;
 
-export const DataManagerDataFrame: React.FC = () => {
-  const { state, dispatch } = useContext(DataManagerContext);
+const mapState = (state: RootState) => ({
+  dataFrame: state.dataManager.dataFrame,
+  decimalsPrecision: state.dataManager.decimalsPrecision,
+  checkedLabels: state.dataManager.checkedLabels,
+  checkedRows: state.dataManager.checkedRows,
+  page: state.dataManager.page,
+  pageSize: state.dataManager.pageSize,
+});
 
-  const handle = React.useMemo(
-    () => ({
-      pageChange: (newPageIndex: number) => dispatch({ type: ActionType.ChangePage, payload: newPageIndex }),
-      pageSizeChange: (newPageSize: number) => dispatch({ type: ActionType.ChangePageSize, payload: newPageSize }),
-      labelCheck: (selectedLabel: string) => dispatch({ type: ActionType.CheckLabel, payload: selectedLabel }),
-      rowCheck: (selectedRow: number) => dispatch({ type: ActionType.CheckRow, payload: selectedRow }),
-    }),
-    [dispatch]
-  );
+const mapDispatch = {
+  changePage,
+  changePageSize,
+  checkLabel,
+  checkRow,
+};
 
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const DataManagerDataFrame: React.FC<PropsFromRedux> = props => {
   return (
     <>
-      {state.dataFrame.totalRows === 0 && <Typography sx={noDataLoadedMessageStyles}>No data loaded...</Typography>}
-      {state.dataFrame.totalRows > 0 && (
+      {props.dataFrame.totalRows === 0 && <Typography sx={noDataLoadedMessageStyles}>No data loaded...</Typography>}
+      {props.dataFrame.totalRows > 0 && (
         <Box sx={dataFrameWrapperStyles}>
           <DataFrameViewer
-            dataFrame={state.dataFrame}
-            decimalsPrecision={state.decimalsPrecision}
-            checkedLabels={state.checkedLabels}
-            checkedRows={state.checkedRows}
-            onLabelCheck={handle.labelCheck}
-            onRowCheck={handle.rowCheck}
+            dataFrame={props.dataFrame}
+            decimalsPrecision={props.decimalsPrecision}
+            checkedLabels={props.checkedLabels}
+            checkedRows={props.checkedRows}
+            onLabelCheck={props.checkLabel}
+            onRowCheck={props.checkRow}
           />
           <DataFrameViewerPagination
-            totalRows={state.dataFrame.totalRows}
-            pageSize={state.pageSize}
-            page={state.page}
-            onPageChange={handle.pageChange}
-            onPageSizeChange={handle.pageSizeChange}
+            totalRows={props.dataFrame.totalRows}
+            pageSize={props.pageSize}
+            page={props.page}
+            onPageChange={props.changePage}
+            onPageSizeChange={props.changePageSize}
           />
         </Box>
       )}
     </>
   );
 };
+
+export default connector(DataManagerDataFrame);

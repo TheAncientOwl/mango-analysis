@@ -1,62 +1,58 @@
 import React from 'react';
 
+import { loadDataFrame, closeFeedbackMessage } from '@renderer/state/actions/DataManagerActions';
+
 import { Backdrop, CircularProgress } from '@mui/material';
 
-import { ActionType, dataManagerStateReducer, getDefaultDataManagerState } from './state';
-
-import { axios } from '@renderer/config';
 import { Snackbar } from '@renderer/components/Snackbar';
 
-import { DataManagerContextProvider } from './context';
-
 import { DataManagerToolbar } from './DataManagerToolbar';
-import { DataManagerDataFrame } from './DataManagerDataFrame';
+import DataManagerDataFrame from './DataManagerDataFrame';
 
-import { useAppDispatch, useAppSelector } from '@renderer/hooks';
-import { loadDataFrame } from '@src/renderer/state/actions/DataManagerActions';
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@renderer/state/store';
 
-export const DataManager: React.FC = () => {
-  const [state, dispatch] = React.useReducer(dataManagerStateReducer, getDefaultDataManagerState());
+const mapState = (state: RootState) => ({
+  loading: state.dataManager.loading,
 
-  const _dispatch = useAppDispatch();
-  const _state = useAppSelector(appState => ({
-    dataFrame: appState.dataManager.dataFrame,
-  }));
+  dataFrame: state.dataManager.dataFrame,
+  page: state.dataManager.page,
+  pageSize: state.dataManager.pageSize,
 
+  feedbackMessage: state.dataManager.feedbackMessage,
+  feedbackMessageOpen: state.dataManager.feedbackMessageOpen,
+});
+
+const mapDispatch = {
+  loadDataFrame,
+  closeFeedbackMessage,
+};
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const DataManager: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {
-    console.log(_state.dataFrame);
-  }, [_state.dataFrame]);
-
-  const fetchData = () => {
-    _dispatch(loadDataFrame(state.page, state.pageSize));
-
-    dispatch({ type: ActionType.Loading });
-
-    axios.get(`/data/page/${state.page}/page-size/${state.pageSize}`).then(res => {
-      if ('dataframe' in res.data) dispatch({ type: ActionType.DataFetched, payload: res.data.dataframe });
-      else dispatch({ type: ActionType.EndLoading });
-    });
-  };
-
-  const closeFeedbackMessage = () => dispatch({ type: ActionType.CloseFeedbackMessage });
-
-  React.useEffect(() => {
-    fetchData();
-  }, [state.page, state.pageSize]);
+    props.loadDataFrame(props.page, props.pageSize);
+  }, [props.page, props.pageSize]);
 
   return (
-    <DataManagerContextProvider value={{ dispatch, state, fetchData }}>
+    <>
       <DataManagerToolbar />
 
       <DataManagerDataFrame />
 
-      <Snackbar open={state.feedbackMessageOpen} onClose={closeFeedbackMessage}>
-        {state.feedbackMessage}
+      <Snackbar open={props.feedbackMessageOpen} onClose={props.closeFeedbackMessage}>
+        {props.feedbackMessage}
       </Snackbar>
 
-      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={state.loading}>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={props.loading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-    </DataManagerContextProvider>
+    </>
   );
 };
+
+export default connector(DataManager);

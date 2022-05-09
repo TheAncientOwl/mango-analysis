@@ -5,8 +5,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 
 import { DecimalsPrecision } from '../data-frame-viewer/types';
 
-import { ActionType } from '../state';
-import { DataManagerContext } from '../context';
+import { changeDecimalsPrecision } from '@src/renderer/state/actions/DataManagerActions';
 
 interface DecimalsOptionConfig {
   id: number;
@@ -31,11 +30,25 @@ const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
   }),
 ];
 
-export const DecimalsHandler: React.FC = () => {
-  const { dispatch, state } = React.useContext(DataManagerContext);
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@renderer/state/store';
 
+const mapState = (state: RootState) => ({
+  decimalsPrecision: state.dataManager.decimalsPrecision,
+});
+
+const mapDispatch = {
+  changeDecimalsPrecision,
+};
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const DecimalsHandler: React.FC<PropsFromRedux> = props => {
   const handleValueChange = (event: SelectChangeEvent) => {
-    dispatch({ type: ActionType.ChangeDecimals, payload: event.target.value as DecimalsPrecision });
+    props.changeDecimalsPrecision(event.target.value as DecimalsPrecision);
   };
 
   return (
@@ -44,7 +57,7 @@ export const DecimalsHandler: React.FC = () => {
       <Select
         labelId='select-decimals-label'
         id='select-decimals'
-        value={state.decimalsPrecision as string}
+        value={props.decimalsPrecision as string}
         label='Display Decimals'
         onChange={handleValueChange}>
         {DecimalsOptions.map(option => (
@@ -56,3 +69,5 @@ export const DecimalsHandler: React.FC = () => {
     </FormControl>
   );
 };
+
+export default connector(DecimalsHandler);
