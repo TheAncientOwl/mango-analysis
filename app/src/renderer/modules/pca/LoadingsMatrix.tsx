@@ -8,24 +8,22 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@renderer/components/anal
 import { axios } from '@renderer/config';
 
 import { PCA } from './config';
-import { Paper } from '../Paper';
+import { Paper } from '../../components/Paper';
 
-export const CorrelationMatrix: React.FC = () => {
+export const LoadingsMatrix: React.FC = () => {
   const { dispatch, state } = React.useContext(PCA.Context);
 
   const handlePlot = () => {
     dispatch({ type: PCA.ActionType.Loading });
 
-    axios.get('/pca/plot/correlation-matrix').then(res => {
-      dispatch({ type: PCA.ActionType.FetchedCorrelationMatrixPath, payload: res.data.imagePath });
+    axios.get('/pca/plot/loadings-matrix').then(res => {
+      dispatch({ type: PCA.ActionType.FetchedLoadingsMatrixPath, payload: res.data.imagePath });
     });
   };
 
   const handleSkip = () => {
-    dispatch({ type: PCA.ActionType.JumpToStep, payload: PCA.ComponentIndex.CorrelationMatrix + 1 });
-
-    // call onNext to fetch components count hints (even on skip)
-    PCA.Steps[PCA.ComponentIndex.CorrelationMatrix - 1]?.onNext?.(state, dispatch);
+    dispatch({ type: PCA.ActionType.JumpToStep, payload: PCA.ComponentIndex.LoadingsMatrix + 1 });
+    PCA.Steps[PCA.ComponentIndex.LoadingsMatrix - 1]?.onNext?.(state, dispatch);
   };
 
   return (
@@ -35,7 +33,7 @@ export const CorrelationMatrix: React.FC = () => {
           <Button onClick={handlePlot} size='small' color='info'>
             Plot
           </Button>
-          {state.correlationMatrixPath === '' && !state.unlockedSteps[PCA.ComponentIndex.CorrelationMatrix + 1] && (
+          {state.loadingsMatrixPath === '' && !state.unlockedSteps[PCA.ComponentIndex.LoadingsMatrix + 1] && (
             <Button onClick={handleSkip} size='small' color='warning'>
               Skip
             </Button>
@@ -43,10 +41,10 @@ export const CorrelationMatrix: React.FC = () => {
         </Stack>
       </AnalysisStepLogic>
       <AnalysisStepResult>
-        {state.correlationMatrixPath !== '' && (
+        {state.loadingsMatrixPath !== '' && (
           <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
-              <AnalysisImage src={state.correlationMatrixPath} alt='Correlation Matrix' />
+              <AnalysisImage src={state.loadingsMatrixPath} alt='Loadings Matrix' />
             </Box>
           </Paper>
         )}
