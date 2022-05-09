@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Stack, Typography } from '@mui/material';
 
-import { AnalysisStepLogic } from '@src/renderer/components/analysis-step';
+import { AnalysisStepLogic } from '@renderer/components/analysis-step';
 import { axios } from '@renderer/config';
 
 import { PCA } from './config';

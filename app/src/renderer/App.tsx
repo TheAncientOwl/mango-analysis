@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Paper, Toolbar, Stack } from '@mui/material';
 
 import { MenuDrawer } from '@renderer/components/MenuDrawer';
-import { AppBar } from '@src/renderer/components/app-bar/AppBar';
+import { AppBar } from '@renderer/components/app-bar/AppBar';
 import { AppRoutes } from '@renderer/config';
 import { useSwitch } from '@renderer/hooks';
 

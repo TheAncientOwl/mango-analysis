@@ -17,7 +17,7 @@ import {
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
-import { AnalysisStepLogic, AnalysisStepResult } from '@src/renderer/components/analysis-step';
+import { AnalysisStepLogic, AnalysisStepResult } from '@renderer/components/analysis-step';
 import { BasicDataFrame } from '@renderer/components/BasicDataFrame';
 import { AnalysisImage } from '@renderer/components/AnalysisImage';
 import { Paper } from '@renderer/components/Paper';

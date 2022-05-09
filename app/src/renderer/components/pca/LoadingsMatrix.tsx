@@ -3,7 +3,7 @@ import React from 'react';
 import { Box, Button, Stack } from '@mui/material';
 
 import { AnalysisImage } from '@renderer/components/AnalysisImage';
-import { AnalysisStepLogic, AnalysisStepResult } from '@src/renderer/components/analysis-step';
+import { AnalysisStepLogic, AnalysisStepResult } from '@renderer/components/analysis-step';
 
 import { axios } from '@renderer/config';
 

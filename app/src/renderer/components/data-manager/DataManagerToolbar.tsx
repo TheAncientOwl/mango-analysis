@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Stack } from '@mui/material';
 
-import { MenuList } from '@src/renderer/components/MenuList';
+import { MenuList } from '@renderer/components/MenuList';
 
 import ImportButton from './components/ImportButton';
 import DropDataFrameButton from './components/DropDataFrameButton';

@@ -5,7 +5,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 
 import { DecimalsPrecision } from '../data-frame-viewer/types';
 
-import { changeDecimalsPrecision } from '@src/renderer/state/actions/data-manager/actions';
+import { changeDecimalsPrecision } from '@renderer/state/actions/data-manager/actions';
 
 interface DecimalsOptionConfig {
   id: number;
