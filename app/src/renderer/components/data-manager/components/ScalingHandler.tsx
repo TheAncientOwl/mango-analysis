@@ -16,8 +16,8 @@ import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
 import { useSwitch } from '@renderer/hooks';
 
-import { changeScalingMethod, scaleData } from '@renderer/state/actions/data-manager/actions';
-import { ScalingMethodType } from '@renderer/state/actions/data-manager/types';
+import { changeScalingMethod, scaleData } from '@renderer/store/data-manager/actions';
+import { ScalingMethodType } from '@renderer/store/data-manager/types';
 
 const ScaleMethodTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -118,7 +118,7 @@ const ScalingMethods: ReadonlyArray<ScalingMethodConfig> = [
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/state/store';
+import { RootState } from '@renderer/store';
 
 const mapState = (state: RootState) => ({
   dataFrame: state.dataManager.dataFrame,

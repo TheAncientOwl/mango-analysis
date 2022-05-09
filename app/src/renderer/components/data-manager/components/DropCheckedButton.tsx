@@ -7,11 +7,11 @@ import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
-import { dropRowsAndColumns } from '@renderer/state/actions/data-manager/actions';
+import { dropRowsAndColumns } from '@renderer/store/data-manager/actions';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/state/store';
+import { RootState } from '@renderer/store';
 
 const mapState = (state: RootState) => ({
   loading: state.dataManager.loading,

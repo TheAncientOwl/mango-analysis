@@ -4,7 +4,7 @@ import {
   DataManagerActionTypes,
   DataManagerDispatchTypes,
   ScalingMethodType,
-} from '@renderer/state/actions/data-manager/types';
+} from '@renderer/store/data-manager/types';
 
 interface IDefaultState extends DataFrameState {
   loading: boolean;

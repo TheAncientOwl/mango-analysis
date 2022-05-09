@@ -3,11 +3,11 @@ import React from 'react';
 import { Button } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
-import { importCSV } from '@renderer/state/actions/data-manager/actions';
+import { importCSV } from '@renderer/store/data-manager/actions';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/state/store';
+import { RootState } from '@renderer/store';
 
 const mapState = (state: RootState) => ({
   page: state.dataManager.page,

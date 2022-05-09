@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { loadDataFrame, closeFeedbackMessage } from '@renderer/state/actions/data-manager/actions';
+import { loadDataFrame, closeFeedbackMessage } from '@renderer/store/data-manager/actions';
 
 import { Backdrop, CircularProgress } from '@mui/material';
 
@@ -11,7 +11,7 @@ import DataManagerDataFrame from './DataManagerDataFrame';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/state/store';
+import { RootState } from '@renderer/store';
 
 const mapState = (state: RootState) => ({
   loading: state.dataManager.loading,

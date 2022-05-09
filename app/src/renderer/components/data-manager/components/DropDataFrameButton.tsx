@@ -7,11 +7,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { DoubleCheck } from '@renderer/components/DoubleCheck';
 
-import { dropDataFrame } from '@renderer/state/actions/data-manager/actions';
+import { dropDataFrame } from '@renderer/store/data-manager/actions';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/state/store';
+import { RootState } from '@renderer/store';
 
 const mapState = (state: RootState) => ({
   dataFrame: state.dataManager.dataFrame,

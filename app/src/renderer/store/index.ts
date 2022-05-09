@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { dataManagerReducer } from './reducers';
+import { dataManagerReducer } from './data-manager/reducer';
 
 import thunk from 'redux-thunk';
 

@@ -8,8 +8,8 @@ import { Box, Typography } from '@mui/material';
 import { DataFrameViewer } from './data-frame-viewer';
 import { DataFrameViewerPagination } from './data-frame-viewer/DataFrameViewerPagination';
 
-import { changePage, changePageSize, checkLabel, checkRow } from '@renderer/state/actions/data-manager/actions';
-import { RootState } from '@renderer/state/store';
+import { changePage, changePageSize, checkLabel, checkRow } from '@renderer/store/data-manager/actions';
+import { RootState } from '@renderer/store';
 
 const noDataLoadedMessageStyles = {
   height: '100%',

@@ -5,7 +5,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 
 import { DecimalsPrecision } from '../data-frame-viewer/types';
 
-import { changeDecimalsPrecision } from '@renderer/state/actions/data-manager/actions';
+import { changeDecimalsPrecision } from '@renderer/store/data-manager/actions';
 
 interface DecimalsOptionConfig {
   id: number;
@@ -32,7 +32,7 @@ const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/state/store';
+import { RootState } from '@renderer/store';
 
 const mapState = (state: RootState) => ({
   decimalsPrecision: state.dataManager.decimalsPrecision,
