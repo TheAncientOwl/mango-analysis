@@ -6,7 +6,7 @@ import { Box, List, Toolbar, ListItemIcon, ListItemText, ListItemButton } from '
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 
-import { AppRoutes } from '@renderer/config';
+import { AppRoutes } from '@config/.';
 
 const DrawerWidth = {
   opened: 195,

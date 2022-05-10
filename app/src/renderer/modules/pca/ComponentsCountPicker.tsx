@@ -17,13 +17,13 @@ import {
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
-import { AnalysisStepLogic, AnalysisStepResult } from '@renderer/components/analysis-step';
-import { BasicDataFrame } from '@renderer/components/BasicDataFrame';
-import { AnalysisImage } from '@renderer/components/AnalysisImage';
-import { Paper } from '@renderer/components/Paper';
+import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
+import { BasicDataFrame } from '@components/BasicDataFrame';
+import { AnalysisImage } from '@components/AnalysisImage';
+import { Paper } from '@components/Paper';
 
-import { useCache } from '@renderer/hooks';
-import { axios } from '@renderer/config';
+import { useCache } from '@hooks/.';
+import { axios } from '@config/.';
 
 import { PCA } from './config';
 

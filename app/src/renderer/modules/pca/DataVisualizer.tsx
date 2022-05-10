@@ -3,11 +3,11 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { Box, Button, SelectChangeEvent, Stack } from '@mui/material';
 
-import { Paper } from '@renderer/components/Paper';
-import { Select } from '@renderer/components/Select';
-import { AnalysisImage } from '@renderer/components/AnalysisImage';
+import { Paper } from '@components/Paper';
+import { Select } from '@components/Select';
+import { AnalysisImage } from '@components/AnalysisImage';
 
-import { axios } from '@renderer/config';
+import { axios } from '@config/.';
 
 import { PCA } from './config';
 

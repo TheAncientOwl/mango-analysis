@@ -1,10 +1,6 @@
-import { DataFrameState } from '@renderer/modules/data-manager/data-frame-viewer/types';
+import { DataFrameState } from '@modules/data-manager/data-frame-viewer/types';
 
-import {
-  DataManagerActionTypes,
-  DataManagerDispatchTypes,
-  ScalingMethodType,
-} from '@renderer/store/data-manager/types';
+import { DataManagerActionTypes, DataManagerDispatchTypes, ScalingMethodType } from '@store/data-manager/types';
 
 interface IDefaultState extends DataFrameState {
   loading: boolean;

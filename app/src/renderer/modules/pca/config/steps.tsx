@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StepConfig } from '../../../components/analysis-step';
 
-import { axios } from '@renderer/config';
+import { axios } from '@config/.';
 
 import { PrincipalComponentsAnalysisState } from './state';
 import { PCA_Dispatcher } from './reducer';

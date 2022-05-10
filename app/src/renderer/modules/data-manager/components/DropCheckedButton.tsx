@@ -5,11 +5,11 @@ import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/store';
-import { dropRowsAndColumns } from '@renderer/store/data-manager/actions';
+import { RootState } from '@store/.';
+import { dropRowsAndColumns } from '@store/data-manager/actions';
 
-import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { useSwitch } from '@renderer/hooks';
+import { DoubleCheck } from '@components/DoubleCheck';
+import { useSwitch } from '@hooks/.';
 
 const DropCheckedButton: React.FC<PropsFromRedux> = props => {
   const doubleCheckSwitch = useSwitch();

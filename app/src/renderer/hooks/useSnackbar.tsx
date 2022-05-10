@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Snackbar, Severity, Variant } from '@renderer/components/Snackbar';
+import { Snackbar, Severity, Variant } from '@components/Snackbar';
 
 interface Props {
   title?: string;

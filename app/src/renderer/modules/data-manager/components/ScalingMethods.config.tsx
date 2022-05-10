@@ -3,7 +3,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
-import { ScalingMethodType } from '@renderer/store/data-manager/types';
+import { ScalingMethodType } from '@store/data-manager/types';
 
 interface ScalingMethodConfig {
   id: number;

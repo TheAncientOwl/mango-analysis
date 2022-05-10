@@ -7,12 +7,12 @@ import InfoIcon from '@mui/icons-material/Info';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/store';
-import { changeScalingMethod, scaleData } from '@renderer/store/data-manager/actions';
-import { ScalingMethodType } from '@renderer/store/data-manager/types';
+import { RootState } from '@store/.';
+import { changeScalingMethod, scaleData } from '@store/data-manager/actions';
+import { ScalingMethodType } from '@store/data-manager/types';
 
-import { DoubleCheck } from '@renderer/components/DoubleCheck';
-import { useSwitch } from '@renderer/hooks';
+import { DoubleCheck } from '@components/DoubleCheck';
+import { useSwitch } from '@hooks/.';
 
 import { ScaleMethodTooltip } from './ScaleMethodTooltip';
 import { ScalingMethods } from './ScalingMethods.config';

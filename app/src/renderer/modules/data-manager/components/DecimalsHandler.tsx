@@ -5,8 +5,8 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/store';
-import { changeDecimalsPrecision } from '@renderer/store/data-manager/actions';
+import { RootState } from '@store/.';
+import { changeDecimalsPrecision } from '@store/data-manager/actions';
 
 import { DecimalsOptions } from './DecimalsOptions.config';
 import { DecimalsPrecision } from '../data-frame-viewer/types';

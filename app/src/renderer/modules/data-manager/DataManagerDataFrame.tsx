@@ -4,8 +4,8 @@ import { Box, Typography } from '@mui/material';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/store';
-import { changePage, changePageSize, checkLabel, checkRow } from '@renderer/store/data-manager/actions';
+import { RootState } from '@store/.';
+import { changePage, changePageSize, checkLabel, checkRow } from '@store/data-manager/actions';
 
 import { DataFrameViewer } from './data-frame-viewer';
 import { DataFrameViewerPagination } from './data-frame-viewer/DataFrameViewerPagination';

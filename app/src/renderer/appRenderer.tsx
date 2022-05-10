@@ -6,11 +6,11 @@ import { inDev } from '@common/helpers';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
-import { theme } from '@renderer/config';
+import { theme } from '@config/.';
 import App from './App';
 
 import { Provider } from 'react-redux';
-import { store } from '@renderer/store';
+import { store } from '@store/.';
 
 // Render application in DOM
 ReactDOM.render(

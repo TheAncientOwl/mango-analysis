@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { axios } from '@renderer/config';
+import { axios } from '@config/.';
 
 import {
   Button,

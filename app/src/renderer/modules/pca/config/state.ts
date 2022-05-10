@@ -3,7 +3,7 @@ import { CacheKeys } from './cacheKeys';
 
 import { PCA } from './index';
 
-import { BasicDataFrameProps } from '@renderer/components/BasicDataFrame';
+import { BasicDataFrameProps } from '@components/BasicDataFrame';
 import { IPlot2D } from '../DataVisualizer';
 
 export interface ComponentsCountHints {

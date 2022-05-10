@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Box, Button, Stack } from '@mui/material';
 
-import { AnalysisImage } from '@renderer/components/AnalysisImage';
-import { AnalysisStepLogic, AnalysisStepResult } from '@renderer/components/analysis-step';
+import { AnalysisImage } from '@components/AnalysisImage';
+import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 
-import { axios } from '@renderer/config';
+import { axios } from '@config/.';
 
 import { PCA } from './config';
 import { Paper } from '../../components/Paper';

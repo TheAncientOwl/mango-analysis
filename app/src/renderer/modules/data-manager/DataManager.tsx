@@ -4,10 +4,10 @@ import { Backdrop, CircularProgress } from '@mui/material';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@renderer/store';
-import { loadDataFrame, closeFeedbackMessage } from '@renderer/store/data-manager/actions';
+import { RootState } from '@store/.';
+import { loadDataFrame, closeFeedbackMessage } from '@store/data-manager/actions';
 
-import { Snackbar } from '@renderer/components/Snackbar';
+import { Snackbar } from '@components/Snackbar';
 
 import { DataManagerToolbar } from './DataManagerToolbar';
 import DataManagerDataFrame from './DataManagerDataFrame';

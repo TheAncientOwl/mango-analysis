@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
-import { theme } from '@renderer/config';
+import { theme } from '@config/.';
 
 interface Props {
   src: string;

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/named
 import { Dispatch as ReduxDispatch } from 'redux';
 
-import { DataFrame, DecimalsPrecision } from '@renderer/modules/data-manager/data-frame-viewer/types';
+import { DataFrame, DecimalsPrecision } from '@modules/data-manager/data-frame-viewer/types';
 
 export enum DataManagerActionTypes {
   Loading = 'LOADING',
