@@ -142,3 +142,15 @@ export const fetchPlotSrc =
 export const clearPlots = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.ClearPlots });
 };
+
+export const togglePlotAnnot = (index: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.TogglePlotAnnot, payload: index });
+};
+
+export const togglePlotLegend = (index: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.TogglePlotLegend, payload: index });
+};
+
+export const changePlotTargets = (index: number, targets: string[]) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ChangePlotTargets, payload: { index, targets } });
+};

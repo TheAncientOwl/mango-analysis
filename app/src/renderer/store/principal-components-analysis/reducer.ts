@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { ComponentIndexPCA } from '@modules/principal-components-analysis/ComponentIndexPCA';
-import { IPlot2D } from '@modules/principal-components-analysis/DataVisualizer';
+import { IPlot2D } from '@modules/principal-components-analysis/Plot2D';
 
 import { AnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
 
@@ -270,7 +270,10 @@ export const principalComponentsAnalysisReducer = (
     }
 
     case ActionType.PushDefaultPlot: {
-      const newPlots: IPlot2D[] = [...state.plots, { id: uuidv4(), pcX: '', pcY: '', plotSrc: '' }];
+      const newPlots: IPlot2D[] = [
+        ...state.plots,
+        { id: uuidv4(), pcX: '', pcY: '', plotSrc: '', annot: false, legend: false, targets: [] },
+      ];
 
       return {
         ...state,
@@ -329,6 +332,42 @@ export const principalComponentsAnalysisReducer = (
       return {
         ...state,
         plots: [],
+      };
+    }
+
+    case ActionType.TogglePlotAnnot: {
+      const index = action.payload;
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], annot: !newPlots[index].annot };
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.TogglePlotLegend: {
+      const index = action.payload;
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], legend: !newPlots[index].legend };
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.ChangePlotTargets: {
+      const { index, targets } = action.payload;
+
+      if (JSON.stringify(state.plots[index].targets) === JSON.stringify(targets)) return state;
+
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], targets: targets };
+
+      return {
+        ...state,
+        plots: newPlots,
       };
     }
 

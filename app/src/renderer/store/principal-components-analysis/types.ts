@@ -34,6 +34,9 @@ export enum ActionType {
   ChangePlotAxisX = 'CHANGE_PLOT_AXIS_X',
   ChangePlotAxisY = 'CHANGE_PLOT_AXIS_Y',
   FetchedPlotSrc = 'FETCHED_PLOT_SRC',
+  TogglePlotAnnot = 'TOGGLE_PLOT_ANNOT',
+  TogglePlotLegend = 'TOGGLE_PLOT_LEGEND',
+  ChangePlotTargets = 'CHANGE_PLOT_TARGETS',
   ClearPlots = 'CLEAR_PLOTS',
 }
 
@@ -161,6 +164,25 @@ interface ClearPlots {
   type: ActionType.ClearPlots;
 }
 
+interface TogglePlotAnnot {
+  type: ActionType.TogglePlotAnnot;
+  payload: number;
+}
+
+interface TogglePlotLegend {
+  type: ActionType.TogglePlotLegend;
+  payload: number;
+}
+
+export type PlotTargets = {
+  targets: string[];
+  index: number;
+};
+interface ChangePlotTargets {
+  type: ActionType.ChangePlotTargets;
+  payload: PlotTargets;
+}
+
 export type DispatchTypes =
   | Loading
   | NextStep
@@ -184,6 +206,9 @@ export type DispatchTypes =
   | ChangePlotAxisX
   | ChangePlotAxisY
   | FetchedPlotSrc
-  | ClearPlots;
+  | ClearPlots
+  | TogglePlotAnnot
+  | TogglePlotLegend
+  | ChangePlotTargets;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;
