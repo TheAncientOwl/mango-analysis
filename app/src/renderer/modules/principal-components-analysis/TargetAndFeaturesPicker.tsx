@@ -1,6 +1,15 @@
 import React from 'react';
 
-import { axios } from '@config/.';
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@store/.';
+import {
+  fetchPossibleTargetsAndFeatures,
+  changeTarget,
+  changeFeatures,
+  unlockNextStep,
+  lockNextStep,
+} from '@store/principal-components-analysis/actions';
 
 import {
   Button,
@@ -18,13 +27,9 @@ import {
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
-import { AnalysisStepLogic } from '../../components/analysis-step';
-import { PCA } from './config';
+import { AnalysisStepLogic } from '@components/analysis-step';
 
-interface PossibleValues {
-  targets: string[];
-  features: string[];
-}
+import { ComponentIndexPCA } from './ComponentIndexPCA';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -39,51 +44,31 @@ const MenuProps = {
 
 const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
-export const TargetAndFeaturesPicker: React.FC = () => {
-  const { dispatch, state } = React.useContext(PCA.Context);
-
-  const [possibleValues, setPossibleValues] = React.useState<PossibleValues>({
-    targets: [],
-    features: [],
-  });
-
+const TargetAndFeaturesPicker: React.FC<PropsFromRedux> = props => {
   // check if the analysis can continue (target and some features are selected)
   React.useEffect(() => {
-    const allowed = state.target !== '' && state.features.length > 0;
+    const allowNextStep = props.target !== '' && props.features.length > 0;
+    const nextStepUnlocked = props.nextStepUnlocked(ComponentIndexPCA.TargetAndFeaturesPicker);
 
-    if (state.unlockedSteps[PCA.ComponentIndex.TargetAndFeaturesPicker + 1] !== allowed)
-      dispatch({
-        type: PCA.ActionType.SetUnlockedStep,
-        payload: {
-          index: PCA.ComponentIndex.TargetAndFeaturesPicker + 1,
-          allowed: allowed,
-        },
-      });
-  }, [state.target, state.features]);
+    if (allowNextStep && !nextStepUnlocked) props.unlockNextStep(ComponentIndexPCA.TargetAndFeaturesPicker);
+    else if (!allowNextStep && nextStepUnlocked) props.lockNextStep(ComponentIndexPCA.TargetAndFeaturesPicker);
+  }, [props.target, props.features]);
 
   // fetch possible targets & features
   React.useEffect(() => {
-    dispatch({ type: PCA.ActionType.Loading });
-
-    axios.get('/pca/possible/targets&features').then(res => {
-      setPossibleValues(res.data);
-
-      dispatch({ type: PCA.ActionType.EndLoading });
-    });
+    props.fetchPossibleTargetsAndFeatures();
   }, []);
 
   // handlers
-  const handleTargetChange = (event: SelectChangeEvent) =>
-    dispatch({ type: PCA.ActionType.ChangeTarget, payload: event.target.value as string });
+  const handleTargetChange = (event: SelectChangeEvent) => props.changeTarget(event.target.value);
 
   const handleFeaturesChange = (event: SelectChangeEvent<string[]>) =>
-    dispatch({ type: PCA.ActionType.SetFeatures, payload: event.target.value });
+    props.changeFeatures(event.target.value as string[]);
 
   const handleSelectAllClick = () =>
-    dispatch({
-      type: PCA.ActionType.SetFeatures,
-      payload: possibleValues.features.length === state.features.length ? [] : possibleValues.features,
-    });
+    props.changeFeatures(
+      props.possibleValues.features.length === props.features.length ? [] : props.possibleValues.features
+    );
 
   // components
   const selectTarget = (
@@ -92,10 +77,10 @@ export const TargetAndFeaturesPicker: React.FC = () => {
       <Select
         labelId='select-target-label'
         id='select-target'
-        value={possibleValues.targets?.length > 0 ? state.target : ''}
+        value={props.possibleValues.targets?.length > 0 ? props.target : ''}
         label='Display Targets'
         onChange={handleTargetChange}>
-        {possibleValues.targets.map(target => (
+        {props.possibleValues.targets.map(target => (
           <MenuItem key={target} value={target}>
             {target}
           </MenuItem>
@@ -109,7 +94,7 @@ export const TargetAndFeaturesPicker: React.FC = () => {
       <Button
         size='medium'
         startIcon={
-          possibleValues.features.length > 0 && possibleValues.features.length === state.features.length ? (
+          props.possibleValues.features.length > 0 && props.possibleValues.features.length === props.features.length ? (
             <CheckBoxIcon />
           ) : (
             <CheckBoxOutlineBlankIcon />
@@ -125,15 +110,15 @@ export const TargetAndFeaturesPicker: React.FC = () => {
           labelId='select-features-label'
           id='select-features'
           multiple
-          value={Array.from(state.features)}
+          value={Array.from(props.features)}
           label='Display Features'
           onChange={handleFeaturesChange}
           input={<OutlinedInput label='Tag' />}
           renderValue={selected => selected.join(', ')}
           MenuProps={MenuProps}>
-          {possibleValues.features.map(feature => (
+          {props.possibleValues.features.map(feature => (
             <MenuItem key={feature} value={feature}>
-              <Checkbox checked={state.features.indexOf(feature) > -1} />
+              <Checkbox checked={props.features.indexOf(feature) > -1} />
               <ListItemText primary={feature} />
             </MenuItem>
           ))}
@@ -154,3 +139,26 @@ export const TargetAndFeaturesPicker: React.FC = () => {
     </AnalysisStepLogic>
   );
 };
+
+// <redux>
+const mapState = (state: RootState) => ({
+  target: state.pca.target,
+  features: state.pca.features,
+  unlockedSteps: state.pca.nextStepUnlocked,
+  possibleValues: state.pca.possible,
+  nextStepUnlocked: (step: number) => state.pca.nextStepUnlocked[step],
+});
+
+const mapDispatch = {
+  fetchPossibleTargetsAndFeatures,
+  changeTarget,
+  changeFeatures,
+  unlockNextStep,
+  lockNextStep,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(TargetAndFeaturesPicker);
+// </redux>

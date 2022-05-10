@@ -1,41 +1,35 @@
 import React from 'react';
 
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@store/.';
+import { fetchCorrelationMatrixPath, jumpToStep } from '@store/principal-components-analysis/actions';
+
 import { Box, Button, Stack } from '@mui/material';
 
+import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 
-import { axios } from '@config/.';
+import { StepsPCA } from './StepsPCA';
+import { ComponentIndexPCA } from './ComponentIndexPCA';
 
-import { PCA } from './config';
-import { Paper } from '../../components/Paper';
-
-export const CorrelationMatrix: React.FC = () => {
-  const { dispatch, state } = React.useContext(PCA.Context);
-
-  const handlePlot = () => {
-    dispatch({ type: PCA.ActionType.Loading });
-
-    axios.get('/pca/plot/correlation-matrix').then(res => {
-      dispatch({ type: PCA.ActionType.FetchedCorrelationMatrixPath, payload: res.data.imagePath });
-    });
-  };
-
+const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => {
-    dispatch({ type: PCA.ActionType.JumpToStep, payload: PCA.ComponentIndex.CorrelationMatrix + 1 });
+    props.jumpToStep(ComponentIndexPCA.CorrelationMatrix + 1);
 
     // call onNext to fetch components count hints (even on skip)
-    PCA.Steps[PCA.ComponentIndex.CorrelationMatrix - 1]?.onNext?.(state, dispatch);
+    StepsPCA[ComponentIndexPCA.CorrelationMatrix]?.onNext?.();
   };
 
   return (
     <>
       <AnalysisStepLogic>
         <Stack direction='row' gap={1}>
-          <Button onClick={handlePlot} size='small' color='info'>
+          <Button onClick={props.fetchCorrelationMatrixPath} size='small' color='info'>
             Plot
           </Button>
-          {state.correlationMatrixPath === '' && !state.unlockedSteps[PCA.ComponentIndex.CorrelationMatrix + 1] && (
+          {props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentIndexPCA.CorrelationMatrix) && (
             <Button onClick={handleSkip} size='small' color='warning'>
               Skip
             </Button>
@@ -43,10 +37,10 @@ export const CorrelationMatrix: React.FC = () => {
         </Stack>
       </AnalysisStepLogic>
       <AnalysisStepResult>
-        {state.correlationMatrixPath !== '' && (
+        {props.correlationMatrixPath !== '' && (
           <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
-              <AnalysisImage src={state.correlationMatrixPath} alt='Correlation Matrix' />
+              <AnalysisImage src={props.correlationMatrixPath} alt='Correlation Matrix' />
             </Box>
           </Paper>
         )}
@@ -54,3 +48,20 @@ export const CorrelationMatrix: React.FC = () => {
     </>
   );
 };
+
+// <redux>
+const mapState = (state: RootState) => ({
+  correlationMatrixPath: state.pca.correlationMatrixPath,
+  nextStepUnlocked: (step: number) => state.pca.nextStepUnlocked[step],
+});
+
+const mapDispatch = {
+  fetchCorrelationMatrixPath,
+  jumpToStep,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(CorrelationMatrix);
+// </redux>

@@ -4,15 +4,13 @@ import { AnalysisStep } from './AnalysisStep';
 import { StepConfig } from './index';
 
 // mapper StepsConfig -> ReactNodes
-export const mapConfigToSteps = <State, Dispatch>(
-  stepsConfig: ReadonlyArray<StepConfig<State, Dispatch>>,
+export const mapConfigToSteps = (
+  stepsConfig: ReadonlyArray<StepConfig>,
   nextStep: () => void,
   prevStep: () => void,
   currentStep: number,
   totalSteps: number,
-  canStep: boolean[],
-  state: State,
-  dispatch: Dispatch
+  canStep: boolean[]
 ) => {
   return (
     <React.Fragment>
@@ -23,12 +21,12 @@ export const mapConfigToSteps = <State, Dispatch>(
           currentStep={currentStep}
           totalSteps={totalSteps}
           title={step.title}
-          canNext={canStep[step.index + 1]}
+          canNext={canStep[step.index]}
           onNext={
             step.onNext
               ? () => {
                   nextStep();
-                  step?.onNext?.(state, dispatch);
+                  step?.onNext?.();
                 }
               : nextStep
           }
@@ -36,7 +34,7 @@ export const mapConfigToSteps = <State, Dispatch>(
             step.onPrev
               ? () => {
                   prevStep();
-                  step?.onPrev?.(state, dispatch);
+                  step?.onPrev?.();
                 }
               : prevStep
           }>

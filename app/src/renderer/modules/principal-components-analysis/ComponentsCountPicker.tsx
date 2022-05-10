@@ -1,5 +1,10 @@
 import React from 'react';
 
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@store/.';
+import { changeComponentsCount, runAnalysis } from '@store/principal-components-analysis/actions';
+
 import {
   Box,
   Button,
@@ -23,29 +28,21 @@ import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 
 import { useCache } from '@hooks/.';
-import { axios } from '@config/.';
 
-import { PCA } from './config';
-
-export const ComponentsCountPicker: React.FC = () => {
-  const { dispatch, state } = React.useContext(PCA.Context);
-  const [showHints, setShowHints] = useCache(PCA.CacheKeys.ComponentsCountHints.Show, false);
+const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
+  const [showHints, setShowHints] = useCache('pca-show-hints', false);
 
   const handleChange = (event: SelectChangeEvent) => {
-    dispatch({ type: PCA.ActionType.SetSelectedComponentsCount, payload: +event.target.value });
+    props.changeComponentsCount(+event.target.value);
   };
 
   const menuItemsDummyArray = React.useMemo(
-    () => new Array(Math.max(0, state.features.length - 1)).fill(0),
-    [state.features]
+    () => new Array(Math.max(0, props.featuresLength)).fill(0),
+    [props.featuresLength]
   );
 
   const runAnalysis = () => {
-    dispatch({ type: PCA.ActionType.Loading });
-
-    axios.post('/pca/analyze', { componentsCount: state.selectedComponentsCount }).then(() => {
-      dispatch({ type: PCA.ActionType.ComponentsAnalysisFinished });
-    });
+    props.runAnalysis(props.componentsCount);
   };
 
   const toggleShowHints = () => setShowHints(!showHints);
@@ -59,7 +56,7 @@ export const ComponentsCountPicker: React.FC = () => {
             <Select
               labelId='components-count-picker-label'
               id='components-count-picker'
-              value={`${state.selectedComponentsCount}`}
+              value={`${props.componentsCount}`}
               label='Components'
               onChange={handleChange}>
               {menuItemsDummyArray.map((val, index) => (
@@ -85,14 +82,14 @@ export const ComponentsCountPicker: React.FC = () => {
 
       <AnalysisStepResult>
         <Collapse in={showHints}>
-          {state.componentsCountHints.kaiserPath !== '' && (
+          {props.hints.kaiserPath !== '' && (
             <Grid container spacing={2} alignItems='center' sx={{ mt: 1 }}>
               <Grid item xs={8} sm={7} md={4}>
                 <Paper>
                   <Typography variant='h6' sx={{ mb: 1 }}>
                     Threshold70
                   </Typography>
-                  <BasicDataFrame {...state.componentsCountHints.threshold70} maxWidth='35em' />
+                  <BasicDataFrame {...props.hints.threshold70} maxWidth='35em' />
                 </Paper>
               </Grid>
 
@@ -101,7 +98,7 @@ export const ComponentsCountPicker: React.FC = () => {
                   <Typography variant='h6' sx={{ mb: 1 }}>
                     Eigenvalues &gt; 1
                   </Typography>
-                  <BasicDataFrame {...state.componentsCountHints.eigenvaluesG1} maxWidth='20em' />
+                  <BasicDataFrame {...props.hints.eigenvaluesG1} maxWidth='20em' />
                 </Paper>
               </Grid>
 
@@ -111,7 +108,7 @@ export const ComponentsCountPicker: React.FC = () => {
                     Scree Plot
                   </Typography>
                   <Box>
-                    <AnalysisImage src={state.componentsCountHints.kaiserPath} alt='Scree Plot ~ Kaiser' />
+                    <AnalysisImage src={props.hints.kaiserPath} alt='Scree Plot ~ Kaiser' />
                   </Box>
                 </Paper>
               </Grid>
@@ -122,3 +119,21 @@ export const ComponentsCountPicker: React.FC = () => {
     </React.Fragment>
   );
 };
+
+// <redux>
+const mapState = (state: RootState) => ({
+  featuresLength: state.pca.features.length,
+  componentsCount: state.pca.analysisComponentsCount,
+  hints: state.pca.analysisHints,
+});
+
+const mapDispatch = {
+  changeComponentsCount,
+  runAnalysis,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(ComponentsCountPicker);
+// </redux>

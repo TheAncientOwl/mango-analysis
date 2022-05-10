@@ -1,35 +1,51 @@
 import React from 'react';
 
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@store/.';
+import { nextStep, prevStep } from '@store/principal-components-analysis/actions';
+
 import { Box, Backdrop, CircularProgress } from '@mui/material';
 
 import { mapConfigToSteps } from '@components/analysis-step';
 
-import { PCA } from './config';
+import { StepsPCA } from './StepsPCA';
 
-export const PrincipalComponentsAnalysis: React.FC = () => {
-  const [state, dispatch] = React.useReducer(PCA.reducer, PCA.getDefaultState());
-
-  const nextStep = () => dispatch({ type: PCA.ActionType.NextStep });
-  const prevStep = () => dispatch({ type: PCA.ActionType.PrevStep });
-
+const PrincipalComponentsAnalysis: React.FC<PropsFromRedux> = props => {
   return (
-    <PCA.ContextProvider value={{ dispatch, state }}>
+    <>
       <Box sx={{ p: 2, pb: '15em', overflowY: 'scroll' }}>
         {mapConfigToSteps(
-          PCA.Steps,
-          nextStep,
-          prevStep,
-          state.currentStep,
-          PCA.Steps.length,
-          state.unlockedSteps,
-          state,
-          dispatch
+          StepsPCA,
+          props.nextStep,
+          props.prevStep,
+          props.currentStep,
+          StepsPCA.length,
+          props.unlockedSteps
         )}
       </Box>
 
-      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={state.loading}>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={props.loading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-    </PCA.ContextProvider>
+    </>
   );
 };
+
+// <redux>
+const mapState = (state: RootState) => ({
+  loading: state.pca.loading,
+  currentStep: state.pca.currentStep,
+  unlockedSteps: state.pca.nextStepUnlocked,
+});
+
+const mapDispatch = {
+  nextStep,
+  prevStep,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(PrincipalComponentsAnalysis);
+// </redux>

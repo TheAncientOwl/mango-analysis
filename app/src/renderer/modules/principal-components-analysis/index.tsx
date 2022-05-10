@@ -1,1 +1,1 @@
-export { PrincipalComponentsAnalysis } from './PrincipalComponentsAnalysis';
+export { default } from './PrincipalComponentsAnalysis';
