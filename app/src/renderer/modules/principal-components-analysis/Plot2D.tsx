@@ -10,10 +10,13 @@ import {
   togglePlotAnnot,
   togglePlotLegend,
   changePlotTargets,
+  togglePlotOpen,
 } from '@store/principal-components-analysis/actions';
 
 // eslint-disable-next-line import/named
-import { Box, Button, Grid, SelectChangeEvent } from '@mui/material';
+import { Box, Button, Grid, SelectChangeEvent, Collapse, IconButton, Tooltip } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
@@ -23,6 +26,7 @@ import { Checkbox } from '@components/Checkbox';
 import { AutoCompleteCheckedSelect } from '@components/AutocompleteCheckedSelect';
 
 export interface IPlot2D {
+  open: boolean;
   id: string;
   pcX: string;
   pcY: string;
@@ -38,6 +42,9 @@ interface Plot2DProps {
 
 type Props = Plot2DProps & PropsFromRedux;
 
+const visibleIcon = <VisibilityIcon />;
+const hiddenIcon = <VisibilityOffIcon />;
+
 export const Plot2D: React.FC<Props> = props => {
   const plot = props.getPlot(props.plotIndex);
 
@@ -47,66 +54,77 @@ export const Plot2D: React.FC<Props> = props => {
   const handleTargetsChange = (values: string[]) => props.changePlotTargets(props.plotIndex, values);
 
   return (
-    <Paper sx={{ mt: 2, display: 'block', p: 2 }} key={plot.id}>
-      <Grid container alignItems='center' gap={2} pt={1} sx={{ overflow: 'hidden' }}>
-        <Grid item>
-          <Select
-            minWidth={'7em'}
-            maxWidth={'20em'}
-            id='pcX'
-            label='X Axis'
-            value={plot.pcX}
-            values={props.pcaLabels}
-            onChange={(event: SelectChangeEvent) => props.changePlotAxisX(props.plotIndex, event.target.value)}
-          />
+    <Paper sx={{ mt: 2, display: 'block', p: 2 }}>
+      <Tooltip title={plot.open ? 'Hide' : 'Show'}>
+        <IconButton onClick={() => props.togglePlotOpen(props.plotIndex)}>
+          {plot.open ? visibleIcon : hiddenIcon}
+        </IconButton>
+      </Tooltip>
+      <Collapse in={plot.open}>
+        <Grid container alignItems='center' gap={2} pt={1} sx={{ overflow: 'hidden' }}>
+          <Grid item>
+            <Select
+              minWidth={'7em'}
+              maxWidth={'20em'}
+              id='pcX'
+              label='X Axis'
+              value={plot.pcX}
+              values={props.pcaLabels}
+              onChange={(event: SelectChangeEvent) => props.changePlotAxisX(props.plotIndex, event.target.value)}
+            />
+          </Grid>
+
+          <Grid item>
+            <Select
+              minWidth={'7em'}
+              maxWidth={'20em'}
+              id='pcY'
+              label='Y Axis'
+              value={plot.pcY}
+              values={props.pcaLabels}
+              onChange={(event: SelectChangeEvent) => props.changePlotAxisY(props.plotIndex, event.target.value)}
+            />
+          </Grid>
+
+          <Grid item>
+            <Checkbox
+              checked={plot.annot}
+              onChange={() => props.togglePlotAnnot(props.plotIndex)}
+              label='Annotations'
+            />
+          </Grid>
+          <Grid item>
+            <Checkbox checked={plot.legend} onChange={() => props.togglePlotLegend(props.plotIndex)} label='Legend' />
+          </Grid>
+          <Grid item>
+            <AutoCompleteCheckedSelect
+              minWidth='10em'
+              id='select-targets'
+              label='Targets'
+              checkedValues={plot.targets}
+              allChecked={props.targets.length === plot.targets.length}
+              onCheckAll={handleCheckAllTargets}
+              possibleValues={props.targets}
+              onChange={handleTargetsChange}
+            />
+          </Grid>
+          <Grid item>
+            <Button
+              disabled={plot.pcX === '' || plot.pcY === '' || plot.targets.length === 0}
+              onClick={() => {
+                props.fetchPlotSrc(props.plotIndex, plot.pcX, plot.pcY, plot.targets, plot.annot, plot.legend);
+              }}>
+              plot
+            </Button>
+          </Grid>
         </Grid>
 
-        <Grid item>
-          <Select
-            minWidth={'7em'}
-            maxWidth={'20em'}
-            id='pcY'
-            label='Y Axis'
-            value={plot.pcY}
-            values={props.pcaLabels}
-            onChange={(event: SelectChangeEvent) => props.changePlotAxisY(props.plotIndex, event.target.value)}
-          />
-        </Grid>
-
-        <Grid item>
-          <Checkbox checked={plot.annot} onChange={() => props.togglePlotAnnot(props.plotIndex)} label='Annotations' />
-        </Grid>
-        <Grid item>
-          <Checkbox checked={plot.legend} onChange={() => props.togglePlotLegend(props.plotIndex)} label='Legend' />
-        </Grid>
-        <Grid item>
-          <AutoCompleteCheckedSelect
-            minWidth='10em'
-            id='select-targets'
-            label='Targets'
-            checkedValues={plot.targets}
-            allChecked={props.targets.length === plot.targets.length}
-            onCheckAll={handleCheckAllTargets}
-            possibleValues={props.targets}
-            onChange={handleTargetsChange}
-          />
-        </Grid>
-        <Grid item>
-          <Button
-            disabled={plot.pcX === '' || plot.pcY === '' || plot.targets.length === 0}
-            onClick={() => {
-              props.fetchPlotSrc(props.plotIndex, plot.pcX, plot.pcY, plot.targets, plot.annot, plot.legend);
-            }}>
-            plot
-          </Button>
-        </Grid>
-      </Grid>
-
-      {plot.plotSrc !== '' && (
-        <Box sx={{ mt: 2, maxWidth: '40em' }}>
-          <AnalysisImage src={plot.plotSrc} alt={`Plot ${plot.pcX} - ${plot.pcY}`} />
-        </Box>
-      )}
+        {plot.plotSrc !== '' && (
+          <Box sx={{ mt: 2, maxWidth: '40em' }}>
+            <AnalysisImage src={plot.plotSrc} alt={`Plot ${plot.pcX} - ${plot.pcY}`} />
+          </Box>
+        )}
+      </Collapse>
     </Paper>
   );
 };
@@ -126,6 +144,7 @@ const mapDispatch = {
   togglePlotAnnot,
   togglePlotLegend,
   changePlotTargets,
+  togglePlotOpen,
 };
 
 const connector = connect(mapState, mapDispatch);

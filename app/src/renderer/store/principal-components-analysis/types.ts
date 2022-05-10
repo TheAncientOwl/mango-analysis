@@ -38,6 +38,7 @@ export enum ActionType {
   TogglePlotLegend = 'TOGGLE_PLOT_LEGEND',
   ChangePlotTargets = 'CHANGE_PLOT_TARGETS',
   ClearPlots = 'CLEAR_PLOTS',
+  TogglePlotOpen = 'TOGGLE_PLOT_OPEN',
 }
 
 interface Loading {
@@ -183,6 +184,11 @@ interface ChangePlotTargets {
   payload: PlotTargets;
 }
 
+interface TogglePlotOpen {
+  type: ActionType.TogglePlotOpen;
+  payload: number;
+}
+
 export type DispatchTypes =
   | Loading
   | NextStep
@@ -209,6 +215,7 @@ export type DispatchTypes =
   | ClearPlots
   | TogglePlotAnnot
   | TogglePlotLegend
-  | ChangePlotTargets;
+  | ChangePlotTargets
+  | TogglePlotOpen;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;

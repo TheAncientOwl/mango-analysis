@@ -154,3 +154,7 @@ export const togglePlotLegend = (index: number) => (dispatch: Dispatch) => {
 export const changePlotTargets = (index: number, targets: string[]) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.ChangePlotTargets, payload: { index, targets } });
 };
+
+export const togglePlotOpen = (index: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.TogglePlotOpen, payload: index });
+};
