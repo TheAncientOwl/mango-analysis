@@ -12,6 +12,7 @@ import {
   changePlotTargets,
   togglePlotOpen,
   deletePlot,
+  changePlotNote,
 } from '@store/principal-components-analysis/actions';
 
 // eslint-disable-next-line import/named
@@ -24,6 +25,7 @@ import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Checkbox } from '@components/Checkbox';
+import { TextInputSave } from '@components/TextInputSave';
 
 import { AutoCompleteCheckedSelect } from '@components/AutocompleteCheckedSelect';
 
@@ -36,6 +38,7 @@ export interface IPlot2D {
   annot: boolean;
   legend: boolean;
   targets: string[];
+  note: string;
 }
 
 interface Plot2DProps {
@@ -47,6 +50,8 @@ type Props = Plot2DProps & PropsFromRedux;
 const visibleIcon = <VisibilityIcon />;
 const hiddenIcon = <VisibilityOffIcon />;
 const deleteIcon = <DeleteIcon />;
+
+const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
 export const Plot2D: React.FC<Props> = props => {
   const plot = props.getPlot(props.plotIndex);
@@ -60,12 +65,21 @@ export const Plot2D: React.FC<Props> = props => {
           </IconButton>
         </Tooltip>
 
+        <TextInputSave
+          minWidth='35em'
+          text={plot.note}
+          placeholder='Note'
+          onSave={(value: string) => props.changePlotNote(props.plotIndex, value)}
+        />
+
         <Box sx={{ flexGrow: 1 }}></Box>
 
         <Tooltip title='Delete'>
           <IconButton onClick={() => props.deletePlot(props.plotIndex)}>{deleteIcon}</IconButton>
         </Tooltip>
       </Stack>
+
+      {separator}
 
       <Collapse in={plot.open}>
         <Grid container alignItems='center' gap={2} pt={1} sx={{ overflow: 'hidden' }}>
@@ -158,6 +172,7 @@ const mapDispatch = {
   changePlotTargets,
   togglePlotOpen,
   deletePlot,
+  changePlotNote,
 };
 
 const connector = connect(mapState, mapDispatch);

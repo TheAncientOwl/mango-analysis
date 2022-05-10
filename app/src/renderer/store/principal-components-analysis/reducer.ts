@@ -272,7 +272,7 @@ export const principalComponentsAnalysisReducer = (
     case ActionType.PushDefaultPlot: {
       const newPlots: IPlot2D[] = [
         ...state.plots,
-        { id: uuidv4(), pcX: '', pcY: '', plotSrc: '', annot: false, legend: false, targets: [], open: true },
+        { id: uuidv4(), pcX: '', pcY: '', plotSrc: '', annot: false, legend: false, targets: [], open: true, note: '' },
       ];
 
       return {
@@ -386,6 +386,20 @@ export const principalComponentsAnalysisReducer = (
       const index = action.payload;
       const newPlots = [...state.plots];
       newPlots.splice(index, 1);
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.ChangePlotNote: {
+      const { index, value } = action.payload;
+
+      if (state.plots[index].note === value) return state;
+
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], note: value };
 
       return {
         ...state,

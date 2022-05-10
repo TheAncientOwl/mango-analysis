@@ -40,6 +40,7 @@ export enum ActionType {
   ClearPlots = 'CLEAR_PLOTS',
   TogglePlotOpen = 'TOGGLE_PLOT_OPEN',
   DeletePlot = 'DELETE_PLOT',
+  ChangePlotNote = 'CHANGE_PLOT_NOTE',
 }
 
 interface Loading {
@@ -195,6 +196,11 @@ interface DeletePlot {
   payload: number;
 }
 
+interface ChangePlotNote {
+  type: ActionType.ChangePlotNote;
+  payload: ChangePlot;
+}
+
 export type DispatchTypes =
   | Loading
   | NextStep
@@ -223,6 +229,7 @@ export type DispatchTypes =
   | TogglePlotLegend
   | ChangePlotTargets
   | TogglePlotOpen
-  | DeletePlot;
+  | DeletePlot
+  | ChangePlotNote;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;

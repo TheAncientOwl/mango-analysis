@@ -162,3 +162,13 @@ export const togglePlotOpen = (index: number) => (dispatch: Dispatch) => {
 export const deletePlot = (index: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.DeletePlot, payload: index });
 };
+
+export const changePlotNote = (index: number, note: string) => (dispatch: Dispatch) => {
+  dispatch({
+    type: ActionType.ChangePlotNote,
+    payload: {
+      index,
+      value: note,
+    },
+  });
+};
