@@ -40,6 +40,9 @@ interface Props {
   onChange: (event: SelectChangeEvent<string[]>) => void;
 }
 
+const icon = <CheckBoxIcon />;
+const checkedIcon = <CheckBoxOutlineBlankIcon />;
+
 export const CheckedSelect: React.FC<Props> = ({
   minWidth = 'auto',
   maxWidth = 'auto',
@@ -53,10 +56,7 @@ export const CheckedSelect: React.FC<Props> = ({
 }) => {
   return (
     <Stack direction='row' gap={2}>
-      <Button
-        size='medium'
-        startIcon={allChecked ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-        onClick={onCheckAll}>
+      <Button size='medium' startIcon={allChecked ? icon : checkedIcon} onClick={onCheckAll}>
         all
       </Button>
 
