@@ -12,6 +12,7 @@ import {
   Select,
   // eslint-disable-next-line import/named
   SelectChangeEvent,
+  Stack,
 } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -51,7 +52,7 @@ export const CheckedSelect: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <>
+    <Stack direction='row' gap={2}>
       <Button
         size='medium'
         startIcon={allChecked ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
@@ -81,6 +82,6 @@ export const CheckedSelect: React.FC<Props> = ({
           </Select>
         </FormControl>
       </Box>
-    </>
+    </Stack>
   );
 };
