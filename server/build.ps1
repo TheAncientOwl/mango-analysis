@@ -6,4 +6,4 @@ foreach ($path in $RemovePaths) {
   Remove-Item -Recurse -Force $path -ErrorAction SilentlyContinue
 }
 
-pyinstaller --onefile .\mango-server.py
+pyinstaller -F --hidden-import="sklearn.utils._cython_blas" --hidden-import="sklearn.neighbors.typedefs" --hidden-import="sklearn.neighbors.quad_tree" --hidden-import="sklearn.tree._utils" --hidden-import="sklearn.utils._typedefs" --onefile .\mango-server.py
