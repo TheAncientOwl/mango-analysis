@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import { Dispatch as ReduxDispatch } from 'redux';
+import { Dispatch } from 'redux';
 
 import { DataFrame, DecimalsPrecision } from '@modules/data-manager/data-frame-viewer/types';
 
@@ -103,4 +103,4 @@ export type DataManagerDispatchTypes =
   | ChangeScalingMethod
   | DataScaled;
 
-export type DataManagerDispatch = ReduxDispatch<DataManagerDispatchTypes>;
+export type DataManagerDispatch = Dispatch<DataManagerDispatchTypes>;
