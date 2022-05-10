@@ -51,11 +51,6 @@ const deleteIcon = <DeleteIcon />;
 export const Plot2D: React.FC<Props> = props => {
   const plot = props.getPlot(props.plotIndex);
 
-  const handleCheckAllTargets = () =>
-    props.changePlotTargets(props.plotIndex, props.targets.length === plot.targets.length ? [] : props.targets);
-
-  const handleTargetsChange = (values: string[]) => props.changePlotTargets(props.plotIndex, values);
-
   return (
     <Paper sx={{ mt: 2, display: 'block', p: 2 }}>
       <Stack direction='row' gap={2}>
@@ -115,9 +110,14 @@ export const Plot2D: React.FC<Props> = props => {
               label='Targets'
               checkedValues={plot.targets}
               allChecked={props.targets.length === plot.targets.length}
-              onCheckAll={handleCheckAllTargets}
+              onCheckAll={() =>
+                props.changePlotTargets(
+                  props.plotIndex,
+                  props.targets.length === plot.targets.length ? [] : props.targets
+                )
+              }
               possibleValues={props.targets}
-              onChange={handleTargetsChange}
+              onChange={(values: string[]) => props.changePlotTargets(props.plotIndex, values)}
             />
           </Grid>
           <Grid item>
