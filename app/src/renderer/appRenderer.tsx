@@ -6,22 +6,22 @@ import { inDev } from '@common/helpers';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
-import { theme } from '@renderer/config';
-import { CacheSystem } from '@renderer/api/CacheSystem';
+import { theme } from '@config/.';
 import App from './App';
 
-CacheSystem.Clear();
+import { Provider } from 'react-redux';
+import { store } from '@store/.';
 
 // Render application in DOM
 ReactDOM.render(
-  <React.Fragment>
+  <Provider store={store}>
     <CssBaseline />
     <HashRouter>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
     </HashRouter>
-  </React.Fragment>,
+  </Provider>,
   document.getElementById('app')
 );
 

@@ -1,13 +1,12 @@
 import React from 'react';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 import { alpha } from '@mui/system';
 import { Box, IconButton } from '@mui/material';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import Tooltip from '@mui/material/Tooltip';
 
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-
-import { theme } from '@renderer/config';
+import { theme } from '@config/.';
 
 interface Props {
   src: string;

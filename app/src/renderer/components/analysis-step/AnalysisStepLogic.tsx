@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { alpha } from '@mui/system';
-import { theme } from '../../config';
 import { Box } from '@mui/material';
+
+import { theme } from '@config/.';
 
 const overlayVisible = {
   mt: 4,

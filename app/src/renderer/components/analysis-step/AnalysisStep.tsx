@@ -41,7 +41,7 @@ export const AnalysisStep: React.FC<Props> = ({
         <Stack direction='row' alignItems='center' pl={1} gap={1}>
           {step < currentStep && <BeenhereIcon color='primary' />}
           <Typography variant='h6' color={stepActiveNow ? '' : 'grey.400'}>
-            Step {step} / {totalSteps} ~ {title}
+            Step {step + 1} / {totalSteps} ~ {title}
           </Typography>
           {optional && <Chip label='optional' color='info' size='small' />}
         </Stack>
@@ -54,7 +54,7 @@ export const AnalysisStep: React.FC<Props> = ({
           {children}
           {stepActiveNow && (
             <Box sx={{ mt: 2 }}>
-              {step > 1 && (
+              {step > 0 && (
                 <Button startIcon={<NavigateBeforeIcon />} onClick={onBack} size='medium' sx={{ mr: 1 }}>
                   Prev
                 </Button>
