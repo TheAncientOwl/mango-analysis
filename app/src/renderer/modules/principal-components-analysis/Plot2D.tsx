@@ -48,10 +48,10 @@ export const Plot2D: React.FC<Props> = props => {
 
   return (
     <Paper sx={{ mt: 2, display: 'block', p: 2 }} key={plot.id}>
-      <Grid container alignItems='center' gap={2} sx={{ overflow: 'hidden' }}>
+      <Grid container alignItems='center' gap={2} pt={1} sx={{ overflow: 'hidden' }}>
         <Grid item>
           <Select
-            minWidth={'15em'}
+            minWidth={'7em'}
             maxWidth={'20em'}
             id='pcX'
             label='X Axis'
@@ -63,7 +63,7 @@ export const Plot2D: React.FC<Props> = props => {
 
         <Grid item>
           <Select
-            minWidth={'15em'}
+            minWidth={'7em'}
             maxWidth={'20em'}
             id='pcY'
             label='Y Axis'
