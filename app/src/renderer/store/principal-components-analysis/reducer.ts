@@ -382,6 +382,17 @@ export const principalComponentsAnalysisReducer = (
       };
     }
 
+    case ActionType.DeletePlot: {
+      const index = action.payload;
+      const newPlots = [...state.plots];
+      newPlots.splice(index, 1);
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
     default: {
       return state;
     }

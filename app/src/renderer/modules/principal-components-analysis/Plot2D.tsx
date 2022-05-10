@@ -11,12 +11,14 @@ import {
   togglePlotLegend,
   changePlotTargets,
   togglePlotOpen,
+  deletePlot,
 } from '@store/principal-components-analysis/actions';
 
 // eslint-disable-next-line import/named
-import { Box, Button, Grid, SelectChangeEvent, Collapse, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, Grid, SelectChangeEvent, Collapse, IconButton, Tooltip, Stack } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
@@ -44,6 +46,7 @@ type Props = Plot2DProps & PropsFromRedux;
 
 const visibleIcon = <VisibilityIcon />;
 const hiddenIcon = <VisibilityOffIcon />;
+const deleteIcon = <DeleteIcon />;
 
 export const Plot2D: React.FC<Props> = props => {
   const plot = props.getPlot(props.plotIndex);
@@ -55,11 +58,20 @@ export const Plot2D: React.FC<Props> = props => {
 
   return (
     <Paper sx={{ mt: 2, display: 'block', p: 2 }}>
-      <Tooltip title={plot.open ? 'Hide' : 'Show'}>
-        <IconButton onClick={() => props.togglePlotOpen(props.plotIndex)}>
-          {plot.open ? visibleIcon : hiddenIcon}
-        </IconButton>
-      </Tooltip>
+      <Stack direction='row' gap={2}>
+        <Tooltip title={plot.open ? 'Hide' : 'Show'}>
+          <IconButton onClick={() => props.togglePlotOpen(props.plotIndex)}>
+            {plot.open ? visibleIcon : hiddenIcon}
+          </IconButton>
+        </Tooltip>
+
+        <Box sx={{ flexGrow: 1 }}></Box>
+
+        <Tooltip title='Delete'>
+          <IconButton onClick={() => props.deletePlot(props.plotIndex)}>{deleteIcon}</IconButton>
+        </Tooltip>
+      </Stack>
+
       <Collapse in={plot.open}>
         <Grid container alignItems='center' gap={2} pt={1} sx={{ overflow: 'hidden' }}>
           <Grid item>
@@ -145,6 +157,7 @@ const mapDispatch = {
   togglePlotLegend,
   changePlotTargets,
   togglePlotOpen,
+  deletePlot,
 };
 
 const connector = connect(mapState, mapDispatch);
