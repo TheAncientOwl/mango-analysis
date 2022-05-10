@@ -19,7 +19,8 @@ import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Checkbox } from '@components/Checkbox';
-import { CheckedSelect } from '@components/CheckedSelect';
+
+import { AutoCompleteCheckedSelect } from '@components/AutocompleteCheckedSelect';
 
 export interface IPlot2D {
   id: string;
@@ -43,8 +44,7 @@ export const Plot2D: React.FC<Props> = props => {
   const handleCheckAllTargets = () =>
     props.changePlotTargets(props.plotIndex, props.targets.length === plot.targets.length ? [] : props.targets);
 
-  const handleTargetsChange = (event: SelectChangeEvent<string[]>) =>
-    props.changePlotTargets(props.plotIndex, event.target.value as string[]);
+  const handleTargetsChange = (values: string[]) => props.changePlotTargets(props.plotIndex, values);
 
   return (
     <Paper sx={{ mt: 2, display: 'block', p: 2 }} key={plot.id}>
@@ -80,19 +80,20 @@ export const Plot2D: React.FC<Props> = props => {
           <Checkbox checked={plot.legend} onChange={() => props.togglePlotLegend(props.plotIndex)} label='Legend' />
         </Grid>
         <Grid item>
-          <CheckedSelect
+          <AutoCompleteCheckedSelect
             minWidth='10em'
             id='select-targets'
             label='Targets'
+            checkedValues={plot.targets}
             allChecked={props.targets.length === plot.targets.length}
             onCheckAll={handleCheckAllTargets}
-            checkedValues={plot.targets}
             possibleValues={props.targets}
             onChange={handleTargetsChange}
           />
         </Grid>
         <Grid item>
           <Button
+            disabled={plot.pcX === '' || plot.pcY === '' || plot.targets.length === 0}
             onClick={() => {
               props.fetchPlotSrc(props.plotIndex, plot.pcX, plot.pcY, plot.targets, plot.annot, plot.legend);
             }}>
