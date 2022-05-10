@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/named
-import { Dispatch } from 'redux';
+import { Dispatch as ReduxDispatch } from 'redux';
 
 import { DataFrame, DecimalsPrecision } from '@modules/data-manager/data-frame-viewer/types';
 
-export enum DataManagerActionTypes {
+export enum ActionType {
   Loading = 'LOADING',
   FetchDataSuccess = 'FETCH_DATA_SUCCESS',
   CloseFeedbackMessage = 'CLOSE_FEEDBACK_MESSAGE',
@@ -20,7 +20,7 @@ export enum DataManagerActionTypes {
 }
 
 interface Loading {
-  type: typeof DataManagerActionTypes.Loading;
+  type: typeof ActionType.Loading;
 }
 
 type FetchDataPayloadType = {
@@ -28,49 +28,49 @@ type FetchDataPayloadType = {
   feedbackMessage: string;
 };
 interface FetchDataSuccess {
-  type: typeof DataManagerActionTypes.FetchDataSuccess;
+  type: typeof ActionType.FetchDataSuccess;
   payload: FetchDataPayloadType;
 }
 
 interface CloseFeedbackMessage {
-  type: typeof DataManagerActionTypes.CloseFeedbackMessage;
+  type: typeof ActionType.CloseFeedbackMessage;
 }
 
 interface ChangePage {
-  type: typeof DataManagerActionTypes.ChangePage;
+  type: typeof ActionType.ChangePage;
   payload: number;
 }
 
 interface ChangePageSize {
-  type: typeof DataManagerActionTypes.ChangePageSize;
+  type: typeof ActionType.ChangePageSize;
   payload: number;
 }
 
 interface CheckLabel {
-  type: typeof DataManagerActionTypes.CheckLabel;
+  type: typeof ActionType.CheckLabel;
   payload: string;
 }
 
 interface CheckRow {
-  type: typeof DataManagerActionTypes.CheckRow;
+  type: typeof ActionType.CheckRow;
   payload: number;
 }
 
 interface ChangeDecimalsPrecision {
-  type: typeof DataManagerActionTypes.ChangeDecimalsPrecision;
+  type: typeof ActionType.ChangeDecimalsPrecision;
   payload: DecimalsPrecision;
 }
 
 interface ColumnsRowsDropped {
-  type: typeof DataManagerActionTypes.ColumnsRowsDropped;
+  type: typeof ActionType.ColumnsRowsDropped;
 }
 
 interface DataFrameDropped {
-  type: typeof DataManagerActionTypes.DataFrameDropped;
+  type: typeof ActionType.DataFrameDropped;
 }
 
 interface CSVImportCanceled {
-  type: typeof DataManagerActionTypes.CSVImportCanceled;
+  type: typeof ActionType.CSVImportCanceled;
 }
 
 export type ScalingMethodType =
@@ -80,15 +80,15 @@ export type ScalingMethodType =
   | 'z_score_scaling'
   | 'robust_scaling';
 export interface ChangeScalingMethod {
-  type: typeof DataManagerActionTypes.ChangeScalingMethod;
+  type: typeof ActionType.ChangeScalingMethod;
   payload: ScalingMethodType;
 }
 
 export interface DataScaled {
-  type: typeof DataManagerActionTypes.ScaledData;
+  type: typeof ActionType.ScaledData;
 }
 
-export type DataManagerDispatchTypes =
+export type DispatchTypes =
   | Loading
   | FetchDataSuccess
   | CloseFeedbackMessage
@@ -103,4 +103,4 @@ export type DataManagerDispatchTypes =
   | ChangeScalingMethod
   | DataScaled;
 
-export type DataManagerDispatch = Dispatch<DataManagerDispatchTypes>;
+export type Dispatch = ReduxDispatch<DispatchTypes>;

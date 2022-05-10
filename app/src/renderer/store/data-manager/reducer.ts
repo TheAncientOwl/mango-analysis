@@ -1,6 +1,6 @@
 import { DataFrameState } from '@modules/data-manager/data-frame-viewer/types';
 
-import { DataManagerActionTypes, DataManagerDispatchTypes, ScalingMethodType } from './types';
+import { ActionType, DispatchTypes, ScalingMethodType } from './types';
 
 interface IDefaultState extends DataFrameState {
   loading: boolean;
@@ -31,12 +31,9 @@ const defaultState: IDefaultState = {
   scalingMethod: 'none',
 };
 
-export const dataManagerReducer = (
-  state: IDefaultState = defaultState,
-  action: DataManagerDispatchTypes
-): IDefaultState => {
+export const dataManagerReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
   switch (action.type) {
-    case DataManagerActionTypes.Loading: {
+    case ActionType.Loading: {
       if (state.loading) return state;
 
       return {
@@ -45,7 +42,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case DataManagerActionTypes.FetchDataSuccess: {
+    case ActionType.FetchDataSuccess: {
       return {
         ...state,
         loading: false,
@@ -55,7 +52,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case DataManagerActionTypes.CloseFeedbackMessage: {
+    case ActionType.CloseFeedbackMessage: {
       if (!state.feedbackMessageOpen) return state;
 
       return {
@@ -64,14 +61,14 @@ export const dataManagerReducer = (
       };
     }
 
-    case DataManagerActionTypes.ChangePage: {
+    case ActionType.ChangePage: {
       return {
         ...state,
         page: action.payload,
       };
     }
 
-    case DataManagerActionTypes.ChangePageSize: {
+    case ActionType.ChangePageSize: {
       return {
         ...state,
         pageSize: action.payload,
@@ -79,7 +76,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case DataManagerActionTypes.CheckLabel: {
+    case ActionType.CheckLabel: {
       const checkedLabel = action.payload;
 
       const newSet = new Set(state.checkedLabels);
@@ -93,7 +90,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case DataManagerActionTypes.CheckRow: {
+    case ActionType.CheckRow: {
       const checkedRow = action.payload;
 
       const newSet = new Set(state.checkedRows);
@@ -107,7 +104,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case DataManagerActionTypes.ChangeDecimalsPrecision: {
+    case ActionType.ChangeDecimalsPrecision: {
       return {
         ...state,
         decimalsPrecision: action.payload,
@@ -115,7 +112,7 @@ export const dataManagerReducer = (
     }
 
     // fetch data after dropping
-    case DataManagerActionTypes.ColumnsRowsDropped: {
+    case ActionType.ColumnsRowsDropped: {
       return {
         ...state,
         checkedLabels: [],
@@ -123,7 +120,7 @@ export const dataManagerReducer = (
       };
     }
 
-    case DataManagerActionTypes.DataFrameDropped: {
+    case ActionType.DataFrameDropped: {
       return {
         ...state,
         loading: false,
@@ -133,14 +130,14 @@ export const dataManagerReducer = (
       };
     }
 
-    case DataManagerActionTypes.CSVImportCanceled: {
+    case ActionType.CSVImportCanceled: {
       return {
         ...state,
         loading: false,
       };
     }
 
-    case DataManagerActionTypes.ChangeScalingMethod: {
+    case ActionType.ChangeScalingMethod: {
       return {
         ...state,
         scalingMethod: action.payload,
@@ -148,7 +145,7 @@ export const dataManagerReducer = (
     }
 
     // fetch data after scaling
-    case DataManagerActionTypes.ScaledData: {
+    case ActionType.ScaledData: {
       return {
         ...state,
         scalingMethod: 'none',
