@@ -26,7 +26,7 @@ export const Select: React.FC<Props> = ({
     <Box maxWidth={maxWidth} minWidth={minWidth}>
       <FormControl fullWidth>
         <InputLabel id={`${id}-label`}>{label}</InputLabel>
-        <MuiSelect labelId={`${id}-label`} id={`${id} `} value={value} label={label} onChange={onChange}>
+        <MuiSelect labelId={`${id}-label`} id={`${id}`} value={value} label={`Display ${label}`} onChange={onChange}>
           {values.map((item, index) => (
             <MenuItem key={index} value={item}>
               {item}
