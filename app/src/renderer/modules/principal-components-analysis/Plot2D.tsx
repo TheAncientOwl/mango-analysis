@@ -63,119 +63,111 @@ const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></St
 export const Plot2D: React.FC<Props> = props => {
   const plot = props.getPlot(props.plotIndex);
 
+  const mainToolbar = (
+    <Stack direction='row' gap={1}>
+      <Tooltip title={plot.open ? 'Hide' : 'Show'}>
+        <IconButton onClick={() => props.togglePlotOpen(props.plotIndex)}>
+          {plot.open ? visibleIcon : hiddenIcon}
+        </IconButton>
+      </Tooltip>
+
+      <TextInputSave
+        minWidth='35em'
+        text={plot.title}
+        placeholder='Title'
+        tooltip='Save Title'
+        onSave={(value: string) => props.changePlotTitle(props.plotIndex, value)}
+      />
+
+      <Box sx={{ flexGrow: 1 }}></Box>
+
+      <Tooltip title='New plot'>
+        <IconButton onClick={props.pushDefaultPlot}>{addIcon}</IconButton>
+      </Tooltip>
+
+      <Tooltip title='Delete'>
+        <IconButton onClick={() => props.deletePlot(props.plotIndex)}>{deleteIcon}</IconButton>
+      </Tooltip>
+    </Stack>
+  );
+
+  const optionsToolbar = (
+    <Grid container alignItems='center' gap={2} pt={1} sx={{ overflow: 'hidden' }}>
+      <Grid item>
+        <Select
+          minWidth={'7em'}
+          maxWidth={'20em'}
+          id='pcX'
+          label='X Axis'
+          value={plot.pcX}
+          values={props.pcaLabels}
+          onChange={(event: SelectChangeEvent) => props.changePlotAxisX(props.plotIndex, event.target.value)}
+        />
+      </Grid>
+
+      <Grid item>
+        <Select
+          minWidth={'7em'}
+          maxWidth={'20em'}
+          id='pcY'
+          label='Y Axis'
+          value={plot.pcY}
+          values={props.pcaLabels}
+          onChange={(event: SelectChangeEvent) => props.changePlotAxisY(props.plotIndex, event.target.value)}
+        />
+      </Grid>
+
+      <Grid item>
+        <Checkbox checked={plot.annot} onChange={() => props.togglePlotAnnot(props.plotIndex)} label='Annotations' />
+      </Grid>
+
+      <Grid item>
+        <Checkbox checked={plot.legend} onChange={() => props.togglePlotLegend(props.plotIndex)} label='Legend' />
+      </Grid>
+
+      <Grid item>
+        <Button
+          size='medium'
+          startIcon={props.targets.length === plot.targets.length ? checkedIcon : unCheckedIcon}
+          onClick={() =>
+            props.changePlotTargets(props.plotIndex, props.targets.length === plot.targets.length ? [] : props.targets)
+          }>
+          all targets
+        </Button>
+      </Grid>
+
+      <Grid item xs={12}>
+        {props.targets.length !== plot.targets.length && (
+          <AutoCompleteCheckedSelect
+            minWidth='10em'
+            id='select-targets'
+            label='Targets'
+            checkedValues={plot.targets}
+            possibleValues={props.targets}
+            onChange={(values: string[]) => props.changePlotTargets(props.plotIndex, values)}
+          />
+        )}
+      </Grid>
+
+      <Grid item>
+        <Button
+          disabled={plot.pcX === '' || plot.pcY === '' || plot.targets.length === 0}
+          onClick={() => {
+            props.fetchPlotSrc(props.plotIndex, plot.title, plot.pcX, plot.pcY, plot.targets, plot.annot, plot.legend);
+          }}>
+          plot
+        </Button>
+      </Grid>
+    </Grid>
+  );
+
   return (
     <Paper sx={{ mt: 2, display: 'block', p: 2 }}>
-      <Stack direction='row' gap={1}>
-        <Tooltip title={plot.open ? 'Hide' : 'Show'}>
-          <IconButton onClick={() => props.togglePlotOpen(props.plotIndex)}>
-            {plot.open ? visibleIcon : hiddenIcon}
-          </IconButton>
-        </Tooltip>
-
-        <TextInputSave
-          minWidth='35em'
-          text={plot.title}
-          placeholder='Title'
-          tooltip='Save Title'
-          onSave={(value: string) => props.changePlotTitle(props.plotIndex, value)}
-        />
-
-        <Box sx={{ flexGrow: 1 }}></Box>
-
-        <Tooltip title='New plot'>
-          <IconButton onClick={props.pushDefaultPlot}>{addIcon}</IconButton>
-        </Tooltip>
-
-        <Tooltip title='Delete'>
-          <IconButton onClick={() => props.deletePlot(props.plotIndex)}>{deleteIcon}</IconButton>
-        </Tooltip>
-      </Stack>
-
+      {mainToolbar}
       {separator}
 
       <Collapse in={plot.open}>
-        <Grid container alignItems='center' gap={2} pt={1} sx={{ overflow: 'hidden' }}>
-          <Grid item>
-            <Select
-              minWidth={'7em'}
-              maxWidth={'20em'}
-              id='pcX'
-              label='X Axis'
-              value={plot.pcX}
-              values={props.pcaLabels}
-              onChange={(event: SelectChangeEvent) => props.changePlotAxisX(props.plotIndex, event.target.value)}
-            />
-          </Grid>
-
-          <Grid item>
-            <Select
-              minWidth={'7em'}
-              maxWidth={'20em'}
-              id='pcY'
-              label='Y Axis'
-              value={plot.pcY}
-              values={props.pcaLabels}
-              onChange={(event: SelectChangeEvent) => props.changePlotAxisY(props.plotIndex, event.target.value)}
-            />
-          </Grid>
-
-          <Grid item>
-            <Checkbox
-              checked={plot.annot}
-              onChange={() => props.togglePlotAnnot(props.plotIndex)}
-              label='Annotations'
-            />
-          </Grid>
-
-          <Grid item>
-            <Checkbox checked={plot.legend} onChange={() => props.togglePlotLegend(props.plotIndex)} label='Legend' />
-          </Grid>
-
-          <Grid item>
-            <Button
-              size='medium'
-              startIcon={props.targets.length === plot.targets.length ? checkedIcon : unCheckedIcon}
-              onClick={() =>
-                props.changePlotTargets(
-                  props.plotIndex,
-                  props.targets.length === plot.targets.length ? [] : props.targets
-                )
-              }>
-              all targets
-            </Button>
-          </Grid>
-
-          <Grid item xs={12}>
-            {props.targets.length !== plot.targets.length && (
-              <AutoCompleteCheckedSelect
-                minWidth='10em'
-                id='select-targets'
-                label='Targets'
-                checkedValues={plot.targets}
-                possibleValues={props.targets}
-                onChange={(values: string[]) => props.changePlotTargets(props.plotIndex, values)}
-              />
-            )}
-          </Grid>
-
-          <Grid item>
-            <Button
-              disabled={plot.pcX === '' || plot.pcY === '' || plot.targets.length === 0}
-              onClick={() => {
-                props.fetchPlotSrc(
-                  props.plotIndex,
-                  plot.title,
-                  plot.pcX,
-                  plot.pcY,
-                  plot.targets,
-                  plot.annot,
-                  plot.legend
-                );
-              }}>
-              plot
-            </Button>
-          </Grid>
-        </Grid>
+        {optionsToolbar}
 
         {plot.plotSrc !== '' && (
           <Box sx={{ mt: 2, maxWidth: '40em' }}>
