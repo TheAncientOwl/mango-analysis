@@ -8,12 +8,20 @@ interface Props {
   maxWidth?: string;
   text: string;
   placeholder: string;
+  tooltip: string;
   onSave: (value: string) => void;
 }
 
 const editIcon = <EditIcon />;
 
-export const TextInputSave: React.FC<Props> = ({ text, placeholder, onSave, minWidth = 'auto', maxWidth = 'auto' }) => {
+export const TextInputSave: React.FC<Props> = ({
+  text,
+  placeholder,
+  onSave,
+  tooltip,
+  minWidth = 'auto',
+  maxWidth = 'auto',
+}) => {
   const [value, setValue] = React.useState(text);
 
   return (
@@ -29,7 +37,7 @@ export const TextInputSave: React.FC<Props> = ({ text, placeholder, onSave, minW
           placeholder={placeholder}
         />
       </Box>
-      <Tooltip title='Write Note'>
+      <Tooltip title={tooltip}>
         <IconButton onClick={() => onSave(value)}>{editIcon}</IconButton>
       </Tooltip>
     </Stack>

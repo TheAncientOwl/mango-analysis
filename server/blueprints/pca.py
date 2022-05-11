@@ -94,6 +94,7 @@ def plot_2D():
     data = flask.request.get_json()
 
     path = server.pca.plot_two_components(
+        title=data['title'],
         pc_x=data['pcX'],
         pc_y=data['pcY'],
         targets=data['targets'],

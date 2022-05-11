@@ -12,7 +12,8 @@ import {
   changePlotTargets,
   togglePlotOpen,
   deletePlot,
-  changePlotNote,
+  changePlotTitle,
+  pushDefaultPlot,
 } from '@store/principal-components-analysis/actions';
 
 // eslint-disable-next-line import/named
@@ -20,6 +21,7 @@ import { Box, Button, Grid, SelectChangeEvent, Collapse, IconButton, Tooltip, St
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
@@ -38,7 +40,7 @@ export interface IPlot2D {
   annot: boolean;
   legend: boolean;
   targets: string[];
-  note: string;
+  title: string;
 }
 
 interface Plot2DProps {
@@ -50,6 +52,7 @@ type Props = Plot2DProps & PropsFromRedux;
 const visibleIcon = <VisibilityIcon />;
 const hiddenIcon = <VisibilityOffIcon />;
 const deleteIcon = <DeleteIcon />;
+const addIcon = <AddBoxIcon />;
 
 const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
@@ -58,7 +61,7 @@ export const Plot2D: React.FC<Props> = props => {
 
   return (
     <Paper sx={{ mt: 2, display: 'block', p: 2 }}>
-      <Stack direction='row' gap={2}>
+      <Stack direction='row' gap={1}>
         <Tooltip title={plot.open ? 'Hide' : 'Show'}>
           <IconButton onClick={() => props.togglePlotOpen(props.plotIndex)}>
             {plot.open ? visibleIcon : hiddenIcon}
@@ -67,12 +70,17 @@ export const Plot2D: React.FC<Props> = props => {
 
         <TextInputSave
           minWidth='35em'
-          text={plot.note}
-          placeholder='Note'
-          onSave={(value: string) => props.changePlotNote(props.plotIndex, value)}
+          text={plot.title}
+          placeholder='Title'
+          tooltip='Save Title'
+          onSave={(value: string) => props.changePlotTitle(props.plotIndex, value)}
         />
 
         <Box sx={{ flexGrow: 1 }}></Box>
+
+        <Tooltip title='New plot'>
+          <IconButton onClick={props.pushDefaultPlot}>{addIcon}</IconButton>
+        </Tooltip>
 
         <Tooltip title='Delete'>
           <IconButton onClick={() => props.deletePlot(props.plotIndex)}>{deleteIcon}</IconButton>
@@ -138,7 +146,15 @@ export const Plot2D: React.FC<Props> = props => {
             <Button
               disabled={plot.pcX === '' || plot.pcY === '' || plot.targets.length === 0}
               onClick={() => {
-                props.fetchPlotSrc(props.plotIndex, plot.pcX, plot.pcY, plot.targets, plot.annot, plot.legend);
+                props.fetchPlotSrc(
+                  props.plotIndex,
+                  plot.title,
+                  plot.pcX,
+                  plot.pcY,
+                  plot.targets,
+                  plot.annot,
+                  plot.legend
+                );
               }}>
               plot
             </Button>
@@ -172,7 +188,8 @@ const mapDispatch = {
   changePlotTargets,
   togglePlotOpen,
   deletePlot,
-  changePlotNote,
+  changePlotTitle,
+  pushDefaultPlot,
 };
 
 const connector = connect(mapState, mapDispatch);

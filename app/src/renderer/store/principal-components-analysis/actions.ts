@@ -124,11 +124,11 @@ export const changePlotAxisY = (index: number, value: string) => (dispatch: Disp
 };
 
 export const fetchPlotSrc =
-  (index: number, pcX: string, pcY: string, targets: string[], annot: boolean, legend: boolean) =>
+  (index: number, title: string, pcX: string, pcY: string, targets: string[], annot: boolean, legend: boolean) =>
   async (dispatch: Dispatch) => {
     dispatch({ type: ActionType.Loading });
 
-    const res = await axios.post('/pca/plot/2D', { pcX, pcY, targets, annot, legend });
+    const res = await axios.post('/pca/plot/2D', { title, pcX, pcY, targets, annot, legend });
 
     dispatch({
       type: ActionType.FetchedPlotSrc,
@@ -163,12 +163,12 @@ export const deletePlot = (index: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.DeletePlot, payload: index });
 };
 
-export const changePlotNote = (index: number, note: string) => (dispatch: Dispatch) => {
+export const changePlotTitle = (index: number, title: string) => (dispatch: Dispatch) => {
   dispatch({
-    type: ActionType.ChangePlotNote,
+    type: ActionType.ChangePlotTitle,
     payload: {
       index,
-      value: note,
+      value: title,
     },
   });
 };

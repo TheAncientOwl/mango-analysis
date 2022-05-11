@@ -156,13 +156,14 @@ class PCA:
 
         return figpath
 
-    def plot_two_components(self, pc_x, pc_y, targets, annot=False, legend=False):
+    def plot_two_components(self, title, pc_x, pc_y, targets, annot=False, legend=False):
         fig = plt.figure(figsize=(8, 8))
 
         ax = fig.add_subplot(1, 1, 1)
         ax.set_xlabel(pc_x, fontsize=15)
         ax.set_ylabel(pc_y, fontsize=15)
-        ax.set_title(f'{pc_x} & {pc_y}', fontsize=20)
+        if title != '':
+            ax.set_title(title, fontsize=20)
 
         for obs in targets:
             indices_to_keep = server.dataFrame[self.target] == obs
