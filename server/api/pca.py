@@ -17,9 +17,6 @@ def make_uuid():
     return str(uuid.uuid4())
 
 
-app_data_path = os.path.join('C:')
-
-
 class PCA:
     cmap = sns.diverging_palette(250, 20, as_cmap=True)
 
@@ -66,7 +63,7 @@ class PCA:
                     cmap=self.cmap, mask=mask)
 
         figpath = os.path.join(
-            app_data_path, os.sep, f'CorrelationMatrix.{make_uuid()}.jpg')
+            server.plots_data_path, f'CorrelationMatrix.{make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -100,7 +97,7 @@ class PCA:
         plt.xticks(range(1, self.pca.n_components + 1))
 
         figpath = os.path.join(
-            app_data_path, os.sep, f'Kaiser-ScreePlot.{make_uuid()}.jpg')
+            server.plots_data_path, f'Kaiser-ScreePlot.{make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -150,7 +147,7 @@ class PCA:
                     vmax=1, vmin=-1, center=0,
                     cmap=self.cmap)
 
-        figpath = os.path.join(app_data_path, os.sep,
+        figpath = os.path.join(server.plots_data_path,
                                f'LoadingsMatrix.{make_uuid()}.jpg')
         plt.savefig(figpath)
 
@@ -179,7 +176,7 @@ class PCA:
             if legend:
                 ax.legend(targets)
 
-        figpath = os.path.join(app_data_path, os.sep,
+        figpath = os.path.join(server.plots_data_path,
                                f'PCA-Plot-{pc_x}-{pc_y}.{make_uuid()}.jpg')
         plt.savefig(figpath)
 
