@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// eslint-disable-next-line import/named
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@store/.';
+
 import { Box, List, Toolbar, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 // eslint-disable-next-line import/named
 import { styled, Theme, CSSObject } from '@mui/material/styles';
@@ -52,24 +56,27 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })
   }),
 }));
 
-interface Props {
+interface MenuDrawerProps {
   open: boolean;
   onItemClick: (itemName: string) => void;
 }
 
-export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
+type Props = MenuDrawerProps & PropsFromRedux;
+
+const MenuDrawer: React.FC<Props> = props => {
   return (
-    <Drawer variant='permanent' open={open}>
+    <Drawer variant='permanent' open={props.open}>
       <Toolbar variant='dense' />
       <Box sx={{ bgcolor: 'grey.900', flexGrow: 1 }}>
         <List>
           {AppRoutes.map((section, index) => (
             <ListItemButton
+              disabled={index > 0 && !props.importedData}
               component={Link}
               to={section.routePath}
               key={index}
               sx={{ color: 'text.primary' }}
-              onClick={() => onItemClick(section.name)}>
+              onClick={() => props.onItemClick(section.name)}>
               <ListItemIcon sx={{ color: 'secondary.main' }}>{section.icon}</ListItemIcon>
               <ListItemText sx={{ textTransform: 'capitalize' }}>{section.alias}</ListItemText>
             </ListItemButton>
@@ -79,3 +86,16 @@ export const MenuDrawer: React.FC<Props> = ({ open, onItemClick }) => {
     </Drawer>
   );
 };
+
+// <redux>
+const mapState = (state: RootState) => ({
+  importedData: state.dataManager.importedData,
+});
+
+const mapDispatch = {};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(MenuDrawer);
+// </redux>

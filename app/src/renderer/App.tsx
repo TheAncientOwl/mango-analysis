@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Paper, Toolbar, Stack } from '@mui/material';
 
-import { MenuDrawer } from '@components/MenuDrawer';
+import MenuDrawer from '@components/MenuDrawer';
 import { AppBar } from '@components/app-bar/AppBar';
 import { AppRoutes } from '@config/.';
 import { useSwitch } from '@hooks/.';

@@ -4,6 +4,7 @@ import { ActionType, DispatchTypes, ScalingMethodType } from './types';
 
 interface IDefaultState extends DataFrameState {
   loading: boolean;
+  importedData: boolean;
 
   pageSize: number;
   page: number;
@@ -16,6 +17,7 @@ interface IDefaultState extends DataFrameState {
 
 const defaultState: IDefaultState = {
   loading: false,
+  importedData: false,
 
   dataFrame: { labels: [], totalRows: 0, rows: [] },
   checkedLabels: [],
@@ -49,6 +51,7 @@ export const dataManagerReducer = (state: IDefaultState = defaultState, action: 
         dataFrame: action.payload.dataframe,
         feedbackMessage: action.payload.feedbackMessage,
         feedbackMessageOpen: action.payload.feedbackMessage !== '',
+        importedData: action.payload.dataframe.totalRows > 0,
       };
     }
 
@@ -127,6 +130,7 @@ export const dataManagerReducer = (state: IDefaultState = defaultState, action: 
         dataFrame: { labels: [], totalRows: 0, rows: [] },
         page: 0,
         pageSize: 25,
+        importedData: false,
       };
     }
 
