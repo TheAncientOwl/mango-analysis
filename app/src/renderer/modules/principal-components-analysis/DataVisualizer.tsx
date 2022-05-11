@@ -11,7 +11,8 @@ import {
   jumpToStep,
 } from '@store/principal-components-analysis/actions';
 
-import { Box, Button } from '@mui/material';
+import { Box, Button, Collapse } from '@mui/material';
+import { TransitionGroup } from 'react-transition-group';
 
 import Plot2D from './Plot2D';
 
@@ -20,9 +21,13 @@ export const DataVisualizer: React.FC<PropsFromRedux> = props => {
     <Box>
       <Button onClick={props.pushDefaultPlot}>add</Button>
 
-      {props.plots.map((plot, idx) => (
-        <Plot2D key={plot.id} plotIndex={idx} />
-      ))}
+      <TransitionGroup>
+        {props.plots.map((plot, idx) => (
+          <Collapse key={plot.id}>
+            <Plot2D plotIndex={idx} />
+          </Collapse>
+        ))}
+      </TransitionGroup>
     </Box>
   );
 };

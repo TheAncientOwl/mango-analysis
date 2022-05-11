@@ -61,7 +61,20 @@ const checkedIcon = <CheckBoxIcon fontSize='small' />;
 const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
 export const Plot2D: React.FC<Props> = props => {
-  const plot = props.getPlot(props.plotIndex);
+  const plot: IPlot2D =
+    props.getPlot(props.plotIndex) !== undefined
+      ? props.getPlot(props.plotIndex)
+      : {
+          open: false,
+          id: '',
+          pcX: '',
+          pcY: '',
+          plotSrc: '',
+          annot: false,
+          legend: false,
+          targets: [],
+          title: '',
+        };
 
   const mainToolbar = (
     <Stack direction='row' gap={1}>
