@@ -66,7 +66,7 @@ export const Plot2D: React.FC<Props> = props => {
   const mainToolbar = (
     <Stack direction='row' gap={1}>
       <Tooltip title={plot.open ? 'Hide' : 'Show'}>
-        <IconButton onClick={() => props.togglePlotOpen(props.plotIndex)}>
+        <IconButton onClick={() => props.togglePlotOpen(props.plotIndex)} color='info'>
           {plot.open ? visibleIcon : hiddenIcon}
         </IconButton>
       </Tooltip>
@@ -83,11 +83,15 @@ export const Plot2D: React.FC<Props> = props => {
       <Box sx={{ flexGrow: 1 }}></Box>
 
       <Tooltip title='New plot'>
-        <IconButton onClick={props.pushDefaultPlot}>{addIcon}</IconButton>
+        <IconButton onClick={props.pushDefaultPlot} color='info'>
+          {addIcon}
+        </IconButton>
       </Tooltip>
 
       <Tooltip title='Delete'>
-        <IconButton onClick={() => props.deletePlot(props.plotIndex)}>{deleteIcon}</IconButton>
+        <IconButton onClick={() => props.deletePlot(props.plotIndex)} color='error'>
+          {deleteIcon}
+        </IconButton>
       </Tooltip>
     </Stack>
   );
