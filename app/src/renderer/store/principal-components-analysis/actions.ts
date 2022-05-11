@@ -172,3 +172,7 @@ export const changePlotTitle = (index: number, title: string) => (dispatch: Disp
     },
   });
 };
+
+export const resetState = () => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Reset });
+};

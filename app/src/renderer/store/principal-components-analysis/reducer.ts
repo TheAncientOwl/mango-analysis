@@ -417,6 +417,10 @@ export const principalComponentsAnalysisReducer = (
       };
     }
 
+    case ActionType.Reset: {
+      return defaultState;
+    }
+
     default: {
       return state;
     }

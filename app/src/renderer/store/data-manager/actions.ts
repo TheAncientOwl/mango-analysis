@@ -72,12 +72,14 @@ export const importCSV = (page: number, pageSize: number) => async (dispatch: Di
 
   if (filePath === null) {
     dispatch({ type: ActionType.CSVImportCanceled });
-    return;
+    return { canceled: true };
   }
 
   await axios.get(`/data/import/csv/${filePath}`);
 
   await fetchDataFrame(dispatch, page, pageSize, 'CSV Imported');
+
+  return { canceled: false };
 };
 
 export const changeScalingMethod = (method: ScalingMethodType) => (dispatch: Dispatch) => {

@@ -5,8 +5,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@store/.';
+import { RootState, store } from '@store/.';
 import { dropDataFrame } from '@store/data-manager/actions';
+import { resetState as resetStatePCA } from '@store/principal-components-analysis/actions';
 
 import { DoubleCheck } from '@components/DoubleCheck';
 import { useSwitch } from '@hooks/.';
@@ -18,6 +19,8 @@ const DropDataFrameButton: React.FC<PropsFromRedux> = props => {
     doubleCheckSwitch.off();
 
     props.dropDataFrame();
+
+    store.dispatch(resetStatePCA());
   };
 
   return (

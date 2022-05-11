@@ -5,6 +5,7 @@ import { BasicDataFrameProps } from '@components/BasicDataFrame';
 
 export enum ActionType {
   Loading = 'LOADING',
+  Reset = 'RESET',
 
   NextStep = 'NEXT_STEP',
   PrevStep = 'PREV_STEP',
@@ -201,8 +202,13 @@ interface ChangePlotTitle {
   payload: ChangePlot;
 }
 
+interface Reset {
+  type: ActionType.Reset;
+}
+
 export type DispatchTypes =
   | Loading
+  | Reset
   | NextStep
   | PrevStep
   | UnlockNextStep
