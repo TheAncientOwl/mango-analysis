@@ -22,6 +22,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
@@ -53,6 +55,8 @@ const visibleIcon = <VisibilityIcon />;
 const hiddenIcon = <VisibilityOffIcon />;
 const deleteIcon = <DeleteIcon />;
 const addIcon = <AddBoxIcon />;
+const unCheckedIcon = <CheckBoxOutlineBlankIcon fontSize='small' />;
+const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
@@ -122,26 +126,38 @@ export const Plot2D: React.FC<Props> = props => {
               label='Annotations'
             />
           </Grid>
+
           <Grid item>
             <Checkbox checked={plot.legend} onChange={() => props.togglePlotLegend(props.plotIndex)} label='Legend' />
           </Grid>
+
           <Grid item>
-            <AutoCompleteCheckedSelect
-              minWidth='10em'
-              id='select-targets'
-              label='Targets'
-              checkedValues={plot.targets}
-              allChecked={props.targets.length === plot.targets.length}
-              onCheckAll={() =>
+            <Button
+              size='medium'
+              startIcon={props.targets.length === plot.targets.length ? checkedIcon : unCheckedIcon}
+              onClick={() =>
                 props.changePlotTargets(
                   props.plotIndex,
                   props.targets.length === plot.targets.length ? [] : props.targets
                 )
-              }
-              possibleValues={props.targets}
-              onChange={(values: string[]) => props.changePlotTargets(props.plotIndex, values)}
-            />
+              }>
+              all targets
+            </Button>
           </Grid>
+
+          <Grid item xs={12}>
+            {props.targets.length !== plot.targets.length && (
+              <AutoCompleteCheckedSelect
+                minWidth='10em'
+                id='select-targets'
+                label='Targets'
+                checkedValues={plot.targets}
+                possibleValues={props.targets}
+                onChange={(values: string[]) => props.changePlotTargets(props.plotIndex, values)}
+              />
+            )}
+          </Grid>
+
           <Grid item>
             <Button
               disabled={plot.pcX === '' || plot.pcY === '' || plot.targets.length === 0}
