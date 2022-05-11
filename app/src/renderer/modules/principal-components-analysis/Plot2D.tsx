@@ -76,6 +76,7 @@ export const Plot2D: React.FC<Props> = props => {
         text={plot.title}
         placeholder='Title'
         tooltip='Save Title'
+        tooltipUnsaved='Save. (not saved)'
         onSave={(value: string) => props.changePlotTitle(props.plotIndex, value)}
       />
 
