@@ -118,3 +118,14 @@ def targets():
 @pca.get('/pca/targets&labels')
 def targets_and_labels():
     return flask.jsonify(targets=list(server.dataFrame[server.pca.target]), labels=server.pca.pca_labels), 200
+
+
+@pca.post('/pca/export-loadings')
+def export_loadings():
+    data = flask.request.get_json()
+
+    location = data['location']
+    file_name = data['fileName']
+    server.pca.export_loadings_matrix(location=location, file_name=file_name)
+
+    return flask.jsonify(message='File exported!'), 200

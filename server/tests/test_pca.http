@@ -49,11 +49,12 @@ POST {{local_host}}/pca/plot/2D
 Content-Type: application/json
 
 {
+  "title": "PC1 - PC2",
   "pcX": "PC1",
   "pcY": "PC2",
   "targets": ["Romania", "United Kingdom", "Norway", "Andorra", "Lebanon"],
   "annot": true,
-  "legend": false
+  "legend": false,
 }
 
 ### New PCA
@@ -61,3 +62,12 @@ POST {{local_host}}/pca/new
 
 ### get labels
 GET {{local_host}}/pca/labels
+
+### Export loadings matrix
+POST {{local_host}}/pca/export-loadings
+Content-Type: application/json
+
+{
+  "location": "C:\\Users\\TheAncientOwl\\Desktop",
+  "fileName": "LoadingsMatrix.csv"
+}

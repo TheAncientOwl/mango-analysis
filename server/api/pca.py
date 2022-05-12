@@ -153,6 +153,15 @@ class PCA:
 
         return figpath
 
+    def export_loadings_matrix(self, location, file_name):
+        loadings_matrix = pd.DataFrame(
+            data=self.pca.components_.T *
+            np.sqrt(self.pca.explained_variance_),
+            columns=self.pca_labels,
+            index=self.features)
+
+        loadings_matrix.to_csv(os.path.join(location, file_name))
+
     def plot_two_components(self, title, pc_x, pc_y, targets, annot=False, legend=False):
         fig = plt.figure(figsize=(8, 8))
 
