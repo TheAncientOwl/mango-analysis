@@ -54,7 +54,7 @@ Content-Type: application/json
   "pcY": "PC2",
   "targets": ["Romania", "United Kingdom", "Norway", "Andorra", "Lebanon"],
   "annot": true,
-  "legend": false,
+  "legend": false
 }
 
 ### New PCA
@@ -68,8 +68,7 @@ POST {{local_host}}/pca/export-loadings
 Content-Type: application/json
 
 {
-  "location": "C:\\Users\\TheAncientOwl\\Desktop",
-  "fileName": "LoadingsMatrix.csv"
+  "path": "C:\\Users\\TheAncientOwl\\Desktop\\LoadingsMatrix.csv"
 }
 
 ### Export pca matrix
@@ -77,6 +76,5 @@ POST {{local_host}}/pca/export-pca
 Content-Type: application/json
 
 {
-  "location": "C:\\Users\\TheAncientOwl\\Desktop",
-  "fileName": "PCA.csv"
+  "path": "C:\\Users\\TheAncientOwl\\Desktop\\PCA.csv"
 }

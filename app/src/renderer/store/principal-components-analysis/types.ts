@@ -42,6 +42,12 @@ export enum ActionType {
   TogglePlotOpen = 'TOGGLE_PLOT_OPEN',
   DeletePlot = 'DELETE_PLOT',
   ChangePlotTitle = 'CHANGE_PLOT_TITLE',
+
+  ExportLoadingsEnded = 'EXPORT_LOADINGS_ENDED',
+  ExportLoadingsFail = 'EXPORT_LOADINGS_FAIL',
+
+  ExportPCAEnded = 'EXPORT_PCA_ENDED',
+  ExportPCAFail = 'EXPORT_PCA_FAIL',
 }
 
 interface Loading {
@@ -206,6 +212,22 @@ interface Reset {
   type: ActionType.Reset;
 }
 
+interface ExportLoadingsEnded {
+  type: ActionType.ExportLoadingsEnded;
+}
+
+interface ExportLoadingsFail {
+  type: ActionType.ExportLoadingsFail;
+}
+
+interface ExportPCAEnded {
+  type: ActionType.ExportPCAEnded;
+}
+
+interface ExportPCAFail {
+  type: ActionType.ExportPCAFail;
+}
+
 export type DispatchTypes =
   | Loading
   | Reset
@@ -236,6 +258,10 @@ export type DispatchTypes =
   | ChangePlotTargets
   | TogglePlotOpen
   | DeletePlot
-  | ChangePlotTitle;
+  | ChangePlotTitle
+  | ExportLoadingsEnded
+  | ExportLoadingsFail
+  | ExportPCAEnded
+  | ExportPCAFail;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;

@@ -122,16 +122,16 @@ def targets_and_labels():
 
 @pca.post('/pca/export-loadings')
 def export_loadings():
-
     data = flask.request.get_json()
 
-    location = data['location']
-    file_name = data['fileName']
+    print(data)
+
+    path = data['path']
+
     try:
-        server.pca.export_loadings_matrix(
-            location=location, file_name=file_name)
+        server.pca.export_loadings_matrix(path=path)
     except:
-        return flask.jsonify(message='Could not save the file!'), 418
+        return flask.jsonify(message='Could not save the file!'), 500
 
     return flask.jsonify(message='File exported!'), 200
 
@@ -140,12 +140,11 @@ def export_loadings():
 def export_pca():
     data = flask.request.get_json()
 
-    location = data['location']
-    file_name = data['fileName']
+    path = data['path']
 
     try:
-        server.pca.export_pca(location=location, file_name=file_name)
+        server.pca.export_pca(path=path)
     except:
-        return flask.jsonify(message='Could not save the file!'), 418
+        return flask.jsonify(message='Could not save the file!'), 500
 
     return flask.jsonify(message='File exported!'), 200

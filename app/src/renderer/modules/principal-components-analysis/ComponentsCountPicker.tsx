@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { changeComponentsCount, runAnalysis } from '@store/principal-components-analysis/actions';
+import { changeComponentsCount, runAnalysis, exportPCA } from '@store/principal-components-analysis/actions';
 
 import {
   Box,
@@ -28,6 +28,7 @@ import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 
 import { useCache } from '@hooks/.';
+import { ComponentIndexPCA } from './ComponentIndexPCA';
 
 const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
   const [showHints, setShowHints] = useCache('pca-show-hints', false);
@@ -77,6 +78,12 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
             size='medium'>
             Hints
           </Button>
+
+          {props.showExportPCA && (
+            <Button size='medium' onClick={props.exportPCA}>
+              export pca data
+            </Button>
+          )}
         </Stack>
       </AnalysisStepLogic>
 
@@ -125,11 +132,13 @@ const mapState = (state: RootState) => ({
   featuresLength: state.pca.features.length,
   componentsCount: state.pca.analysisComponentsCount,
   hints: state.pca.analysisHints,
+  showExportPCA: state.pca.nextStepUnlocked[ComponentIndexPCA.ComponentsCountPicker],
 });
 
 const mapDispatch = {
   changeComponentsCount,
   runAnalysis,
+  exportPCA,
 };
 
 const connector = connect(mapState, mapDispatch);

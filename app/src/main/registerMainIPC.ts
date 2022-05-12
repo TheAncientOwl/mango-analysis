@@ -1,5 +1,6 @@
-import { BrowserWindow, ipcMain, dialog } from 'electron';
+import { BrowserWindow, ipcMain, dialog, app } from 'electron';
 import fs from 'fs';
+import path from 'path';
 
 export const registerMainIPC = (appWindow: BrowserWindow): void => {
   ipcMain.handle('window-minimize', () => {
@@ -39,5 +40,13 @@ export const registerMainIPC = (appWindow: BrowserWindow): void => {
 
   ipcMain.handle('copy-file-sync', (event, src: string, dest: string) => {
     fs.copyFileSync(src, dest);
+  });
+
+  ipcMain.handle('get-home-dir', () => app.getPath('home'));
+
+  ipcMain.handle('get-app-data-path', () => path.resolve(app.getPath('home'), '.mango-analysis'));
+
+  ipcMain.handle('resolve', (event, part1: string, part2: string) => {
+    return path.resolve(part1, part2);
   });
 };

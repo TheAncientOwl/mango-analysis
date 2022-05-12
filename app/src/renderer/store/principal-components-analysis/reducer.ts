@@ -417,6 +417,40 @@ export const principalComponentsAnalysisReducer = (
       };
     }
 
+    case ActionType.ExportLoadingsEnded: {
+      if (!state.loading) return state;
+
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
+    // TODO: add message on fail
+    case ActionType.ExportLoadingsFail: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
+    case ActionType.ExportPCAEnded: {
+      if (!state.loading) return state;
+
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
+    // TODO: add message on fail
+    case ActionType.ExportPCAFail: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
     case ActionType.Reset: {
       return defaultState;
     }

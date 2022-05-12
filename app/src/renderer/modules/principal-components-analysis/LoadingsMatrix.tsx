@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { fetchLoadingsMatrixPath, jumpToStep } from '@store/principal-components-analysis/actions';
+import { fetchLoadingsMatrixPath, jumpToStep, exportLoadings } from '@store/principal-components-analysis/actions';
 
 import { Box, Button, Stack } from '@mui/material';
 
@@ -32,8 +32,12 @@ const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
               Skip
             </Button>
           )}
+          <Button size='small' onClick={props.exportLoadings}>
+            export loadings
+          </Button>
         </Stack>
       </AnalysisStepLogic>
+
       <AnalysisStepResult>
         {props.loadingsMatrixPath !== '' && (
           <Paper sx={{ mt: 2, maxWidth: '38em' }}>
@@ -56,6 +60,7 @@ const mapState = (state: RootState) => ({
 const mapDispatch = {
   fetchLoadingsMatrixPath,
   jumpToStep,
+  exportLoadings,
 };
 
 const connector = connect(mapState, mapDispatch);

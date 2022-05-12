@@ -176,3 +176,49 @@ export const changePlotTitle = (index: number, title: string) => (dispatch: Disp
 export const resetState = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Reset });
 };
+
+export const exportLoadings = () => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  const savePath = await window.electron.showSaveDialog({
+    title: 'Save Loadings',
+    defaultPath: await window.electron.resolve(await window.electron.getHomeDir(), 'Loadings.csv'),
+    buttonLabel: 'Save',
+    filters: [
+      { name: 'CSV', extensions: ['csv'] },
+      { name: 'All files', extensions: ['*'] },
+    ],
+  });
+
+  if (savePath === null) dispatch({ type: ActionType.ExportLoadingsEnded });
+
+  try {
+    await axios.post('/pca/export-loadings', { path: savePath });
+    dispatch({ type: ActionType.ExportLoadingsEnded });
+  } catch (e) {
+    dispatch({ type: ActionType.ExportLoadingsFail });
+  }
+};
+
+export const exportPCA = () => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  const savePath = await window.electron.showSaveDialog({
+    title: 'Save PCA',
+    defaultPath: await window.electron.resolve(await window.electron.getHomeDir(), 'PCA.csv'),
+    buttonLabel: 'Save',
+    filters: [
+      { name: 'CSV', extensions: ['csv'] },
+      { name: 'All files', extensions: ['*'] },
+    ],
+  });
+
+  if (savePath === null) dispatch({ type: ActionType.ExportPCAEnded });
+
+  try {
+    await axios.post('/pca/export-pca', { path: savePath });
+    dispatch({ type: ActionType.ExportPCAEnded });
+  } catch (e) {
+    dispatch({ type: ActionType.ExportPCAFail });
+  }
+};
