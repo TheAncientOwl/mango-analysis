@@ -71,3 +71,12 @@ Content-Type: application/json
   "location": "C:\\Users\\TheAncientOwl\\Desktop",
   "fileName": "LoadingsMatrix.csv"
 }
+
+### Export pca matrix
+POST {{local_host}}/pca/export-pca
+Content-Type: application/json
+
+{
+  "location": "C:\\Users\\TheAncientOwl\\Desktop",
+  "fileName": "PCA.csv"
+}

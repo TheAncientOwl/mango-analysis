@@ -129,3 +129,14 @@ def export_loadings():
     server.pca.export_loadings_matrix(location=location, file_name=file_name)
 
     return flask.jsonify(message='File exported!'), 200
+
+
+@pca.post('/pca/export-pca')
+def export_pca():
+    data = flask.request.get_json()
+
+    location = data['location']
+    file_name = data['fileName']
+    server.pca.export_pca(location=location, file_name=file_name)
+
+    return flask.jsonify(message='File exported!'), 200

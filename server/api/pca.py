@@ -162,6 +162,9 @@ class PCA:
 
         loadings_matrix.to_csv(os.path.join(location, file_name))
 
+    def export_pca(self, location, file_name):
+        self.final_df.to_csv(os.path.join(location, file_name), index=False)
+
     def plot_two_components(self, title, pc_x, pc_y, targets, annot=False, legend=False):
         fig = plt.figure(figsize=(8, 8))
 
