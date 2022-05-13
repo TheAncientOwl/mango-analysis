@@ -240,7 +240,7 @@ export const principalComponentsAnalysisReducer = (
       return {
         ...state,
         loading: false,
-        currentStep: ComponentIndexPCA.ComponentsCountPicker + 1,
+        // currentStep: ComponentIndexPCA.ComponentsCountPicker + 1,
         nextStepUnlocked: newSteps,
       };
     }
