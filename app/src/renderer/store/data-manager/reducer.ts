@@ -160,6 +160,13 @@ export const dataManagerReducer = (state: IDefaultState = defaultState, action: 
       };
     }
 
+    case ActionType.CSVImported: {
+      return {
+        ...state,
+        scaledData: false,
+      };
+    }
+
     default: {
       return state;
     }

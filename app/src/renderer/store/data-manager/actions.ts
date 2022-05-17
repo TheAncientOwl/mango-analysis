@@ -79,6 +79,8 @@ export const importCSV = (page: number, pageSize: number) => async (dispatch: Di
 
   await fetchDataFrame(dispatch, page, pageSize, 'CSV Imported');
 
+  dispatch({ type: ActionType.CSVImported });
+
   return { canceled: false };
 };
 

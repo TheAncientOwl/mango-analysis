@@ -14,6 +14,7 @@ export enum ActionType {
   ChangeDecimalsPrecision = 'CHANGE_DECIMALS_PRECISION',
   ColumnsRowsDropped = 'COLUMNS_ROWS_DROPPED',
   DataFrameDropped = 'DATA_FRAME_DROPPED',
+  CSVImported = 'CSV_IMPORTED',
   CSVImportCanceled = 'CSV_IMPORT_CANCELED',
   ChangeScalingMethod = 'CHANGE_SCALING_METHOD',
   ScaledData = 'SCALED_DATA',
@@ -79,13 +80,17 @@ export type ScalingMethodType =
   | 'min_max_scaling'
   | 'z_score_scaling'
   | 'robust_scaling';
-export interface ChangeScalingMethod {
+interface ChangeScalingMethod {
   type: typeof ActionType.ChangeScalingMethod;
   payload: ScalingMethodType;
 }
 
-export interface DataScaled {
+interface DataScaled {
   type: typeof ActionType.ScaledData;
+}
+
+interface CSVImported {
+  type: typeof ActionType.CSVImported;
 }
 
 export type DispatchTypes =
@@ -101,6 +106,7 @@ export type DispatchTypes =
   | DataFrameDropped
   | CSVImportCanceled
   | ChangeScalingMethod
-  | DataScaled;
+  | DataScaled
+  | CSVImported;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;
