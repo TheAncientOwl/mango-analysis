@@ -63,7 +63,7 @@ interface MenuDrawerProps {
 
 type Props = MenuDrawerProps & PropsFromRedux;
 
-const MenuDrawer: React.FC<Props> = props => {
+const AppMenu: React.FC<Props> = props => {
   return (
     <Drawer variant='permanent' open={props.open}>
       <Toolbar variant='dense' />
@@ -97,5 +97,5 @@ const mapDispatch = {};
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(MenuDrawer);
+export default connector(AppMenu);
 // </redux>

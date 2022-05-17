@@ -1,12 +1,13 @@
-import './App.css';
+import '@styles/scrollbar.css';
+
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Routes, Route } from 'react-router-dom';
 
 import { Paper, Toolbar, Stack } from '@mui/material';
 
-import MenuDrawer from '@components/MenuDrawer';
-import { AppBar } from '@components/app-bar/AppBar';
+import AppMenu from '@components/AppMenu';
+import { AppBar } from '@components/AppBar';
 import { AppRoutes } from '@config/.';
 import { useSwitch } from '@hooks/.';
 
@@ -22,7 +23,7 @@ const App: React.FC = () => {
         <Toolbar variant='dense' />
 
         <Stack direction='row' sx={{ flex: 1, minWidth: 0, minHeight: 0, bgcolor: 'secondary.main' }}>
-          <MenuDrawer open={menuOpen} onItemClick={setCurrentSectionTitle} />
+          <AppMenu open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
           <Paper
             sx={{

@@ -22,7 +22,8 @@
       "@config/*": ["./src/renderer/config/*"],
       "@hooks/*": ["./src/renderer/hooks/*"],
       "@modules/*": ["./src/renderer/modules/*"],
-      "@store/*": ["./src/renderer/store/*"]
+      "@store/*": ["./src/renderer/store/*"],
+      "@styles/*": ["./src/renderer/styles/*"]
     }
   },
   "include": ["src/**/*", "tools/**/*"]

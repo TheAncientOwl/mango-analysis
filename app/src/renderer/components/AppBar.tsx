@@ -1,10 +1,11 @@
+import '@styles/app-bar.css';
+
 import React from 'react';
-import './app-bar.css';
 
 import { AppBar as MuiAppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import { WindowControls } from './WindowControls.config';
+import { WindowControls } from '@config/.';
 
 interface Props {
   title: string;

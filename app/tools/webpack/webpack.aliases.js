@@ -11,4 +11,5 @@ module.exports = createWebpackAliases({
   '@hooks': 'src/renderer/hooks',
   '@modules': 'src/renderer/modules',
   '@store': 'src/renderer/store',
+  '@styles': 'src/renderer/styles',
 });

@@ -1,4 +1,5 @@
-import './scaling-notification.css';
+import '@styles/scaling-notification-blink.css';
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
