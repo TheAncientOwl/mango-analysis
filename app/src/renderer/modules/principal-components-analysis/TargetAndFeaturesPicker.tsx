@@ -18,7 +18,7 @@ import { Select } from '@components/Select';
 import { CheckedSelect } from '@components/CheckedSelect';
 import { AnalysisStepLogic } from '@components/analysis-step';
 
-import { ComponentIndexPCA } from './ComponentIndexPCA';
+import { ComponentsID } from './config/componentsID';
 
 const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
@@ -26,10 +26,10 @@ const TargetAndFeaturesPicker: React.FC<PropsFromRedux> = props => {
   // check if the analysis can continue (target and some features are selected)
   React.useEffect(() => {
     const allowNextStep = props.target !== '' && props.features.length > 0;
-    const nextStepUnlocked = props.nextStepUnlocked(ComponentIndexPCA.TargetAndFeaturesPicker);
+    const nextStepUnlocked = props.nextStepUnlocked(ComponentsID.TargetAndFeaturesPicker);
 
-    if (allowNextStep && !nextStepUnlocked) props.unlockNextStep(ComponentIndexPCA.TargetAndFeaturesPicker);
-    else if (!allowNextStep && nextStepUnlocked) props.lockNextStep(ComponentIndexPCA.TargetAndFeaturesPicker);
+    if (allowNextStep && !nextStepUnlocked) props.unlockNextStep(ComponentsID.TargetAndFeaturesPicker);
+    else if (!allowNextStep && nextStepUnlocked) props.lockNextStep(ComponentsID.TargetAndFeaturesPicker);
   }, [props.target, props.features]);
 
   // fetch possible targets & features

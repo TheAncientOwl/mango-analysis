@@ -10,18 +10,17 @@ import {
   setServerTargetAndFeatures,
 } from '@store/principal-components-analysis/actions';
 
-import TargetAndFeaturesPicker from './TargetAndFeaturesPicker';
-// import ScaleHandler from './ScaleHandler';
-import CorrelationMatrix from './CorrelationMatrix';
-import ComponentsCountPicker from './ComponentsCountPicker';
-import LoadingsMatrix from './LoadingsMatrix';
-import DataVisualizer from './DataVisualizer';
+import TargetAndFeaturesPicker from '../TargetAndFeaturesPicker';
+import CorrelationMatrix from '../CorrelationMatrix';
+import ComponentsCountPicker from '../ComponentsCountPicker';
+import LoadingsMatrix from '../LoadingsMatrix';
+import DataVisualizer from '../DataVisualizer';
 
-import { ComponentIndexPCA } from './ComponentIndexPCA';
+import { ComponentsID } from './componentsID';
 
 export const StepsPCA: ReadonlyArray<StepConfig> = [
   {
-    index: ComponentIndexPCA.TargetAndFeaturesPicker,
+    index: ComponentsID.TargetAndFeaturesPicker,
     title: 'Pick target and features',
     content: <TargetAndFeaturesPicker />,
     onNext: () => {
@@ -29,13 +28,8 @@ export const StepsPCA: ReadonlyArray<StepConfig> = [
       store.dispatch(setServerTargetAndFeatures(state.pca.target, state.pca.features));
     },
   },
-  // {
-  //   index: ComponentIndexPCA.ScaleHandler,
-  //   title: 'Scale data',
-  //   content: <ScaleHandler />,
-  // },
   {
-    index: ComponentIndexPCA.CorrelationMatrix,
+    index: ComponentsID.CorrelationMatrix,
     title: 'Plot correlation matrix',
     content: <CorrelationMatrix />,
     onNext: () => {
@@ -43,15 +37,15 @@ export const StepsPCA: ReadonlyArray<StepConfig> = [
     },
   },
   {
-    index: ComponentIndexPCA.ComponentsCountPicker,
+    index: ComponentsID.ComponentsCountPicker,
     title: 'Pick components count',
     content: <ComponentsCountPicker />,
     onPrev: () => {
-      store.dispatch(lockNextStep(ComponentIndexPCA.ComponentsCountPicker));
+      store.dispatch(lockNextStep(ComponentsID.ComponentsCountPicker));
     },
   },
   {
-    index: ComponentIndexPCA.LoadingsMatrix,
+    index: ComponentsID.LoadingsMatrix,
     title: 'Plot loadings matrix',
     content: <LoadingsMatrix />,
     onNext: () => {
@@ -59,7 +53,7 @@ export const StepsPCA: ReadonlyArray<StepConfig> = [
     },
   },
   {
-    index: ComponentIndexPCA.DataVisualizer,
+    index: ComponentsID.DataVisualizer,
     title: 'Visualize data',
     content: <DataVisualizer />,
   },

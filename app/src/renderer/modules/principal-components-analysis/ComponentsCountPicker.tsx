@@ -28,7 +28,7 @@ import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 
 import { useCache } from '@hooks/.';
-import { ComponentIndexPCA } from './ComponentIndexPCA';
+import { ComponentsID } from './config/componentsID';
 
 const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
   const [showHints, setShowHints] = useCache('pca-show-hints', false);
@@ -132,7 +132,7 @@ const mapState = (state: RootState) => ({
   featuresLength: state.pca.features.length,
   componentsCount: state.pca.analysisComponentsCount,
   hints: state.pca.analysisHints,
-  showExportPCA: state.pca.nextStepUnlocked[ComponentIndexPCA.ComponentsCountPicker],
+  showExportPCA: state.pca.nextStepUnlocked[ComponentsID.ComponentsCountPicker],
 });
 
 const mapDispatch = {

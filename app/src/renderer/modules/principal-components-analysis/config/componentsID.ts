@@ -1,4 +1,4 @@
-export const ComponentIndexPCA = Object.freeze({
+export const ComponentsID = Object.freeze({
   TargetAndFeaturesPicker: 0,
   CorrelationMatrix: 1,
   ComponentsCountPicker: 2,

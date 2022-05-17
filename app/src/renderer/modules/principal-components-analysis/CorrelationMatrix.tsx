@@ -11,15 +11,15 @@ import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 
-import { StepsPCA } from './StepsPCA';
-import { ComponentIndexPCA } from './ComponentIndexPCA';
+import { StepsPCA } from './config/steps';
+import { ComponentsID } from './config/componentsID';
 
 const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => {
-    props.jumpToStep(ComponentIndexPCA.CorrelationMatrix + 1);
+    props.jumpToStep(ComponentsID.CorrelationMatrix + 1);
 
     // call onNext to fetch components count hints (even on skip)
-    StepsPCA[ComponentIndexPCA.CorrelationMatrix]?.onNext?.();
+    StepsPCA[ComponentsID.CorrelationMatrix]?.onNext?.();
   };
 
   return (
@@ -29,7 +29,7 @@ const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
           <Button onClick={props.fetchCorrelationMatrixPath} size='small' color='info'>
             Plot
           </Button>
-          {props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentIndexPCA.CorrelationMatrix) && (
+          {props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.CorrelationMatrix) && (
             <Button onClick={handleSkip} size='small' color='warning'>
               Skip
             </Button>

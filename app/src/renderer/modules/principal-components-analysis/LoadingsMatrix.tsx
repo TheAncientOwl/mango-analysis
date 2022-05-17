@@ -11,13 +11,13 @@ import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 
-import { StepsPCA } from './StepsPCA';
-import { ComponentIndexPCA } from './ComponentIndexPCA';
+import { StepsPCA } from './config/steps';
+import { ComponentsID } from './config/componentsID';
 
 const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => {
-    props.jumpToStep(ComponentIndexPCA.LoadingsMatrix + 1);
-    StepsPCA[ComponentIndexPCA.LoadingsMatrix]?.onNext?.();
+    props.jumpToStep(ComponentsID.LoadingsMatrix + 1);
+    StepsPCA[ComponentsID.LoadingsMatrix]?.onNext?.();
   };
 
   return (
@@ -27,7 +27,7 @@ const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
           <Button onClick={props.fetchLoadingsMatrixPath} size='small' color='info'>
             Plot
           </Button>
-          {props.loadingsMatrixPath === '' && !props.nextStepUnlocked(ComponentIndexPCA.LoadingsMatrix) && (
+          {props.loadingsMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.LoadingsMatrix) && (
             <Button onClick={handleSkip} size='small' color='warning'>
               Skip
             </Button>
