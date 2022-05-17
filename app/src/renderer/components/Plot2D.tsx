@@ -2,6 +2,7 @@ import React from 'react';
 
 // eslint-disable-next-line import/named
 import { Box, Button, Grid, SelectChangeEvent, Collapse, IconButton, Tooltip, Stack } from '@mui/material';
+
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,14 +10,12 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
-import { Paper } from '@components/Paper';
-import { Select } from '@components/Select';
-import { AnalysisImage } from '@components/AnalysisImage';
-import { Checkbox } from '@components/Checkbox';
-import { TextInputSave } from '@components/TextInputSave';
-
-import { AutoCompleteCheckedSelect } from '@components/AutocompleteCheckedSelect';
-import { logRender } from '@src/common/logRender';
+import { Paper } from './Paper';
+import { Select } from './Select';
+import { AnalysisImage } from './AnalysisImage';
+import { Checkbox } from './Checkbox';
+import { TextInputSave } from './TextInputSave';
+import { AutoCompleteCheckedSelect } from './AutocompleteCheckedSelect';
 
 export interface IPlot2D {
   open: boolean;
@@ -62,23 +61,20 @@ const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
-export const Plot2D: React.FC<Props> = props => {
-  const plot: IPlot2D =
-    props.plot !== undefined
-      ? props.plot
-      : {
-          open: false,
-          id: '',
-          pcX: '',
-          pcY: '',
-          plotSrc: '',
-          annot: false,
-          legend: false,
-          targets: [],
-          title: '',
-        };
+const emptyPlot: IPlot2D = {
+  open: false,
+  id: '',
+  pcX: '',
+  pcY: '',
+  plotSrc: '',
+  annot: false,
+  legend: false,
+  targets: [],
+  title: '',
+};
 
-  logRender(`Plot ${plot.id}`);
+export const Plot2D: React.FC<Props> = props => {
+  const plot: IPlot2D = props.plot !== undefined ? props.plot : emptyPlot;
 
   const mainToolbar = (
     <Stack direction='row' gap={1}>
