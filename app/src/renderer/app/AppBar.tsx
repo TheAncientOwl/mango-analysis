@@ -12,58 +12,49 @@ interface Props {
   onMenuButtonClick: () => void;
 }
 
+const spacer = <Box sx={{ flexGrow: 1 }} />;
+
 export const AppBar: React.FC<Props> = ({ onMenuButtonClick, title }) => {
-  const menuIcon = (
-    <IconButton
-      className='non-draggable'
-      size='small'
-      edge='start'
-      color='inherit'
-      aria-label='menu'
-      sx={{ mr: 1, color: 'secondary.main' }}
-      onClick={onMenuButtonClick}>
-      <MenuIcon />
-    </IconButton>
-  );
-
-  const logo = (
-    <Typography variant='body1' component='div' sx={{ mr: 2 }}>
-      Mango
-    </Typography>
-  );
-
-  const spacer = <Box sx={{ flexGrow: 1 }} />;
-
-  const appTitle = (
-    <Typography variant='body2' sx={{ textTransform: 'capitalize' }}>
-      {title}
-    </Typography>
-  );
-
-  const controls = WindowControls.map((control, index) => (
-    <IconButton
-      key={index}
-      onClick={control.action}
-      className='non-draggable'
-      size='small'
-      edge='start'
-      color='inherit'
-      aria-label={`app-control-${index}`}
-      sx={{ ml: 0.1 }}>
-      {control.icon}
-    </IconButton>
-  ));
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <MuiAppBar position='fixed' className='draggable' sx={{ zIndex: theme => theme.zIndex.tooltip + 100 }}>
         <Toolbar variant='dense'>
-          {menuIcon}
-          {logo}
+          <IconButton
+            className='non-draggable'
+            size='small'
+            edge='start'
+            color='inherit'
+            aria-label='menu'
+            sx={{ mr: 1, color: 'secondary.main' }}
+            onClick={onMenuButtonClick}>
+            <MenuIcon />
+          </IconButton>
+
+          <Typography variant='body1' component='div' sx={{ mr: 2 }}>
+            Mango
+          </Typography>
+
           {spacer}
-          {appTitle}
+
+          <Typography variant='body2' sx={{ textTransform: 'capitalize' }}>
+            {title}
+          </Typography>
+
           {spacer}
-          {controls}
+
+          {WindowControls.map((control, index) => (
+            <IconButton
+              key={index}
+              onClick={control.action}
+              className='non-draggable'
+              size='small'
+              edge='start'
+              color='inherit'
+              aria-label={`app-control-${index}`}
+              sx={{ ml: 0.1 }}>
+              {control.icon}
+            </IconButton>
+          ))}
         </Toolbar>
       </MuiAppBar>
     </Box>
