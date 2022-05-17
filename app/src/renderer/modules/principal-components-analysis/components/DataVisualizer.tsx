@@ -4,17 +4,23 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 import {
-  pushDefaultPlot,
+  jumpToStep,
   changePlotAxisX,
   changePlotAxisY,
   fetchPlotSrc,
-  jumpToStep,
+  togglePlotAnnot,
+  togglePlotLegend,
+  changePlotTargets,
+  togglePlotOpen,
+  deletePlot,
+  changePlotTitle,
+  pushDefaultPlot,
 } from '@store/principal-components-analysis/actions';
 
 import { Box, Button, Collapse } from '@mui/material';
 import { TransitionGroup } from 'react-transition-group';
 
-import Plot2D from './Plot2D';
+import PlotWrapper2D from './PlotWrapper2D';
 
 export const DataVisualizer: React.FC<PropsFromRedux> = props => {
   return (
@@ -22,9 +28,15 @@ export const DataVisualizer: React.FC<PropsFromRedux> = props => {
       <Button onClick={props.pushDefaultPlot}>add</Button>
 
       <TransitionGroup>
-        {props.plots.map((plot, idx) => (
+        {props.plots.map((plot, plotIndex) => (
           <Collapse key={plot.id}>
-            <Plot2D plotIndex={idx} />
+            <PlotWrapper2D
+              plot={plot}
+              plotIndex={plotIndex}
+              componentsCount={props.componentsCount}
+              pcaLabels={props.pcaLabels}
+              targets={props.targets}
+            />
           </Collapse>
         ))}
       </TransitionGroup>
@@ -41,11 +53,17 @@ const mapState = (state: RootState) => ({
 });
 
 const mapDispatch = {
-  pushDefaultPlot,
+  jumpToStep,
   changePlotAxisX,
   changePlotAxisY,
   fetchPlotSrc,
-  jumpToStep,
+  togglePlotAnnot,
+  togglePlotLegend,
+  changePlotTargets,
+  togglePlotOpen,
+  deletePlot,
+  changePlotTitle,
+  pushDefaultPlot,
 };
 
 const connector = connect(mapState, mapDispatch);

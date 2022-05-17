@@ -1,4 +1,5 @@
 import { axios } from '@config/.';
+import { store } from '@store/.';
 
 import { Dispatch, ActionType } from './types';
 
@@ -107,21 +108,21 @@ export const changePlotAxisY = (index: number, value: string) => (dispatch: Disp
   dispatch({ type: ActionType.ChangePlotAxisY, payload: { index, value } });
 };
 
-export const fetchPlotSrc =
-  (index: number, title: string, pcX: string, pcY: string, targets: string[], annot: boolean, legend: boolean) =>
-  async (dispatch: Dispatch) => {
-    dispatch({ type: ActionType.Loading });
+export const fetchPlotSrc = (index: number) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
 
-    const res = await axios.post('/pca/plot/2D', { title, pcX, pcY, targets, annot, legend });
+  const { title, pcX, pcY, targets, annot, legend } = store.getState().pca.plots[index];
 
-    dispatch({
-      type: ActionType.FetchedPlotSrc,
-      payload: {
-        index,
-        value: res.data.imagePath,
-      },
-    });
-  };
+  const res = await axios.post('/pca/plot/2D', { title, pcX, pcY, targets, annot, legend });
+
+  dispatch({
+    type: ActionType.FetchedPlotSrc,
+    payload: {
+      index,
+      value: res.data.imagePath,
+    },
+  });
+};
 
 export const clearPlots = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.ClearPlots });

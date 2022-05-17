@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { ComponentsID } from '@modules/principal-components-analysis/config/componentsID';
-import { IPlot2D } from '@modules/principal-components-analysis/components/Plot2D';
+import { IPlot2D } from '@components/Plot2D';
 
 import { AnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
 
