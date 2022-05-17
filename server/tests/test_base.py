@@ -17,7 +17,8 @@ class tokens:
 class TestBase(unittest.TestCase):
     # dataframe read & empty
     def readDataFrame(self):
-        server.dataFrame = pandas.read_csv(f'{tokens.working_dir}/Date.csv')
+        server.dataFrame = pandas.read_csv(
+            f'{tokens.working_dir}/test-data/pca-data.csv')
         server.dataFrame.insert(
             0, '_mango_id', range(1, len(server.dataFrame) + 1))
 

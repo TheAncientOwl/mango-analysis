@@ -14,7 +14,7 @@ class DataImportExportTest(TestBase):
     # -------------------------------------------------------------------------------------------------------
     def test_import_existing_csv(self):
         response = self.client.get(
-            f'/data/import/csv/{tokens.working_dir}/Date.csv')
+            f'/data/import/csv/{tokens.working_dir}/test-data/pca-data.csv')
 
         self.assertStatusCodeCorrect(response, 200)
         self.assertContentTypeJSON(response)

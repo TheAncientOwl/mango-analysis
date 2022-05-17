@@ -13,6 +13,7 @@ interface IDefaultState extends DataFrameState {
   feedbackMessageOpen: boolean;
 
   scalingMethod: ScalingMethodType;
+  scaledData: boolean;
 }
 
 const defaultState: IDefaultState = {
@@ -31,6 +32,7 @@ const defaultState: IDefaultState = {
   feedbackMessageOpen: false,
 
   scalingMethod: 'none',
+  scaledData: false,
 };
 
 export const dataManagerReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
@@ -131,6 +133,7 @@ export const dataManagerReducer = (state: IDefaultState = defaultState, action: 
         page: 0,
         pageSize: 25,
         importedData: false,
+        scaledData: false,
       };
     }
 
@@ -153,6 +156,7 @@ export const dataManagerReducer = (state: IDefaultState = defaultState, action: 
       return {
         ...state,
         scalingMethod: 'none',
+        scaledData: true,
       };
     }
 

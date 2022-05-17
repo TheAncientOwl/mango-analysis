@@ -98,3 +98,8 @@ def scale():
 
     server.scaled_data = True
     return flask.jsonify(message="DataFrame scaled"), 200
+
+
+@data_scale.get('/data/scale-state')
+def scale_state():
+    return flask.jsonify(scaledData=server.scaled_data), 200

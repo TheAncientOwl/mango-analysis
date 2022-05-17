@@ -10,11 +10,13 @@ import { Box, Backdrop, CircularProgress } from '@mui/material';
 import { mapConfigToSteps } from '@components/analysis-step';
 
 import { StepsPCA } from './StepsPCA';
+import { ScalingNotification } from '@components/ScalingNotification';
 
 const PrincipalComponentsAnalysis: React.FC<PropsFromRedux> = props => {
   return (
     <>
-      <Box sx={{ p: 2, pb: '15em', overflowY: 'scroll' }}>
+      <Box sx={{ p: 2, pb: '15em', overflowY: 'scroll', position: 'relative' }}>
+        <ScalingNotification scaled={props.scaledData} />
         {mapConfigToSteps(
           StepsPCA,
           props.nextStep,
@@ -34,6 +36,7 @@ const PrincipalComponentsAnalysis: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
+  scaledData: state.dataManager.scaledData,
   loading: state.pca.loading,
   currentStep: state.pca.currentStep,
   unlockedSteps: state.pca.nextStepUnlocked,

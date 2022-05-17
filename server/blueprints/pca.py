@@ -40,18 +40,6 @@ def set_target_and_features():
     return flask.jsonify(message='Set target & features!'), 200
 
 
-@pca.get('/pca/was-data-scaled')
-def was_data_scaled():
-    return flask.jsonify(scaledData=server.scaled_data), 200
-
-
-@pca.post('/pca/scale-data')
-def scale_data():
-    server.pca.standardize_data()
-
-    return flask.jsonify(message='Data scaled!'), 200
-
-
 @pca.get('/pca/plot/correlation-matrix')
 def plot_correlation_matrix():
     path = server.pca.plot_correlation_matrix()

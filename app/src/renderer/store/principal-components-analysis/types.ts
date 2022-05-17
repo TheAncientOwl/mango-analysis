@@ -19,8 +19,8 @@ export enum ActionType {
 
   ServerSetTargetFeaturesSuccess = 'SERVER_SET_TARGET_FEATURES_SUCCESS',
 
-  FetchedScaleDataStatus = 'FETCHED_SCALE_DATA_STATUS',
-  ScaledData = 'SCALED_DATA',
+  // FetchedScaleDataStatus = 'FETCHED_SCALE_DATA_STATUS',
+  // ScaledData = 'SCALED_DATA',
 
   FetchedCorrelationMatrixPath = 'FETCHED_CORRELATION_MATRIX_PATH',
   FetchedLoadingsMatrixPath = 'FETCHED_LOADINGS_MATRIX_PATH',
@@ -95,14 +95,14 @@ interface ServerSetTargetsFeaturesSuccess {
   type: ActionType.ServerSetTargetFeaturesSuccess;
 }
 
-interface FetchedScaleDataStatus {
-  type: ActionType.FetchedScaleDataStatus;
-  payload: boolean;
-}
+// interface FetchedScaleDataStatus {
+//   type: ActionType.FetchedScaleDataStatus;
+//   payload: boolean;
+// }
 
-interface ScaledData {
-  type: ActionType.ScaledData;
-}
+// interface ScaledData {
+//   type: ActionType.ScaledData;
+// }
 
 interface JumpToStep {
   type: ActionType.JumpToStep;
@@ -239,8 +239,8 @@ export type DispatchTypes =
   | ChangeTarget
   | ChangeFeatures
   | ServerSetTargetsFeaturesSuccess
-  | FetchedScaleDataStatus
-  | ScaledData
+  // | FetchedScaleDataStatus
+  // | ScaledData
   | JumpToStep
   | FetchedCorrelationMatrixPath
   | FetchedAnalysisHints

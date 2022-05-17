@@ -45,21 +45,21 @@ export const setServerTargetAndFeatures = (target: string, features: string[]) =
   dispatch({ type: ActionType.ServerSetTargetFeaturesSuccess });
 };
 
-export const fetchScaledDataStatus = () => async (dispatch: Dispatch) => {
-  dispatch({ type: ActionType.Loading });
+// export const fetchScaledDataStatus = () => async (dispatch: Dispatch) => {
+//   dispatch({ type: ActionType.Loading });
 
-  const res = await axios.get('/pca/was-data-scaled');
+//   const res = await axios.get('/pca/was-data-scaled');
 
-  dispatch({ type: ActionType.FetchedScaleDataStatus, payload: res.data.scaledData });
-};
+//   dispatch({ type: ActionType.FetchedScaleDataStatus, payload: res.data.scaledData });
+// };
 
-export const scaleData = () => async (dispatch: Dispatch) => {
-  dispatch({ type: ActionType.Loading });
+// export const scaleData = () => async (dispatch: Dispatch) => {
+//   dispatch({ type: ActionType.Loading });
 
-  await axios.post('/pca/scale-data');
+//   await axios.post('/pca/scale-data');
 
-  dispatch({ type: ActionType.ScaledData });
-};
+//   dispatch({ type: ActionType.ScaledData });
+// };
 
 export const jumpToStep = (step: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.JumpToStep, payload: step });

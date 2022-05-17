@@ -48,10 +48,6 @@ class PCA:
         self.features = list(features)
         self.features_values = server.dataFrame.loc[:, self.features].values
 
-    def standardize_data(self):
-        self.features_values = StandardScaler().fit_transform(self.features_values)
-        server.scaled_data = True
-
     def plot_correlation_matrix(self):
         corr_matrix = pd.DataFrame(
             data=self.features_values, columns=self.features).corr().round(2)

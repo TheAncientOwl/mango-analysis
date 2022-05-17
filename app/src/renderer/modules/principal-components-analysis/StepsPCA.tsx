@@ -11,7 +11,7 @@ import {
 } from '@store/principal-components-analysis/actions';
 
 import TargetAndFeaturesPicker from './TargetAndFeaturesPicker';
-import ScaleHandler from './ScaleHandler';
+// import ScaleHandler from './ScaleHandler';
 import CorrelationMatrix from './CorrelationMatrix';
 import ComponentsCountPicker from './ComponentsCountPicker';
 import LoadingsMatrix from './LoadingsMatrix';
@@ -29,11 +29,11 @@ export const StepsPCA: ReadonlyArray<StepConfig> = [
       store.dispatch(setServerTargetAndFeatures(state.pca.target, state.pca.features));
     },
   },
-  {
-    index: ComponentIndexPCA.ScaleHandler,
-    title: 'Scale data',
-    content: <ScaleHandler />,
-  },
+  // {
+  //   index: ComponentIndexPCA.ScaleHandler,
+  //   title: 'Scale data',
+  //   content: <ScaleHandler />,
+  // },
   {
     index: ComponentIndexPCA.CorrelationMatrix,
     title: 'Plot correlation matrix',
