@@ -7,25 +7,21 @@ import { Routes, Route } from 'react-router-dom';
 import { Toolbar, Stack } from '@mui/material';
 
 import { AppRoutes } from '@config/.';
-import { useSwitch } from '@hooks/.';
 
 import AppMenu from './AppMenu';
-import { AppBar } from './AppBar';
+import AppBar from './AppBar';
 import { AppPaper } from './AppPaper';
 
 const App: React.FC = () => {
-  const [currentSectionTitle, setCurrentSectionTitle] = React.useState(AppRoutes[0].name);
-  const { value: menuOpen, toggle: toggleMenu } = useSwitch(false);
-
   return (
     <React.Fragment>
-      <AppBar onMenuButtonClick={toggleMenu} title={currentSectionTitle} />
+      <AppBar />
 
       <Stack direction='column' sx={{ width: '100vw', height: '100vh' }}>
         <Toolbar variant='dense' />
 
         <Stack direction='row' sx={{ flex: 1, minWidth: 0, minHeight: 0, bgcolor: 'secondary.main' }}>
-          <AppMenu open={menuOpen} onItemClick={setCurrentSectionTitle} />
+          <AppMenu />
 
           <AppPaper>
             <Routes>

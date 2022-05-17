@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
+import { setAppTitle } from '@store/app-global/actions';
 
 import { Box, List, Toolbar, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 // eslint-disable-next-line import/named
@@ -56,14 +57,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })
   }),
 }));
 
-interface MenuDrawerProps {
-  open: boolean;
-  onItemClick: (itemName: string) => void;
-}
-
-type Props = MenuDrawerProps & PropsFromRedux;
-
-const AppMenu: React.FC<Props> = props => {
+const AppMenu: React.FC<PropsFromRedux> = props => {
   return (
     <Drawer variant='permanent' open={props.open}>
       <Toolbar variant='dense' />
@@ -76,7 +70,7 @@ const AppMenu: React.FC<Props> = props => {
               to={section.routePath}
               key={index}
               sx={{ color: 'text.primary' }}
-              onClick={() => props.onItemClick(section.name)}>
+              onClick={() => props.setAppTitle(section.name)}>
               <ListItemIcon sx={{ color: 'secondary.main' }}>{section.icon}</ListItemIcon>
               <ListItemText sx={{ textTransform: 'capitalize' }}>{section.alias}</ListItemText>
             </ListItemButton>
@@ -89,10 +83,13 @@ const AppMenu: React.FC<Props> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
+  open: state.appGlobal.menuOpen,
   importedData: state.dataManager.importedData,
 });
 
-const mapDispatch = {};
+const mapDispatch = {
+  setAppTitle,
+};
 
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;

@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { appGlobalReducer } from './app-global/reducer';
 import { dataManagerReducer } from './data-manager/reducer';
 import { principalComponentsAnalysisReducer } from './principal-components-analysis/reducer';
 
@@ -7,6 +8,7 @@ import thunk from 'redux-thunk';
 
 export const store = configureStore({
   reducer: {
+    appGlobal: appGlobalReducer,
     dataManager: dataManagerReducer,
     pca: principalComponentsAnalysisReducer,
   },
