@@ -35,6 +35,7 @@ const App: React.FC = () => {
                 minWidth: 0,
                 minHeight: 0,
               },
+              position: 'relative',
             }}>
             <Routes>
               {AppRoutes.map((section, index) => (

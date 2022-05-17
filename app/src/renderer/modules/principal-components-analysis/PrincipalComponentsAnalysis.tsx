@@ -15,7 +15,7 @@ import { ScalingNotification } from '@components/ScalingNotification';
 const PrincipalComponentsAnalysis: React.FC<PropsFromRedux> = props => {
   return (
     <>
-      <Box sx={{ p: 2, pb: '15em', overflowY: 'scroll', position: 'relative' }}>
+      <Box sx={{ p: 2, pb: '15em', overflowY: 'scroll' }}>
         <ScalingNotification scaled={props.scaledData} />
         {mapConfigToSteps(
           StepsPCA,
