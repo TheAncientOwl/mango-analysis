@@ -18,6 +18,7 @@ interface IDefaultState {
 
   analysisComponentsCount: number;
   analysisHints: AnalysisHints;
+  hintsOpen: boolean;
 
   correlationMatrixPath: string;
   loadingsMatrixPath: string;
@@ -46,6 +47,7 @@ const defaultState: IDefaultState = {
     threshold70: { columns: [], data: [], index: [] },
     eigenvaluesG1: { columns: [], data: [], index: [] },
   },
+  hintsOpen: false,
 
   correlationMatrixPath: '',
   loadingsMatrixPath: '',
@@ -426,6 +428,13 @@ export const principalComponentsAnalysisReducer = (
 
     case ActionType.Reset: {
       return defaultState;
+    }
+
+    case ActionType.ToggleHints: {
+      return {
+        ...state,
+        hintsOpen: !state.hintsOpen,
+      };
     }
 
     default: {

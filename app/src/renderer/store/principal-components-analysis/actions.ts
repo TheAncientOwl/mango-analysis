@@ -206,3 +206,7 @@ export const exportPCA = () => async (dispatch: Dispatch) => {
     dispatch({ type: ActionType.ExportPCAFail });
   }
 };
+
+export const toggleHints = () => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ToggleHints });
+};

@@ -3,7 +3,12 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { changeComponentsCount, runAnalysis, exportPCA } from '@store/principal-components-analysis/actions';
+import {
+  changeComponentsCount,
+  runAnalysis,
+  exportPCA,
+  toggleHints,
+} from '@store/principal-components-analysis/actions';
 
 import {
   Box,
@@ -27,12 +32,9 @@ import { BasicDataFrame } from '@components/BasicDataFrame';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 
-import { useCache } from '@hooks/.';
 import { ComponentsID } from '../config/componentsID';
 
 const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
-  const [showHints, setShowHints] = useCache('pca-show-hints', false);
-
   const handleChange = (event: SelectChangeEvent) => {
     props.changeComponentsCount(+event.target.value);
   };
@@ -45,8 +47,6 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
   const runAnalysis = () => {
     props.runAnalysis(props.componentsCount);
   };
-
-  const toggleShowHints = () => setShowHints(!showHints);
 
   return (
     <React.Fragment>
@@ -73,8 +73,8 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
           </Button>
 
           <Button
-            startIcon={showHints ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-            onClick={toggleShowHints}
+            startIcon={props.hintsOpen ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+            onClick={props.toggleHints}
             size='medium'>
             Hints
           </Button>
@@ -88,7 +88,7 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
       </AnalysisStepLogic>
 
       <AnalysisStepResult>
-        <Collapse in={showHints}>
+        <Collapse in={props.hintsOpen}>
           {props.hints.kaiserPath !== '' && (
             <Grid container spacing={2} alignItems='center' sx={{ mt: 1 }}>
               <Grid item xs={8} sm={7} md={4}>
@@ -129,6 +129,7 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
+  hintsOpen: state.pca.hintsOpen,
   featuresLength: state.pca.features.length,
   componentsCount: state.pca.analysisComponentsCount,
   hints: state.pca.analysisHints,
@@ -139,6 +140,7 @@ const mapDispatch = {
   changeComponentsCount,
   runAnalysis,
   exportPCA,
+  toggleHints,
 };
 
 const connector = connect(mapState, mapDispatch);

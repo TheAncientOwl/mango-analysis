@@ -45,6 +45,8 @@ export enum ActionType {
 
   ExportPCAEnded = 'EXPORT_PCA_ENDED',
   ExportPCAFail = 'EXPORT_PCA_FAIL',
+
+  ToggleHints = 'TOGGLE_HINTS',
 }
 
 interface Loading {
@@ -216,6 +218,10 @@ interface ExportPCAFail {
   type: ActionType.ExportPCAFail;
 }
 
+interface ToggleHints {
+  type: ActionType.ToggleHints;
+}
+
 export type DispatchTypes =
   | Loading
   | Reset
@@ -248,6 +254,7 @@ export type DispatchTypes =
   | ExportLoadingsEnded
   | ExportLoadingsFail
   | ExportPCAEnded
-  | ExportPCAFail;
+  | ExportPCAFail
+  | ToggleHints;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;
