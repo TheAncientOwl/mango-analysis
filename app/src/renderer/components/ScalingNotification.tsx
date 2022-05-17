@@ -37,7 +37,7 @@ export const ScalingNotification: React.FC<Props> = ({ scaled }) => {
             }}>
             <Tooltip title='For better results, scale the data! Click and go to the DataManager'>
               <Box color='error.main' className='blink'>
-                <PriorityHighIcon sx={{ fontSize: '2.5rem', cursor: 'pointer' }} />
+                <PriorityHighIcon sx={{ fontSize: '2rem', cursor: 'pointer' }} />
               </Box>
             </Tooltip>
           </IconButton>
