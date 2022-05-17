@@ -22,8 +22,6 @@ interface IDefaultState {
   correlationMatrixPath: string;
   loadingsMatrixPath: string;
 
-  // scaledData: boolean;
-
   plot: {
     pcaLabels: string[];
     targets: string[];
@@ -51,8 +49,6 @@ const defaultState: IDefaultState = {
 
   correlationMatrixPath: '',
   loadingsMatrixPath: '',
-
-  // scaledData: false,
 
   plot: {
     pcaLabels: [],
@@ -128,8 +124,6 @@ export const principalComponentsAnalysisReducer = (
     }
 
     case ActionType.ChangeTarget: {
-      // if (state.target === action.payload) return state;
-
       // features not set ? old unlockedSteps : new set with next step unlocked
       const getSteps = () =>
         state.features.length < 2
@@ -141,13 +135,10 @@ export const principalComponentsAnalysisReducer = (
         target: action.payload,
         nextStepUnlocked: getSteps(),
         correlationMatrixPath: '',
-        // scaledData: false,
       };
     }
 
     case ActionType.ChangeFeatures: {
-      // if (JSON.stringify(state.features) === JSON.stringify(action.payload)) return state;
-
       // target not set ? old unlockedSteps : new set with next step unlocked
       const getSteps = () =>
         state.target === ''
@@ -169,23 +160,6 @@ export const principalComponentsAnalysisReducer = (
         loading: false,
       };
     }
-
-    // case ActionType.FetchedScaleDataStatus: {
-    //   if (state.scaledData === action.payload) return state;
-
-    //   return {
-    //     ...state,
-    //     scaledData: action.payload,
-    //   };
-    // }
-
-    // case ActionType.ScaledData: {
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     scaledData: true,
-    //   };
-    // }
 
     case ActionType.JumpToStep: {
       const step = action.payload;
@@ -240,7 +214,6 @@ export const principalComponentsAnalysisReducer = (
       return {
         ...state,
         loading: false,
-        // currentStep: ComponentIndexPCA.ComponentsCountPicker + 1,
         nextStepUnlocked: newSteps,
       };
     }
