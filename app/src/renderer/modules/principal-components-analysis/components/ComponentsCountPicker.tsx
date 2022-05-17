@@ -28,7 +28,7 @@ import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 
 import { useCache } from '@hooks/.';
-import { ComponentsID } from './config/componentsID';
+import { ComponentsID } from '../config/componentsID';
 
 const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
   const [showHints, setShowHints] = useCache('pca-show-hints', false);

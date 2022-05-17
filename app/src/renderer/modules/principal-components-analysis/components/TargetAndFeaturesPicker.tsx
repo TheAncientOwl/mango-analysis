@@ -18,7 +18,7 @@ import { Select } from '@components/Select';
 import { CheckedSelect } from '@components/CheckedSelect';
 import { AnalysisStepLogic } from '@components/analysis-step';
 
-import { ComponentsID } from './config/componentsID';
+import { ComponentsID } from '../config/componentsID';
 
 const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 

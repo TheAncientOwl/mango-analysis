@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { fetchCorrelationMatrixPath, jumpToStep } from '@store/principal-components-analysis/actions';
+import { fetchLoadingsMatrixPath, jumpToStep, exportLoadings } from '@store/principal-components-analysis/actions';
 
 import { Box, Button, Stack } from '@mui/material';
 
@@ -11,36 +11,38 @@ import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 
-import { StepsPCA } from './config/steps';
-import { ComponentsID } from './config/componentsID';
+import { StepsPCA } from '../config/steps';
+import { ComponentsID } from '../config/componentsID';
 
-const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
+const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => {
-    props.jumpToStep(ComponentsID.CorrelationMatrix + 1);
-
-    // call onNext to fetch components count hints (even on skip)
-    StepsPCA[ComponentsID.CorrelationMatrix]?.onNext?.();
+    props.jumpToStep(ComponentsID.LoadingsMatrix + 1);
+    StepsPCA[ComponentsID.LoadingsMatrix]?.onNext?.();
   };
 
   return (
     <>
       <AnalysisStepLogic>
         <Stack direction='row' gap={1}>
-          <Button onClick={props.fetchCorrelationMatrixPath} size='small' color='info'>
+          <Button onClick={props.fetchLoadingsMatrixPath} size='small' color='info'>
             Plot
           </Button>
-          {props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.CorrelationMatrix) && (
+          {props.loadingsMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.LoadingsMatrix) && (
             <Button onClick={handleSkip} size='small' color='warning'>
               Skip
             </Button>
           )}
+          <Button size='small' onClick={props.exportLoadings}>
+            export loadings
+          </Button>
         </Stack>
       </AnalysisStepLogic>
+
       <AnalysisStepResult>
-        {props.correlationMatrixPath !== '' && (
+        {props.loadingsMatrixPath !== '' && (
           <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
-              <AnalysisImage src={props.correlationMatrixPath} alt='Correlation Matrix' />
+              <AnalysisImage src={props.loadingsMatrixPath} alt='Loadings Matrix' />
             </Box>
           </Paper>
         )}
@@ -51,17 +53,18 @@ const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
-  correlationMatrixPath: state.pca.correlationMatrixPath,
+  loadingsMatrixPath: state.pca.loadingsMatrixPath,
   nextStepUnlocked: (step: number) => state.pca.nextStepUnlocked[step],
 });
 
 const mapDispatch = {
-  fetchCorrelationMatrixPath,
+  fetchLoadingsMatrixPath,
   jumpToStep,
+  exportLoadings,
 };
 
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(CorrelationMatrix);
+export default connector(LoadingsMatrix);
 // </redux>

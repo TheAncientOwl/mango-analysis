@@ -10,11 +10,11 @@ import {
   setServerTargetAndFeatures,
 } from '@store/principal-components-analysis/actions';
 
-import TargetAndFeaturesPicker from '../TargetAndFeaturesPicker';
-import CorrelationMatrix from '../CorrelationMatrix';
-import ComponentsCountPicker from '../ComponentsCountPicker';
-import LoadingsMatrix from '../LoadingsMatrix';
-import DataVisualizer from '../DataVisualizer';
+import TargetAndFeaturesPicker from '../components/TargetAndFeaturesPicker';
+import CorrelationMatrix from '../components/CorrelationMatrix';
+import ComponentsCountPicker from '../components/ComponentsCountPicker';
+import LoadingsMatrix from '../components/LoadingsMatrix';
+import DataVisualizer from '../components/DataVisualizer';
 
 import { ComponentsID } from './componentsID';
 
