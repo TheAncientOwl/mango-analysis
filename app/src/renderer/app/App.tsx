@@ -4,12 +4,14 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Routes, Route } from 'react-router-dom';
 
-import { Paper, Toolbar, Stack } from '@mui/material';
+import { Toolbar, Stack } from '@mui/material';
 
-import AppMenu from '@components/AppMenu';
-import { AppBar } from '@components/AppBar';
 import { AppRoutes } from '@config/.';
 import { useSwitch } from '@hooks/.';
+
+import AppMenu from './AppMenu';
+import { AppBar } from './AppBar';
+import { AppPaper } from './AppPaper';
 
 const App: React.FC = () => {
   const [currentSectionTitle, setCurrentSectionTitle] = React.useState(AppRoutes[0].name);
@@ -25,25 +27,13 @@ const App: React.FC = () => {
         <Stack direction='row' sx={{ flex: 1, minWidth: 0, minHeight: 0, bgcolor: 'secondary.main' }}>
           <AppMenu open={menuOpen} onItemClick={setCurrentSectionTitle} />
 
-          <Paper
-            sx={{
-              m: 1,
-              flex: 1,
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-              '> *': {
-                minWidth: 0,
-                minHeight: 0,
-              },
-              position: 'relative',
-            }}>
+          <AppPaper>
             <Routes>
               {AppRoutes.map((section, index) => (
                 <Route key={index} path={section.routePath} element={section.element} />
               ))}
             </Routes>
-          </Paper>
+          </AppPaper>
         </Stack>
       </Stack>
     </React.Fragment>
