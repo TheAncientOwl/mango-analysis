@@ -1,0 +1,34 @@
+@local_host = http://localhost:5000
+@route = http://localhost:5000/factor-analysis
+
+### Read data
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/factor-analysis.csv
+
+### Print server's dataframe head
+GET {{local_host}}/printhead 
+
+### new fa
+POST {{route}}/new
+
+### possible features
+GET {{route}}/possible-features
+
+### set features
+POST {{route}}/set-features
+Content-Type: application/json
+
+{
+  "features": ["A1", "A2", "A3", "A4", "A5", "C1", "C2", "C3", "C4", "C5", "E1", "E2", "E3", "E4", "E5", "N1", "N2", "N3", "N4", "N5", "O1", "O2", "O3", "O4", "O5"]
+}
+
+### bartlett
+GET {{route}}/tests/bartlett
+
+### kmo
+GET {{route}}/tests/kmo
+
+### default analysis
+POST {{route}}/analyze
+
+### default hints
+GET {{route}}/default-hints

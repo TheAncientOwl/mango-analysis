@@ -1,5 +1,4 @@
 import os
-import uuid
 import random
 
 import main.server as server
@@ -11,10 +10,6 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA as skPCA
 from sklearn.preprocessing import StandardScaler
 from pandas.api.types import is_numeric_dtype as pandas_is_numeric
-
-
-def make_uuid():
-    return str(uuid.uuid4())
 
 
 class PCA:
@@ -59,7 +54,7 @@ class PCA:
                     cmap=self.cmap, mask=mask)
 
         figpath = os.path.join(
-            server.plots_data_path, f'CorrelationMatrix.{make_uuid()}.jpg')
+            server.plots_data_path, f'CorrelationMatrix.{server.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -93,7 +88,7 @@ class PCA:
         plt.xticks(range(1, self.pca.n_components + 1))
 
         figpath = os.path.join(
-            server.plots_data_path, f'Kaiser-ScreePlot.{make_uuid()}.jpg')
+            server.plots_data_path, f'Kaiser-ScreePlot.{server.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -144,7 +139,7 @@ class PCA:
                     cmap=self.cmap)
 
         figpath = os.path.join(server.plots_data_path,
-                               f'LoadingsMatrix.{make_uuid()}.jpg')
+                               f'LoadingsMatrix.{server.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -185,7 +180,7 @@ class PCA:
                 ax.legend(targets)
 
         figpath = os.path.join(server.plots_data_path,
-                               f'PCA-Plot-{pc_x}-{pc_y}.{make_uuid()}.jpg')
+                               f'PCA-Plot-{pc_x}-{pc_y}.{server.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
