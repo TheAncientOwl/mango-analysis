@@ -4,8 +4,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { alpha } from '@mui/system';
-import { Box, Tooltip, IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+
+import { Tooltip } from '@components/Tooltip';
 
 import { theme } from '@config/.';
 

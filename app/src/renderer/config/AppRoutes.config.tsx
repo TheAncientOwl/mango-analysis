@@ -2,9 +2,11 @@ import React from 'react';
 
 import TableViewIcon from '@mui/icons-material/TableView';
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 
 import DataManager from '@modules/data-manager';
 import PrincipalComponentsAnalysis from '@modules/principal-components-analysis';
+import FactorAnalysis from '@modules/factor-analysis';
 
 interface Route {
   name: string;
@@ -22,5 +24,12 @@ export const AppRoutes: ReadonlyArray<Route> = [
     routePath: '/pca',
     element: <PrincipalComponentsAnalysis />,
     icon: <SettingsInputComponentIcon />,
+  },
+  {
+    name: 'factor analysis',
+    alias: 'FA',
+    routePath: '/factor-analysis',
+    element: <FactorAnalysis />,
+    icon: <AutoGraphIcon />,
   },
 ];

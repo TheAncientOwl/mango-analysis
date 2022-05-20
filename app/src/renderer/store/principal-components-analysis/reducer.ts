@@ -4,15 +4,11 @@ import { ComponentsID } from '@modules/principal-components-analysis/config/comp
 import { IPlot2D } from '@components/Plot2D';
 
 import { AnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
+import { IDefaultAnalysisStep, newNextStepUnlockedArray } from '@store/IDefaultAnalysisState';
 
 const StepsCountPCA = 6;
 
-interface IDefaultState {
-  loading: boolean;
-
-  currentStep: number;
-  nextStepUnlocked: boolean[];
-
+interface IDefaultState extends IDefaultAnalysisStep {
   target: string;
   features: string[];
 
@@ -62,13 +58,6 @@ const defaultState: IDefaultState = {
     targets: [],
     features: [],
   },
-};
-
-const newNextStepUnlockedArray = (old: boolean[], position: number, value: boolean) => {
-  const newArray = [...old];
-  newArray[position] = value;
-
-  return newArray;
 };
 
 export const principalComponentsAnalysisReducer = (

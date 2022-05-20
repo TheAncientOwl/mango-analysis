@@ -14,7 +14,7 @@ import { ScalingMethodType } from '@store/data-manager/types';
 import { DoubleCheck } from '@components/DoubleCheck';
 import { useSwitch } from '@hooks/.';
 
-import { ScaleMethodTooltip } from './ScaleMethodTooltip';
+import { Tooltip } from '@components/Tooltip';
 import { ScalingMethods } from './ScalingMethods.config';
 
 const ScalingHandler: React.FC<PropsFromRedux> = props => {
@@ -44,9 +44,9 @@ const ScalingHandler: React.FC<PropsFromRedux> = props => {
             {ScalingMethods.map(method => (
               <MenuItem key={method.id} value={method.type}>
                 <Stack direction='row' gap={1}>
-                  <ScaleMethodTooltip title={method.tooltip} placement='right'>
+                  <Tooltip title={method.tooltip} placement='right'>
                     <InfoIcon sx={{ color: 'grey.500' }} />
-                  </ScaleMethodTooltip>
+                  </Tooltip>
                   {method.display}
                 </Stack>
               </MenuItem>

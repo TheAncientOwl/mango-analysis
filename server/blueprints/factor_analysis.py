@@ -45,6 +45,8 @@ def analyze():
     if data != None:
         n_factors = data['nFactors'] if 'nFactors' in data else 'all'
         rotation = data['rotation'] if 'rotation' in data else None
+        if rotation == 'none':
+            rotation = None
         server.factor_analysis.analyze(n_factors=n_factors, rotation=rotation)
     else:
         server.factor_analysis.analyze()
@@ -55,4 +57,5 @@ def analyze():
 @factor_analysis.get('/factor-analysis/default-hints')
 def get_default_hints():
 
-    return flask.jsonify(screePlotPath=server.factor_analysis.plot_scree_plot(), eigenvalues=server.factor_analysis.get_eigen_values().to_dict(orient='split')), 200
+    return flask.jsonify(screePlotPath=server.factor_analysis.plot_scree_plot(),
+                         eigenvalues=server.factor_analysis.get_eigen_values().to_dict(orient='split')), 200

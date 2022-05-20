@@ -1,7 +1,7 @@
 import React from 'react';
 
 // eslint-disable-next-line import/named
-import { Box, Button, Grid, SelectChangeEvent, Collapse, IconButton, Tooltip, Stack } from '@mui/material';
+import { Box, Button, Grid, SelectChangeEvent, Collapse, IconButton, Stack } from '@mui/material';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -9,6 +9,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+
+import { Tooltip } from '@components/Tooltip';
 
 import { Paper } from './Paper';
 import { Select } from './Select';

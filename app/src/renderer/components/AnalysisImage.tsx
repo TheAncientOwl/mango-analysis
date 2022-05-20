@@ -4,7 +4,7 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { alpha } from '@mui/system';
 import { Box, IconButton } from '@mui/material';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import Tooltip from '@mui/material/Tooltip';
+import { Tooltip } from '@components/Tooltip';
 
 import { theme } from '@config/.';
 

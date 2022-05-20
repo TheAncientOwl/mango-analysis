@@ -1,10 +1,10 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 // eslint-disable-next-line import/named
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import { default as MuiTooltip, TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 
-export const ScaleMethodTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip {...props} classes={{ popper: className }} />
+export const Tooltip = styled(({ className, ...props }: TooltipProps) => (
+  <MuiTooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     maxWidth: 350,

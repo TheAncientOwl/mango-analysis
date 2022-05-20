@@ -1,7 +1,9 @@
 import React from 'react';
 
-import { TextField, Stack, IconButton, Tooltip, Box } from '@mui/material';
+import { TextField, Stack, IconButton, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+
+import { Tooltip } from '@components/Tooltip';
 
 interface Props {
   minWidth?: string;
