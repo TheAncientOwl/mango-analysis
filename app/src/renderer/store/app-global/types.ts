@@ -2,8 +2,8 @@
 import { Dispatch as ReduxDispatch } from 'redux';
 
 export enum ActionType {
-  SetAppTitle = 'SET_APP_TITLE',
-  ToggleMenu = 'TOGGLE_MENU',
+  SetAppTitle = 'APP_GLOBAL__SET_APP_TITLE',
+  ToggleMenu = 'APP_GLOBAL__TOGGLE_MENU',
 }
 
 interface SetAppTitle {

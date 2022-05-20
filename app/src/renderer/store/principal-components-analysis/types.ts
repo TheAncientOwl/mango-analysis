@@ -4,49 +4,49 @@ import { Dispatch as ReduxDispatch } from 'redux';
 import { BasicDataFrameProps } from '@components/BasicDataFrame';
 
 export enum ActionType {
-  Loading = 'LOADING',
-  Reset = 'RESET',
+  Loading = 'PCA__LOADING',
+  Reset = 'PCA__RESET',
 
-  NextStep = 'NEXT_STEP',
-  PrevStep = 'PREV_STEP',
-  UnlockNextStep = 'UNLOCK_NEXT_STEP',
-  LockNextStep = 'LOCK_NEXT_STEP',
-  JumpToStep = 'JUMP_TO_STEP',
+  NextStep = 'PCA__NEXT_STEP',
+  PrevStep = 'PCA__PREV_STEP',
+  UnlockNextStep = 'PCA__UNLOCK_NEXT_STEP',
+  LockNextStep = 'PCA__LOCK_NEXT_STEP',
+  JumpToStep = 'PCA__JUMP_TO_STEP',
 
-  FetchedPossibleTargetsFeatures = 'FETCHED_POSSIBLE_TARGETS_FEATURES',
-  ChangeTarget = 'CHANGE_TARGET',
-  ChangeFeatures = 'CHANGE_FEATURES',
+  FetchedPossibleTargetsFeatures = 'PCA__FETCHED_POSSIBLE_TARGETS_FEATURES',
+  ChangeTarget = 'PCA__CHANGE_TARGET',
+  ChangeFeatures = 'PCA__CHANGE_FEATURES',
 
-  ServerSetTargetFeaturesSuccess = 'SERVER_SET_TARGET_FEATURES_SUCCESS',
+  ServerSetTargetFeaturesSuccess = 'PCA__SERVER_SET_TARGET_FEATURES_SUCCESS',
 
-  FetchedCorrelationMatrixPath = 'FETCHED_CORRELATION_MATRIX_PATH',
-  FetchedLoadingsMatrixPath = 'FETCHED_LOADINGS_MATRIX_PATH',
+  FetchedCorrelationMatrixPath = 'PCA__FETCHED_CORRELATION_MATRIX_PATH',
+  FetchedLoadingsMatrixPath = 'PCA__FETCHED_LOADINGS_MATRIX_PATH',
 
-  FetchedAnalysisHints = 'FETCHED_COMPONENTS_COUNT_HINTS',
-  ChangeComponentsCount = 'CHANGE_COMPONENTS_COUNT',
-  AnalysisFinished = 'ANALYSIS_FINISHED',
+  FetchedAnalysisHints = 'PCA__FETCHED_COMPONENTS_COUNT_HINTS',
+  ChangeComponentsCount = 'PCA__CHANGE_COMPONENTS_COUNT',
+  AnalysisFinished = 'PCA__ANALYSIS_FINISHED',
 
-  FetchedLabelsTargetsPCA = 'FETCHED_LABELS_TARGETS_PCA',
+  FetchedLabelsTargetsPCA = 'PCA__FETCHED_LABELS_TARGETS_PCA',
 
-  PushDefaultPlot = 'PUSH_DEFAULT_PLOT',
-  ChangePlotAxisX = 'CHANGE_PLOT_AXIS_X',
-  ChangePlotAxisY = 'CHANGE_PLOT_AXIS_Y',
-  FetchedPlotSrc = 'FETCHED_PLOT_SRC',
-  TogglePlotAnnot = 'TOGGLE_PLOT_ANNOT',
-  TogglePlotLegend = 'TOGGLE_PLOT_LEGEND',
-  ChangePlotTargets = 'CHANGE_PLOT_TARGETS',
-  ClearPlots = 'CLEAR_PLOTS',
-  TogglePlotOpen = 'TOGGLE_PLOT_OPEN',
-  DeletePlot = 'DELETE_PLOT',
-  ChangePlotTitle = 'CHANGE_PLOT_TITLE',
+  PushDefaultPlot = 'PCA__PUSH_DEFAULT_PLOT',
+  ChangePlotAxisX = 'PCA__CHANGE_PLOT_AXIS_X',
+  ChangePlotAxisY = 'PCA__CHANGE_PLOT_AXIS_Y',
+  FetchedPlotSrc = 'PCA__FETCHED_PLOT_SRC',
+  TogglePlotAnnot = 'PCA__TOGGLE_PLOT_ANNOT',
+  TogglePlotLegend = 'PCA__TOGGLE_PLOT_LEGEND',
+  ChangePlotTargets = 'PCA__CHANGE_PLOT_TARGETS',
+  ClearPlots = 'PCA__CLEAR_PLOTS',
+  TogglePlotOpen = 'PCA__TOGGLE_PLOT_OPEN',
+  DeletePlot = 'PCA__DELETE_PLOT',
+  ChangePlotTitle = 'PCA__CHANGE_PLOT_TITLE',
 
-  ExportLoadingsEnded = 'EXPORT_LOADINGS_ENDED',
-  ExportLoadingsFail = 'EXPORT_LOADINGS_FAIL',
+  ExportLoadingsEnded = 'PCA__EXPORT_LOADINGS_ENDED',
+  ExportLoadingsFail = 'PCA__EXPORT_LOADINGS_FAIL',
 
-  ExportPCAEnded = 'EXPORT_PCA_ENDED',
-  ExportPCAFail = 'EXPORT_PCA_FAIL',
+  ExportPCAEnded = 'PCA__EXPORT_PCA_ENDED',
+  ExportPCAFail = 'PCA__EXPORT_PCA_FAIL',
 
-  ToggleHints = 'TOGGLE_HINTS',
+  ToggleHints = 'PCA__TOGGLE_HINTS',
 }
 
 interface Loading {

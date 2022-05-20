@@ -4,20 +4,20 @@ import { Dispatch as ReduxDispatch } from 'redux';
 import { DataFrame, DecimalsPrecision } from '@modules/data-manager/data-frame-viewer/types';
 
 export enum ActionType {
-  Loading = 'LOADING',
-  FetchDataSuccess = 'FETCH_DATA_SUCCESS',
-  CloseFeedbackMessage = 'CLOSE_FEEDBACK_MESSAGE',
-  ChangePage = 'CHANGE_PAGE',
-  ChangePageSize = 'CHANGE_PAGE_SIZE',
-  CheckLabel = 'CHECK_LABEL',
-  CheckRow = 'CHECK_ROW',
-  ChangeDecimalsPrecision = 'CHANGE_DECIMALS_PRECISION',
-  ColumnsRowsDropped = 'COLUMNS_ROWS_DROPPED',
-  DataFrameDropped = 'DATA_FRAME_DROPPED',
-  CSVImported = 'CSV_IMPORTED',
-  CSVImportCanceled = 'CSV_IMPORT_CANCELED',
-  ChangeScalingMethod = 'CHANGE_SCALING_METHOD',
-  ScaledData = 'SCALED_DATA',
+  Loading = 'DATA_MANAGER__LOADING',
+  FetchDataSuccess = 'DATA_MANAGER__FETCH_DATA_SUCCESS',
+  CloseFeedbackMessage = 'DATA_MANAGER__CLOSE_FEEDBACK_MESSAGE',
+  ChangePage = 'DATA_MANAGER__CHANGE_PAGE',
+  ChangePageSize = 'DATA_MANAGER__CHANGE_PAGE_SIZE',
+  CheckLabel = 'DATA_MANAGER__CHECK_LABEL',
+  CheckRow = 'DATA_MANAGER__CHECK_ROW',
+  ChangeDecimalsPrecision = 'DATA_MANAGER__CHANGE_DECIMALS_PRECISION',
+  ColumnsRowsDropped = 'DATA_MANAGER__COLUMNS_ROWS_DROPPED',
+  DataFrameDropped = 'DATA_MANAGER__DATA_FRAME_DROPPED',
+  CSVImported = 'DATA_MANAGER__CSV_IMPORTED',
+  CSVImportCanceled = 'DATA_MANAGER__CSV_IMPORT_CANCELED',
+  ChangeScalingMethod = 'DATA_MANAGER__CHANGE_SCALING_METHOD',
+  ScaledData = 'DATA_MANAGER__SCALED_DATA',
 }
 
 interface Loading {

@@ -4,22 +4,22 @@ import { Dispatch as ReduxDispatch } from 'redux';
 import { BasicDataFrameProps } from '@components/BasicDataFrame';
 
 export enum ActionType {
-  Loading = 'LOADING',
+  Loading = 'FACTOR_ANALYSIS__LOADING',
 
-  NextStep = 'NEXT_STEP',
-  PrevStep = 'PREV_STEP',
-  UnlockNextStep = 'UNLOCK_NEXT_STEP',
-  LockNextStep = 'LOCK_NEXT_STEP',
+  NextStep = 'FACTOR_ANALYSIS__NEXT_STEP',
+  PrevStep = 'FACTOR_ANALYSIS__PREV_STEP',
+  UnlockNextStep = 'FACTOR_ANALYSIS__UNLOCK_NEXT_STEP',
+  LockNextStep = 'FACTOR_ANALYSIS__LOCK_NEXT_STEP',
 
-  FetchedPossibleFeatures = 'FETCHED_POSSIBLE_FEATURES',
-  ChangeFeatures = 'CHANGE_FEATURES',
-  ServerSetFeaturesSuccess = 'SERVER_SET_FEATURES_SUCCESS',
+  FetchedPossibleFeatures = 'FACTOR_ANALYSIS__FETCHED_POSSIBLE_FEATURES',
+  ChangeFeatures = 'FACTOR_ANALYSIS__CHANGE_FEATURES',
+  ServerSetFeaturesSuccess = 'FACTOR_ANALYSIS__SERVER_SET_FEATURES_SUCCESS',
 
-  ChangeFactorsNumber = 'CHANGE_FACTORS_NUMBER',
-  FetchedBartlettResults = 'FETCHED_BARTLETT_RESULTS',
-  FetchedKmoResult = 'FETCHED_KMO_RESULT',
-  AnalysisFinished = 'ANALYSIS_FINISHED',
-  FetchedDefaultHints = 'FETCHED_DEFAULT_HINTS',
+  ChangeFactorsNumber = 'FACTOR_ANALYSIS__CHANGE_FACTORS_NUMBER',
+  FetchedBartlettResults = 'FACTOR_ANALYSIS__FETCHED_BARTLETT_RESULTS',
+  FetchedKmoResult = 'FACTOR_ANALYSIS__FETCHED_KMO_RESULT',
+  AnalysisFinished = 'FACTOR_ANALYSIS__ANALYSIS_FINISHED',
+  FetchedDefaultHints = 'FACTOR_ANALYSIS__FETCHED_DEFAULT_HINTS',
 }
 
 interface Loading {
