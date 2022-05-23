@@ -57,7 +57,7 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
             <Select
               labelId='components-count-picker-label'
               id='components-count-picker'
-              value={`${props.componentsCount}`}
+              value={props.featuresLength > 0 ? `${props.componentsCount}` : ''}
               label='Components'
               onChange={handleChange}>
               {menuItemsDummyArray.map((val, index) => (
