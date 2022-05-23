@@ -34,7 +34,7 @@ const TargetAndFeaturesPicker: React.FC<PropsFromRedux> = props => {
 
   // fetch possible targets & features
   React.useEffect(() => {
-    props.fetchPossibleTargetsAndFeatures();
+    if (props.possibleValues.features.length === 0) props.fetchPossibleTargetsAndFeatures();
   }, []);
 
   // handlers
