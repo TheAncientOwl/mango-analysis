@@ -3,10 +3,12 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { changeFactorsNumber, runDefaultAnalysis } from '@store/factor-analysis/actions';
+import { changeFactorsNumber, runDefaultAnalysis, jumpToStep } from '@store/factor-analysis/actions';
 
 import { Button, Collapse, Grid } from '@mui/material';
 import BoltIcon from '@mui/icons-material/Bolt';
+
+import { ComponentsID } from '../config/componentsID';
 
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 import { AnalysisImage } from '@components/AnalysisImage';
@@ -14,11 +16,16 @@ import { BasicDataFrame } from '@components/BasicDataFrame';
 import { Paper } from '@components/Paper';
 
 const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
+  const handleSkip = () => props.jumpToStep(ComponentsID.DefaultFactorAnalysis + 1);
+
   return (
     <React.Fragment>
       <AnalysisStepLogic>
         <Button onClick={props.runDefaultAnalysis} startIcon={<BoltIcon />} size='medium'>
           run default analysis
+        </Button>
+        <Button sx={{ ml: 1 }} onClick={handleSkip} size='medium' color='warning'>
+          skip
         </Button>
       </AnalysisStepLogic>
 
@@ -50,6 +57,7 @@ const mapState = (state: RootState) => ({
 const mapDispatch = {
   changeFactorsNumber,
   runDefaultAnalysis,
+  jumpToStep,
 };
 
 const connector = connect(mapState, mapDispatch);
