@@ -5,12 +5,12 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 import { fetchCorrelationMatrixPath, jumpToStep } from '@store/principal-components-analysis/actions';
 
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 
 import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
-import { SkipButton } from '@components/buttons';
+import { SkipButton, PlotButton } from '@components/buttons';
 
 import { StepsPCA } from '../config/steps';
 import { ComponentsID } from '../config/componentsID';
@@ -27,9 +27,9 @@ const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
     <>
       <AnalysisStepLogic>
         <Stack direction='row' gap={1}>
-          <Button onClick={props.fetchCorrelationMatrixPath} size='small' color='info'>
+          <PlotButton onClick={props.fetchCorrelationMatrixPath} size='small'>
             Plot
-          </Button>
+          </PlotButton>
           {props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.CorrelationMatrix) && (
             <SkipButton size='small' onClick={handleSkip}>
               skip

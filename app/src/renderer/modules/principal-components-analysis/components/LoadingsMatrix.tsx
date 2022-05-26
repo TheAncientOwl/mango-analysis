@@ -10,7 +10,7 @@ import { Box, Button, Stack } from '@mui/material';
 import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
-import { SkipButton } from '@components/buttons';
+import { SkipButton, PlotButton } from '@components/buttons';
 
 import { StepsPCA } from '../config/steps';
 import { ComponentsID } from '../config/componentsID';
@@ -25,9 +25,9 @@ const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
     <>
       <AnalysisStepLogic>
         <Stack direction='row' gap={1}>
-          <Button onClick={props.fetchLoadingsMatrixPath} size='small' color='info'>
+          <PlotButton onClick={props.fetchLoadingsMatrixPath} size='small'>
             Plot
-          </Button>
+          </PlotButton>
           {props.loadingsMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.LoadingsMatrix) && (
             <SkipButton size='small' onClick={handleSkip}>
               skip

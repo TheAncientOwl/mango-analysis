@@ -7,10 +7,10 @@ import { IButtonProps } from './IButtonProps';
 
 const icon = <BoltIcon />;
 
-export const RunButton: React.FC<IButtonProps> = ({ sx, onClick, size = 'medium', children }) => {
+export const RunButton: React.FC<IButtonProps> = props => {
   return (
-    <Button sx={sx} startIcon={icon} onClick={onClick} size={size}>
-      {children}
+    <Button {...props} startIcon={icon}>
+      {props.children}
     </Button>
   );
 };

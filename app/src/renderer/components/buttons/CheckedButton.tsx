@@ -13,10 +13,10 @@ interface Props extends IButtonProps {
 const checkedIcon = <CheckBoxIcon />;
 const uncheckedIcon = <CheckBoxOutlineBlankIcon />;
 
-export const CheckedButton: React.FC<Props> = ({ sx, checked, onClick, children, size = 'medium' }) => {
+export const CheckedButton: React.FC<Props> = props => {
   return (
-    <Button sx={sx} size={size} startIcon={checked ? checkedIcon : uncheckedIcon} onClick={onClick}>
-      {children}
+    <Button {...props} startIcon={props.checked ? checkedIcon : uncheckedIcon}>
+      {props.children}
     </Button>
   );
 };

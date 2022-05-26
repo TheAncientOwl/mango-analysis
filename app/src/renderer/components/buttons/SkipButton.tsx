@@ -7,10 +7,10 @@ import { IButtonProps } from './IButtonProps';
 
 const icon = <SkipNextIcon />;
 
-export const SkipButton: React.FC<IButtonProps> = ({ sx, onClick, children, size = 'medium' }) => {
+export const SkipButton: React.FC<IButtonProps> = props => {
   return (
-    <Button sx={sx} startIcon={icon} size={size} onClick={onClick} color='warning'>
-      {children}
+    <Button {...props} startIcon={icon} color='warning'>
+      {props.children}
     </Button>
   );
 };
