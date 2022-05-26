@@ -18,8 +18,8 @@ import { BasicDataFrame } from '@components/BasicDataFrame';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
-import { CheckedButton } from '@components/CheckedButton';
-import { RunButton } from '@components/RunButton';
+import { CheckedButton } from '@components/buttons/CheckedButton';
+import { RunButton } from '@components/buttons';
 
 import { ComponentsID } from '../config/componentsID';
 

@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import { Tooltip } from '@components/Tooltip';
-import { CheckedButton } from '@components/CheckedButton';
+import { CheckedButton } from '@components/buttons/CheckedButton';
 
 import { Paper } from './Paper';
 import { Select } from './Select';

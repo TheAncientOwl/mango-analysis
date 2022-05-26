@@ -1,16 +1,13 @@
 import React from 'react';
 
-// eslint-disable-next-line import/named
-import { SxProps } from '@mui/system';
 import { Button } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
-interface Props {
-  sx?: SxProps;
+import { IButtonProps } from './IButtonProps';
+
+interface Props extends IButtonProps {
   checked: boolean;
-  onClick: () => void;
-  size?: 'large' | 'medium' | 'small';
 }
 
 const checkedIcon = <CheckBoxIcon />;

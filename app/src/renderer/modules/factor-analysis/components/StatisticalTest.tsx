@@ -5,7 +5,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 import { Tooltip } from '@components/Tooltip';
 import { Paper } from '@components/Paper';
-import { RunButton } from '@components/RunButton';
+import { RunButton } from '@components/buttons';
 
 interface TestValueConfig {
   symbol: string;

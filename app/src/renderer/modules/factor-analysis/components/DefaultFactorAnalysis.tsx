@@ -13,7 +13,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step
 import { AnalysisImage } from '@components/AnalysisImage';
 import { BasicDataFrame } from '@components/BasicDataFrame';
 import { Paper } from '@components/Paper';
-import { RunButton } from '@components/RunButton';
+import { RunButton } from '@components/buttons';
 
 const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => props.jumpToStep(ComponentsID.DefaultFactorAnalysis + 1);
