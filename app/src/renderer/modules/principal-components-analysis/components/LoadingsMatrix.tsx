@@ -5,12 +5,12 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 import { fetchLoadingsMatrixPath, jumpToStep, exportLoadings } from '@store/principal-components-analysis/actions';
 
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 
 import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
-import { SkipButton, PlotButton } from '@components/buttons';
+import { SkipButton, PlotButton, ExportButton } from '@components/buttons';
 
 import { StepsPCA } from '../config/steps';
 import { ComponentsID } from '../config/componentsID';
@@ -33,9 +33,9 @@ const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
               skip
             </SkipButton>
           )}
-          <Button size='small' onClick={props.exportLoadings}>
+          <ExportButton size='small' onClick={props.exportLoadings}>
             export loadings
-          </Button>
+          </ExportButton>
         </Stack>
       </AnalysisStepLogic>
 

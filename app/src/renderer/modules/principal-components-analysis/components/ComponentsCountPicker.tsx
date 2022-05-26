@@ -11,14 +11,14 @@ import {
 } from '@store/principal-components-analysis/actions';
 
 // eslint-disable-next-line import/named
-import { Box, Button, Collapse, Grid, SelectChangeEvent, Stack, Typography } from '@mui/material';
+import { Box, Collapse, Grid, SelectChangeEvent, Stack, Typography } from '@mui/material';
 
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 import { BasicDataFrame } from '@components/BasicDataFrame';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
-import { CheckedButton, RunButton } from '@components/buttons';
+import { CheckedButton, RunButton, ExportButton } from '@components/buttons';
 
 import { ComponentsID } from '../config/componentsID';
 
@@ -60,11 +60,7 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
             hints
           </CheckedButton>
 
-          {props.showExportPCA && (
-            <Button size='medium' onClick={props.exportPCA}>
-              export pca data
-            </Button>
-          )}
+          {props.showExportPCA && <ExportButton onClick={props.exportPCA}>export pca data</ExportButton>}
         </Stack>
       </AnalysisStepLogic>
 
