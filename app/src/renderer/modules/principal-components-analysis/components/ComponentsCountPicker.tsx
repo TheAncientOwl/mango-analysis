@@ -19,6 +19,7 @@ import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
 import { CheckedButton, RunButton, ExportButton } from '@components/buttons';
+import { RenderIf } from '@components/RenderIf';
 
 import { ComponentsID } from '../config/componentsID';
 
@@ -66,7 +67,7 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
 
       <AnalysisStepResult>
         <Collapse in={props.hintsOpen}>
-          {props.hints.kaiserPath !== '' && (
+          <RenderIf condition={props.hints.kaiserPath !== ''}>
             <Grid container spacing={2} alignItems='center' sx={{ mt: 1 }}>
               <Grid item xs={8} sm={7} md={4}>
                 <Paper>
@@ -97,7 +98,7 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
                 </Paper>
               </Grid>
             </Grid>
-          )}
+          </RenderIf>
         </Collapse>
       </AnalysisStepResult>
     </React.Fragment>

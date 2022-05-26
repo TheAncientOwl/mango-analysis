@@ -8,15 +8,15 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
-import { Tooltip } from '@components/Tooltip';
-import { CheckedButton, PlotButton } from '@components/buttons';
-
+import { Tooltip } from './Tooltip';
+import { CheckedButton, PlotButton } from './buttons';
 import { Paper } from './Paper';
 import { Select } from './Select';
 import { AnalysisImage } from './AnalysisImage';
 import { Checkbox } from './Checkbox';
 import { TextInputSave } from './TextInputSave';
 import { AutoCompleteCheckedSelect } from './AutocompleteCheckedSelect';
+import { RenderIf } from './RenderIf';
 
 export interface IPlot2D {
   open: boolean;
@@ -151,7 +151,7 @@ export const Plot2D: React.FC<Props> = props => {
       </Grid>
 
       <Grid item xs={12}>
-        {props.targets.length !== plot.targets.length && (
+        <RenderIf condition={props.targets.length !== plot.targets.length}>
           <AutoCompleteCheckedSelect
             minWidth='10em'
             id='select-targets'
@@ -160,7 +160,7 @@ export const Plot2D: React.FC<Props> = props => {
             possibleValues={props.targets}
             onChange={props.onTargetsChange}
           />
-        )}
+        </RenderIf>
       </Grid>
 
       <Grid item>
@@ -182,11 +182,11 @@ export const Plot2D: React.FC<Props> = props => {
       <Collapse in={plot.open}>
         {optionsToolbar}
 
-        {plot.plotSrc !== '' && (
+        <RenderIf condition={plot.plotSrc !== ''}>
           <Box sx={{ mt: 2, maxWidth: '40em' }}>
             <AnalysisImage src={plot.plotSrc} alt={`Plot ${plot.pcX} - ${plot.pcY}`} />
           </Box>
-        )}
+        </RenderIf>
       </Collapse>
     </Paper>
   );

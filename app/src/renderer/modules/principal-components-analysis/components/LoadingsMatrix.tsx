@@ -11,6 +11,7 @@ import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 import { SkipButton, PlotButton, ExportButton } from '@components/buttons';
+import { RenderIf } from '@components/RenderIf';
 
 import { StepsPCA } from '../config/steps';
 import { ComponentsID } from '../config/componentsID';
@@ -28,11 +29,11 @@ const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
           <PlotButton onClick={props.fetchLoadingsMatrixPath} size='small'>
             Plot
           </PlotButton>
-          {props.loadingsMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.LoadingsMatrix) && (
+          <RenderIf condition={props.loadingsMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.LoadingsMatrix)}>
             <SkipButton size='small' onClick={handleSkip}>
               skip
             </SkipButton>
-          )}
+          </RenderIf>
           <ExportButton size='small' onClick={props.exportLoadings}>
             export loadings
           </ExportButton>
@@ -40,13 +41,13 @@ const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
       </AnalysisStepLogic>
 
       <AnalysisStepResult>
-        {props.loadingsMatrixPath !== '' && (
+        <RenderIf condition={props.loadingsMatrixPath !== ''}>
           <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
               <AnalysisImage src={props.loadingsMatrixPath} alt='Loadings Matrix' />
             </Box>
           </Paper>
-        )}
+        </RenderIf>
       </AnalysisStepResult>
     </>
   );

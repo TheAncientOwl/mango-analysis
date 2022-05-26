@@ -4,8 +4,12 @@ import { Box, Stack, Typography, Chip, Button, Collapse } from '@mui/material';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { getStepOverlayProps } from './AnalysisStepLogic';
+
 // import { logRender } from '@src/common/logRender';
+
+import { RenderIf } from '@components/RenderIf';
+
+import { getStepOverlayProps } from './AnalysisStepLogic';
 
 interface Props {
   step: number;
@@ -52,20 +56,21 @@ export const AnalysisStep: React.FC<Props> = ({
       <Collapse in={step <= currentStep}>
         <Box p={1}>
           {children}
-          {stepActiveNow && (
+          <RenderIf condition={stepActiveNow}>
             <Box sx={{ mt: 2 }}>
-              {step > 0 && (
+              <RenderIf condition={step > 0}>
                 <Button startIcon={<NavigateBeforeIcon />} onClick={onBack} size='medium' sx={{ mr: 1 }}>
                   Prev
                 </Button>
-              )}
-              {step < totalSteps && (
+              </RenderIf>
+
+              <RenderIf condition={step < totalSteps}>
                 <Button endIcon={<NavigateNextIcon />} onClick={onNext} size='medium' disabled={!canNext}>
                   Next
                 </Button>
-              )}
+              </RenderIf>
             </Box>
-          )}
+          </RenderIf>
         </Box>
         {separator}
       </Collapse>

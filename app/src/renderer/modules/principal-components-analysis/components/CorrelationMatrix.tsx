@@ -11,6 +11,7 @@ import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 import { SkipButton, PlotButton } from '@components/buttons';
+import { RenderIf } from '@components/RenderIf';
 
 import { StepsPCA } from '../config/steps';
 import { ComponentsID } from '../config/componentsID';
@@ -30,21 +31,23 @@ const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
           <PlotButton onClick={props.fetchCorrelationMatrixPath} size='small'>
             Plot
           </PlotButton>
-          {props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.CorrelationMatrix) && (
+          <RenderIf
+            condition={props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.CorrelationMatrix)}>
             <SkipButton size='small' onClick={handleSkip}>
               skip
             </SkipButton>
-          )}
+          </RenderIf>
         </Stack>
       </AnalysisStepLogic>
+
       <AnalysisStepResult>
-        {props.correlationMatrixPath !== '' && (
+        <RenderIf condition={props.correlationMatrixPath !== ''}>
           <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
               <AnalysisImage src={props.correlationMatrixPath} alt='Correlation Matrix' />
             </Box>
           </Paper>
-        )}
+        </RenderIf>
       </AnalysisStepResult>
     </>
   );

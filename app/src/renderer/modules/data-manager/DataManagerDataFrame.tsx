@@ -7,6 +7,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 import { changePage, changePageSize, checkLabel, checkRow } from '@store/data-manager/actions';
 
+import { RenderIf } from '@components/RenderIf';
+
 import { DataFrameViewer } from './data-frame-viewer';
 import { DataFrameViewerPagination } from './data-frame-viewer/DataFrameViewerPagination';
 import { noDataLoadedMessageStyles, dataFrameWrapperStyles } from './styles';
@@ -15,7 +17,7 @@ const DataManagerDataFrame: React.FC<PropsFromRedux> = props => {
   return (
     <>
       {props.dataFrame.totalRows === 0 && <Typography sx={noDataLoadedMessageStyles}>No data loaded...</Typography>}
-      {props.dataFrame.totalRows > 0 && (
+      <RenderIf condition={props.dataFrame.totalRows > 0}>
         <Box sx={dataFrameWrapperStyles}>
           <DataFrameViewer
             dataFrame={props.dataFrame}
@@ -33,7 +35,7 @@ const DataManagerDataFrame: React.FC<PropsFromRedux> = props => {
             onPageSizeChange={props.changePageSize}
           />
         </Box>
-      )}
+      </RenderIf>
     </>
   );
 };
