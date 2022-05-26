@@ -4,7 +4,16 @@ import { ComponentsID } from '@modules/principal-components-analysis/config/comp
 import { IPlot2D } from '@components/Plot2D';
 
 import { AnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
-import { IDefaultAnalysisStep, newNextStepUnlockedArray } from '@store/IDefaultAnalysisState';
+import {
+  IDefaultAnalysisStep,
+  newNextStepUnlockedArray,
+  loading,
+  nextStep,
+  prevStep,
+  unlockNextStep,
+  lockNextStep,
+  jumpToStep,
+} from '@store/IDefaultAnalysisState';
 
 const StepsCountPCA = 6;
 
@@ -66,44 +75,27 @@ export const principalComponentsAnalysisReducer = (
 ): IDefaultState => {
   switch (action.type) {
     case ActionType.Loading: {
-      if (state.loading) return state;
-
-      return {
-        ...state,
-        loading: true,
-      };
+      return loading(state) as IDefaultState;
     }
 
     case ActionType.NextStep: {
-      return {
-        ...state,
-        currentStep: Math.min(StepsCountPCA, state.currentStep + 1),
-      };
+      return nextStep(state, StepsCountPCA) as IDefaultState;
     }
 
     case ActionType.PrevStep: {
-      return {
-        ...state,
-        currentStep: Math.max(0, state.currentStep - 1),
-      };
+      return prevStep(state) as IDefaultState;
     }
 
     case ActionType.UnlockNextStep: {
-      if (state.nextStepUnlocked[action.payload]) return state;
-
-      return {
-        ...state,
-        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, action.payload, true),
-      };
+      return unlockNextStep(state, action.payload) as IDefaultState;
     }
 
     case ActionType.LockNextStep: {
-      if (!state.nextStepUnlocked[action.payload]) return state;
+      return lockNextStep(state, action.payload) as IDefaultState;
+    }
 
-      return {
-        ...state,
-        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, action.payload, false),
-      };
+    case ActionType.JumpToStep: {
+      return jumpToStep(state, action.payload) as IDefaultState;
     }
 
     case ActionType.FetchedPossibleTargetsFeatures: {
@@ -149,19 +141,6 @@ export const principalComponentsAnalysisReducer = (
       return {
         ...state,
         loading: false,
-      };
-    }
-
-    case ActionType.JumpToStep: {
-      const step = action.payload;
-
-      const newSteps = new Array(StepsCountPCA).fill(false);
-      newSteps.fill(true, 0, step);
-
-      return {
-        ...state,
-        currentStep: step,
-        nextStepUnlocked: newSteps,
       };
     }
 

@@ -1,6 +1,15 @@
 import { BartlettTest, ActionType, DispatchTypes, DefaultHints } from './types';
 
-import { IDefaultAnalysisStep, newNextStepUnlockedArray } from '@store/IDefaultAnalysisState';
+import {
+  IDefaultAnalysisStep,
+  newNextStepUnlockedArray,
+  loading,
+  nextStep,
+  prevStep,
+  unlockNextStep,
+  lockNextStep,
+  jumpToStep,
+} from '@store/IDefaultAnalysisState';
 import { ComponentsID } from '@src/renderer/modules/factor-analysis/config/componentsID';
 
 const StepsCountFactorAnalysis = 4;
@@ -42,44 +51,27 @@ const defaultState: IDefaultState = {
 export const factorAnalysisReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
   switch (action.type) {
     case ActionType.Loading: {
-      if (state.loading) return state;
-
-      return {
-        ...state,
-        loading: true,
-      };
+      return loading(state) as IDefaultState;
     }
 
     case ActionType.NextStep: {
-      return {
-        ...state,
-        currentStep: Math.min(StepsCountFactorAnalysis, state.currentStep + 1),
-      };
+      return nextStep(state, StepsCountFactorAnalysis) as IDefaultState;
     }
 
     case ActionType.PrevStep: {
-      return {
-        ...state,
-        currentStep: Math.max(0, state.currentStep - 1),
-      };
+      return prevStep(state) as IDefaultState;
     }
 
     case ActionType.UnlockNextStep: {
-      if (state.nextStepUnlocked[action.payload]) return state;
-
-      return {
-        ...state,
-        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, action.payload, true),
-      };
+      return unlockNextStep(state, action.payload) as IDefaultState;
     }
 
     case ActionType.LockNextStep: {
-      if (!state.nextStepUnlocked[action.payload]) return state;
+      return lockNextStep(state, action.payload) as IDefaultState;
+    }
 
-      return {
-        ...state,
-        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, action.payload, false),
-      };
+    case ActionType.JumpToStep: {
+      return jumpToStep(state, action.payload) as IDefaultState;
     }
 
     case ActionType.FetchedPossibleFeatures: {
@@ -142,19 +134,6 @@ export const factorAnalysisReducer = (state: IDefaultState = defaultState, actio
       return {
         ...state,
         loading: false,
-      };
-    }
-
-    case ActionType.JumpToStep: {
-      const stepIndex = action.payload;
-
-      const newNextStepUnlocked = new Array(state.nextStepUnlocked.length);
-      newNextStepUnlocked.fill(true, 0, stepIndex);
-
-      return {
-        ...state,
-        currentStep: stepIndex,
-        nextStepUnlocked: newNextStepUnlocked,
       };
     }
 
