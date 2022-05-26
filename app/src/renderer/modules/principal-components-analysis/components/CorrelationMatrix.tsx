@@ -10,6 +10,7 @@ import { Box, Button, Stack } from '@mui/material';
 import { Paper } from '@components/Paper';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
+import { SkipButton } from '@components/buttons';
 
 import { StepsPCA } from '../config/steps';
 import { ComponentsID } from '../config/componentsID';
@@ -30,9 +31,9 @@ const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
             Plot
           </Button>
           {props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.CorrelationMatrix) && (
-            <Button onClick={handleSkip} size='small' color='warning'>
-              Skip
-            </Button>
+            <SkipButton size='small' onClick={handleSkip}>
+              skip
+            </SkipButton>
           )}
         </Stack>
       </AnalysisStepLogic>

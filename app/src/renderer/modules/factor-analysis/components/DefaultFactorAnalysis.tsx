@@ -5,7 +5,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 import { changeFactorsNumber, runDefaultAnalysis, jumpToStep } from '@store/factor-analysis/actions';
 
-import { Button, Collapse, Grid } from '@mui/material';
+import { Collapse, Grid } from '@mui/material';
 
 import { ComponentsID } from '../config/componentsID';
 
@@ -13,7 +13,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step
 import { AnalysisImage } from '@components/AnalysisImage';
 import { BasicDataFrame } from '@components/BasicDataFrame';
 import { Paper } from '@components/Paper';
-import { RunButton } from '@components/buttons';
+import { RunButton, SkipButton } from '@components/buttons';
 
 const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => props.jumpToStep(ComponentsID.DefaultFactorAnalysis + 1);
@@ -23,9 +23,9 @@ const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
       <AnalysisStepLogic>
         <RunButton onClick={props.runDefaultAnalysis}>run default analysis</RunButton>
 
-        <Button sx={{ ml: 1 }} onClick={handleSkip} size='medium' color='warning'>
+        <SkipButton sx={{ ml: 1 }} onClick={handleSkip}>
           skip
-        </Button>
+        </SkipButton>
       </AnalysisStepLogic>
 
       <AnalysisStepResult>

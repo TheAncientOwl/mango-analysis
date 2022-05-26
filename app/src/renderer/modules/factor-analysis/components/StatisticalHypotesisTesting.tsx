@@ -5,11 +5,12 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 import { fetchBartlett, fetchKMO, unlockNextStep, lockNextStep, jumpToStep } from '@store/factor-analysis/actions';
 
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import { AnalysisStepLogic } from '@components/analysis-step';
-import { StatisticalTest } from './StatisticalTest';
+import { SkipButton } from '@components/buttons';
 
+import { StatisticalTest } from './StatisticalTest';
 import { ComponentsID } from '../config/componentsID';
 
 const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
@@ -23,9 +24,9 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
 
   return (
     <AnalysisStepLogic>
-      <Button size='small' color='warning' onClick={handleSkip}>
+      <SkipButton size='small' onClick={handleSkip}>
         skip
-      </Button>
+      </SkipButton>
 
       <Grid container gap={2} mt={1}>
         <Grid item xs={5}>

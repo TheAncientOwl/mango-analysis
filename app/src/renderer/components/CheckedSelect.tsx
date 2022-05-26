@@ -14,7 +14,7 @@ import {
   Stack,
 } from '@mui/material';
 
-import { CheckedButton } from '@components/buttons/CheckedButton';
+import { CheckedButton } from '@components/buttons';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
