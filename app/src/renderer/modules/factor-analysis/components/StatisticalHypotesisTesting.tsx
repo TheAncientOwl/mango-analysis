@@ -9,6 +9,7 @@ import { Grid } from '@mui/material';
 
 import { AnalysisStepLogic } from '@components/analysis-step';
 import { SkipButton } from '@components/buttons';
+import { RenderIf } from '@components/RenderIf';
 
 import { StatisticalTest } from './StatisticalTest';
 import { ComponentsID } from '../config/componentsID';
@@ -24,9 +25,11 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
 
   return (
     <AnalysisStepLogic>
-      <SkipButton size='small' onClick={handleSkip}>
-        skip
-      </SkipButton>
+      <RenderIf condition={!props.nextStepUnlocked}>
+        <SkipButton size='small' onClick={handleSkip}>
+          skip
+        </SkipButton>
+      </RenderIf>
 
       <Grid container gap={2} mt={1}>
         <Grid item xs={5}>
@@ -57,6 +60,7 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
 const mapState = (state: RootState) => ({
   kmoModel: state.factorAnalysis.kmoModel,
   bartlett: state.factorAnalysis.bartlett,
+  nextStepUnlocked: state.factorAnalysis.nextStepUnlocked[ComponentsID.StatisticalHypotesisTesting],
 });
 
 const mapDispatch = {

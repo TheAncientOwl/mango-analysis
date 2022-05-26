@@ -14,6 +14,7 @@ import { AnalysisImage } from '@components/AnalysisImage';
 import { BasicDataFrame } from '@components/BasicDataFrame';
 import { Paper } from '@components/Paper';
 import { RunButton, SkipButton } from '@components/buttons';
+import { RenderIf } from '@components/RenderIf';
 
 const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => props.jumpToStep(ComponentsID.DefaultFactorAnalysis + 1);
@@ -23,9 +24,11 @@ const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
       <AnalysisStepLogic>
         <RunButton onClick={props.runDefaultAnalysis}>run default analysis</RunButton>
 
-        <SkipButton sx={{ ml: 1 }} onClick={handleSkip}>
-          skip
-        </SkipButton>
+        <RenderIf condition={!props.nextStepUnlocked}>
+          <SkipButton sx={{ ml: 1 }} onClick={handleSkip}>
+            skip
+          </SkipButton>
+        </RenderIf>
       </AnalysisStepLogic>
 
       <AnalysisStepResult>
@@ -51,6 +54,7 @@ const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
 const mapState = (state: RootState) => ({
   numberOfFeatures: state.factorAnalysis.features.length - 1,
   defaultHints: state.factorAnalysis.defaultHints,
+  nextStepUnlocked: state.factorAnalysis.nextStepUnlocked[ComponentsID.DefaultFactorAnalysis],
 });
 
 const mapDispatch = {
