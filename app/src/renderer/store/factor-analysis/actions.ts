@@ -63,7 +63,7 @@ export const fetchKMO = () => async (dispatch: Dispatch) => {
 export const runDefaultAnalysis = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
-  await axios.post('/factor-analysis/analyze');
+  await axios.post('/factor-analysis/default-analysis');
 
   const res = await axios.get('/factor-analysis/default-hints');
 

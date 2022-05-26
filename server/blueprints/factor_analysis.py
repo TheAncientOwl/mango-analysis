@@ -39,6 +39,13 @@ def kmo():
     return flask.jsonify(kmoModel=server.factor_analysis.kmo()), 200
 
 
+@factor_analysis.post('/factor-analysis/default-analysis')
+def default_analysis():
+    server.factor_analysis.analyze()
+
+    return flask.jsonify(message='Analysis completed!'), 200
+
+
 @factor_analysis.post('/factor-analysis/analyze')
 def analyze():
     data = flask.request.get_json()
