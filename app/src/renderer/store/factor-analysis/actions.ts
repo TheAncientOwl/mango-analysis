@@ -85,3 +85,7 @@ export const runAnalysis =
 
     dispatch({ type: ActionType.AnalysisFinished });
   };
+
+export const resetState = () => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Reset });
+};

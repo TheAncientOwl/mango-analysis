@@ -144,6 +144,10 @@ export const factorAnalysisReducer = (state: IDefaultState = defaultState, actio
       };
     }
 
+    case ActionType.Reset: {
+      return defaultState;
+    }
+
     default: {
       return state;
     }

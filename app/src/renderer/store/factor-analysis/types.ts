@@ -5,6 +5,7 @@ import { BasicDataFrameProps } from '@components/BasicDataFrame';
 
 export enum ActionType {
   Loading = 'FACTOR_ANALYSIS__LOADING',
+  Reset = 'FACTOR_ANALYSIS__RESET',
 
   NextStep = 'FACTOR_ANALYSIS__NEXT_STEP',
   PrevStep = 'FACTOR_ANALYSIS__PREV_STEP',
@@ -90,6 +91,10 @@ interface ServerSetFeaturesSuccess {
   type: ActionType.ServerSetFeaturesSuccess;
 }
 
+interface Reset {
+  type: ActionType.Reset;
+}
+
 export type DispatchTypes =
   | Loading
   | NextStep
@@ -104,6 +109,7 @@ export type DispatchTypes =
   | FetchedDefaultHints
   | UnlockNextStep
   | LockNextStep
-  | ServerSetFeaturesSuccess;
+  | ServerSetFeaturesSuccess
+  | Reset;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;
