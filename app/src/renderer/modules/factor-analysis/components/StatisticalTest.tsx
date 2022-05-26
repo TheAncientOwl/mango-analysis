@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Box, Typography, Stack, Badge, Button, Collapse } from '@mui/material';
+import { Box, Typography, Stack, Badge, Collapse } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
-import BoltIcon from '@mui/icons-material/Bolt';
 
 import { Tooltip } from '@components/Tooltip';
 import { Paper } from '@components/Paper';
+import { RunButton } from '@components/RunButton';
 
 interface TestValueConfig {
   symbol: string;
@@ -54,9 +54,9 @@ export const StatisticalTest: React.FC<Props> = ({ title, tooltip, values, onTes
             </Typography>
           </Badge>
 
-          <Button startIcon={<BoltIcon />} sx={{ ml: 2 }} size='small' onClick={onTest}>
+          <RunButton size='small' onClick={onTest}>
             run test
-          </Button>
+          </RunButton>
         </Stack>
 
         <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>

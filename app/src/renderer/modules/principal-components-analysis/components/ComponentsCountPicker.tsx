@@ -18,9 +18,10 @@ import { BasicDataFrame } from '@components/BasicDataFrame';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
+import { CheckedButton } from '@components/CheckedButton';
+import { RunButton } from '@components/RunButton';
 
 import { ComponentsID } from '../config/componentsID';
-import { CheckedButton } from '@src/renderer/components/CheckedButton';
 
 const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
   const handleChange = (event: SelectChangeEvent) => {
@@ -54,9 +55,7 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
             onChange={handleChange}
           />
 
-          <Button onClick={runAnalysis} size='medium'>
-            Run analysis
-          </Button>
+          <RunButton onClick={runAnalysis}>run analysis</RunButton>
 
           <CheckedButton checked={props.hintsOpen} onClick={props.toggleHints}>
             hints

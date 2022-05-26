@@ -6,7 +6,6 @@ import { RootState } from '@store/.';
 import { changeFactorsNumber, runDefaultAnalysis, jumpToStep } from '@store/factor-analysis/actions';
 
 import { Button, Collapse, Grid } from '@mui/material';
-import BoltIcon from '@mui/icons-material/Bolt';
 
 import { ComponentsID } from '../config/componentsID';
 
@@ -14,6 +13,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step
 import { AnalysisImage } from '@components/AnalysisImage';
 import { BasicDataFrame } from '@components/BasicDataFrame';
 import { Paper } from '@components/Paper';
+import { RunButton } from '@components/RunButton';
 
 const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => props.jumpToStep(ComponentsID.DefaultFactorAnalysis + 1);
@@ -21,9 +21,8 @@ const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
   return (
     <React.Fragment>
       <AnalysisStepLogic>
-        <Button onClick={props.runDefaultAnalysis} startIcon={<BoltIcon />} size='medium'>
-          run default analysis
-        </Button>
+        <RunButton onClick={props.runDefaultAnalysis}>run default analysis</RunButton>
+
         <Button sx={{ ml: 1 }} onClick={handleSkip} size='medium' color='warning'>
           skip
         </Button>
