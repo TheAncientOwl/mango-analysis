@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   InputLabel,
@@ -14,8 +13,8 @@ import {
   SelectChangeEvent,
   Stack,
 } from '@mui/material';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+
+import { CheckedButton } from '@components/CheckedButton';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -40,9 +39,6 @@ interface Props {
   onChange: (event: SelectChangeEvent<string[]>) => void;
 }
 
-const icon = <CheckBoxIcon />;
-const checkedIcon = <CheckBoxOutlineBlankIcon />;
-
 export const CheckedSelect: React.FC<Props> = ({
   minWidth = 'auto',
   maxWidth = 'auto',
@@ -56,9 +52,9 @@ export const CheckedSelect: React.FC<Props> = ({
 }) => {
   return (
     <Stack direction='row' gap={2}>
-      <Button size='medium' startIcon={allChecked ? icon : checkedIcon} onClick={onCheckAll}>
+      <CheckedButton checked={allChecked} onClick={onCheckAll}>
         all
-      </Button>
+      </CheckedButton>
 
       <Box minWidth={minWidth} maxWidth={maxWidth}>
         <FormControl fullWidth>

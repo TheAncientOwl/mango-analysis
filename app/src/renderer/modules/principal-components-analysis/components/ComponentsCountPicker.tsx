@@ -12,8 +12,6 @@ import {
 
 // eslint-disable-next-line import/named
 import { Box, Button, Collapse, Grid, SelectChangeEvent, Stack, Typography } from '@mui/material';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 import { BasicDataFrame } from '@components/BasicDataFrame';
@@ -22,6 +20,7 @@ import { Paper } from '@components/Paper';
 import { Select } from '@components/Select';
 
 import { ComponentsID } from '../config/componentsID';
+import { CheckedButton } from '@src/renderer/components/CheckedButton';
 
 const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
   const handleChange = (event: SelectChangeEvent) => {
@@ -59,12 +58,9 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
             Run analysis
           </Button>
 
-          <Button
-            startIcon={props.hintsOpen ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-            onClick={props.toggleHints}
-            size='medium'>
-            Hints
-          </Button>
+          <CheckedButton checked={props.hintsOpen} onClick={props.toggleHints}>
+            hints
+          </CheckedButton>
 
           {props.showExportPCA && (
             <Button size='medium' onClick={props.exportPCA}>

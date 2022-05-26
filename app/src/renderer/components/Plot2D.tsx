@@ -7,10 +7,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import { Tooltip } from '@components/Tooltip';
+import { CheckedButton } from '@components/CheckedButton';
 
 import { Paper } from './Paper';
 import { Select } from './Select';
@@ -58,8 +57,6 @@ const visibleIcon = <VisibilityIcon />;
 const hiddenIcon = <VisibilityOffIcon />;
 const deleteIcon = <DeleteIcon />;
 const addIcon = <AddBoxIcon />;
-const unCheckedIcon = <CheckBoxOutlineBlankIcon fontSize='small' />;
-const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
@@ -146,12 +143,11 @@ export const Plot2D: React.FC<Props> = props => {
       </Grid>
 
       <Grid item>
-        <Button
-          size='medium'
-          startIcon={props.targets.length === plot.targets.length ? checkedIcon : unCheckedIcon}
+        <CheckedButton
+          checked={props.targets.length === plot.targets.length}
           onClick={() => props.onTargetsChange(props.targets.length === plot.targets.length ? [] : props.targets)}>
           all targets
-        </Button>
+        </CheckedButton>
       </Grid>
 
       <Grid item xs={12}>
