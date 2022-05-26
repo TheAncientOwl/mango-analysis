@@ -66,6 +66,8 @@ class FactorAnalysis:
         ev, v = self.fa.get_eigenvalues()
 
         dummy_range = range(1, self.n_factors + 1)
+        
+        plt.figure(figsize=(8, 8))
         plt.scatter(dummy_range, ev)
         plt.plot(dummy_range, ev)
         plt.title('Scree Plot')

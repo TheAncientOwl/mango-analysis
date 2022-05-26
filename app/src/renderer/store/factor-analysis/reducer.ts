@@ -1,6 +1,7 @@
 import { BartlettTest, ActionType, DispatchTypes, DefaultHints } from './types';
 
 import { IDefaultAnalysisStep, newNextStepUnlockedArray } from '@store/IDefaultAnalysisState';
+import { ComponentsID } from '@src/renderer/modules/factor-analysis/config/componentsID';
 
 const StepsCountFactorAnalysis = 4;
 
@@ -14,7 +15,6 @@ interface IDefaultState extends IDefaultAnalysisStep {
   factorsNumber: number;
 
   defaultHints: DefaultHints;
-  hintsOpen: boolean;
 }
 
 const defaultState: IDefaultState = {
@@ -37,7 +37,6 @@ const defaultState: IDefaultState = {
     eigenvalues: { columns: [], data: [], index: [] },
     screePlotSrc: '',
   },
-  hintsOpen: false,
 };
 
 export const factorAnalysisReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
@@ -133,7 +132,9 @@ export const factorAnalysisReducer = (state: IDefaultState = defaultState, actio
     case ActionType.FetchedDefaultHints: {
       return {
         ...state,
+        loading: false,
         defaultHints: action.payload,
+        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, ComponentsID.DefaultFactorAnalysis, true),
       };
     }
 

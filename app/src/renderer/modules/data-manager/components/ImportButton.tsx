@@ -5,14 +5,13 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState, store } from '@store/.';
+import { RootState, resetAppState } from '@store/.';
 import { importCSV } from '@store/data-manager/actions';
-import { resetState as resetStatePCA } from '@store/principal-components-analysis/actions';
 
 const ImportButton: React.FC<PropsFromRedux> = props => {
   const importData = () => {
     props.importCSV(props.page, props.pageSize).then(importState => {
-      if (!importState.canceled) store.dispatch(resetStatePCA());
+      if (!importState.canceled) resetAppState();
     });
   };
 

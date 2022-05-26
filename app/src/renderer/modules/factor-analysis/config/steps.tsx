@@ -9,6 +9,7 @@ import { ComponentsID } from './componentsID';
 
 import FeaturesPicker from '../components/FeaturesPicker';
 import StatisticalHypotesisTesting from '../components/StatisticalHypotesisTesting';
+import DefaultFactorAnalysis from '../components/DefaultFactorAnalysis';
 
 export const StepsFactorAnalysis: ReadonlyArray<StepConfig> = [
   {
@@ -24,5 +25,10 @@ export const StepsFactorAnalysis: ReadonlyArray<StepConfig> = [
     index: ComponentsID.StatisticalHypotesisTesting,
     title: 'Statistical hypothesis testing',
     content: <StatisticalHypotesisTesting />,
+  },
+  {
+    index: ComponentsID.DefaultFactorAnalysis,
+    title: 'Default analysis',
+    content: <DefaultFactorAnalysis />,
   },
 ];
