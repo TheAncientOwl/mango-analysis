@@ -89,3 +89,7 @@ export const runAnalysis =
 export const resetState = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Reset });
 };
+
+export const changeFactorsNumber = (value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ChangeFactorsNumber, payload: value });
+};
