@@ -10,20 +10,8 @@ import {
   toggleHints,
 } from '@store/principal-components-analysis/actions';
 
-import {
-  Box,
-  Button,
-  Collapse,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  // eslint-disable-next-line import/named
-  SelectChangeEvent,
-  Stack,
-  Typography,
-} from '@mui/material';
+// eslint-disable-next-line import/named
+import { Box, Button, Collapse, Grid, SelectChangeEvent, Stack, Typography } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
@@ -31,6 +19,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step
 import { BasicDataFrame } from '@components/BasicDataFrame';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
+import { Select } from '@components/Select';
 
 import { ComponentsID } from '../config/componentsID';
 
@@ -39,10 +28,15 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
     props.changeComponentsCount(+event.target.value);
   };
 
-  const menuItemsDummyArray = React.useMemo(
-    () => new Array(Math.max(0, props.featuresLength)).fill(0),
-    [props.featuresLength]
-  );
+  const componentsCountOptions = React.useMemo(() => {
+    const options = new Array(Math.max(0, props.featuresLength)).fill(0);
+
+    options.forEach((element, index, array) => {
+      array[index] = index + 2;
+    });
+
+    return options;
+  }, [props.featuresLength]);
 
   const runAnalysis = () => {
     props.runAnalysis(props.componentsCount);
@@ -52,21 +46,14 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
     <React.Fragment>
       <AnalysisStepLogic>
         <Stack mt={1} ml={1} direction='row' gap={1}>
-          <FormControl sx={{ minWidth: '7em' }}>
-            <InputLabel id='components-count-picker-label'>Components</InputLabel>
-            <Select
-              labelId='components-count-picker-label'
-              id='components-count-picker'
-              value={props.featuresLength > 0 ? `${props.componentsCount}` : ''}
-              label='Components'
-              onChange={handleChange}>
-              {menuItemsDummyArray.map((val, index) => (
-                <MenuItem key={index} value={index + 2}>
-                  {index + 2}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Select
+            minWidth='7em'
+            id='components-count-picker'
+            label='Components'
+            value={props.featuresLength > 0 ? `${props.componentsCount}` : ''}
+            values={componentsCountOptions}
+            onChange={handleChange}
+          />
 
           <Button onClick={runAnalysis} size='medium'>
             Run analysis
