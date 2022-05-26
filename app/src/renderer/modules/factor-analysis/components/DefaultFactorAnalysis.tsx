@@ -51,6 +51,7 @@ const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
   );
 };
 
+// <redux>
 const mapState = (state: RootState) => ({
   numberOfFeatures: state.factorAnalysis.features.length - 1,
   defaultHints: state.factorAnalysis.defaultHints,
