@@ -3,9 +3,9 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { fetchBartlett, fetchKMO, unlockNextStep, lockNextStep } from '@store/factor-analysis/actions';
+import { fetchBartlett, fetchKMO, unlockNextStep, lockNextStep, jumpToStep } from '@store/factor-analysis/actions';
 
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 
 import { AnalysisStepLogic } from '@components/analysis-step';
 import { StatisticalTest } from './StatisticalTest';
@@ -19,9 +19,15 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
     else props.lockNextStep(ComponentsID.StatisticalHypotesisTesting);
   }, [props.bartlett, props.kmoModel]);
 
+  const handleSkip = () => props.jumpToStep(ComponentsID.StatisticalHypotesisTesting + 1);
+
   return (
     <AnalysisStepLogic>
-      <Grid container gap={2}>
+      <Button size='small' color='warning' onClick={handleSkip}>
+        skip
+      </Button>
+
+      <Grid container gap={2} mt={1}>
         <Grid item xs={5}>
           <StatisticalTest
             onTest={props.fetchBartlett}
@@ -57,6 +63,7 @@ const mapDispatch = {
   fetchKMO,
   unlockNextStep,
   lockNextStep,
+  jumpToStep,
 };
 
 const connector = connect(mapState, mapDispatch);

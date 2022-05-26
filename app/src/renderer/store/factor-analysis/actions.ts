@@ -93,3 +93,7 @@ export const resetState = () => (dispatch: Dispatch) => {
 export const changeFactorsNumber = (value: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.ChangeFactorsNumber, payload: value });
 };
+
+export const jumpToStep = (step: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.JumpToStep, payload: step });
+};

@@ -145,6 +145,19 @@ export const factorAnalysisReducer = (state: IDefaultState = defaultState, actio
       };
     }
 
+    case ActionType.JumpToStep: {
+      const stepIndex = action.payload;
+
+      const newNextStepUnlocked = new Array(state.nextStepUnlocked.length);
+      newNextStepUnlocked.fill(true, 0, stepIndex);
+
+      return {
+        ...state,
+        currentStep: stepIndex,
+        nextStepUnlocked: newNextStepUnlocked,
+      };
+    }
+
     case ActionType.Reset: {
       return defaultState;
     }

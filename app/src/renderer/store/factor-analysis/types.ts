@@ -11,6 +11,7 @@ export enum ActionType {
   PrevStep = 'FACTOR_ANALYSIS__PREV_STEP',
   UnlockNextStep = 'FACTOR_ANALYSIS__UNLOCK_NEXT_STEP',
   LockNextStep = 'FACTOR_ANALYSIS__LOCK_NEXT_STEP',
+  JumpToStep = 'FACTOR_ANALYSIS__JUMP_TO_STEP',
 
   FetchedPossibleFeatures = 'FACTOR_ANALYSIS__FETCHED_POSSIBLE_FEATURES',
   ChangeFeatures = 'FACTOR_ANALYSIS__CHANGE_FEATURES',
@@ -95,6 +96,11 @@ interface Reset {
   type: ActionType.Reset;
 }
 
+interface JumpToStep {
+  type: ActionType.JumpToStep;
+  payload: number;
+}
+
 export type DispatchTypes =
   | Loading
   | NextStep
@@ -110,6 +116,7 @@ export type DispatchTypes =
   | UnlockNextStep
   | LockNextStep
   | ServerSetFeaturesSuccess
-  | Reset;
+  | Reset
+  | JumpToStep;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;
