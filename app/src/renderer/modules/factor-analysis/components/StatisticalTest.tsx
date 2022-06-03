@@ -10,7 +10,6 @@ import { RunButton } from '@components/buttons';
 interface TestValueConfig {
   symbol: string;
   value: number;
-  tooltip: string;
 }
 
 interface Props {
@@ -19,24 +18,6 @@ interface Props {
   values: TestValueConfig[];
   onTest: () => void;
 }
-
-const TestValue: React.FC<TestValueConfig> = ({ symbol, value, tooltip }) => {
-  return (
-    <Box>
-      <Badge
-        sx={{ mr: 2 }}
-        badgeContent={
-          <Tooltip title={tooltip} placement='right'>
-            <InfoIcon sx={{ color: 'info.main', fontSize: '15px', ml: 2 }} />
-          </Tooltip>
-        }>
-        {symbol}
-      </Badge>
-      {' = '}
-      {value}
-    </Box>
-  );
-};
 
 export const StatisticalTest: React.FC<Props> = ({ title, tooltip, values, onTest }) => {
   return (
@@ -63,8 +44,12 @@ export const StatisticalTest: React.FC<Props> = ({ title, tooltip, values, onTes
 
         <Collapse in={values[0].value !== undefined}>
           <Stack direction='column' gap={1} pl={2} mt={2}>
-            {values.map((value, index) => (
-              <TestValue key={index} symbol={value.symbol} value={value.value} tooltip={value.tooltip} />
+            {values.map((test, index) => (
+              <Box key={index}>
+                {test.symbol}
+                {' = '}
+                {test.value}
+              </Box>
             ))}
           </Stack>
         </Collapse>

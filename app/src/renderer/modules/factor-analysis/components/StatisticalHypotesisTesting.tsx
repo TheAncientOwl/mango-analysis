@@ -36,10 +36,10 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
           <StatisticalTest
             onTest={props.fetchBartlett}
             title='Bartlett'
-            tooltip='some tooltip'
+            tooltip='The null hypothesis of the test is that the variables are orthogonal, i.e. not correlated. The alternative hypothesis is that the variables are not orthogonal, i.e. they are correlated enough to where the correlation matrix diverges significantly from the identity matrix. If the p-value from Bartlett’s Test of Sphericity is lower than our chosen significance level (common choices are 0.10, 0.05, and 0.01), then our dataset is suitable for a data reduction technique.'
             values={[
-              { symbol: 'chi^2', value: props.bartlett.chiSquare, tooltip: 'some tooltip' },
-              { symbol: 'pValue', value: props.bartlett.pValue, tooltip: 'some tooltip' },
+              { symbol: 'chi^2', value: props.bartlett.chiSquare },
+              { symbol: 'pValue', value: props.bartlett.pValue },
             ]}
           />
         </Grid>
@@ -47,8 +47,8 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
           <StatisticalTest
             onTest={props.fetchKMO}
             title='KMO'
-            tooltip='some tooltip'
-            values={[{ symbol: 'kmoModel', value: props.kmoModel, tooltip: 'some tooltip' }]}
+            tooltip='The KMO test allows us to ensure that the data we have are suitable to run a Factor Analysis and therefore determine whether or not we have set out what we intended to measure. The statistic that is computed is a measure of 0 to 1. Interpreting the statistic is relatively straightforward; the closer to 1, the better.'
+            values={[{ symbol: 'kmoModel', value: props.kmoModel }]}
           />
         </Grid>
       </Grid>
