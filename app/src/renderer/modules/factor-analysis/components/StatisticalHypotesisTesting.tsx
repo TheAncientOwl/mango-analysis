@@ -14,6 +14,14 @@ import { RenderIf } from '@components/RenderIf';
 import { StatisticalTest } from './StatisticalTest';
 import { StepsID } from '../steps';
 
+const getFeedbackKMO = (kmoModel: number) => {
+  if (kmoModel >= 0.9) return 'Our dataset has great factorability';
+  if (kmoModel >= 0.8) return 'Our dataset has good factorability';
+  if (kmoModel >= 0.7) return 'Our dataset has mean factorability';
+
+  return 'Our model has weak factorability';
+};
+
 const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {
     if (props.bartlett.chiSquare !== undefined && props.kmoModel !== undefined)
@@ -41,6 +49,11 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
               { symbol: 'chi^2', value: props.bartlett.chiSquare },
               { symbol: 'pValue', value: props.bartlett.pValue },
             ]}
+            feedback={
+              props.bartlett.pValue < 0.1
+                ? 'Our dataset is suitable for a data reduction technique'
+                : 'Our dataset is not suitable for a data reduction technique'
+            }
           />
         </Grid>
         <Grid item xs={5}>
@@ -49,6 +62,7 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
             title='KMO'
             tooltip='The KMO test allows us to ensure that the data we have are suitable to run a Factor Analysis and therefore determine whether or not we have set out what we intended to measure. The statistic that is computed is a measure of 0 to 1. Interpreting the statistic is relatively straightforward; the closer to 1, the better.'
             values={[{ symbol: 'kmoModel', value: props.kmoModel }]}
+            feedback={getFeedbackKMO(props.kmoModel)}
           />
         </Grid>
       </Grid>

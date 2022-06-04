@@ -17,9 +17,10 @@ interface Props {
   tooltip?: string;
   values: TestValueConfig[];
   onTest: () => void;
+  feedback: string;
 }
 
-export const StatisticalTest: React.FC<Props> = ({ title, tooltip, values, onTest }) => {
+export const StatisticalTest: React.FC<Props> = ({ title, tooltip, values, onTest, feedback }) => {
   return (
     <Paper sx={{ display: 'block', p: 2 }}>
       <Box>
@@ -51,6 +52,9 @@ export const StatisticalTest: React.FC<Props> = ({ title, tooltip, values, onTes
                 {test.value}
               </Box>
             ))}
+            <Typography mt={1} variant='body1'>
+              {feedback}
+            </Typography>
           </Stack>
         </Collapse>
       </Box>
