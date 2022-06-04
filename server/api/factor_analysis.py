@@ -127,14 +127,15 @@ class FactorAnalysis:
         loadings_matrix = pd.DataFrame(self.fa.loadings_, index=self.features,
                                        columns=[f'F{x}' for x in range(1, self.n_factors + 1)])
 
-        plt.figure(figsize=(8, 8))
+        size = self.n_factors + 1 if self.n_factors + 1 > 8 else 8
+        plt.figure(figsize=(size, size))
         sns.heatmap(loadings_matrix, annot=True,
                     vmax=1, vmin=-1, center=0,
                     cmap=self.cmap)
 
         figpath = os.path.join(server.plots_data_path,
                                f'LoadingsMatrix.{server.make_uuid()}.jpg')
-        plt.savefig(figpath)
+        plt.savefig(figpath, bbox_inches='tight')
 
         return {'loadings': loadings_matrix, 'loadingsPath': figpath}
 

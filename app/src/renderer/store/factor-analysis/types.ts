@@ -22,6 +22,14 @@ export enum ActionType {
   FetchedKmoResult = 'FACTOR_ANALYSIS__FETCHED_KMO_RESULT',
   AnalysisFinished = 'FACTOR_ANALYSIS__ANALYSIS_FINISHED',
   FetchedDefaultHints = 'FACTOR_ANALYSIS__FETCHED_DEFAULT_HINTS',
+
+  NewTab = 'FACTOR_ANALYSIS__NEW_TAB',
+  ChangeCurrentTab = 'FACTOR_ANALYSIS__CHANGE_TAB',
+  RemoveTab = 'FACTOR_ANALYSIS__REMOVE_TAB',
+  ChangeTabFactorsCount = 'FACTOR_ANALYSIS__CHANGE_TAB_FACTORS_COUNT',
+  ChangeTabRotationMethod = 'FACTOR_ANALYSIS__CHANGE_TAB_ROTATION_METHOD',
+  ChangeTabLoadings = 'FACTOR_ANALYSIS__CHANGE_TAB_LOADINGS',
+  TabAnalysisFinished = 'FACTOR_ANALYSIS__TAB_ANALYSIS_FINISHED',
 }
 
 interface Loading {
@@ -101,6 +109,67 @@ interface JumpToStep {
   payload: number;
 }
 
+interface NewTab {
+  type: ActionType.NewTab;
+}
+
+interface ChangeTabFactorsCount {
+  type: ActionType.ChangeTabFactorsCount;
+  payload: {
+    count: number;
+    index: number;
+  };
+}
+
+export type RotationMethod =
+  | 'none'
+  | 'varimax'
+  | 'promax'
+  | 'oblimin'
+  | 'oblimax'
+  | 'quartimin'
+  | 'quartimax'
+  | 'equamax'
+  | 'geomin_obl'
+  | 'geomin_ort';
+interface ChangeTabRotationMethod {
+  type: ActionType.ChangeTabRotationMethod;
+  payload: {
+    method: RotationMethod;
+    index: number;
+  };
+}
+
+export interface FactorLoadings {
+  imagePath: string;
+  data: BasicDataFrameProps;
+}
+interface ChangeTabLoadings {
+  type: ActionType.ChangeTabLoadings;
+  payload: {
+    loadings: FactorLoadings;
+    index: number;
+  };
+}
+
+interface RemoveTab {
+  type: ActionType.RemoveTab;
+  payload: number;
+}
+
+interface ChangeCurrentTab {
+  type: ActionType.ChangeCurrentTab;
+  payload: number;
+}
+
+interface TabAnalysisFinished {
+  type: ActionType.TabAnalysisFinished;
+  payload: {
+    loadings: FactorLoadings;
+    index: number;
+  };
+}
+
 export type DispatchTypes =
   | Loading
   | NextStep
@@ -117,6 +186,13 @@ export type DispatchTypes =
   | LockNextStep
   | ServerSetFeaturesSuccess
   | Reset
-  | JumpToStep;
+  | JumpToStep
+  | NewTab
+  | ChangeTabFactorsCount
+  | ChangeTabRotationMethod
+  | ChangeTabLoadings
+  | RemoveTab
+  | ChangeCurrentTab
+  | TabAnalysisFinished;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;

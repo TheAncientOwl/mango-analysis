@@ -1,4 +1,5 @@
-import { BartlettTest, ActionType, DispatchTypes, DefaultHints } from './types';
+import { FactorLoadings, BartlettTest, ActionType, DispatchTypes, DefaultHints, RotationMethod } from './types';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   IDefaultAnalysisStep,
@@ -10,9 +11,33 @@ import {
   lockNextStep,
   jumpToStep,
 } from '@store/IDefaultAnalysisState';
+
 import { StepsID } from '@modules/factor-analysis/steps';
 
 const StepsCountFactorAnalysis = 4;
+
+interface FactorAnalysisTab {
+  id: string;
+  factorsCount: number;
+  rotationMethod: RotationMethod;
+  loadings: FactorLoadings;
+}
+
+const makeNewTab = (): FactorAnalysisTab => {
+  return {
+    id: uuidv4(),
+    rotationMethod: 'none',
+    factorsCount: 2,
+    loadings: {
+      imagePath: '',
+      data: {
+        index: [],
+        columns: [],
+        data: [],
+      },
+    },
+  };
+};
 
 interface IDefaultState extends IDefaultAnalysisStep {
   possibleFeatures: string[];
@@ -24,6 +49,9 @@ interface IDefaultState extends IDefaultAnalysisStep {
   factorsNumber: number;
 
   defaultHints: DefaultHints;
+
+  analysisTabs: FactorAnalysisTab[];
+  currentTab: number;
 }
 
 const defaultState: IDefaultState = {
@@ -46,6 +74,9 @@ const defaultState: IDefaultState = {
     eigenvalues: { columns: [], data: [], index: [] },
     screePlotSrc: '',
   },
+
+  analysisTabs: [makeNewTab()],
+  currentTab: 0,
 };
 
 export const factorAnalysisReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
@@ -134,6 +165,81 @@ export const factorAnalysisReducer = (state: IDefaultState = defaultState, actio
       return {
         ...state,
         loading: false,
+      };
+    }
+
+    case ActionType.NewTab: {
+      const newTabs = [...state.analysisTabs, makeNewTab()];
+
+      return {
+        ...state,
+        analysisTabs: newTabs,
+      };
+    }
+
+    case ActionType.ChangeTabFactorsCount: {
+      const newTabs = [...state.analysisTabs];
+      const { index, count } = action.payload;
+      newTabs[index] = { ...newTabs[index], factorsCount: count };
+
+      return {
+        ...state,
+        analysisTabs: newTabs,
+      };
+    }
+
+    case ActionType.ChangeTabRotationMethod: {
+      const newTabs = [...state.analysisTabs];
+      const { index, method } = action.payload;
+      newTabs[index] = { ...newTabs[index], rotationMethod: method };
+
+      return {
+        ...state,
+        analysisTabs: newTabs,
+      };
+    }
+
+    case ActionType.ChangeTabLoadings: {
+      const newTabs = [...state.analysisTabs];
+      const { index, loadings } = action.payload;
+      newTabs[index] = { ...newTabs[index], loadings };
+
+      return {
+        ...state,
+        analysisTabs: newTabs,
+      };
+    }
+
+    case ActionType.RemoveTab: {
+      if (state.analysisTabs.length === 1) return state;
+
+      const index = action.payload;
+      const newTabs = [...state.analysisTabs];
+      newTabs.splice(index, 1);
+
+      return {
+        ...state,
+        analysisTabs: newTabs,
+        currentTab: Math.max(0, state.currentTab - 1),
+      };
+    }
+
+    case ActionType.ChangeCurrentTab: {
+      return {
+        ...state,
+        currentTab: action.payload,
+      };
+    }
+
+    case ActionType.TabAnalysisFinished: {
+      const newTabs = [...state.analysisTabs];
+      const { loadings, index } = action.payload;
+      newTabs[index] = { ...newTabs[index], loadings };
+
+      return {
+        ...state,
+        loading: false,
+        analysisTabs: newTabs,
       };
     }
 

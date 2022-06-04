@@ -1,6 +1,8 @@
 import { axios } from '@config/.';
 
-import { Dispatch, ActionType } from './types';
+import { Dispatch, ActionType, RotationMethod, FactorLoadings } from './types';
+
+import { store } from '@store/.';
 
 export const nextStep = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.NextStep });
@@ -96,4 +98,68 @@ export const changeFactorsNumber = (value: number) => (dispatch: Dispatch) => {
 
 export const jumpToStep = (step: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.JumpToStep, payload: step });
+};
+
+export const newTab = () => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.NewTab });
+};
+
+export const changeTabFactorsCount = (index: number, count: number) => (dispatch: Dispatch) => {
+  dispatch({
+    type: ActionType.ChangeTabFactorsCount,
+    payload: {
+      index,
+      count,
+    },
+  });
+};
+
+export const changeTabRotationMethod = (index: number, method: RotationMethod) => (dispatch: Dispatch) => {
+  dispatch({
+    type: ActionType.ChangeTabRotationMethod,
+    payload: {
+      index,
+      method,
+    },
+  });
+};
+
+export const changeTabLoadings = (index: number, loadings: FactorLoadings) => (dispatch: Dispatch) => {
+  dispatch({
+    type: ActionType.ChangeTabLoadings,
+    payload: {
+      index,
+      loadings,
+    },
+  });
+};
+
+export const removeTab = (index: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.RemoveTab, payload: index });
+};
+
+export const changeCurrentTab = (value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ChangeCurrentTab, payload: value });
+};
+
+export const runTabAnalysis = (index: number) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  const tabConfig = store.getState().factorAnalysis.analysisTabs[index];
+
+  const res = await axios.post('/factor-analysis/run', {
+    nFactors: tabConfig.factorsCount,
+    rotation: tabConfig.rotationMethod,
+  });
+
+  dispatch({
+    type: ActionType.TabAnalysisFinished,
+    payload: {
+      index: index,
+      loadings: {
+        imagePath: res.data.loadingsPath,
+        data: res.data.loadings,
+      },
+    },
+  });
 };
