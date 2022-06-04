@@ -38,3 +38,21 @@ def export_csv(fileName, dirPath):
         dirPath, fileName), index=False)
 
     return flask.jsonify(message='File saved successfully'), 201
+
+# >> Export CSV from params
+
+
+@data_import_export.post('/data/export/dataframe/csv')
+def export_dataframe_csv():
+    data = flask.request.get_json()
+
+    save_path = data['savePath']
+
+    df_index = data['index']
+    df_columns = data['columns']
+    df_data = data['data']
+
+    df = pandas.DataFrame(index=df_index, columns=df_columns, data=df_data)
+    df.to_csv(path_or_buf=save_path)
+
+    return flask.jsonify(message='File saved successfully'), 201

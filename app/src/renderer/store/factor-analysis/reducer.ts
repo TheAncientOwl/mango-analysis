@@ -243,6 +243,13 @@ export const factorAnalysisReducer = (state: IDefaultState = defaultState, actio
       };
     }
 
+    case ActionType.ExportDataframeSuccess: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
     case ActionType.Reset: {
       return defaultState;
     }

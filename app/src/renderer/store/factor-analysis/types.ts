@@ -30,6 +30,7 @@ export enum ActionType {
   ChangeTabRotationMethod = 'FACTOR_ANALYSIS__CHANGE_TAB_ROTATION_METHOD',
   ChangeTabLoadings = 'FACTOR_ANALYSIS__CHANGE_TAB_LOADINGS',
   TabAnalysisFinished = 'FACTOR_ANALYSIS__TAB_ANALYSIS_FINISHED',
+  ExportDataframeSuccess = 'FACTOR_ANALYSIS__EXPORT_DATAFRAME_SUCCESS',
 }
 
 interface Loading {
@@ -121,6 +122,10 @@ interface ChangeTabFactorsCount {
   };
 }
 
+interface ExportDataframeSuccess {
+  type: ActionType.ExportDataframeSuccess;
+}
+
 export type RotationMethod =
   | 'none'
   | 'varimax'
@@ -193,6 +198,7 @@ export type DispatchTypes =
   | ChangeTabLoadings
   | RemoveTab
   | ChangeCurrentTab
-  | TabAnalysisFinished;
+  | TabAnalysisFinished
+  | ExportDataframeSuccess;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;

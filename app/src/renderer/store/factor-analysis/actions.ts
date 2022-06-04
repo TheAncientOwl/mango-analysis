@@ -3,6 +3,7 @@ import { axios } from '@config/.';
 import { Dispatch, ActionType, RotationMethod, FactorLoadings } from './types';
 
 import { store } from '@store/.';
+import { BasicDataFrameProps } from '@components/BasicDataFrame';
 
 export const nextStep = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.NextStep });
@@ -162,4 +163,28 @@ export const runTabAnalysis = (index: number) => async (dispatch: Dispatch) => {
       },
     },
   });
+};
+
+export const exportDataFrame = (loadings: BasicDataFrameProps) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  const savePath = await window.electron.showSaveDialog({
+    title: 'Save Loadings',
+    defaultPath: await window.electron.resolve(await window.electron.getHomeDir(), 'Loadings.csv'),
+    buttonLabel: 'Save',
+    filters: [
+      { name: 'CSV', extensions: ['csv'] },
+      { name: 'All files', extensions: ['*'] },
+    ],
+  });
+
+  if (savePath !== null)
+    await axios.post('/data/export/dataframe/csv', {
+      savePath,
+      index: loadings.index,
+      columns: loadings.columns,
+      data: loadings.data,
+    });
+
+  dispatch({ type: ActionType.ExportDataframeSuccess });
 };

@@ -10,6 +10,7 @@ import {
   changeTabRotationMethod,
   changeCurrentTab,
   runTabAnalysis,
+  exportDataFrame,
 } from '@store/factor-analysis/actions';
 
 import { Tabs } from '@components/Tabs';
@@ -61,6 +62,7 @@ const Analysis: React.FC<PropsFromRedux> = props => {
             onNewTab={props.newTab}
             onRemove={() => props.removeTab(index)}
             onRun={() => props.runTabAnalysis(index)}
+            onExportLoadings={props.exportDataFrame}
           />
         ),
       }))}
@@ -82,6 +84,7 @@ const mapDispatch = {
   changeTabRotationMethod,
   changeCurrentTab,
   runTabAnalysis,
+  exportDataFrame,
 };
 
 const connector = connect(mapState, mapDispatch);

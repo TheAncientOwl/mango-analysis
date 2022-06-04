@@ -70,3 +70,13 @@ GET http://localhost:5000/data/page/1/page-size/3
 ###
 GET http://localhost:5000/data/rows-count
 
+###
+POST http://localhost:5000/data/export/dataframe/csv
+Content-Type: application/json
+
+{
+  "savePath": "C:\\Users\\TheAncientOwl\\Desktop\\Test.csv",
+  "index": ["idx1", "idx2"],
+  "columns": ["col1", "col2"],
+  "data": [[1, 2], [3, 4]]
+}

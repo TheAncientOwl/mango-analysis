@@ -9,6 +9,7 @@ import { DeleteButton, RunButton, NewButton, ExportButton } from '@components/bu
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
+import { BasicDataFrameProps } from '@components/BasicDataFrame';
 
 interface Props {
   factorsCount: string;
@@ -21,6 +22,7 @@ interface Props {
   onNewTab: () => void;
   onRemove: () => void;
   onRun: () => void;
+  onExportLoadings: (loadings: BasicDataFrameProps) => void;
 }
 
 export const AxisRotation: React.FC<Props> = props => {
@@ -61,7 +63,7 @@ export const AxisRotation: React.FC<Props> = props => {
               <Paper>
                 <Stack mb={1} direction='row' justifyItems='center' gap={2}>
                   <Typography variant='h6'>Loadings Matrix</Typography>
-                  <ExportButton size='small' onClick={() => console.log('export')}>
+                  <ExportButton size='small' onClick={() => props.onExportLoadings(props.loadings.data)}>
                     export
                   </ExportButton>
                 </Stack>

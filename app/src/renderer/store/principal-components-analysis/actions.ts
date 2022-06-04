@@ -175,7 +175,10 @@ export const exportLoadings = () => async (dispatch: Dispatch) => {
     ],
   });
 
-  if (savePath === null) dispatch({ type: ActionType.ExportLoadingsEnded });
+  if (savePath === null) {
+    dispatch({ type: ActionType.ExportLoadingsEnded });
+    return;
+  }
 
   try {
     await axios.post('/pca/export-loadings', { path: savePath });
