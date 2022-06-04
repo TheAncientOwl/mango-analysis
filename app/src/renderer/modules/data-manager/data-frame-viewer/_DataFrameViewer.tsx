@@ -47,7 +47,11 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
               const columnLabel = dataFrame.labels[index + 1];
               const cellChecked = checkedLabels.indexOf(columnLabel) > -1;
               const formatedValue =
-                typeof value === 'number' && decimalsPrecision !== 'all' ? value.toFixed(decimalsPrecision) : value;
+                typeof value === 'number' && decimalsPrecision !== 'all'
+                  ? value.toFixed(decimalsPrecision)
+                  : value === ''
+                  ? 'NA'
+                  : value;
 
               return (
                 <TableCell

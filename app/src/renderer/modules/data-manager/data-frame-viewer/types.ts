@@ -2,6 +2,7 @@ export interface DataFrame {
   labels: string[];
   totalRows: number;
   rows: (string | number)[][];
+  missingValues: boolean;
 }
 
 export type DecimalsPrecision = number | 'all';

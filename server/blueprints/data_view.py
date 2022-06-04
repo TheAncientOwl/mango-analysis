@@ -23,11 +23,14 @@ def rows_between(start, end):
     end = min(server.dataFrame.shape[0], end)
 
     requestedDf = server.dataFrame[start:end]
+    missingValues = True if server.dataFrame.isnull().sum().sum() > 0 else False
+    requestedDf.fillna('', inplace=True)
 
     resultMap = {
         'labels': list(requestedDf.columns),
         'totalRows': server.dataFrame.shape[0],
-        'rows': requestedDf.to_numpy().tolist()
+        'rows': requestedDf.to_numpy().tolist(),
+        'missingValues': missingValues
     }
 
     return flask.jsonify(dataframe=resultMap), 200

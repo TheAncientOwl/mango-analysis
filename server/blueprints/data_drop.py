@@ -86,3 +86,10 @@ def drop_rows_cols():
     idk = flask.request.get_json()
 
     return flask.jsonify(message='Rows & columns dropped'), 200
+
+
+@data_drop.post('/data/drop/na')
+def drop_na():
+    server.dataFrame.dropna(inplace=True)
+
+    return flask.jsonify(message='NA values dropped'), 200

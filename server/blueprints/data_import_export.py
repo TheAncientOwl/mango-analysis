@@ -19,7 +19,7 @@ def import_csv(filePath):
     if not os.path.exists(filePath):
         return flask.jsonify(message='File does not exist'), 404
 
-    server.dataFrame = pandas.read_csv(filePath)
+    server.dataFrame = pandas.read_csv(filePath, na_values=['NA'])
     server.dataFrame.insert(
         0, '_mango_id', range(1, len(server.dataFrame) + 1))
 

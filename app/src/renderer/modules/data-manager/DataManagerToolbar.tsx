@@ -10,6 +10,7 @@ import DropDataFrameButton from './components/DropDataFrameButton';
 import DropCheckedButton from './components/DropCheckedButton';
 import ScalingHandler from './components/ScalingHandler';
 import DecimalsHandler from './components/DecimalsHandler';
+import DropNA from './components/DropNA';
 
 const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
@@ -44,6 +45,8 @@ export const DataManagerToolbar: React.FC = () => {
         />
       ) : (
         <>
+          {VerticalLine}
+          <DropNA />
           {VerticalLine}
           <ScalingHandler />
           {VerticalLine}

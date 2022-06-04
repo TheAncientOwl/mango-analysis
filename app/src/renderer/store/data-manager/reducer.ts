@@ -19,7 +19,7 @@ const defaultState: IDefaultState = {
   loading: false,
   importedData: false,
 
-  dataFrame: { labels: [], totalRows: 0, rows: [] },
+  dataFrame: { labels: [], totalRows: 0, rows: [], missingValues: false },
   checkedLabels: [],
   checkedRows: [],
   decimalsPrecision: 3,
@@ -127,7 +127,7 @@ export const dataManagerReducer = (state: IDefaultState = defaultState, action: 
       return {
         ...state,
         loading: false,
-        dataFrame: { labels: [], totalRows: 0, rows: [] },
+        dataFrame: { labels: [], totalRows: 0, rows: [], missingValues: false },
         page: 0,
         pageSize: 25,
         importedData: false,

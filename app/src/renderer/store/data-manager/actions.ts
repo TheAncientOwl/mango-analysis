@@ -1,5 +1,6 @@
 import { axios } from '@config/.';
 import { DecimalsPrecision } from '@modules/data-manager/data-frame-viewer/types';
+import { store } from '..';
 import { Dispatch, ActionType, ScalingMethodType } from './types';
 
 const fetchDataFrame = async (dispatch: Dispatch, page: number, pageSize: number, feedbackMessage = '') => {
@@ -98,4 +99,14 @@ export const scaleData = (method: ScalingMethodType, page: number, pageSize: num
   dispatch({ type: ActionType.ScaledData });
 
   await fetchDataFrame(dispatch, page, pageSize, 'Data scaled!');
+};
+
+export const dropNA = () => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  await axios.post('/data/drop/na');
+
+  const state = store.getState().dataManager;
+
+  await fetchDataFrame(dispatch, state.page, state.pageSize, 'Missing values dropped!');
 };
