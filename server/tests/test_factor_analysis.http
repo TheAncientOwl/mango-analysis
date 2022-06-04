@@ -32,3 +32,12 @@ POST {{route}}/analyze
 
 ### default hints
 GET {{route}}/default-hints
+
+### analysis
+POST {{route}}/run
+Content-Type: application/json
+
+{
+  "nFactors": 6,
+  "rotation": "none"
+}

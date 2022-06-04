@@ -66,3 +66,16 @@ def get_default_hints():
 
     return flask.jsonify(screePlotPath=server.factor_analysis.plot_scree_plot(),
                          eigenvalues=server.factor_analysis.get_eigen_values().to_dict(orient='split')), 200
+
+
+@factor_analysis.post('/factor-analysis/run')
+def run_analysis():
+    data = flask.request.get_json()
+
+    n_factors = data['nFactors']
+    rotation = data['rotation']
+
+    result = server.factor_analysis.run_analysis(
+        n_factors=n_factors, rotation=rotation)
+
+    return flask.jsonify(loadings=result['loadings'].to_dict(orient='split'), loadingsPath=result['loadingsPath']), 200

@@ -66,7 +66,7 @@ class FactorAnalysis:
         ev, v = self.fa.get_eigenvalues()
 
         dummy_range = range(1, self.n_factors + 1)
-        
+
         plt.figure(figsize=(8, 8))
         plt.scatter(dummy_range, ev)
         plt.plot(dummy_range, ev)
@@ -114,6 +114,29 @@ class FactorAnalysis:
         return pd.DataFrame(data={'EigenValue': list(ev)},
                             columns=['EigenValue'],
                             index=[f'F{x}' for x in range(1, self.n_factors + 1)])
+
+    def run_analysis(self, n_factors, rotation):
+        if rotation == 'none':
+            rotation = None
+
+        self.n_factors = n_factors
+        self.fa = FactorAnalyzer(n_factors=n_factors, rotation=rotation)
+        self.fa.fit_transform(self.features_values)
+
+        # loadings matrix
+        loadings_matrix = pd.DataFrame(self.fa.loadings_, index=self.features,
+                                       columns=[f'F{x}' for x in range(1, self.n_factors + 1)])
+
+        plt.figure(figsize=(8, 8))
+        sns.heatmap(loadings_matrix, annot=True,
+                    vmax=1, vmin=-1, center=0,
+                    cmap=self.cmap)
+
+        figpath = os.path.join(server.plots_data_path,
+                               f'LoadingsMatrix.{server.make_uuid()}.jpg')
+        plt.savefig(figpath)
+
+        return {'loadings': loadings_matrix, 'loadingsPath': figpath}
 
 
 if __name__ == '__main__':
