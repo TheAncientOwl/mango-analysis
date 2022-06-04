@@ -17,7 +17,7 @@ app.whenReady().then(async () => {
 
   // react devtools
   await session.defaultSession.loadExtension(
-    'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.24.6_0'
+    'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.24.7_0'
   );
 
   // redux devtools
