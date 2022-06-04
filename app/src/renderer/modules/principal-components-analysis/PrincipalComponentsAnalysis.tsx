@@ -9,7 +9,7 @@ import { Box, Backdrop, CircularProgress } from '@mui/material';
 
 import { mapConfigToSteps } from '@components/analysis-step';
 
-import { StepsPCA } from './config/steps';
+import { StepsPCA } from './steps';
 
 const PrincipalComponentsAnalysis: React.FC<PropsFromRedux> = props => {
   return (

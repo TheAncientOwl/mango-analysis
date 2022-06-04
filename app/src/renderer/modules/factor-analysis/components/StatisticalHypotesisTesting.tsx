@@ -12,16 +12,16 @@ import { SkipButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
 import { StatisticalTest } from './StatisticalTest';
-import { ComponentsID } from '../config/componentsID';
+import { StepsID } from '../steps';
 
 const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {
     if (props.bartlett.chiSquare !== undefined && props.kmoModel !== undefined)
-      props.unlockNextStep(ComponentsID.StatisticalHypotesisTesting);
-    else props.lockNextStep(ComponentsID.StatisticalHypotesisTesting);
+      props.unlockNextStep(StepsID.StatisticalHypotesisTesting);
+    else props.lockNextStep(StepsID.StatisticalHypotesisTesting);
   }, [props.bartlett, props.kmoModel]);
 
-  const handleSkip = () => props.jumpToStep(ComponentsID.StatisticalHypotesisTesting + 1);
+  const handleSkip = () => props.jumpToStep(StepsID.StatisticalHypotesisTesting + 1);
 
   return (
     <AnalysisStepLogic>
@@ -60,7 +60,7 @@ const StatisticalHypotesisTesting: React.FC<PropsFromRedux> = props => {
 const mapState = (state: RootState) => ({
   kmoModel: state.factorAnalysis.kmoModel,
   bartlett: state.factorAnalysis.bartlett,
-  nextStepUnlocked: state.factorAnalysis.nextStepUnlocked[ComponentsID.StatisticalHypotesisTesting],
+  nextStepUnlocked: state.factorAnalysis.nextStepUnlocked[StepsID.StatisticalHypotesisTesting],
 });
 
 const mapDispatch = {

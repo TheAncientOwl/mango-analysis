@@ -9,7 +9,7 @@ import { Box, Backdrop, CircularProgress } from '@mui/material';
 
 import { mapConfigToSteps } from '@components/analysis-step';
 
-import { StepsFactorAnalysis } from './config/steps';
+import { StepsFactorAnalysis } from './steps';
 
 const FactorAnalysis: React.FC<PropsFromRedux> = props => {
   return (

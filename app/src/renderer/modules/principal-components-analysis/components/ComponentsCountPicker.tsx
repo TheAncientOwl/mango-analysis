@@ -21,7 +21,7 @@ import { Select } from '@components/Select';
 import { CheckedButton, RunButton, ExportButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
-import { ComponentsID } from '../config/componentsID';
+import { StepsID } from '../steps';
 
 const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
   const handleChange = (event: SelectChangeEvent) => {
@@ -111,7 +111,7 @@ const mapState = (state: RootState) => ({
   featuresLength: state.pca.features.length,
   componentsCount: state.pca.analysisComponentsCount,
   hints: state.pca.analysisHints,
-  showExportPCA: state.pca.nextStepUnlocked[ComponentsID.ComponentsCountPicker],
+  showExportPCA: state.pca.nextStepUnlocked[StepsID.ComponentsCountPicker],
 });
 
 const mapDispatch = {

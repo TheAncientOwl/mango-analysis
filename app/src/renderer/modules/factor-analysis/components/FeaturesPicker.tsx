@@ -11,16 +11,16 @@ import { SelectChangeEvent, Stack } from '@mui/material';
 import { CheckedSelect } from '@components/CheckedSelect';
 import { AnalysisStepLogic } from '@components/analysis-step';
 
-import { ComponentsID } from '../config/componentsID';
+import { StepsID } from '../steps';
 
 const FeaturesPicker: React.FC<PropsFromRedux> = props => {
   // check if the analysis can continue (some features are selected)
   React.useEffect(() => {
     const allowNextStep = props.features.length > 0;
-    const nextStepUnlocked = props.nextStepUnlocked(ComponentsID.FeaturesPicker);
+    const nextStepUnlocked = props.nextStepUnlocked(StepsID.FeaturesPicker);
 
-    if (allowNextStep && !nextStepUnlocked) props.unlockNextStep(ComponentsID.FeaturesPicker);
-    else if (!allowNextStep && nextStepUnlocked) props.lockNextStep(ComponentsID.FeaturesPicker);
+    if (allowNextStep && !nextStepUnlocked) props.unlockNextStep(StepsID.FeaturesPicker);
+    else if (!allowNextStep && nextStepUnlocked) props.lockNextStep(StepsID.FeaturesPicker);
   }, [props.features]);
 
   // fetch possible targets & features

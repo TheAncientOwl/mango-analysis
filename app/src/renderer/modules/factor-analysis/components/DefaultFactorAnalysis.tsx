@@ -7,7 +7,7 @@ import { changeFactorsNumber, runDefaultAnalysis, jumpToStep } from '@store/fact
 
 import { Collapse, Grid } from '@mui/material';
 
-import { ComponentsID } from '../config/componentsID';
+import { StepsID } from '../steps';
 
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 import { AnalysisImage } from '@components/AnalysisImage';
@@ -17,7 +17,7 @@ import { RunButton, SkipButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
 const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
-  const handleSkip = () => props.jumpToStep(ComponentsID.DefaultFactorAnalysis + 1);
+  const handleSkip = () => props.jumpToStep(StepsID.DefaultFactorAnalysis + 1);
 
   return (
     <React.Fragment>
@@ -55,7 +55,7 @@ const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
 const mapState = (state: RootState) => ({
   numberOfFeatures: state.factorAnalysis.features.length - 1,
   defaultHints: state.factorAnalysis.defaultHints,
-  nextStepUnlocked: state.factorAnalysis.nextStepUnlocked[ComponentsID.DefaultFactorAnalysis],
+  nextStepUnlocked: state.factorAnalysis.nextStepUnlocked[StepsID.DefaultFactorAnalysis],
 });
 
 const mapDispatch = {

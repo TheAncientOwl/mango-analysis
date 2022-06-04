@@ -13,13 +13,12 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step
 import { SkipButton, PlotButton, ExportButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
-import { StepsPCA } from '../config/steps';
-import { ComponentsID } from '../config/componentsID';
+import { StepsPCA, StepsID } from '../steps';
 
 const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => {
-    props.jumpToStep(ComponentsID.LoadingsMatrix + 1);
-    StepsPCA[ComponentsID.LoadingsMatrix]?.onNext?.();
+    props.jumpToStep(StepsID.LoadingsMatrix + 1);
+    StepsPCA[StepsID.LoadingsMatrix]?.onNext?.();
   };
 
   return (
@@ -29,7 +28,7 @@ const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
           <PlotButton onClick={props.fetchLoadingsMatrixPath} size='small'>
             Plot
           </PlotButton>
-          <RenderIf condition={props.loadingsMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.LoadingsMatrix)}>
+          <RenderIf condition={props.loadingsMatrixPath === '' && !props.nextStepUnlocked(StepsID.LoadingsMatrix)}>
             <SkipButton size='small' onClick={handleSkip}>
               skip
             </SkipButton>

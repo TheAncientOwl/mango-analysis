@@ -13,15 +13,14 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step
 import { SkipButton, PlotButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
-import { StepsPCA } from '../config/steps';
-import { ComponentsID } from '../config/componentsID';
+import { StepsPCA, StepsID } from '../steps';
 
 const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => {
-    props.jumpToStep(ComponentsID.CorrelationMatrix + 1);
+    props.jumpToStep(StepsID.CorrelationMatrix + 1);
 
     // call onNext to fetch components count hints (even on skip)
-    StepsPCA[ComponentsID.CorrelationMatrix]?.onNext?.();
+    StepsPCA[StepsID.CorrelationMatrix]?.onNext?.();
   };
 
   return (
@@ -32,7 +31,7 @@ const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
             Plot
           </PlotButton>
           <RenderIf
-            condition={props.correlationMatrixPath === '' && !props.nextStepUnlocked(ComponentsID.CorrelationMatrix)}>
+            condition={props.correlationMatrixPath === '' && !props.nextStepUnlocked(StepsID.CorrelationMatrix)}>
             <SkipButton size='small' onClick={handleSkip}>
               skip
             </SkipButton>

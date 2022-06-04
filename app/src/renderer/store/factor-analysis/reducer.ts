@@ -10,7 +10,7 @@ import {
   lockNextStep,
   jumpToStep,
 } from '@store/IDefaultAnalysisState';
-import { ComponentsID } from '@src/renderer/modules/factor-analysis/config/componentsID';
+import { StepsID } from '@modules/factor-analysis/steps';
 
 const StepsCountFactorAnalysis = 4;
 
@@ -126,7 +126,7 @@ export const factorAnalysisReducer = (state: IDefaultState = defaultState, actio
         ...state,
         loading: false,
         defaultHints: action.payload,
-        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, ComponentsID.DefaultFactorAnalysis, true),
+        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, StepsID.DefaultFactorAnalysis, true),
       };
     }
 

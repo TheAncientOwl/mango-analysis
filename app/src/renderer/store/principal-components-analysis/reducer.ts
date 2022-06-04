@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { ComponentsID } from '@modules/principal-components-analysis/config/componentsID';
+import { StepsID } from '@modules/principal-components-analysis/steps';
 import { IPlot2D } from '@components/Plot2D';
 
 import { AnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
@@ -111,7 +111,7 @@ export const principalComponentsAnalysisReducer = (
       const getSteps = () =>
         state.features.length < 2
           ? state.nextStepUnlocked
-          : newNextStepUnlockedArray(state.nextStepUnlocked, ComponentsID.TargetAndFeaturesPicker, true);
+          : newNextStepUnlockedArray(state.nextStepUnlocked, StepsID.TargetAndFeaturesPicker, true);
 
       return {
         ...state,
@@ -126,7 +126,7 @@ export const principalComponentsAnalysisReducer = (
       const getSteps = () =>
         state.target === ''
           ? state.nextStepUnlocked
-          : newNextStepUnlockedArray(state.nextStepUnlocked, ComponentsID.TargetAndFeaturesPicker, true);
+          : newNextStepUnlockedArray(state.nextStepUnlocked, StepsID.TargetAndFeaturesPicker, true);
 
       return {
         ...state,
@@ -145,7 +145,7 @@ export const principalComponentsAnalysisReducer = (
     }
 
     case ActionType.FetchedCorrelationMatrixPath: {
-      const newSteps = newNextStepUnlockedArray(state.nextStepUnlocked, ComponentsID.CorrelationMatrix, true);
+      const newSteps = newNextStepUnlockedArray(state.nextStepUnlocked, StepsID.CorrelationMatrix, true);
 
       return {
         ...state,
@@ -167,7 +167,7 @@ export const principalComponentsAnalysisReducer = (
       if (action.payload === state.analysisComponentsCount) return state;
 
       const newSteps = new Array(StepsCountPCA).fill(false);
-      newSteps.fill(true, 0, ComponentsID.ComponentsCountPicker);
+      newSteps.fill(true, 0, StepsID.ComponentsCountPicker);
 
       return {
         ...state,
@@ -179,7 +179,7 @@ export const principalComponentsAnalysisReducer = (
     }
 
     case ActionType.AnalysisFinished: {
-      const newSteps = newNextStepUnlockedArray(state.nextStepUnlocked, ComponentsID.ComponentsCountPicker, true);
+      const newSteps = newNextStepUnlockedArray(state.nextStepUnlocked, StepsID.ComponentsCountPicker, true);
 
       return {
         ...state,
@@ -189,7 +189,7 @@ export const principalComponentsAnalysisReducer = (
     }
 
     case ActionType.FetchedLoadingsMatrixPath: {
-      const newSteps = newNextStepUnlockedArray(state.nextStepUnlocked, ComponentsID.LoadingsMatrix, true);
+      const newSteps = newNextStepUnlockedArray(state.nextStepUnlocked, StepsID.LoadingsMatrix, true);
 
       return {
         ...state,
