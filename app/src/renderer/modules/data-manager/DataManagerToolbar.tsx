@@ -24,7 +24,7 @@ export const DataManagerToolbar: React.FC = () => {
 
       const container = entries[0];
 
-      setSmall(container.contentRect.width < 720);
+      setSmall(container.contentRect.width < 860);
     });
 
     observer.observe(containerRef.current);
@@ -41,7 +41,7 @@ export const DataManagerToolbar: React.FC = () => {
         <MenuList
           title={'Settings'}
           startIcon={<SettingsIcon />}
-          items={[<ScalingHandler key={0} />, <DecimalsHandler key={1} />]}
+          items={[<DropNA key={0} />, <ScalingHandler key={1} />, <DecimalsHandler key={2} />]}
         />
       ) : (
         <>
