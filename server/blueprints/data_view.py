@@ -23,8 +23,9 @@ def rows_between(start, end):
     end = min(server.dataFrame.shape[0], end)
 
     requestedDf = server.dataFrame[start:end]
-    missingValues = True if server.dataFrame.isnull().sum().sum() > 0 else False
     requestedDf.fillna('', inplace=True)
+
+    missingValues = True if server.dataFrame.isnull().sum().sum() > 0 else False
 
     resultMap = {
         'labels': list(requestedDf.columns),
