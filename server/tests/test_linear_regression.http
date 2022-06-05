@@ -1,0 +1,28 @@
+@local_host = http://localhost:5000
+@route = http://localhost:5000/linear-regression
+
+### Read data
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/linear-regression.salary-data.csv
+
+### Print server's dataframe head
+GET {{local_host}}/printhead 
+
+### new linear regression
+POST {{route}}/new
+
+### variables
+GET {{route}}/variables
+
+### run-model
+POST {{route}}/run-model
+Content-Type: application/json
+
+{
+  "xLabel": "YearsExperience",
+  "yLabel": "Salary",
+  "testSize": 0.33,
+  "randomState": 42
+}
+
+### predict
+GET {{route}}/predict/11

@@ -39,14 +39,22 @@ dataFrame = pandas.DataFrame()
 pca = api.PCA()
 scaled_data = False
 factor_analysis = api.FactorAnalysis()
+linear_regression = api.LinearRegression()
+
 
 def new_pca():
     global pca
     pca = api.PCA()
 
+
 def new_factor_analysis():
     global factor_analysis
     factor_analysis = api.FactorAnalysis()
+
+
+def new_linear_regression():
+    global linear_regression
+    linear_regression = api.LinearRegression()
 
 
 app = Flask(__name__)
