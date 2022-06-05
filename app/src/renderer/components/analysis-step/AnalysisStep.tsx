@@ -54,7 +54,7 @@ export const AnalysisStep: React.FC<Props> = ({
       </Box>
 
       <Collapse in={step <= currentStep}>
-        <Box p={1}>
+        <Box p={1} pl={2}>
           {children}
           <RenderIf condition={stepActiveNow}>
             <Box sx={{ mt: 2 }}>

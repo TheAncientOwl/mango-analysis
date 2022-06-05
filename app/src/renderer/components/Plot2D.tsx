@@ -14,7 +14,7 @@ import { Paper } from './Paper';
 import { Select } from './Select';
 import { AnalysisImage } from './AnalysisImage';
 import { Checkbox } from './Checkbox';
-import { TextInputSave } from './TextInputSave';
+import { InputSave } from './InputSave';
 import { AutoCompleteCheckedSelect } from './AutocompleteCheckedSelect';
 import { RenderIf } from './RenderIf';
 
@@ -83,7 +83,7 @@ export const Plot2D: React.FC<Props> = props => {
         </IconButton>
       </Tooltip>
 
-      <TextInputSave
+      <InputSave
         minWidth='35em'
         text={plot.title}
         placeholder='Title'

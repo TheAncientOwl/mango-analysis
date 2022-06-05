@@ -8,17 +8,18 @@ import { Tooltip } from '@components/Tooltip';
 interface Props {
   minWidth?: string;
   maxWidth?: string;
-  text: string;
+  text: string | number;
   color?: 'error' | 'warning' | 'primary' | 'secondary' | 'info' | 'success';
   placeholder: string;
   tooltip: string;
   tooltipUnsaved: string;
-  onSave: (value: string) => void;
+  onSave: (value: string | number) => void;
+  type?: 'text' | 'number';
 }
 
 const editIcon = <EditIcon />;
 
-export const TextInputSave: React.FC<Props> = ({
+export const InputSave: React.FC<Props> = ({
   text,
   placeholder,
   onSave,
@@ -27,6 +28,7 @@ export const TextInputSave: React.FC<Props> = ({
   tooltipUnsaved,
   minWidth = 'auto',
   maxWidth = 'auto',
+  type = 'text',
 }) => {
   const [value, setValue] = React.useState(text);
 
@@ -39,6 +41,7 @@ export const TextInputSave: React.FC<Props> = ({
           color={notSaved ? 'warning' : color}
           size='small'
           fullWidth
+          type={type}
           label={placeholder}
           variant='outlined'
           onChange={e => setValue(e.target.value)}
