@@ -67,7 +67,7 @@ export const runModel =
 export const predict = (value: number) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
-  const res = await axios.get(`/linear-regression/predict/${value}`);
+  const res = await axios.post(`/linear-regression/predict`, { value });
 
   dispatch({ type: ActionType.PredictionFinished, payload: res.data.prediction });
 };

@@ -39,6 +39,10 @@ def run_model():
     ), 200
 
 
-@linear_regression.get('/linear-regression/predict/<int:value>')
-def predict(value):
+@linear_regression.post('/linear-regression/predict')
+def predict():
+    data = flask.request.get_json()
+
+    value = data['value']
+
     return flask.jsonify(prediction=server.linear_regression.predict_value(value)), 200

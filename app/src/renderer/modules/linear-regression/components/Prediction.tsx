@@ -15,7 +15,7 @@ const Prediction: React.FC<PropsFromRedux> = props => {
     <>
       <Stack direction='row' alignItems='center' gap={2} mb={2}>
         <InputSave
-          text={props.valueToPredict}
+          text={props.valueToPredict === undefined ? 0 : props.valueToPredict}
           onSave={value => props.changeValueToPredict(value as number)}
           placeholder='Value to predict'
           tooltip='Value Saved'
@@ -23,7 +23,9 @@ const Prediction: React.FC<PropsFromRedux> = props => {
           type='number'
         />
 
-        <RunButton onClick={() => props.predict(props.valueToPredict)}>predict</RunButton>
+        <RunButton disabled={props.valueToPredict === undefined} onClick={() => props.predict(props.valueToPredict)}>
+          predict
+        </RunButton>
       </Stack>
 
       <Collapse in={props.prediction !== undefined}>

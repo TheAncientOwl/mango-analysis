@@ -19,7 +19,7 @@ interface IDefaultState extends IDefaultAnalysisStep {
   testSize: number;
   randomState: number;
   modelResult: ModelResult;
-  valueToPredict: number;
+  valueToPredict: number | undefined;
   prediction: number | undefined;
 }
 
@@ -43,7 +43,7 @@ const defaultState: IDefaultState = {
     rSquaredAdj: 0,
     rSquared: 0,
   },
-  valueToPredict: 0,
+  valueToPredict: undefined,
   prediction: undefined,
 };
 

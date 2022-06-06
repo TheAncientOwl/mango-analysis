@@ -25,4 +25,17 @@ Content-Type: application/json
 }
 
 ### predict
-GET {{route}}/predict/11
+POST {{route}}/predict
+Content-Type: application/json
+
+{
+  "value": 11
+}
+
+### predict
+POST {{route}}/predict
+Content-Type: application/json
+
+{
+  "value": -13
+}
