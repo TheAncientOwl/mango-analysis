@@ -7,7 +7,7 @@ import { predict, changeValueToPredict } from '@store/linear-regression/actions'
 
 import { Typography, Collapse, Stack } from '@mui/material';
 
-import { InputWithSave } from '@src/renderer/components/InputWithSave';
+import { InputWithSave } from '@components/InputWithSave';
 import { RunButton } from '@components/buttons';
 
 const Prediction: React.FC<PropsFromRedux> = props => {
