@@ -1,0 +1,44 @@
+@local_host = http://localhost:5000
+@route = http://localhost:5000/multiple-linear-regression
+
+### Read data
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/multiple-linear-regression.csv
+
+### Print server's dataframe head
+GET {{local_host}}/printhead 
+
+### new linear regression
+POST {{route}}/new
+
+### variables
+GET {{route}}/variables
+
+### run-model
+POST {{route}}/run-model
+Content-Type: application/json
+
+{
+  "xLabels": ["AT", "V", "AP", "RH"],
+  "yLabel": "PE",
+  "testSize": 0.33,
+  "randomState": 42
+}
+
+### differences
+GET {{route}}/differences/20
+
+### predict
+POST {{route}}/predict
+Content-Type: application/json
+
+{
+  "values": [14.96, 41.76, 1024.07, 73.17]
+}
+
+### predict
+POST {{route}}/predict
+Content-Type: application/json
+
+{
+  "value": -13
+}

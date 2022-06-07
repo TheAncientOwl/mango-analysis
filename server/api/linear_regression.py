@@ -6,7 +6,6 @@ import flask
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 from pandas.api.types import is_numeric_dtype as pandas_is_numeric
 from sklearn.linear_model import LinearRegression as skLinearRegression
 from sklearn.model_selection import train_test_split

@@ -40,6 +40,7 @@ pca = api.PCA()
 scaled_data = False
 factor_analysis = api.FactorAnalysis()
 linear_regression = api.LinearRegression()
+multiple_linear_regression = api.MultipleLinearRegression()
 
 
 def new_pca():
@@ -55,6 +56,11 @@ def new_factor_analysis():
 def new_linear_regression():
     global linear_regression
     linear_regression = api.LinearRegression()
+
+
+def new_multiple_linear_regression():
+    global multiple_linear_regression
+    multiple_linear_regression = api.MultipleLinearRegression()
 
 
 app = Flask(__name__)
