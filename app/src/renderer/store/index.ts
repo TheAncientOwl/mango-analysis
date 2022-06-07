@@ -5,6 +5,7 @@ import { dataManagerReducer } from './data-manager/reducer';
 import { principalComponentsAnalysisReducer } from './principal-components-analysis/reducer';
 import { factorAnalysisReducer } from './factor-analysis/reducer';
 import { linearRegressionReducer } from './linear-regression/reducer';
+import { multipleLinearRegressionReducer } from './multiple-linear-regression/reducer';
 
 import thunk from 'redux-thunk';
 
@@ -15,6 +16,7 @@ export const store = configureStore({
     pca: principalComponentsAnalysisReducer,
     factorAnalysis: factorAnalysisReducer,
     linearRegression: linearRegressionReducer,
+    multipleLinearRegression: multipleLinearRegressionReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(thunk),
   devTools: process.env.NODE_ENV !== 'production',
