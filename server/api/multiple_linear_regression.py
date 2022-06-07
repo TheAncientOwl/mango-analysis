@@ -1,6 +1,6 @@
 import os
 
-import main.app as server
+import main.app as app
 
 import flask
 import numpy as np
@@ -18,16 +18,16 @@ class MultipleLinearRegression():
 
     def get_numeric_columns(self):
         numeric_columns = []
-        for label in server.dataFrame.columns:
+        for label in app.dataFrame.columns:
             if label == '_mango_id':
                 continue
-            if pandas_is_numeric(server.dataFrame[label]):
+            if pandas_is_numeric(app.dataFrame[label]):
                 numeric_columns.append(label)
         return numeric_columns
 
     def run_model(self, x_labels, y_label, test_size, random_state):
-        x = server.dataFrame[x_labels].values
-        y = server.dataFrame[y_label].values
+        x = app.dataFrame[x_labels].values
+        y = app.dataFrame[y_label].values
 
         # split in train & test
         x_train, x_test, y_train, y_test = train_test_split(
@@ -79,7 +79,7 @@ class MultipleLinearRegression():
 if __name__ == '__main__':
     mlr = MultipleLinearRegression()
 
-    server.dataFrame = pd.read_csv(
+    app.dataFrame = pd.read_csv(
         'C:\\Users\\TheAncientOwl\\Code\\data-analysis-tool\\server\\test-data\\multiple-linear-regression.csv')
 
     print('Numeric columns: ', mlr.get_numeric_columns())

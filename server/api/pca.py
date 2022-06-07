@@ -1,7 +1,7 @@
 import os
 import random
 
-import main.app as server
+import main.app as app
 import main.utils as utils
 
 import pandas as pd
@@ -27,22 +27,22 @@ class PCA:
         self.pca_df = pd.DataFrame()
 
     def set_target(self, target):
-        if target not in server.dataFrame.columns:
+        if target not in app.dataFrame.columns:
             raise 'Unknown target'
 
         self.target = str(target)
-        self.target_values = server.dataFrame.loc[:, self.target].values
+        self.target_values = app.dataFrame.loc[:, self.target].values
 
     def set_features(self, features):
         for feature in features:
-            if feature not in server.dataFrame.columns:
+            if feature not in app.dataFrame.columns:
                 raise 'Unknown feature'
 
-            if not pandas_is_numeric(server.dataFrame[feature]):
+            if not pandas_is_numeric(app.dataFrame[feature]):
                 raise 'Cannot use non-numeric features in PCA analysis'
 
         self.features = list(features)
-        self.features_values = server.dataFrame.loc[:, self.features].values
+        self.features_values = app.dataFrame.loc[:, self.features].values
 
     def plot_correlation_matrix(self):
         corr_matrix = pd.DataFrame(
@@ -76,7 +76,7 @@ class PCA:
             data=principal_components, columns=self.pca_labels)
 
         self.final_df = pd.concat(
-            [server.dataFrame[self.target], self.pca_df], axis=1)
+            [app.dataFrame[self.target], self.pca_df], axis=1)
 
     def plot_kaiser(self):
         pc_values = np.arange(self.pca.n_components_) + 1
@@ -168,7 +168,7 @@ class PCA:
             ax.set_title(title, fontsize=20)
 
         for obs in targets:
-            indices_to_keep = server.dataFrame[self.target] == obs
+            indices_to_keep = app.dataFrame[self.target] == obs
 
             x_points = self.final_df.loc[indices_to_keep, pc_x]
             y_points = self.final_df.loc[indices_to_keep, pc_y]
@@ -191,12 +191,12 @@ class PCA:
 if __name__ == '__main__':
     pca = PCA()
 
-    server.dataFrame = pd.read_csv(
+    app.dataFrame = pd.read_csv(
         'C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/pca-data.agriculture.csv')
 
     pca.set_target('Country')
 
-    features = list(server.dataFrame.columns)
+    features = list(app.dataFrame.columns)
     features.remove('Country')
     pca.set_features(features)
 
@@ -224,6 +224,6 @@ if __name__ == '__main__':
 
     random.seed(893927)
     targets = set(random.sample(
-        sorted(server.dataFrame['Country'].values), 10))
+        sorted(app.dataFrame['Country'].values), 10))
     print(pca.plot_two_components(title='PC1 & PC2', pc_x='PC1',
           pc_y='PC2', targets=targets, annot=True))

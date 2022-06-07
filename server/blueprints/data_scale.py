@@ -1,4 +1,4 @@
-import main.app as server
+import main.app as app
 import pandas
 import flask
 from pandas.api.types import is_numeric_dtype as pandas_is_numeric
@@ -7,7 +7,7 @@ data_scale = flask.Blueprint('data_scale', __name__)
 
 
 def should_scale(column):
-    return pandas_is_numeric(server.dataFrame[column]) and column != '_mango_id'
+    return pandas_is_numeric(app.dataFrame[column]) and column != '_mango_id'
 
 
 # >> rescales each feature between -1 and 1 by
@@ -86,13 +86,13 @@ def scale():
     scale_method = data['method']
 
     if scale_method == 'maximum_absolute_scaling':
-        server.dataFrame = maximum_absolute_scaling(server.dataFrame)
+        app.dataFrame = maximum_absolute_scaling(app.dataFrame)
     elif scale_method == 'min_max_scaling':
-        server.dataFrame = min_max_scaling(server.dataFrame)
+        app.dataFrame = min_max_scaling(app.dataFrame)
     elif scale_method == 'z_score_scaling':
-        server.dataFrame = z_score_scaling(server.dataFrame)
+        app.dataFrame = z_score_scaling(app.dataFrame)
     elif scale_method == 'robust_scaling':
-        server.dataFrame = robust_scaling(server.dataFrame)
+        app.dataFrame = robust_scaling(app.dataFrame)
     else:
         return flask.jsonify(message="Method not found"), 404
 

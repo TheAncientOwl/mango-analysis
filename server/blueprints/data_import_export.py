@@ -1,4 +1,4 @@
-import main.app as server
+import main.app as app
 import pandas
 import flask
 import os
@@ -9,7 +9,7 @@ data_import_export = flask.Blueprint('data_import_export', __name__)
 # >> Helper route
 @data_import_export.get('/printhead')
 def printhead():
-    print(server.dataFrame.head())
+    print(app.dataFrame.head())
     return flask.jsonify(message='Data printed'), 200
 
 
@@ -19,9 +19,9 @@ def import_csv(filePath):
     if not os.path.exists(filePath):
         return flask.jsonify(message='File does not exist'), 404
 
-    server.dataFrame = pandas.read_csv(filePath, na_values=['NA'])
-    server.dataFrame.insert(
-        0, '_mango_id', range(1, len(server.dataFrame) + 1))
+    app.dataFrame = pandas.read_csv(filePath, na_values=['NA'])
+    app.dataFrame.insert(
+        0, '_mango_id', range(1, len(app.dataFrame) + 1))
 
     return flask.jsonify(message='Success'), 200
 
@@ -32,7 +32,7 @@ def export_csv(fileName, dirPath):
     if not os.path.isdir(dirPath):
         return flask.jsonify(message='Directory does not exist'), 404
 
-    server.dataFrame.to_csv(path_or_buf=os.path.join(
+    app.dataFrame.to_csv(path_or_buf=os.path.join(
         dirPath, fileName), index=False)
 
     return flask.jsonify(message='File saved successfully'), 201

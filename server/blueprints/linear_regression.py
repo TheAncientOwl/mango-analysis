@@ -1,4 +1,4 @@
-import main.app as server
+import main.app as app
 import flask
 
 linear_regression = flask.Blueprint('linear_regression', __name__)
@@ -6,21 +6,21 @@ linear_regression = flask.Blueprint('linear_regression', __name__)
 
 @linear_regression.post('/linear-regression/new')
 def create_new_linear_regression():
-    server.new_linear_regression()
+    app.new_linear_regression()
 
     return flask.jsonify(message='New LinearRegression created!'), 200
 
 
 @linear_regression.get('/linear-regression/variables')
 def get_variables():
-    return flask.jsonify(variables=server.linear_regression.get_numeric_columns()), 200
+    return flask.jsonify(variables=app.linear_regression.get_numeric_columns()), 200
 
 
 @linear_regression.post('/linear-regression/run-model')
 def run_model():
     data = flask.request.get_json()
 
-    result = server.linear_regression.run_model(
+    result = app.linear_regression.run_model(
         X_label=data['xLabel'],
         y_label=data['yLabel'],
         test_size=data['testSize'],
@@ -45,4 +45,4 @@ def predict():
 
     value = data['value']
 
-    return flask.jsonify(prediction=server.linear_regression.predict_value(value)), 200
+    return flask.jsonify(prediction=app.linear_regression.predict_value(value)), 200

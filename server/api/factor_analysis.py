@@ -1,6 +1,6 @@
 import os
 
-import main.app as server
+import main.app as app
 import main.utils as utils
 
 import pandas as pd
@@ -24,24 +24,24 @@ class FactorAnalysis:
 
     def get_possible_features(self):
         features = []
-        for label in server.dataFrame.columns:
+        for label in app.dataFrame.columns:
             if label == '_mango_id':
                 continue
-            if pandas_is_numeric(server.dataFrame[label]):
+            if pandas_is_numeric(app.dataFrame[label]):
                 features.append(label)
 
         return features
 
     def set_features(self, features):
         for feature in features:
-            if feature not in server.dataFrame.columns:
+            if feature not in app.dataFrame.columns:
                 raise 'Unknown feature'
 
-            if not pandas_is_numeric(server.dataFrame[feature]):
+            if not pandas_is_numeric(app.dataFrame[feature]):
                 raise 'Cannot use non-numeric features in PCA analysis'
 
             self.features = list(features)
-            self.features_values = server.dataFrame.loc[:,
+            self.features_values = app.dataFrame.loc[:,
                                                         self.features].values
 
     def bartlett(self):
@@ -144,9 +144,9 @@ class FactorAnalysis:
 if __name__ == '__main__':
     fa = FactorAnalysis()
 
-    server.dataFrame = pd.read_csv(
+    app.dataFrame = pd.read_csv(
         'C:\\Users\\TheAncientOwl\\Code\\data-analysis-tool\\server\\test-data\\factor-analysis.bfi.csv')
-    server.dataFrame.dropna(inplace=True)
+    app.dataFrame.dropna(inplace=True)
 
     fa.set_features(['A1', 'A2', 'A3', 'A4', 'A5', 'C1', 'C2', 'C3', 'C4', 'C5', 'E1', 'E2',
                      'E3', 'E4', 'E5', 'N1', 'N2', 'N3', 'N4', 'N5', 'O1', 'O2', 'O3', 'O4',

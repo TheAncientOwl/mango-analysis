@@ -1,4 +1,4 @@
-import main.app as server
+import main.app as app
 import flask
 from pandas.api.types import is_numeric_dtype as pandas_is_numeric
 
@@ -7,7 +7,7 @@ pca = flask.Blueprint('pca', __name__)
 
 @pca.post('/pca/new')
 def create_new_pca():
-    server.new_pca()
+    app.new_pca()
 
     return flask.jsonify(message='New PCA created!')
 
@@ -17,10 +17,10 @@ def get_possible_targets_features():
     targets = []
     features = []
 
-    for label in server.dataFrame.columns:
+    for label in app.dataFrame.columns:
         if label == '_mango_id':
             continue
-        if pandas_is_numeric(server.dataFrame[label]):
+        if pandas_is_numeric(app.dataFrame[label]):
             features.append(label)
         else:
             targets.append(label)
@@ -34,15 +34,15 @@ def set_target_and_features():
     target = data['target']
     features = data['features']
 
-    server.pca.set_target(target)
-    server.pca.set_features(features)
+    app.pca.set_target(target)
+    app.pca.set_features(features)
 
     return flask.jsonify(message='Set target & features!'), 200
 
 
 @pca.get('/pca/plot/correlation-matrix')
 def plot_correlation_matrix():
-    path = server.pca.plot_correlation_matrix()
+    path = app.pca.plot_correlation_matrix()
 
     return flask.jsonify(imagePath=path), 200
 
@@ -52,27 +52,27 @@ def analyze():
     data = flask.request.get_json()
     if data != None:
         components_count = data['componentsCount']
-        server.pca.analyze(components_count)
+        app.pca.analyze(components_count)
     else:
-        server.pca.analyze()
+        app.pca.analyze()
 
     return flask.jsonify(message='Analyze complete!'), 200
 
 
 @pca.get('/pca/components-count-hints')
 def get_components_count_hints():
-    kaiser_path = server.pca.plot_kaiser()
+    kaiser_path = app.pca.plot_kaiser()
 
-    threshold70 = server.pca.threshold70().to_dict(orient='split')
+    threshold70 = app.pca.threshold70().to_dict(orient='split')
 
-    eigenvalues_g1 = server.pca.eigenvalues_g1().to_dict(orient='split')
+    eigenvalues_g1 = app.pca.eigenvalues_g1().to_dict(orient='split')
 
     return flask.jsonify(kaiserPath=kaiser_path, threshold70=threshold70, eigenvaluesG1=eigenvalues_g1), 200
 
 
 @pca.get('/pca/plot/loadings-matrix')
 def plot_loadings_matrix():
-    path = server.pca.plot_loadings_matrix()
+    path = app.pca.plot_loadings_matrix()
 
     return flask.jsonify(imagePath=path), 200
 
@@ -81,7 +81,7 @@ def plot_loadings_matrix():
 def plot_2D():
     data = flask.request.get_json()
 
-    path = server.pca.plot_two_components(
+    path = app.pca.plot_two_components(
         title=data['title'],
         pc_x=data['pcX'],
         pc_y=data['pcY'],
@@ -95,17 +95,17 @@ def plot_2D():
 
 @pca.get('/pca/labels')
 def labels():
-    return flask.jsonify(labels=server.pca.pca_labels), 200
+    return flask.jsonify(labels=app.pca.pca_labels), 200
 
 
 @pca.get('/pca/targets')
 def targets():
-    return flask.jsonify(targets=server.dataFrame[server.pca.target]), 200
+    return flask.jsonify(targets=app.dataFrame[app.pca.target]), 200
 
 
 @pca.get('/pca/targets&labels')
 def targets_and_labels():
-    return flask.jsonify(targets=list(server.dataFrame[server.pca.target]), labels=server.pca.pca_labels), 200
+    return flask.jsonify(targets=list(app.dataFrame[app.pca.target]), labels=app.pca.pca_labels), 200
 
 
 @pca.post('/pca/export-loadings')
@@ -117,7 +117,7 @@ def export_loadings():
     path = data['path']
 
     try:
-        server.pca.export_loadings_matrix(path=path)
+        app.pca.export_loadings_matrix(path=path)
     except:
         return flask.jsonify(message='Could not save the file!'), 500
 
@@ -131,7 +131,7 @@ def export_pca():
     path = data['path']
 
     try:
-        server.pca.export_pca(path=path)
+        app.pca.export_pca(path=path)
     except:
         return flask.jsonify(message='Could not save the file!'), 500
 

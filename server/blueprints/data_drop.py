@@ -1,4 +1,4 @@
-import main.app as server
+import main.app as app
 import pandas
 import flask
 
@@ -8,7 +8,7 @@ data_drop = flask.Blueprint('data_drop', __name__)
 # >> Drop dataframe
 @data_drop.post('/data/drop-all')
 def drop_dataframe():
-    server.dataFrame = pandas.DataFrame()
+    app.dataFrame = pandas.DataFrame()
 
     return flask.jsonify(message='Dataframe dropped'), 200
 
@@ -21,13 +21,13 @@ def drop_dataframe():
 def drop_columns_impl(labels):
     # create valid labels set. (label valid if dataFrame contains it)
     dropLabels = set()
-    colLabels = server.dataFrame.columns
+    colLabels = app.dataFrame.columns
     for label in labels:
         if label in colLabels:
             dropLabels.add(label)
 
     # drop columns
-    server.dataFrame = server.dataFrame.drop(columns=dropLabels)
+    app.dataFrame = app.dataFrame.drop(columns=dropLabels)
 
 
 @data_drop.post('/data/drop/columns')
@@ -48,7 +48,7 @@ def drop_columns():
 # }
 # @return jsonify(success, message)
 def drop_rows_impl(mangoIDs):
-    server.dataFrame.drop(server.dataFrame[server.dataFrame['_mango_id'].isin(
+    app.dataFrame.drop(app.dataFrame[app.dataFrame['_mango_id'].isin(
         mangoIDs)].index, axis=0, inplace=True)
 
 
@@ -89,6 +89,6 @@ def drop_rows_cols():
 
 @data_drop.post('/data/drop/na')
 def drop_na():
-    server.dataFrame.dropna(inplace=True)
+    app.dataFrame.dropna(inplace=True)
 
     return flask.jsonify(message='NA values dropped'), 200

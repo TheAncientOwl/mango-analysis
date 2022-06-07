@@ -1,4 +1,4 @@
-import main.app as server
+import main.app as app
 import flask
 
 factor_analysis = flask.Blueprint('factor_analysis', __name__)
@@ -6,14 +6,14 @@ factor_analysis = flask.Blueprint('factor_analysis', __name__)
 
 @factor_analysis.post('/factor-analysis/new')
 def create_new_factor_analysis():
-    server.new_factor_analysis()
+    app.new_factor_analysis()
 
     return flask.jsonify(message='New FactorAnalysis created!'), 200
 
 
 @factor_analysis.get('/factor-analysis/possible-features')
 def get_possible_features():
-    return flask.jsonify(features=server.factor_analysis.get_possible_features()), 200
+    return flask.jsonify(features=app.factor_analysis.get_possible_features()), 200
 
 
 @factor_analysis.post('/factor-analysis/set-features')
@@ -22,26 +22,26 @@ def set_features():
 
     features = data['features']
 
-    server.factor_analysis.set_features(features=features)
+    app.factor_analysis.set_features(features=features)
 
     return flask.jsonify(messages='Success'), 200
 
 
 @factor_analysis.get('/factor-analysis/tests/bartlett')
 def bartlett():
-    chi_square_value, p_value = server.factor_analysis.bartlett()
+    chi_square_value, p_value = app.factor_analysis.bartlett()
 
     return flask.jsonify(chiSquareValue=chi_square_value, pValue=p_value), 200
 
 
 @factor_analysis.get('/factor-analysis/tests/kmo')
 def kmo():
-    return flask.jsonify(kmoModel=server.factor_analysis.kmo()), 200
+    return flask.jsonify(kmoModel=app.factor_analysis.kmo()), 200
 
 
 @factor_analysis.post('/factor-analysis/default-analysis')
 def default_analysis():
-    server.factor_analysis.analyze()
+    app.factor_analysis.analyze()
 
     return flask.jsonify(message='Analysis completed!'), 200
 
@@ -54,9 +54,9 @@ def analyze():
         rotation = data['rotation'] if 'rotation' in data else None
         if rotation == 'none':
             rotation = None
-        server.factor_analysis.analyze(n_factors=n_factors, rotation=rotation)
+        app.factor_analysis.analyze(n_factors=n_factors, rotation=rotation)
     else:
-        server.factor_analysis.analyze()
+        app.factor_analysis.analyze()
 
     return flask.jsonify(message='Analysis completed!'), 200
 
@@ -64,8 +64,8 @@ def analyze():
 @factor_analysis.get('/factor-analysis/default-hints')
 def get_default_hints():
 
-    return flask.jsonify(screePlotPath=server.factor_analysis.plot_scree_plot(),
-                         eigenvalues=server.factor_analysis.get_eigen_values().to_dict(orient='split')), 200
+    return flask.jsonify(screePlotPath=app.factor_analysis.plot_scree_plot(),
+                         eigenvalues=app.factor_analysis.get_eigen_values().to_dict(orient='split')), 200
 
 
 @factor_analysis.post('/factor-analysis/run')
@@ -75,7 +75,7 @@ def run_analysis():
     n_factors = data['nFactors']
     rotation = data['rotation']
 
-    result = server.factor_analysis.run_analysis(
+    result = app.factor_analysis.run_analysis(
         n_factors=n_factors, rotation=rotation)
 
     return flask.jsonify(loadings=result['loadings'].to_dict(orient='split'), loadingsPath=result['loadingsPath']), 200
