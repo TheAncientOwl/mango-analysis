@@ -7,7 +7,7 @@ import { inDev } from '@common/helpers';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { theme } from '@config/.';
-import App from '@renderer/app';
+import App from '@renderer/layout';
 
 import { Provider } from 'react-redux';
 import { store } from '@store/.';
