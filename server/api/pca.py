@@ -192,15 +192,13 @@ if __name__ == '__main__':
     pca = PCA()
 
     server.dataFrame = pd.read_csv(
-        'C:/Users/TheAncientOwl/Code/data-analysis-tool/server/Date.csv')
+        'C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/pca-data.agriculture.csv')
 
     pca.set_target('Country')
 
     features = list(server.dataFrame.columns)
     features.remove('Country')
     pca.set_features(features)
-
-    pca.standardize_data()
 
     # print(pca.features_values)
 
@@ -227,5 +225,5 @@ if __name__ == '__main__':
     random.seed(893927)
     targets = set(random.sample(
         sorted(server.dataFrame['Country'].values), 10))
-    print(pca.plot_two_components(pc_x='PC1',
+    print(pca.plot_two_components(title='PC1 & PC2', pc_x='PC1',
           pc_y='PC2', targets=targets, annot=True))

@@ -145,7 +145,7 @@ if __name__ == '__main__':
     fa = FactorAnalysis()
 
     server.dataFrame = pd.read_csv(
-        'C:\\Users\\TheAncientOwl\\Code\\data-analysis-tool\\server\\test-data\\factor-analysis-bfi.csv')
+        'C:\\Users\\TheAncientOwl\\Code\\data-analysis-tool\\server\\test-data\\factor-analysis.bfi.csv')
     server.dataFrame.dropna(inplace=True)
 
     fa.set_features(['A1', 'A2', 'A3', 'A4', 'A5', 'C1', 'C2', 'C3', 'C4', 'C5', 'E1', 'E2',
