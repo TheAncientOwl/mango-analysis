@@ -2,34 +2,16 @@ import os
 import shutil
 import uuid
 
+
 from flask_cors import CORS
 from flask import Flask
 import pandas
 
+import utils
 import blueprints
 import api
 
-
-data_path = os.path.join(str(os.path.expanduser('~')), '.mango-analysis')
-plots_data_path = os.path.join(data_path, 'plots')
-
-
-def make_dirs(path):
-    try:
-        os.makedirs(path)
-    except FileExistsError:
-        pass
-
-
-def cleanup_dirs(path):
-    shutil.rmtree(path)
-
-    make_dirs(path)
-
-
-make_dirs(data_path)
-cleanup_dirs(plots_data_path)
-
+utils.setup_app_dirs()
 
 dataFrame = pandas.DataFrame()
 pca = api.PCA()

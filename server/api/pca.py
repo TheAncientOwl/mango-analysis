@@ -56,7 +56,7 @@ class PCA:
 
         print(utils.make_uuid())
         figpath = os.path.join(
-            server.plots_data_path, f'CorrelationMatrix.{utils.make_uuid()}.jpg')
+            utils.plots_app_data_path, f'CorrelationMatrix.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -90,7 +90,7 @@ class PCA:
         plt.xticks(range(1, self.pca.n_components + 1))
 
         figpath = os.path.join(
-            server.plots_data_path, f'Kaiser-ScreePlot.{utils.make_uuid()}.jpg')
+            utils.plots_app_data_path, f'Kaiser-ScreePlot.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -140,7 +140,7 @@ class PCA:
                     vmax=1, vmin=-1, center=0,
                     cmap=self.cmap)
 
-        figpath = os.path.join(server.plots_data_path,
+        figpath = os.path.join(utils.plots_app_data_path,
                                f'LoadingsMatrix.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
@@ -181,7 +181,7 @@ class PCA:
             if legend:
                 ax.legend(targets)
 
-        figpath = os.path.join(server.plots_data_path,
+        figpath = os.path.join(utils.plots_app_data_path,
                                f'PCA-Plot-{pc_x}-{pc_y}.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 

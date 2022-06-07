@@ -52,7 +52,7 @@ class LinearRegression():
         plt.xlabel(X_label)
         plt.ylabel(y_label)
 
-        training_path = os.path.join(server.plots_data_path,
+        training_path = os.path.join(utils.plots_app_data_path,
                                      f'TrainingSet.{utils.make_uuid()}.jpg')
         plt.savefig(training_path)
 
@@ -64,7 +64,7 @@ class LinearRegression():
         plt.xlabel(X_label)
         plt.ylabel(y_label)
 
-        test_path = os.path.join(server.plots_data_path,
+        test_path = os.path.join(utils.plots_app_data_path,
                                  f'TestSet.{utils.make_uuid()}.jpg')
         plt.savefig(test_path)
 

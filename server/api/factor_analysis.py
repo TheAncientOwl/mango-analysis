@@ -76,7 +76,7 @@ class FactorAnalysis:
         plt.ylabel('Egienvalues')
         plt.grid()
 
-        figpath = os.path.join(server.plots_data_path,
+        figpath = os.path.join(utils.plots_app_data_path,
                                f'ScreePlot.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
@@ -91,7 +91,7 @@ class FactorAnalysis:
                     vmax=1, vmin=-1, center=0,
                     cmap=self.cmap)
 
-        figpath = os.path.join(server.plots_data_path,
+        figpath = os.path.join(utils.plots_app_data_path,
                                f'LoadingsMatrix.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
@@ -103,7 +103,7 @@ class FactorAnalysis:
         plt.bar(self.features, height=self.fa.get_communalities())
         plt.grid(axis='y')
 
-        figpath = os.path.join(server.plots_data_path,
+        figpath = os.path.join(utils.plots_app_data_path,
                                f'Communalities.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
@@ -134,7 +134,7 @@ class FactorAnalysis:
                     vmax=1, vmin=-1, center=0,
                     cmap=self.cmap)
 
-        figpath = os.path.join(server.plots_data_path,
+        figpath = os.path.join(utils.plots_app_data_path,
                                f'LoadingsMatrix.{utils.make_uuid()}.jpg')
         plt.savefig(figpath, bbox_inches='tight')
 
