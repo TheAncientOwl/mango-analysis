@@ -23,8 +23,6 @@ def import_csv(filePath):
     server.dataFrame.insert(
         0, '_mango_id', range(1, len(server.dataFrame) + 1))
 
-    server.scaled_data = False
-
     return flask.jsonify(message='Success'), 200
 
 

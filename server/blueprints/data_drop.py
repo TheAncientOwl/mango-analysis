@@ -9,7 +9,6 @@ data_drop = flask.Blueprint('data_drop', __name__)
 @data_drop.post('/data/drop-all')
 def drop_dataframe():
     server.dataFrame = pandas.DataFrame()
-    server.scaled_data = False
 
     return flask.jsonify(message='Dataframe dropped'), 200
 

@@ -15,7 +15,6 @@ utils.setup_app_dirs()
 
 dataFrame = pandas.DataFrame()
 pca = api.PCA()
-scaled_data = False
 factor_analysis = api.FactorAnalysis()
 linear_regression = api.LinearRegression()
 multiple_linear_regression = api.MultipleLinearRegression()

@@ -29,7 +29,6 @@ class TestBase(unittest.TestCase):
     def setUp(self):
         self.emptyDataFrame()
         self.client = app.test_client(self)
-        server.scaled_data = False
 
         server.pca = api.PCA()
 
