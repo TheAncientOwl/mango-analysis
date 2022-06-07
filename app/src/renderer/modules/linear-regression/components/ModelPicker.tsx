@@ -14,11 +14,12 @@ import {
 } from '@store/linear-regression/actions';
 
 // eslint-disable-next-line import/named
-import { SelectChangeEvent, Stack, Slider, Typography } from '@mui/material';
+import { SelectChangeEvent, Stack } from '@mui/material';
 
 import { Select } from '@components/Select';
 import { RunButton } from '@components/buttons';
 import { AnalysisStepLogic } from '@components/analysis-step';
+import { SelectSlider } from '@components/SelectSlider';
 
 import { StepsID } from '../steps';
 
@@ -63,43 +64,27 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
         />
       </Stack>
 
-      <Stack direction='row' justifyContent='space-between' alignItems='center' gap={2} mb={4} maxWidth='32em'>
-        <Typography>Random State</Typography>
+      <SelectSlider
+        maxWidth='32em'
+        sliderWidth='20em'
+        label='Random State'
+        min={0}
+        max={100}
+        onChange={value => props.changeRandomState(value)}
+        value={props.randomState}
+        sx={{ mb: 4 }}
+      />
 
-        <Stack direction='row' alignItems='center' gap={1}>
-          0
-          <Slider
-            sx={{ width: '20em' }}
-            size='small'
-            onChange={(e, value: number) => props.changeRandomState(value)}
-            value={props.randomState}
-            aria-label='Random-State'
-            valueLabelDisplay='on'
-            min={0}
-            max={100}
-          />
-          100
-        </Stack>
-      </Stack>
-
-      <Stack direction='row' justifyContent='space-between' alignItems='center' gap={2} mb={3} maxWidth='32em'>
-        <Typography>Test Size</Typography>
-
-        <Stack direction='row' alignItems='center' gap={1}>
-          0
-          <Slider
-            sx={{ width: '20em' }}
-            size='small'
-            onChange={(e, value: number) => props.changeTestSize(value)}
-            value={props.testSize}
-            aria-label='Random-State'
-            valueLabelDisplay='on'
-            min={0}
-            max={100}
-          />
-          100
-        </Stack>
-      </Stack>
+      <SelectSlider
+        maxWidth='32em'
+        sliderWidth='20em'
+        label='Test Size'
+        min={0}
+        max={100}
+        onChange={value => props.changeTestSize(value)}
+        value={props.testSize}
+        sx={{ mb: 3 }}
+      />
 
       <RunButton
         disabled={props.xLabel === '' || props.yLabel === ''}
