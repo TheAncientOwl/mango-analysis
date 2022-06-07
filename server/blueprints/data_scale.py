@@ -1,13 +1,14 @@
 import main.app as app
 import pandas
 import flask
-from pandas.api.types import is_numeric_dtype as pandas_is_numeric
+
+import main.utils as utils
 
 data_scale = flask.Blueprint('data_scale', __name__)
 
 
 def should_scale(column):
-    return pandas_is_numeric(app.dataFrame[column]) and column != '_mango_id'
+    return utils.pandas_is_numeric(app.dataFrame[column]) and column != '_mango_id'
 
 
 # >> rescales each feature between -1 and 1 by

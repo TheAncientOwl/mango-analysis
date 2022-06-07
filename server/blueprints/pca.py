@@ -1,6 +1,7 @@
 import main.app as app
 import flask
-from pandas.api.types import is_numeric_dtype as pandas_is_numeric
+
+import main.utils as utils
 
 pca = flask.Blueprint('pca', __name__)
 
@@ -20,7 +21,7 @@ def get_possible_targets_features():
     for label in app.dataFrame.columns:
         if label == '_mango_id':
             continue
-        if pandas_is_numeric(app.dataFrame[label]):
+        if utils.pandas_is_numeric(app.dataFrame[label]):
             features.append(label)
         else:
             targets.append(label)

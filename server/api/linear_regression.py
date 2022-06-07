@@ -7,7 +7,6 @@ import flask
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from pandas.api.types import is_numeric_dtype as pandas_is_numeric
 from sklearn.linear_model import LinearRegression as skLinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
@@ -19,14 +18,7 @@ class LinearRegression():
         self.model = skLinearRegression()
 
     def get_numeric_columns(self):
-        numeric_columns = []
-        for label in app.dataFrame.columns:
-            if label == '_mango_id':
-                continue
-            if pandas_is_numeric(app.dataFrame[label]):
-                numeric_columns.append(label)
-
-        return numeric_columns
+        return utils.get_numeric_columns(app.dataFrame)
 
     def run_model(self, X_label, y_label, test_size, random_state):
         X = app.dataFrame[X_label].values.reshape(-1, 1)

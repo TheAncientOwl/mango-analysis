@@ -6,7 +6,6 @@ import main.utils as utils
 import pandas as pd
 import numpy as np
 import seaborn as sns
-from pandas.api.types import is_numeric_dtype as pandas_is_numeric
 from factor_analyzer import FactorAnalyzer
 from factor_analyzer.factor_analyzer import calculate_bartlett_sphericity
 from factor_analyzer.factor_analyzer import calculate_kmo
@@ -23,26 +22,12 @@ class FactorAnalysis:
         self.n_factors = 0
 
     def get_possible_features(self):
-        features = []
-        for label in app.dataFrame.columns:
-            if label == '_mango_id':
-                continue
-            if pandas_is_numeric(app.dataFrame[label]):
-                features.append(label)
-
-        return features
+        return utils.get_numeric_columns(app.dataFrame)
 
     def set_features(self, features):
-        for feature in features:
-            if feature not in app.dataFrame.columns:
-                raise 'Unknown feature'
-
-            if not pandas_is_numeric(app.dataFrame[feature]):
-                raise 'Cannot use non-numeric features in PCA analysis'
-
-            self.features = list(features)
-            self.features_values = app.dataFrame.loc[:,
-                                                        self.features].values
+        self.features = list(features)
+        self.features_values = app.dataFrame.loc[:,
+                                                 self.features].values
 
     def bartlett(self):
         chi_square_value, p_value = calculate_bartlett_sphericity(

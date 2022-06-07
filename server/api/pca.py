@@ -10,7 +10,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA as skPCA
 from sklearn.preprocessing import StandardScaler
-from pandas.api.types import is_numeric_dtype as pandas_is_numeric
 
 
 class PCA:
@@ -34,13 +33,6 @@ class PCA:
         self.target_values = app.dataFrame.loc[:, self.target].values
 
     def set_features(self, features):
-        for feature in features:
-            if feature not in app.dataFrame.columns:
-                raise 'Unknown feature'
-
-            if not pandas_is_numeric(app.dataFrame[feature]):
-                raise 'Cannot use non-numeric features in PCA analysis'
-
         self.features = list(features)
         self.features_values = app.dataFrame.loc[:, self.features].values
 
