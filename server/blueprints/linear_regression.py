@@ -1,4 +1,4 @@
-import main.server as server
+import main.app as server
 import flask
 
 linear_regression = flask.Blueprint('linear_regression', __name__)

@@ -1,4 +1,4 @@
-import main.server as server
+import main.app as server
 import flask
 
 factor_analysis = flask.Blueprint('factor_analysis', __name__)

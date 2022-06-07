@@ -1,4 +1,4 @@
-import main.server as server
+import main.app as server
 import pandas
 import flask
 

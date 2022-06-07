@@ -1,4 +1,4 @@
-import main.server as server
+import main.app as server
 import flask
 from pandas.api.types import is_numeric_dtype as pandas_is_numeric
 

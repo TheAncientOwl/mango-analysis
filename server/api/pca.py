@@ -1,7 +1,7 @@
 import os
 import random
 
-import main.server as server
+import main.app as server
 import main.utils as utils
 
 import pandas as pd

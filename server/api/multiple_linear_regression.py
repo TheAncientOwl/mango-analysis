@@ -1,6 +1,6 @@
 import os
 
-import main.server as server
+import main.app as server
 
 import flask
 import numpy as np

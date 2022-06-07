@@ -2,7 +2,6 @@ import os
 import shutil
 import uuid
 
-
 from flask_cors import CORS
 from flask import Flask
 import pandas
@@ -40,8 +39,8 @@ def new_multiple_linear_regression():
     multiple_linear_regression = api.MultipleLinearRegression()
 
 
-app = Flask(__name__)
-CORS(app)
+server = Flask(__name__)
+CORS(server)
 
 for blueprint in blueprints.all_blueprints:
-    app.register_blueprint(blueprint)
+    server.register_blueprint(blueprint)

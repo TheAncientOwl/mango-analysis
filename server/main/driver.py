@@ -1,4 +1,4 @@
-import main.server as server
+import main.app as app
 
 if __name__ == '__main__':
-    server.app.run(debug=True)
+    app.server.run(debug=True)

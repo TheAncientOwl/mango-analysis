@@ -1,4 +1,4 @@
-import main.server as server
+import main.app as server
 import flask
 
 multiple_linear_regression = flask.Blueprint(
