@@ -16,10 +16,10 @@ import {
 // eslint-disable-next-line import/named
 import { SelectChangeEvent, Stack } from '@mui/material';
 
-import { Select } from '@components/Select';
+import { Select } from '@src/renderer/components/select/Select';
 import { RunButton } from '@components/buttons';
 import { AnalysisStepLogic } from '@components/analysis-step';
-import { SelectSlider } from '@components/SelectSlider';
+import { SelectSlider } from '@components/select';
 
 import { StepsID } from '../steps';
 

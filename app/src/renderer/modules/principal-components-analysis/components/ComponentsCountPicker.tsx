@@ -17,7 +17,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step
 import { BasicDataFrame } from '@components/BasicDataFrame';
 import { AnalysisImage } from '@components/AnalysisImage';
 import { Paper } from '@components/Paper';
-import { Select } from '@components/Select';
+import { Select } from '@components/select';
 import { CheckedButton, RunButton, ExportButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 

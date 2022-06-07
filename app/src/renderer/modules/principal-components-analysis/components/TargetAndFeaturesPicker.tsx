@@ -14,8 +14,8 @@ import {
 // eslint-disable-next-line import/named
 import { SelectChangeEvent, Stack } from '@mui/material';
 
-import { Select } from '@components/Select';
-import { CheckedSelect } from '@components/CheckedSelect';
+import { Select } from '@src/renderer/components/select';
+import { CheckedSelect } from '@src/renderer/components/select';
 import { AnalysisStepLogic } from '@components/analysis-step';
 
 import { StepsID } from '../steps';

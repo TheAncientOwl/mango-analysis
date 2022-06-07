@@ -4,7 +4,7 @@ import { Slider, Stack, Typography } from '@mui/material';
 // eslint-disable-next-line import/named
 import { SxProps } from '@mui/system';
 
-import { RenderIf } from './RenderIf';
+import { RenderIf } from '@components/RenderIf';
 
 interface Props {
   sx?: SxProps;

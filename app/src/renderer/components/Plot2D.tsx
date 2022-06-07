@@ -11,11 +11,11 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Tooltip } from './Tooltip';
 import { CheckedButton, PlotButton } from './buttons';
 import { Paper } from './Paper';
-import { Select } from './Select';
+import { Select } from './select/Select';
 import { AnalysisImage } from './AnalysisImage';
 import { Checkbox } from './Checkbox';
 import { InputSave } from './InputSave';
-import { AutoCompleteCheckedSelect } from './AutocompleteCheckedSelect';
+import { AutoCompleteCheckedSelect } from './select';
 import { RenderIf } from './RenderIf';
 
 export interface IPlot2D {

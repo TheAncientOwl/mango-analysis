@@ -4,7 +4,7 @@ import { RotationMethod, FactorLoadings } from '@store/factor-analysis/types';
 
 import { Stack, Collapse, Grid, Typography } from '@mui/material';
 
-import { Select } from '@components/Select';
+import { Select } from '@components/select';
 import { DeleteButton, RunButton, NewButton, ExportButton } from '@components/buttons';
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
 import { AnalysisImage } from '@components/AnalysisImage';
