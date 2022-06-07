@@ -8,8 +8,8 @@ import { fetchPossibleFeatures, changeFeatures, unlockNextStep, lockNextStep } f
 // eslint-disable-next-line import/named
 import { SelectChangeEvent, Stack } from '@mui/material';
 
-import { CheckedSelect } from '@src/renderer/components/select';
-import { AnalysisStepLogic } from '@components/analysis-step';
+import { CheckedSelect } from '@components/select';
+import { AnalysisStepLogic } from '@components/analysis';
 
 import { StepsID } from '../steps';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StepConfig } from '@components/analysis-step';
+import { StepConfig } from '@components/analysis';
 
 import ModelPicker from './components/ModelPicker';
 import RegressionResults from './components/RegressionResults';

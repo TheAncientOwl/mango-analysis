@@ -7,20 +7,20 @@ import { RootState } from '@store/.';
 import { Grid, Typography, Stack } from '@mui/material';
 
 import { Paper } from '@components/Paper';
-import { AnalysisImage } from '@components/AnalysisImage';
+import { Image } from '@components/Image';
 
 const RegressionResults: React.FC<PropsFromRedux> = props => {
   return (
     <Grid container gap={2}>
       <Grid item xs={5} sm={4}>
         <Paper>
-          <AnalysisImage src={props.results.trainPath} alt='Train Set' />
+          <Image src={props.results.trainPath} alt='Train Set' />
         </Paper>
       </Grid>
 
       <Grid item xs={5} sm={4}>
         <Paper>
-          <AnalysisImage src={props.results.testPath} alt='Test Set' />
+          <Image src={props.results.testPath} alt='Test Set' />
         </Paper>
       </Grid>
 

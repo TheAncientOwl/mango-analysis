@@ -1,7 +1,7 @@
-export { AnalysisStep } from './AnalysisStep';
+export { Analysis } from './Analysis';
+
 export { AnalysisStepLogic } from './AnalysisStepLogic';
 export { AnalysisStepResult } from './AnalysisStepResult';
-export { mapConfigToSteps } from './mapConfigToSteps';
 
 export interface StepConfig {
   index: number;

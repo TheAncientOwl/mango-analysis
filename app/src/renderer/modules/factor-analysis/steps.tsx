@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StepConfig } from '@components/analysis-step';
+import { StepConfig } from '@components/analysis';
 
 import { store } from '@store/.';
 import { setServerFeatures } from '@store/factor-analysis/actions';

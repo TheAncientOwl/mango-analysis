@@ -8,8 +8,8 @@ import { fetchLoadingsMatrixPath, jumpToStep, exportLoadings } from '@store/prin
 import { Box, Stack } from '@mui/material';
 
 import { Paper } from '@components/Paper';
-import { AnalysisImage } from '@components/AnalysisImage';
-import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
+import { Image } from '@components/Image';
+import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
 import { SkipButton, PlotButton, ExportButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
@@ -43,7 +43,7 @@ const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
         <RenderIf condition={props.loadingsMatrixPath !== ''}>
           <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
-              <AnalysisImage src={props.loadingsMatrixPath} alt='Loadings Matrix' />
+              <Image src={props.loadingsMatrixPath} alt='Loadings Matrix' />
             </Box>
           </Paper>
         </RenderIf>

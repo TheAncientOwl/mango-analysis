@@ -7,7 +7,7 @@ import { fetchBartlett, fetchKMO, unlockNextStep, lockNextStep, jumpToStep } fro
 
 import { Grid } from '@mui/material';
 
-import { AnalysisStepLogic } from '@components/analysis-step';
+import { AnalysisStepLogic } from '@components/analysis';
 import { SkipButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 

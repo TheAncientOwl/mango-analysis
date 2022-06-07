@@ -5,30 +5,20 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 import { nextStep, prevStep } from '@store/principal-components-analysis/actions';
 
-import { Box, Backdrop, CircularProgress } from '@mui/material';
-
-import { mapConfigToSteps } from '@components/analysis-step';
+import { Analysis } from '@components/analysis';
 
 import { StepsPCA } from './steps';
 
 const PrincipalComponentsAnalysis: React.FC<PropsFromRedux> = props => {
   return (
-    <>
-      <Box sx={{ p: 2, pb: '15em', overflowY: 'scroll' }}>
-        {mapConfigToSteps(
-          StepsPCA,
-          props.nextStep,
-          props.prevStep,
-          props.currentStep,
-          StepsPCA.length,
-          props.unlockedSteps
-        )}
-      </Box>
-
-      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={props.loading}>
-        <CircularProgress color='inherit' />
-      </Backdrop>
-    </>
+    <Analysis
+      stepsConfig={StepsPCA}
+      nextStep={props.nextStep}
+      prevStep={props.prevStep}
+      currentStep={props.currentStep}
+      unlockedSteps={props.unlockedSteps}
+      loading={props.loading}
+    />
   );
 };
 

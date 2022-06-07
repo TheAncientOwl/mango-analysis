@@ -9,8 +9,8 @@ import { Collapse, Grid } from '@mui/material';
 
 import { StepsID } from '../steps';
 
-import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
-import { AnalysisImage } from '@components/AnalysisImage';
+import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
+import { Image } from '@components/Image';
 import { BasicDataFrame } from '@components/BasicDataFrame';
 import { Paper } from '@components/Paper';
 import { RunButton, SkipButton } from '@components/buttons';
@@ -36,7 +36,7 @@ const DefaultFactorAnalysis: React.FC<PropsFromRedux> = props => {
           <Grid container spacing={2} alignItems='flex-start' sx={{ mt: 1 }}>
             <Grid item xs={6} sm={7} md={4}>
               <Paper>
-                <AnalysisImage src={props.defaultHints.screePlotSrc} alt='Scree Plot' />
+                <Image src={props.defaultHints.screePlotSrc} alt='Scree Plot' />
               </Paper>
             </Grid>
             <Grid item xs={4} sm={5} md={4}>

@@ -6,8 +6,8 @@ import { Stack, Collapse, Grid, Typography } from '@mui/material';
 
 import { Select } from '@components/select';
 import { DeleteButton, RunButton, NewButton, ExportButton } from '@components/buttons';
-import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
-import { AnalysisImage } from '@components/AnalysisImage';
+import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
+import { Image } from '@components/Image';
 import { Paper } from '@components/Paper';
 import { BasicDataFrameProps } from '@components/BasicDataFrame';
 
@@ -67,7 +67,7 @@ export const AxisRotation: React.FC<Props> = props => {
                     export
                   </ExportButton>
                 </Stack>
-                <AnalysisImage src={props.loadings.imagePath} alt={`${props.rotationMethod}-${props.factorsCount}`} />
+                <Image src={props.loadings.imagePath} alt={`${props.rotationMethod}-${props.factorsCount}`} />
               </Paper>
             </Collapse>
           </Grid>

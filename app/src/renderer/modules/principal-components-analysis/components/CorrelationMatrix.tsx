@@ -8,8 +8,8 @@ import { fetchCorrelationMatrixPath, jumpToStep } from '@store/principal-compone
 import { Box, Stack } from '@mui/material';
 
 import { Paper } from '@components/Paper';
-import { AnalysisImage } from '@components/AnalysisImage';
-import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
+import { Image } from '@components/Image';
+import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
 import { SkipButton, PlotButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
@@ -43,7 +43,7 @@ const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
         <RenderIf condition={props.correlationMatrixPath !== ''}>
           <Paper sx={{ mt: 2, maxWidth: '38em' }}>
             <Box sx={{ mt: 2, maxWidth: '35em' }}>
-              <AnalysisImage src={props.correlationMatrixPath} alt='Correlation Matrix' />
+              <Image src={props.correlationMatrixPath} alt='Correlation Matrix' />
             </Box>
           </Paper>
         </RenderIf>

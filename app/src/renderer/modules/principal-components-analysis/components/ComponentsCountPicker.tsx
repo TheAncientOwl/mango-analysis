@@ -13,9 +13,9 @@ import {
 // eslint-disable-next-line import/named
 import { Box, Collapse, Grid, SelectChangeEvent, Stack, Typography } from '@mui/material';
 
-import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis-step';
+import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
 import { BasicDataFrame } from '@components/BasicDataFrame';
-import { AnalysisImage } from '@components/AnalysisImage';
+import { Image } from '@components/Image';
 import { Paper } from '@components/Paper';
 import { Select } from '@components/select';
 import { CheckedButton, RunButton, ExportButton } from '@components/buttons';
@@ -93,7 +93,7 @@ const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
                     Scree Plot
                   </Typography>
                   <Box>
-                    <AnalysisImage src={props.hints.kaiserPath} alt='Scree Plot ~ Kaiser' />
+                    <Image src={props.hints.kaiserPath} alt='Scree Plot ~ Kaiser' />
                   </Box>
                 </Paper>
               </Grid>

@@ -12,9 +12,9 @@ import { Tooltip } from './Tooltip';
 import { CheckedButton, PlotButton } from './buttons';
 import { Paper } from './Paper';
 import { Select } from './select/Select';
-import { AnalysisImage } from './AnalysisImage';
+import { Image } from './Image';
 import { Checkbox } from './Checkbox';
-import { InputSave } from './InputSave';
+import { InputWithSave } from './InputWithSave';
 import { AutoCompleteCheckedSelect } from './select';
 import { RenderIf } from './RenderIf';
 
@@ -83,7 +83,7 @@ export const Plot2D: React.FC<Props> = props => {
         </IconButton>
       </Tooltip>
 
-      <InputSave
+      <InputWithSave
         minWidth='35em'
         text={plot.title}
         placeholder='Title'
@@ -184,7 +184,7 @@ export const Plot2D: React.FC<Props> = props => {
 
         <RenderIf condition={plot.plotSrc !== ''}>
           <Box sx={{ mt: 2, maxWidth: '40em' }}>
-            <AnalysisImage src={plot.plotSrc} alt={`Plot ${plot.pcX} - ${plot.pcY}`} />
+            <Image src={plot.plotSrc} alt={`Plot ${plot.pcX} - ${plot.pcY}`} />
           </Box>
         </RenderIf>
       </Collapse>

@@ -7,14 +7,14 @@ import { predict, changeValueToPredict } from '@store/linear-regression/actions'
 
 import { Typography, Collapse, Stack } from '@mui/material';
 
-import { InputSave } from '@components/InputSave';
+import { InputWithSave } from '@src/renderer/components/InputWithSave';
 import { RunButton } from '@components/buttons';
 
 const Prediction: React.FC<PropsFromRedux> = props => {
   return (
     <>
       <Stack direction='row' alignItems='center' gap={2} mb={2}>
-        <InputSave
+        <InputWithSave
           text={props.valueToPredict === undefined ? 0 : props.valueToPredict}
           onSave={value => props.changeValueToPredict(value as number)}
           placeholder='Value to predict'

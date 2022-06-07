@@ -19,7 +19,7 @@ interface Props {
 
 const editIcon = <EditIcon />;
 
-export const InputSave: React.FC<Props> = ({
+export const InputWithSave: React.FC<Props> = ({
   text,
   placeholder,
   onSave,

@@ -13,7 +13,7 @@ interface Props {
   alt: string;
 }
 
-export const AnalysisImage: React.FC<Props> = ({ src, alt }) => {
+export const Image: React.FC<Props> = ({ src, alt }) => {
   const handleSave = async () => {
     const savePath = await window.electron.showSaveDialog({
       title: 'Save image',
@@ -41,8 +41,8 @@ export const AnalysisImage: React.FC<Props> = ({ src, alt }) => {
         <IconButton
           sx={{
             position: 'absolute',
-            right: theme.spacing(1),
-            top: theme.spacing(1),
+            right: theme.spacing(0.5),
+            top: theme.spacing(0.5),
             background: alpha(theme.palette.common.black, 0.9),
             ':hover': {
               background: alpha(theme.palette.primary.main, 0.9),
