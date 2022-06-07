@@ -4,12 +4,13 @@ import main.app as app
 import main.utils as utils
 
 import pandas as pd
-import numpy as np
+
 import seaborn as sns
+import matplotlib.pyplot as plt
+
 from factor_analyzer import FactorAnalyzer
 from factor_analyzer.factor_analyzer import calculate_bartlett_sphericity
 from factor_analyzer.factor_analyzer import calculate_kmo
-import matplotlib.pyplot as plt
 
 
 class FactorAnalysis:

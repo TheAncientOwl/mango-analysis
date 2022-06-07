@@ -1,7 +1,6 @@
-import main.app as app
-import pandas
 import flask
 
+import main.app as app
 import main.utils as utils
 
 data_scale = flask.Blueprint('data_scale', __name__)

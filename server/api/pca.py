@@ -6,10 +6,11 @@ import main.utils as utils
 
 import pandas as pd
 import numpy as np
+
 import seaborn as sns
 import matplotlib.pyplot as plt
+
 from sklearn.decomposition import PCA as skPCA
-from sklearn.preprocessing import StandardScaler
 
 
 class PCA:

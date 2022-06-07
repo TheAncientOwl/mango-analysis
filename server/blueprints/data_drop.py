@@ -1,6 +1,8 @@
-import main.app as app
-import pandas
 import flask
+
+import pandas as pd
+
+import main.app as app
 
 data_drop = flask.Blueprint('data_drop', __name__)
 
@@ -8,7 +10,7 @@ data_drop = flask.Blueprint('data_drop', __name__)
 # >> Drop dataframe
 @data_drop.post('/data/drop-all')
 def drop_dataframe():
-    app.dataFrame = pandas.DataFrame()
+    app.dataFrame = pd.DataFrame()
 
     return flask.jsonify(message='Dataframe dropped'), 200
 

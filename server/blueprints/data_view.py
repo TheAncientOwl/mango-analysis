@@ -1,6 +1,6 @@
-import main.app as app
-import pandas
 import flask
+
+import main.app as app
 
 data_view = flask.Blueprint('data_view', __name__)
 

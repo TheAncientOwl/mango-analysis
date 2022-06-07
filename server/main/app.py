@@ -4,14 +4,16 @@ import uuid
 
 from flask_cors import CORS
 from flask import Flask
-import pandas
 
-from .utils import setup_app_dirs
+import pandas as pd
+
 from blueprints import all_blueprints
 import api
 
+from .utils import setup_app_dirs
+
 # App state
-dataFrame = pandas.DataFrame()
+dataFrame = pd.DataFrame()
 
 pca = api.PCA()
 factor_analysis = api.FactorAnalysis()

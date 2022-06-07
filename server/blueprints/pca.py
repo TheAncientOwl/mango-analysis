@@ -1,6 +1,6 @@
-import main.app as app
 import flask
 
+import main.app as app
 import main.utils as utils
 
 pca = flask.Blueprint('pca', __name__)

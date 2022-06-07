@@ -1,5 +1,6 @@
-import main.app as app
 import flask
+
+import main.app as app
 
 linear_regression = flask.Blueprint('linear_regression', __name__)
 

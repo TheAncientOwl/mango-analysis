@@ -1,7 +1,10 @@
-import main.app as app
-import pandas
 import flask
+
 import os
+
+import pandas as pd
+
+import main.app as app
 
 data_import_export = flask.Blueprint('data_import_export', __name__)
 
@@ -19,7 +22,7 @@ def import_csv(filePath):
     if not os.path.exists(filePath):
         return flask.jsonify(message='File does not exist'), 404
 
-    app.dataFrame = pandas.read_csv(filePath, na_values=['NA'])
+    app.dataFrame = pd.read_csv(filePath, na_values=['NA'])
     app.dataFrame.insert(
         0, '_mango_id', range(1, len(app.dataFrame) + 1))
 
@@ -50,7 +53,7 @@ def export_dataframe_csv():
     df_columns = data['columns']
     df_data = data['data']
 
-    df = pandas.DataFrame(index=df_index, columns=df_columns, data=df_data)
+    df = pd.DataFrame(index=df_index, columns=df_columns, data=df_data)
     df.to_csv(path_or_buf=save_path)
 
     return flask.jsonify(message='File saved successfully'), 201

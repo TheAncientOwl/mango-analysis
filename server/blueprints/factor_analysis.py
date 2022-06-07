@@ -1,5 +1,6 @@
-import main.app as app
 import flask
+
+import main.app as app
 
 factor_analysis = flask.Blueprint('factor_analysis', __name__)
 
