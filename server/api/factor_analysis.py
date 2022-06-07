@@ -1,6 +1,7 @@
 import os
 
 import main.server as server
+import main.utils as utils
 
 import pandas as pd
 import numpy as np
@@ -76,7 +77,7 @@ class FactorAnalysis:
         plt.grid()
 
         figpath = os.path.join(server.plots_data_path,
-                               f'ScreePlot.{server.make_uuid()}.jpg')
+                               f'ScreePlot.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -91,7 +92,7 @@ class FactorAnalysis:
                     cmap=self.cmap)
 
         figpath = os.path.join(server.plots_data_path,
-                               f'LoadingsMatrix.{server.make_uuid()}.jpg')
+                               f'LoadingsMatrix.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -103,7 +104,7 @@ class FactorAnalysis:
         plt.grid(axis='y')
 
         figpath = os.path.join(server.plots_data_path,
-                               f'Communalities.{server.make_uuid()}.jpg')
+                               f'Communalities.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -134,7 +135,7 @@ class FactorAnalysis:
                     cmap=self.cmap)
 
         figpath = os.path.join(server.plots_data_path,
-                               f'LoadingsMatrix.{server.make_uuid()}.jpg')
+                               f'LoadingsMatrix.{utils.make_uuid()}.jpg')
         plt.savefig(figpath, bbox_inches='tight')
 
         return {'loadings': loadings_matrix, 'loadingsPath': figpath}

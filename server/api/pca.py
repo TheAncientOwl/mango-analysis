@@ -2,6 +2,7 @@ import os
 import random
 
 import main.server as server
+import main.utils as utils
 
 import pandas as pd
 import numpy as np
@@ -53,8 +54,9 @@ class PCA:
                     vmax=1, vmin=-1, center=0,
                     cmap=self.cmap, mask=mask)
 
+        print(utils.make_uuid())
         figpath = os.path.join(
-            server.plots_data_path, f'CorrelationMatrix.{server.make_uuid()}.jpg')
+            server.plots_data_path, f'CorrelationMatrix.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -88,7 +90,7 @@ class PCA:
         plt.xticks(range(1, self.pca.n_components + 1))
 
         figpath = os.path.join(
-            server.plots_data_path, f'Kaiser-ScreePlot.{server.make_uuid()}.jpg')
+            server.plots_data_path, f'Kaiser-ScreePlot.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -139,7 +141,7 @@ class PCA:
                     cmap=self.cmap)
 
         figpath = os.path.join(server.plots_data_path,
-                               f'LoadingsMatrix.{server.make_uuid()}.jpg')
+                               f'LoadingsMatrix.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath
@@ -180,7 +182,7 @@ class PCA:
                 ax.legend(targets)
 
         figpath = os.path.join(server.plots_data_path,
-                               f'PCA-Plot-{pc_x}-{pc_y}.{server.make_uuid()}.jpg')
+                               f'PCA-Plot-{pc_x}-{pc_y}.{utils.make_uuid()}.jpg')
         plt.savefig(figpath)
 
         return figpath

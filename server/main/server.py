@@ -10,10 +10,6 @@ import blueprints
 import api
 
 
-def make_uuid():
-    return str(uuid.uuid4())
-
-
 data_path = os.path.join(str(os.path.expanduser('~')), '.mango-analysis')
 plots_data_path = os.path.join(data_path, 'plots')
 

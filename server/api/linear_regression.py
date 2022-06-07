@@ -1,6 +1,7 @@
 import os
 
 import main.server as server
+import main.utils as utils
 
 import flask
 import numpy as np
@@ -52,7 +53,7 @@ class LinearRegression():
         plt.ylabel(y_label)
 
         training_path = os.path.join(server.plots_data_path,
-                                     f'TrainingSet.{server.make_uuid()}.jpg')
+                                     f'TrainingSet.{utils.make_uuid()}.jpg')
         plt.savefig(training_path)
 
         # >> plot test set
@@ -64,7 +65,7 @@ class LinearRegression():
         plt.ylabel(y_label)
 
         test_path = os.path.join(server.plots_data_path,
-                                 f'TestSet.{server.make_uuid()}.jpg')
+                                 f'TestSet.{utils.make_uuid()}.jpg')
         plt.savefig(test_path)
 
         # equation
