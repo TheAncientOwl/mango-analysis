@@ -21,8 +21,8 @@ import { RenderIf } from './RenderIf';
 export interface IPlot2D {
   open: boolean;
   id: string;
-  pcX: string;
-  pcY: string;
+  xLabel: string;
+  yLabel: string;
   plotSrc: string;
   annot: boolean;
   legend: boolean;
@@ -63,8 +63,8 @@ const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></St
 const emptyPlot: IPlot2D = {
   open: false,
   id: '',
-  pcX: '',
-  pcY: '',
+  xLabel: '',
+  yLabel: '',
   plotSrc: '',
   annot: false,
   legend: false,
@@ -114,9 +114,9 @@ export const Plot2D: React.FC<Props> = props => {
         <Select
           minWidth={'7em'}
           maxWidth={'20em'}
-          id='pcX'
+          id='xLabel'
           label='X Axis'
-          value={plot.pcX}
+          value={plot.xLabel}
           values={props.pcaLabels}
           onChange={props.onChangeAxisX}
         />
@@ -126,9 +126,9 @@ export const Plot2D: React.FC<Props> = props => {
         <Select
           minWidth={'7em'}
           maxWidth={'20em'}
-          id='pcY'
+          id='yLabel'
           label='Y Axis'
-          value={plot.pcY}
+          value={plot.yLabel}
           values={props.pcaLabels}
           onChange={props.onChangeAxisY}
         />
@@ -165,7 +165,7 @@ export const Plot2D: React.FC<Props> = props => {
 
       <Grid item>
         <PlotButton
-          disabled={plot.pcX === '' || plot.pcY === '' || plot.targets.length === 0}
+          disabled={plot.xLabel === '' || plot.yLabel === '' || plot.targets.length === 0}
           onClick={props.onPlot}
           size='small'>
           plot
@@ -184,7 +184,7 @@ export const Plot2D: React.FC<Props> = props => {
 
         <RenderIf condition={plot.plotSrc !== ''}>
           <Box sx={{ mt: 2, maxWidth: '40em' }}>
-            <Image src={plot.plotSrc} alt={`Plot ${plot.pcX} - ${plot.pcY}`} />
+            <Image src={plot.plotSrc} alt={`Plot ${plot.xLabel} - ${plot.yLabel}`} />
           </Box>
         </RenderIf>
       </Collapse>

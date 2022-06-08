@@ -217,8 +217,8 @@ export const principalComponentsAnalysisReducer = (
         ...state.plots,
         {
           id: uuidv4(),
-          pcX: '',
-          pcY: '',
+          xLabel: '',
+          yLabel: '',
           plotSrc: '',
           annot: false,
           legend: false,
@@ -237,10 +237,10 @@ export const principalComponentsAnalysisReducer = (
     case ActionType.ChangePlotAxisX: {
       const { index, value } = action.payload;
 
-      if (state.plots[index].pcX === value) return state;
+      if (state.plots[index].xLabel === value) return state;
 
       const newPlots = [...state.plots];
-      newPlots[index] = { ...newPlots[index], pcX: value };
+      newPlots[index] = { ...newPlots[index], xLabel: value };
 
       return {
         ...state,
@@ -251,10 +251,10 @@ export const principalComponentsAnalysisReducer = (
     case ActionType.ChangePlotAxisY: {
       const { index, value } = action.payload;
 
-      if (state.plots[index].pcY === value) return state;
+      if (state.plots[index].yLabel === value) return state;
 
       const newPlots = [...state.plots];
-      newPlots[index] = { ...newPlots[index], pcY: value };
+      newPlots[index] = { ...newPlots[index], yLabel: value };
 
       return {
         ...state,

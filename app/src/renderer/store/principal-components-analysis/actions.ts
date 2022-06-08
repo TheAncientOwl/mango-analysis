@@ -111,9 +111,9 @@ export const changePlotAxisY = (index: number, value: string) => (dispatch: Disp
 export const fetchPlotSrc = (index: number) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
-  const { title, pcX, pcY, targets, annot, legend } = store.getState().pca.plots[index];
+  const { title, xLabel, yLabel, targets, annot, legend } = store.getState().pca.plots[index];
 
-  const res = await axios.post('/pca/plot/2D', { title, pcX, pcY, targets, annot, legend });
+  const res = await axios.post('/pca/plot/2D', { title, xLabel, yLabel, targets, annot, legend });
 
   dispatch({
     type: ActionType.FetchedPlotSrc,
