@@ -266,3 +266,64 @@ export type DispatchTypes =
 export type Dispatch = ReduxDispatch<DispatchTypes>;
 
 "@
+
+$storePath = "$($PSScriptRoot)/src/renderer/store"
+# -------------------------------------------------------------------------------------------------
+# >> Deal with root reducer file
+New-Item -Path $storePath -Name "dummy.ts" -ErrorAction SilentlyContinue
+
+$originalPath = "$($storePath)/index.ts"
+$dummyPath = "$($storePath)/dummy.ts"
+
+$importLine = "import { $($moduleNameCamelCase)Reducer } from './$($moduleDirectoryName)/reducer';"
+$reducerLine = "    $($moduleNameCamelCase): $($moduleNameCamelCase)Reducer,"
+
+Add-Content -Path $dummyPath -Value $importLine
+
+Foreach ($line in Get-Content $originalPath) {
+  if ($line -Match $importLine) {
+    Remove-Item -Path $dummyPath
+    Break
+  }
+
+  Add-Content -Path $dummyPath -Value $line
+
+  if ($line -Match "  reducer: {") {    
+    Add-Content -Path $dummyPath -Value $reducerLine
+  }
+}
+
+if (Test-Path -Path $dummyPath -PathType Leaf) {
+  Remove-Item $originalPath
+  Move-Item -Path $dummyPath $originalPath
+}
+
+# -------------------------------------------------------------------------------------------------
+# >> Deal with reset app state file
+New-Item -Path $storePath -Name "dummy.ts" -ErrorAction SilentlyContinue
+
+$originalPath = "$($storePath)/resetAppState.ts"
+$dummyPath = "$($storePath)/dummy.ts"
+
+$importLine = "import { resetState as resetState$($moduleNameCapitalized) } from './$($moduleDirectoryName)/actions';"
+$resetLine = "  store.dispatch(resetState$($moduleNameCapitalized)());"
+
+Add-Content -Path $dummyPath -Value $importLine
+
+Foreach ($line in Get-Content $originalPath) {
+  if ($line -Match $importLine) {
+    Remove-Item -Path $dummyPath
+    Break
+  }
+  
+  if ($line -Match "};") {
+    Add-Content -Path $dummyPath -Value $resetLine
+  }
+  
+  Add-Content -Path $dummyPath -Value $line
+}
+
+if (Test-Path -Path $dummyPath -PathType Leaf) {
+  Remove-Item $originalPath
+  Move-Item -Path $dummyPath $originalPath
+}
