@@ -3,12 +3,12 @@ import React from 'react';
 import { StepConfig } from '@components/analysis';
 
 import ModelPicker from './ModelPicker';
-import RegressionResults from './RegressionResults';
+import MultipleRegressionResults from './MultipleRegressionResults';
 import Prediction from './Prediction';
 
 export const StepsID = Object.freeze({
   ModelPicker: 0,
-  RegressionResults: 1,
+  MultipleRegressionResults: 1,
   Prediction: 2,
 });
 
@@ -19,9 +19,9 @@ export const StepsMultipleLinearRegression: ReadonlyArray<StepConfig> = [
     content: <ModelPicker />,
   },
   {
-    index: StepsID.RegressionResults,
+    index: StepsID.MultipleRegressionResults,
     title: 'Results',
-    content: <RegressionResults />,
+    content: <MultipleRegressionResults />,
   },
   {
     index: StepsID.Prediction,

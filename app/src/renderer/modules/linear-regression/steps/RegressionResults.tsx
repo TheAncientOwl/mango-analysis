@@ -4,10 +4,11 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 
-import { Grid, Typography, Stack } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 
 import { Paper } from '@components/Paper';
 import { Image } from '@components/Image';
+import { TestValue } from '@src/renderer/components/TestValue';
 
 const RegressionResults: React.FC<PropsFromRedux> = props => {
   return (
@@ -27,24 +28,12 @@ const RegressionResults: React.FC<PropsFromRedux> = props => {
       <Grid item xs={12} sm={7}>
         <Paper sx={{ display: 'block' }}>
           <Stack direction='column' gap={1}>
-            <Typography>
-              {`>>`} Coefficient: {props.results.coeff}
-            </Typography>
-            <Typography>
-              {`>>`} Intercept: {props.results.intercept}
-            </Typography>
-            <Typography>
-              {`>>`} Equation: {props.results.equation}
-            </Typography>
-            <Typography>
-              {`>>`} MSE: {props.results.mse}
-            </Typography>
-            <Typography>
-              {`>>`} R-Squared: {props.results.rSquared}
-            </Typography>
-            <Typography>
-              {`>>`} Adj-R-Squared: {props.results.rSquaredAdj}
-            </Typography>
+            <TestValue label='Coefficient' value={props.results.coeff} />
+            <TestValue label='Intercept' value={props.results.intercept} />
+            <TestValue label='Equation' value={props.results.equation} />
+            <TestValue label='MSE' value={props.results.mse} />
+            <TestValue label='R-Squared' value={props.results.rSquared} />
+            <TestValue label='Adj-R-Squared' value={props.results.rSquaredAdj} />
           </Stack>
         </Paper>
       </Grid>

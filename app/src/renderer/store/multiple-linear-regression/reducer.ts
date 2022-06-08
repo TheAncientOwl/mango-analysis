@@ -1,4 +1,4 @@
-import { ActionType, DispatchTypes } from './types';
+import { ActionType, DispatchTypes, ModelResult } from './types';
 
 import {
   IDefaultAnalysisStep,
@@ -10,10 +10,17 @@ import {
   jumpToStep,
 } from '@store/IDefaultAnalysisState';
 
-const StepsCountArray = 4;
+const StepsCountArray = 2;
 
 interface IDefaultState extends IDefaultAnalysisStep {
-  specificStatePropery: string;
+  independentVariables: string[];
+  dependentVariable: string;
+  variables: string[];
+  randState: number;
+  testSize: number;
+  modelResult: ModelResult;
+  valuesToPredict: number[];
+  prediction: number | undefined;
 }
 
 const defaultState: IDefaultState = {
@@ -21,7 +28,21 @@ const defaultState: IDefaultState = {
   currentStep: 0,
   nextStepUnlocked: new Array(StepsCountArray).fill(false),
 
-  specificStatePropery: 'dunno',
+  independentVariables: [],
+  dependentVariable: '',
+  variables: [],
+  randState: 42,
+  testSize: 33,
+  modelResult: {
+    coeff: [],
+    intercept: 0,
+    equation: '',
+    mse: 0,
+    rSquaredAdj: 0,
+    rSquared: 0,
+  },
+  valuesToPredict: [],
+  prediction: undefined,
 };
 
 export const multipleLinearRegressionReducer = (
@@ -55,6 +76,70 @@ export const multipleLinearRegressionReducer = (
 
     case ActionType.Reset: {
       return defaultState;
+    }
+
+    case ActionType.SetIndependentVariables: {
+      return {
+        ...state,
+        independentVariables: action.payload,
+      };
+    }
+
+    case ActionType.SetDependentVariable: {
+      return {
+        ...state,
+        dependentVariable: action.payload,
+      };
+    }
+
+    case ActionType.SetRandState: {
+      return {
+        ...state,
+        randState: action.payload,
+      };
+    }
+
+    case ActionType.SetTestSize: {
+      return {
+        ...state,
+        testSize: action.payload,
+      };
+    }
+
+    case ActionType.ModelFinished: {
+      const newSteps = [...state.nextStepUnlocked];
+      newSteps.fill(true);
+
+      return {
+        ...state,
+        loading: false,
+        currentStep: 1,
+        nextStepUnlocked: newSteps,
+        modelResult: action.payload,
+      };
+    }
+
+    case ActionType.FetchedVariables: {
+      return {
+        ...state,
+        loading: false,
+        variables: action.payload,
+      };
+    }
+
+    case ActionType.ChangeValuesToPredict: {
+      return {
+        ...state,
+        valuesToPredict: action.payload,
+      };
+    }
+
+    case ActionType.PredictionFinished: {
+      return {
+        ...state,
+        loading: false,
+        prediction: action.payload,
+      };
     }
 
     default: {
