@@ -1,22 +1,21 @@
-import { configureStore } from '@reduxjs/toolkit';
-
-import { appGlobalReducer } from './app-global/reducer';
-import { dataManagerReducer } from './data-manager/reducer';
-import { principalComponentsAnalysisReducer } from './principal-components-analysis/reducer';
-import { factorAnalysisReducer } from './factor-analysis/reducer';
-import { linearRegressionReducer } from './linear-regression/reducer';
 import { multipleLinearRegressionReducer } from './multiple-linear-regression/reducer';
+import { linearRegressionReducer } from './linear-regression/reducer';
+import { factorAnalysisReducer } from './factor-analysis/reducer';
+import { principalComponentsAnalysisReducer } from './principal-components-analysis/reducer';
+import { dataManagerReducer } from './data-manager/reducer';
+import { appGlobalReducer } from './app-global/reducer';
 
+import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 
 export const store = configureStore({
   reducer: {
-    appGlobal: appGlobalReducer,
-    dataManager: dataManagerReducer,
-    pca: principalComponentsAnalysisReducer,
-    factorAnalysis: factorAnalysisReducer,
-    linearRegression: linearRegressionReducer,
     multipleLinearRegression: multipleLinearRegressionReducer,
+    linearRegression: linearRegressionReducer,
+    factorAnalysis: factorAnalysisReducer,
+    pca: principalComponentsAnalysisReducer,
+    dataManager: dataManagerReducer,
+    appGlobal: appGlobalReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(thunk),
   devTools: process.env.NODE_ENV !== 'production',
