@@ -13,7 +13,7 @@ interface Props {
 
 const paginationOptions = [5, 10, 25, 50, 100];
 
-export const DataFrameViewerPagination: React.FC<Props> = ({
+export const Pagination: React.FC<Props> = ({
   totalRows = 0,
   pageSize = 0,
   page = 0,

@@ -12,7 +12,7 @@ import { SkipButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
 import { StatisticalTest } from './StatisticalTest';
-import { StepsID } from '../steps';
+import { StepsID } from '.';
 
 const getFeedbackKMO = (kmoModel: number) => {
   if (kmoModel >= 0.9) return 'Our dataset has great factorability';

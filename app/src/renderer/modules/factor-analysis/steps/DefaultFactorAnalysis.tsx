@@ -7,7 +7,7 @@ import { changeFactorsNumber, runDefaultAnalysis, jumpToStep } from '@store/fact
 
 import { Collapse, Grid } from '@mui/material';
 
-import { StepsID } from '../steps';
+import { StepsID } from '.';
 
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
 import { Image } from '@components/Image';

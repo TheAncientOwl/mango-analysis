@@ -5,7 +5,7 @@ import { CheckBox } from './CheckBox';
 import { getCellStyle } from './styles';
 import { DataFrameViewerProps } from './types';
 
-export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
+const _DataFrame: React.FC<DataFrameViewerProps> = ({
   dataFrame,
 
   checkedLabels,
@@ -79,3 +79,5 @@ export const _DataFrameViewer: React.FC<DataFrameViewerProps> = ({
     </React.Fragment>
   );
 };
+
+export const DataFrame = React.memo(_DataFrame);

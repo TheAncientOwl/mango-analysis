@@ -10,11 +10,11 @@ import {
   setServerTargetAndFeatures,
 } from '@store/principal-components-analysis/actions';
 
-import TargetAndFeaturesPicker from './components/TargetAndFeaturesPicker';
-import CorrelationMatrix from './components/CorrelationMatrix';
-import ComponentsCountPicker from './components/ComponentsCountPicker';
-import LoadingsMatrix from './components/LoadingsMatrix';
-import DataVisualizer from './components/DataVisualizer';
+import TargetAndFeaturesPicker from './TargetAndFeaturesPicker';
+import CorrelationMatrix from './CorrelationMatrix';
+import ComponentsCountPicker from './ComponentsCountPicker';
+import LoadingsMatrix from './LoadingsMatrix';
+import DataVisualizer from './DataVisualizer';
 
 export const StepsID = Object.freeze({
   TargetAndFeaturesPicker: 0,

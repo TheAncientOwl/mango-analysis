@@ -21,7 +21,7 @@ import { RunButton } from '@components/buttons';
 import { AnalysisStepLogic } from '@components/analysis';
 import { SelectSlider } from '@components/select';
 
-import { StepsID } from '../steps';
+import { StepsID } from '.';
 
 const ModelPicker: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {

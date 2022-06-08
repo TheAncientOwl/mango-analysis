@@ -21,7 +21,7 @@ import { Select } from '@components/select';
 import { CheckedButton, RunButton, ExportButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
-import { StepsID } from '../steps';
+import { StepsID } from '.';
 
 const ComponentsCountPicker: React.FC<PropsFromRedux> = props => {
   const handleChange = (event: SelectChangeEvent) => {

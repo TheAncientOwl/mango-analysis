@@ -2,9 +2,9 @@ import React from 'react';
 
 import { StepConfig } from '@components/analysis';
 
-import ModelPicker from './components/ModelPicker';
-import RegressionResults from './components/RegressionResults';
-import Prediction from './components/Prediction';
+import ModelPicker from './ModelPicker';
+import RegressionResults from './RegressionResults';
+import Prediction from './Prediction';
 
 export const StepsID = Object.freeze({
   ModelPicker: 0,

@@ -5,10 +5,10 @@ import { StepConfig } from '@components/analysis';
 import { store } from '@store/.';
 import { setServerFeatures } from '@store/factor-analysis/actions';
 
-import FeaturesPicker from './components/FeaturesPicker';
-import StatisticalHypotesisTesting from './components/StatisticalHypotesisTesting';
-import DefaultFactorAnalysis from './components/DefaultFactorAnalysis';
-import Analysis from './components/Analysis';
+import FeaturesPicker from './FeaturesPicker';
+import StatisticalHypotesisTesting from './StatisticalHypotesisTesting';
+import DefaultFactorAnalysis from './DefaultFactorAnalysis';
+import Analysis from './Analysis';
 
 export const StepsID = Object.freeze({
   FeaturesPicker: 0,

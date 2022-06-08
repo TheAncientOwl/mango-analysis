@@ -13,7 +13,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
 import { SkipButton, PlotButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
-import { StepsPCA, StepsID } from '../steps';
+import { StepsPCA, StepsID } from '.';
 
 const CorrelationMatrix: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => {

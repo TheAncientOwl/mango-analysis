@@ -11,7 +11,7 @@ import { SelectChangeEvent, Stack } from '@mui/material';
 import { CheckedSelect } from '@components/select';
 import { AnalysisStepLogic } from '@components/analysis';
 
-import { StepsID } from '../steps';
+import { StepsID } from '.';
 
 const FeaturesPicker: React.FC<PropsFromRedux> = props => {
   // check if the analysis can continue (some features are selected)

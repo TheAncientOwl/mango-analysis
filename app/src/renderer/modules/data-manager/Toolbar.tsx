@@ -14,7 +14,7 @@ import DropNA from './components/DropNA';
 
 const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
-export const DataManagerToolbar: React.FC = () => {
+export const Toolbar: React.FC = () => {
   const [small, setSmall] = React.useState(false);
   const containerRef = React.useRef();
 

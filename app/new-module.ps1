@@ -1,15 +1,16 @@
-$moduleDirectoryName = $args[0]
-$moduleName = $args[1]
+$moduleName = $args[0]
 
-Write-Host $moduleDirectoryName
-Write-Host $moduleName
+# >> Modules
+$moduleDirectoryPath = "$($PSScriptRoot)/src/renderer/modules/$($moduleName)"
 
-$moduleDirectoryPath = "$($PSScriptRoot)/src/renderer/modules/$($moduleDirectoryName)"
 New-Item -Path $moduleDirectoryPath -ItemType Directory -ErrorAction SilentlyContinue
-New-Item -Path $moduleDirectoryPath -Name "$($moduleName).tsx"
-New-Item -Path $moduleDirectoryPath -Name "index.ts"
+New-Item -Path $moduleDirectoryPath -Name "index.tsx"
 
-$storeDirectoryPath = "$($PSScriptRoot)/src/renderer/store/$($moduleDirectoryName)"
+New-Item -Path "$($moduleDirectoryPath)/steps" -ItemType Directory -ErrorAction SilentlyContinue
+New-Item -Path "$($moduleDirectoryPath)/steps" -Name "index.tsx"
+
+# >> Store
+$storeDirectoryPath = "$($PSScriptRoot)/src/renderer/store/$($moduleName)"
 New-Item -Path $storeDirectoryPath -ItemType Directory -ErrorAction SilentlyContinue
 New-Item -Path $storeDirectoryPath -Name "actions.ts"
 New-Item -Path $storeDirectoryPath -Name "reducer.ts"

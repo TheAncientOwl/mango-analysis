@@ -9,8 +9,8 @@ import { loadDataFrame, closeFeedbackMessage } from '@store/data-manager/actions
 
 import { Snackbar } from '@components/Snackbar';
 
-import { DataManagerToolbar } from './DataManagerToolbar';
-import DataManagerDataFrame from './DataManagerDataFrame';
+import { Toolbar } from './Toolbar';
+import DataFrameViewer from './data-frame-viewer';
 
 const DataManager: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {
@@ -19,9 +19,9 @@ const DataManager: React.FC<PropsFromRedux> = props => {
 
   return (
     <>
-      <DataManagerToolbar />
+      <Toolbar />
 
-      <DataManagerDataFrame />
+      <DataFrameViewer />
 
       <Snackbar open={props.feedbackMessageOpen} onClose={props.closeFeedbackMessage}>
         {props.feedbackMessage}

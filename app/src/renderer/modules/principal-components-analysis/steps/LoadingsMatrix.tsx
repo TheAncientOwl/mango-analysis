@@ -13,7 +13,7 @@ import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
 import { SkipButton, PlotButton, ExportButton } from '@components/buttons';
 import { RenderIf } from '@components/RenderIf';
 
-import { StepsPCA, StepsID } from '../steps';
+import { StepsPCA, StepsID } from '.';
 
 const LoadingsMatrix: React.FC<PropsFromRedux> = props => {
   const handleSkip = () => {
