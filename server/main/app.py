@@ -7,7 +7,7 @@ from flask import Flask
 
 import pandas as pd
 
-from blueprints import all_blueprints
+from routes import all_routes
 import api
 
 from .utils import setup_app_dirs
@@ -15,15 +15,8 @@ from .utils import setup_app_dirs
 # App state
 dataFrame = pd.DataFrame()
 
-pca = api.PCA()
 factor_analysis = api.FactorAnalysis()
 linear_regression = api.LinearRegression()
-
-
-def new_pca():
-    global pca
-    pca = api.PCA()
-
 
 def new_factor_analysis():
     global factor_analysis
@@ -42,5 +35,5 @@ setup_app_dirs()
 server = Flask(__name__)
 CORS(server)
 
-for blueprint in all_blueprints:
-    server.register_blueprint(blueprint)
+for route in all_routes:
+    server.register_blueprint(route)

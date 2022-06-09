@@ -1,5 +1,5 @@
 ### Read data
-GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/pca-data.csv
+GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/pca-data.agriculture.csv
 
 ### Read data
 GET http://localhost:5000/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/pca-data-na.csv

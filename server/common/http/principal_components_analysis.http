@@ -1,0 +1,75 @@
+@local_host = http://localhost:5000
+@pca_route = http://localhost:5000/pca
+
+### ------------------------------------------------------------------------------------------- ###
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/pca-data.agriculture.csv
+
+### ------------------------------------------------------------------------------------------- ###
+GET {{local_host}}/printhead 
+
+### ------------------------------------------------------------------------------------------- ###
+POST {{pca_route}}/new
+
+### ------------------------------------------------------------------------------------------- ###
+GET {{pca_route}}/possible-targets-and-features
+
+### ------------------------------------------------------------------------------------------- ###
+POST {{pca_route}}/set-targets-and-features
+Content-Type: application/json
+
+{
+  "target": "Country",
+  "features": ["EA", "EAM", "EAF", "AFF", "ANE", "AME", "CY", "SA", "CP", "LA", "LCP", "ARL", "AGL"]
+}
+
+### ------------------------------------------------------------------------------------------- ###
+GET {{pca_route}}/plot/correlation-matrix
+
+### ------------------------------------------------------------------------------------------- ###
+POST {{pca_route}}/analyze
+
+### ------------------------------------------------------------------------------------------- ###
+POST {{pca_route}}/analyze
+Content-Type: application/json
+
+{
+  "componentsCount": 4
+}
+
+### ------------------------------------------------------------------------------------------- ###
+GET {{pca_route}}/components-count-hints
+
+### ------------------------------------------------------------------------------------------- ###
+GET {{pca_route}}/plot/loadings-matrix
+
+### ------------------------------------------------------------------------------------------- ###
+POST {{pca_route}}/plot/2D
+Content-Type: application/json
+
+{
+  "title": "PC1 - PC2",
+  "pcX": "PC1",
+  "pcY": "PC2",
+  "targets": ["Romania", "United Kingdom", "Norway", "Andorra", "Lebanon"],
+  "annot": true,
+  "legend": false
+}
+
+### ------------------------------------------------------------------------------------------- ###
+GET {{pca_route}}/labels
+
+### ------------------------------------------------------------------------------------------- ###
+POST {{pca_route}}/export-loadings
+Content-Type: application/json
+
+{
+  "path": "C:\\Users\\TheAncientOwl\\Desktop\\LoadingsMatrix.csv"
+}
+
+### ------------------------------------------------------------------------------------------- ###
+POST {{pca_route}}/export-pca
+Content-Type: application/json
+
+{
+  "path": "C:\\Users\\TheAncientOwl\\Desktop\\PCA.csv"
+}

@@ -14,7 +14,7 @@ export const prevStep = () => (dispatch: Dispatch) => {
 export const fetchPossibleTargetsAndFeatures = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
-  const res = await axios.get('/pca/possible/targets&features');
+  const res = await axios.get('/pca/possible-targets-and-features');
 
   dispatch({ type: ActionType.FetchedPossibleTargetsFeatures, payload: res.data });
 };
@@ -38,7 +38,7 @@ export const lockNextStep = (step: number) => (dispatch: Dispatch) => {
 export const setServerTargetAndFeatures = (target: string, features: string[]) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
-  await axios.post('pca/set/target&features', {
+  await axios.post('pca/set-targets-and-features', {
     target,
     features,
   });
@@ -91,7 +91,7 @@ export const fetchLoadingsMatrixPath = () => async (dispatch: Dispatch) => {
 export const fetchTargetsLabelsPCA = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
-  const res = await axios.get('/pca/targets&labels');
+  const res = await axios.get('/pca/targets-and-labels');
 
   dispatch({ type: ActionType.FetchedLabelsTargetsPCA, payload: res.data });
 };
@@ -113,7 +113,7 @@ export const fetchPlotSrc = (index: number) => async (dispatch: Dispatch) => {
 
   const { title, xLabel, yLabel, targets, annot, legend } = store.getState().pca.plots[index];
 
-  const res = await axios.post('/pca/plot/2D', { title, xLabel, yLabel, targets, annot, legend });
+  const res = await axios.post('/pca/plot/2D', { title, pcX: xLabel, pcY: yLabel, targets, annot, legend });
 
   dispatch({
     type: ActionType.FetchedPlotSrc,
