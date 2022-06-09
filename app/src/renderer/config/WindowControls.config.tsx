@@ -3,12 +3,12 @@ import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-interface WindowControl {
+interface IWindowControl {
   icon: React.ReactNode;
   action: () => void;
 }
 
-export const WindowControls: ReadonlyArray<WindowControl> = [
+export const WindowControls: ReadonlyArray<IWindowControl> = [
   {
     icon: <KeyboardArrowDownIcon />,
     action: window.electron.appWindow.minimize,

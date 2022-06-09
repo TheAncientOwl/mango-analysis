@@ -2,19 +2,17 @@ import React from 'react';
 
 import { Box, Backdrop, CircularProgress } from '@mui/material';
 
-import { StepConfig } from './index';
+import { IStep } from './index';
 import { AnalysisStep } from './AnalysisStep';
 
-interface StepsProps {
-  stepsConfig: ReadonlyArray<StepConfig>;
+interface Props {
+  loading: boolean;
+
+  stepsConfig: ReadonlyArray<IStep>;
   nextStep: () => void;
   prevStep: () => void;
   currentStep: number;
   unlockedSteps: boolean[];
-}
-
-interface Props extends StepsProps {
-  loading: boolean;
 }
 
 export const Analysis: React.FC<Props> = props => {

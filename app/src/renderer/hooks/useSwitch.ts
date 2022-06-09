@@ -1,13 +1,13 @@
 import React from 'react';
 
-interface Switch {
+interface ISwitch {
   value: boolean;
   on: () => void;
   off: () => void;
   toggle: () => void;
 }
 
-export const useSwitch = (defaultValue = false): Switch => {
+export const useSwitch = (defaultValue = false): ISwitch => {
   const [value, setValue] = React.useState(defaultValue);
 
   const on = React.useCallback(() => setValue(true), [setValue]);

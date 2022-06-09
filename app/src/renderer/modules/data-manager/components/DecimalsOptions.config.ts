@@ -1,12 +1,12 @@
 import { DecimalsPrecision } from '../data-frame-viewer/types';
 
-interface DecimalsOptionConfig {
+interface IDecimalsOption {
   id: number;
   display: string;
   value: DecimalsPrecision;
 }
 
-export const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
+export const DecimalsOptions: ReadonlyArray<IDecimalsOption> = [
   {
     id: 0,
     display: 'all',
@@ -19,6 +19,6 @@ export const DecimalsOptions: ReadonlyArray<DecimalsOptionConfig> = [
       id: value as number,
       display: value.toString(),
       value: value as DecimalsPrecision,
-    } as DecimalsOptionConfig;
+    } as IDecimalsOption;
   }),
 ];

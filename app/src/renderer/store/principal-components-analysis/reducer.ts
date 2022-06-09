@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { StepsID } from '@modules/principal-components-analysis/steps';
 import { IPlot2D } from '@components/Plot2D';
 
-import { AnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
+import { IAnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
 import {
   IDefaultAnalysisStep,
   newNextStepUnlockedArray,
@@ -22,7 +22,7 @@ interface IDefaultState extends IDefaultAnalysisStep {
   features: string[];
 
   analysisComponentsCount: number;
-  analysisHints: AnalysisHints;
+  analysisHints: IAnalysisHints;
   hintsOpen: boolean;
 
   correlationMatrixPath: string;

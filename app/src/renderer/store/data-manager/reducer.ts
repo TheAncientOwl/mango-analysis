@@ -1,8 +1,8 @@
-import { DataFrameState } from '@modules/data-manager/data-frame-viewer/types';
+import { IDataFrameState } from '@modules/data-manager/data-frame-viewer/types';
 
 import { ActionType, DispatchTypes, ScalingMethodType } from './types';
 
-interface IDefaultState extends DataFrameState {
+interface IDefaultState extends IDataFrameState {
   loading: boolean;
   importedData: boolean;
 

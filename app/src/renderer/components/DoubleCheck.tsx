@@ -2,18 +2,18 @@ import React from 'react';
 
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 
-interface Action {
+interface IAction {
   title: string;
   execute: () => void;
 }
 
-export interface DoubleCheckProps {
+export interface Props {
   open: boolean;
-  onAccept: Action;
-  onReject: Action;
+  onAccept: IAction;
+  onReject: IAction;
 }
 
-export const DoubleCheck: React.FC<DoubleCheckProps> = ({ open, onAccept, onReject, children }) => {
+export const DoubleCheck: React.FC<Props> = ({ open, onAccept, onReject, children }) => {
   return (
     <Dialog open={open} aria-labelledby='doublecheck-dialog-title' aria-describedby='doublecheck-dialog-description'>
       <DialogTitle id='doublecheck-dialog-title'>Double Check</DialogTitle>

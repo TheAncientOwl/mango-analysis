@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StepConfig } from '@components/analysis';
+import { IStep } from '@components/analysis';
 
 import { store } from '@store/.';
 import { setServerFeatures } from '@store/factor-analysis/actions';
@@ -17,7 +17,7 @@ export const StepsID = Object.freeze({
   Analysis: 3,
 });
 
-export const StepsFactorAnalysis: ReadonlyArray<StepConfig> = [
+export const StepsFactorAnalysis: ReadonlyArray<IStep> = [
   {
     index: StepsID.FeaturesPicker,
     title: 'Pick features',

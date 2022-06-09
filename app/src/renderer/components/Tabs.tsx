@@ -1,22 +1,8 @@
 import React from 'react';
 
-import { Tabs as MuiTabs, Tab, Typography, Box } from '@mui/material';
+import { Tabs as MuiTabs, Tab, Box } from '@mui/material';
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other }) => (
-  <div role='tabpanel' hidden={value !== index} id={`tabpanel-${index}`} aria-labelledby={`tab-${index}`} {...other}>
-    {value === index && (
-      <Box sx={{ p: 3 }}>
-        <Typography>{children}</Typography>
-      </Box>
-    )}
-  </div>
-);
+import { TabPanel } from './TabPanel';
 
 const a11yProps = (index: number) => ({
   id: `tab-${index}`,
@@ -29,13 +15,13 @@ export interface ITab {
   label: string;
 }
 
-interface TabsProps {
+interface Props {
   tabs: ITab[];
   currentTab: number;
   onCurrentTabChange: (value: number) => void;
 }
 
-export const Tabs: React.FC<TabsProps> = ({ tabs, currentTab, onCurrentTabChange }) => {
+export const Tabs: React.FC<Props> = ({ tabs, currentTab, onCurrentTabChange }) => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     onCurrentTabChange(newValue);
   };

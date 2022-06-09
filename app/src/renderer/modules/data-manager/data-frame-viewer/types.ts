@@ -1,4 +1,4 @@
-export interface DataFrame {
+export interface IDataFrame {
   labels: string[];
   totalRows: number;
   rows: (string | number)[][];
@@ -7,16 +7,16 @@ export interface DataFrame {
 
 export type DecimalsPrecision = number | 'all';
 
-export interface DataFrameState {
-  dataFrame: DataFrame;
+export interface IDataFrameState {
+  dataFrame: IDataFrame;
   checkedLabels: string[];
   checkedRows: number[];
   decimalsPrecision: DecimalsPrecision;
 }
 
-interface DataFrameEvents {
+interface IDataFrameEvents {
   onLabelCheck: (checkedLabel: string) => void;
   onRowCheck: (checkedRow: number) => void;
 }
 
-export type DataFrameViewerProps = DataFrameState & DataFrameEvents;
+export type DataFrameViewerProps = IDataFrameState & IDataFrameEvents;

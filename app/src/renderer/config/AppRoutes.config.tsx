@@ -10,7 +10,7 @@ import PrincipalComponentsAnalysis from '@modules/principal-components-analysis'
 import FactorAnalysis from '@modules/factor-analysis';
 import LinearRegression from '@src/renderer/modules/linear-regression';
 
-interface Route {
+interface IRoute {
   name: string;
   alias: string;
   routePath: string;
@@ -18,7 +18,7 @@ interface Route {
   icon: React.ReactNode;
 }
 
-export const AppRoutes: ReadonlyArray<Route> = [
+export const AppRoutes: ReadonlyArray<IRoute> = [
   { name: 'data manager', alias: 'data manager', routePath: '/', element: <DataManager />, icon: <TableViewIcon /> },
   {
     name: 'principal components analysis',

@@ -7,7 +7,7 @@ import { Tooltip } from '@components/Tooltip';
 import { Paper } from '@components/Paper';
 import { RunButton } from '@components/buttons';
 
-interface TestValueConfig {
+interface ITestValue {
   symbol: string;
   value: number;
 }
@@ -15,7 +15,7 @@ interface TestValueConfig {
 interface Props {
   title: string;
   tooltip?: string;
-  values: TestValueConfig[];
+  values: ITestValue[];
   onTest: () => void;
   feedback: string;
 }

@@ -2,14 +2,14 @@ import React from 'react';
 
 import { Table, TableBody, TableContainer, TableHead, TableRow, TableCell } from '@mui/material';
 
-export interface BasicDataFrameProps {
+export interface IBasicDataFrame {
   columns: string[];
   data: number[][];
   index: string[];
   maxWidth?: string;
 }
 
-export const BasicDataFrame: React.FC<BasicDataFrameProps> = ({ columns, data, index, maxWidth = 'auto' }) => {
+export const BasicDataFrame: React.FC<IBasicDataFrame> = ({ columns, data, index, maxWidth = 'auto' }) => {
   return (
     <TableContainer sx={{ maxWidth: maxWidth }}>
       <Table size='small' stickyHeader aria-label='basic-data-frame'>

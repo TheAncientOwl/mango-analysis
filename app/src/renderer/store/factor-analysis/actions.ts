@@ -1,9 +1,9 @@
 import { axios } from '@config/.';
 
-import { Dispatch, ActionType, RotationMethod, FactorLoadings } from './types';
+import { Dispatch, ActionType, RotationMethod, IFactorLoadings } from './types';
 
 import { store } from '@store/.';
-import { BasicDataFrameProps } from '@components/BasicDataFrame';
+import { IBasicDataFrame } from '@components/BasicDataFrame';
 
 export const nextStep = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.NextStep });
@@ -125,7 +125,7 @@ export const changeTabRotationMethod = (index: number, method: RotationMethod) =
   });
 };
 
-export const changeTabLoadings = (index: number, loadings: FactorLoadings) => (dispatch: Dispatch) => {
+export const changeTabLoadings = (index: number, loadings: IFactorLoadings) => (dispatch: Dispatch) => {
   dispatch({
     type: ActionType.ChangeTabLoadings,
     payload: {
@@ -165,7 +165,7 @@ export const runTabAnalysis = (index: number) => async (dispatch: Dispatch) => {
   });
 };
 
-export const exportDataFrame = (loadings: BasicDataFrameProps) => async (dispatch: Dispatch) => {
+export const exportDataFrame = (loadings: IBasicDataFrame) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
   const savePath = await window.electron.showSaveDialog({

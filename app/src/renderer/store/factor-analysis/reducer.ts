@@ -1,4 +1,4 @@
-import { FactorLoadings, BartlettTest, ActionType, DispatchTypes, DefaultHints, RotationMethod } from './types';
+import { IFactorLoadings, BartlettTest, ActionType, DispatchTypes, DefaultHints, RotationMethod } from './types';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -16,14 +16,14 @@ import { StepsID } from '@modules/factor-analysis/steps';
 
 const StepsCountFactorAnalysis = 4;
 
-interface FactorAnalysisTab {
+interface IFactorAnalysisTab {
   id: string;
   factorsCount: number;
   rotationMethod: RotationMethod;
-  loadings: FactorLoadings;
+  loadings: IFactorLoadings;
 }
 
-const makeNewTab = (): FactorAnalysisTab => {
+const makeNewTab = (): IFactorAnalysisTab => {
   return {
     id: uuidv4(),
     rotationMethod: 'none',
@@ -50,7 +50,7 @@ interface IDefaultState extends IDefaultAnalysisStep {
 
   defaultHints: DefaultHints;
 
-  analysisTabs: FactorAnalysisTab[];
+  analysisTabs: IFactorAnalysisTab[];
   currentTab: number;
 }
 

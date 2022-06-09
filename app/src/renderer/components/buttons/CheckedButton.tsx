@@ -4,9 +4,9 @@ import { Button } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
-import { IButtonProps } from './IButtonProps';
+import { IButton } from './IButtonProps';
 
-interface Props extends IButtonProps {
+interface Props extends IButton {
   checked: boolean;
 }
 

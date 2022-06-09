@@ -1,4 +1,4 @@
-import { ActionType, DispatchTypes, ModelResult } from './types';
+import { ActionType, DispatchTypes, IModelResult } from './types';
 
 import {
   IDefaultAnalysisStep,
@@ -18,7 +18,7 @@ interface IDefaultState extends IDefaultAnalysisStep {
   variables: string[];
   randState: number;
   testSize: number;
-  modelResult: ModelResult;
+  modelResult: IModelResult;
   valuesToPredict: number[];
   prediction: number | undefined;
 }

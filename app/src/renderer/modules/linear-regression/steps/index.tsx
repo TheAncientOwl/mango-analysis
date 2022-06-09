@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StepConfig } from '@components/analysis';
+import { IStep } from '@components/analysis';
 
 import ModelPicker from './ModelPicker';
 import RegressionResults from './RegressionResults';
@@ -12,7 +12,7 @@ export const StepsID = Object.freeze({
   Prediction: 2,
 });
 
-export const StepsLinearRegression: ReadonlyArray<StepConfig> = [
+export const StepsLinearRegression: ReadonlyArray<IStep> = [
   {
     index: StepsID.ModelPicker,
     title: 'Pick features',

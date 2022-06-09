@@ -5,7 +5,7 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 import { ScalingMethodType } from '@store/data-manager/types';
 
-interface ScalingMethodConfig {
+interface IScalingMethod {
   id: number;
   display: string;
   type: ScalingMethodType;
@@ -13,7 +13,7 @@ interface ScalingMethodConfig {
 }
 
 const tooltipParagraphChar = <DoubleArrowIcon sx={{ fontSize: '10px', mr: '2px' }} />;
-export const ScalingMethods: ReadonlyArray<ScalingMethodConfig> = [
+export const ScalingMethods: ReadonlyArray<IScalingMethod> = [
   {
     id: 0,
     display: 'none',

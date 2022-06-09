@@ -73,7 +73,7 @@ interface SetTestSize {
   payload: number;
 }
 
-export interface ModelResult {
+export interface IModelResult {
   coeff: number[];
   intercept: number;
   equation: string;
@@ -83,7 +83,7 @@ export interface ModelResult {
 }
 interface ModelFinished {
   type: ActionType.ModelFinished;
-  payload: ModelResult;
+  payload: IModelResult;
 }
 
 interface ChangeValuesToPredict {

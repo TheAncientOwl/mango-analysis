@@ -18,41 +18,6 @@ import { InputWithSave } from './InputWithSave';
 import { AutoCompleteCheckedSelect } from './select';
 import { RenderIf } from './RenderIf';
 
-export interface IPlot2D {
-  open: boolean;
-  id: string;
-  xLabel: string;
-  yLabel: string;
-  plotSrc: string;
-  annot: boolean;
-  legend: boolean;
-  targets: string[];
-  title: string;
-}
-
-interface PlotEvents {
-  onChangeAxisX: (event: SelectChangeEvent) => void;
-  onChangeAxisY: (event: SelectChangeEvent) => void;
-  onPlot: () => void;
-  onToggleAnnot: () => void;
-  onToggleLegend: () => void;
-  onTargetsChange: (values: string[]) => void;
-  onToggleOpen: () => void;
-  onDelete: () => void;
-  onTitleChange: (value: string) => void;
-  onPushDefaultPlot: () => void;
-}
-
-interface Plot2DProps extends PlotEvents {
-  plot: IPlot2D;
-
-  componentsCount: number;
-  pcaLabels: string[];
-  targets: string[];
-}
-
-type Props = Plot2DProps;
-
 const visibleIcon = <VisibilityIcon />;
 const hiddenIcon = <VisibilityOffIcon />;
 const deleteIcon = <DeleteIcon />;
@@ -71,6 +36,39 @@ const emptyPlot: IPlot2D = {
   targets: [],
   title: '',
 };
+
+export interface IPlot2D {
+  open: boolean;
+  id: string;
+  xLabel: string;
+  yLabel: string;
+  plotSrc: string;
+  annot: boolean;
+  legend: boolean;
+  targets: string[];
+  title: string;
+}
+
+interface IPlotEvents {
+  onChangeAxisX: (event: SelectChangeEvent) => void;
+  onChangeAxisY: (event: SelectChangeEvent) => void;
+  onPlot: () => void;
+  onToggleAnnot: () => void;
+  onToggleLegend: () => void;
+  onTargetsChange: (values: string[]) => void;
+  onToggleOpen: () => void;
+  onDelete: () => void;
+  onTitleChange: (value: string) => void;
+  onPushDefaultPlot: () => void;
+}
+
+interface Props extends IPlotEvents {
+  plot: IPlot2D;
+
+  componentsCount: number;
+  pcaLabels: string[];
+  targets: string[];
+}
 
 export const Plot2D: React.FC<Props> = props => {
   const plot: IPlot2D = props.plot !== undefined ? props.plot : emptyPlot;

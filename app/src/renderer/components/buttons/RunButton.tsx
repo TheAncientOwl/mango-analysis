@@ -3,11 +3,11 @@ import React from 'react';
 import { Button } from '@mui/material';
 import BoltIcon from '@mui/icons-material/Bolt';
 
-import { IButtonProps } from './IButtonProps';
+import { IButton } from './IButtonProps';
 
 const icon = <BoltIcon />;
 
-export const RunButton: React.FC<IButtonProps> = props => {
+export const RunButton: React.FC<IButton> = props => {
   return (
     <Button {...props} startIcon={icon}>
       {props.children}

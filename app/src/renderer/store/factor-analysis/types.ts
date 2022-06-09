@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/named
 import { Dispatch as ReduxDispatch } from 'redux';
 
-import { BasicDataFrameProps } from '@components/BasicDataFrame';
+import { IBasicDataFrame } from '@components/BasicDataFrame';
 
 export enum ActionType {
   Loading = 'FACTOR_ANALYSIS__LOADING',
@@ -89,7 +89,7 @@ interface ChangeFactorsNumber {
 }
 
 export type DefaultHints = {
-  eigenvalues: BasicDataFrameProps;
+  eigenvalues: IBasicDataFrame;
   screePlotSrc: string;
 };
 interface FetchedDefaultHints {
@@ -145,14 +145,14 @@ interface ChangeTabRotationMethod {
   };
 }
 
-export interface FactorLoadings {
+export interface IFactorLoadings {
   imagePath: string;
-  data: BasicDataFrameProps;
+  data: IBasicDataFrame;
 }
 interface ChangeTabLoadings {
   type: ActionType.ChangeTabLoadings;
   payload: {
-    loadings: FactorLoadings;
+    loadings: IFactorLoadings;
     index: number;
   };
 }
@@ -170,7 +170,7 @@ interface ChangeCurrentTab {
 interface TabAnalysisFinished {
   type: ActionType.TabAnalysisFinished;
   payload: {
-    loadings: FactorLoadings;
+    loadings: IFactorLoadings;
     index: number;
   };
 }

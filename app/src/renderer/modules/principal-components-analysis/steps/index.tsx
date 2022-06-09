@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StepConfig } from '@components/analysis';
+import { IStep } from '@components/analysis';
 
 import { store } from '@store/.';
 import {
@@ -24,7 +24,7 @@ export const StepsID = Object.freeze({
   DataVisualizer: 4,
 });
 
-export const StepsPCA: ReadonlyArray<StepConfig> = [
+export const StepsPCA: ReadonlyArray<IStep> = [
   {
     index: StepsID.TargetAndFeaturesPicker,
     title: 'Pick target and features',

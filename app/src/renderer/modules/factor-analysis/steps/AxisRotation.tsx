@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RotationMethod, FactorLoadings } from '@store/factor-analysis/types';
+import { RotationMethod, IFactorLoadings } from '@store/factor-analysis/types';
 
 import { Stack, Collapse, Grid, Typography } from '@mui/material';
 
@@ -9,20 +9,20 @@ import { DeleteButton, RunButton, NewButton, ExportButton } from '@components/bu
 import { AnalysisStepLogic, AnalysisStepResult } from '@components/analysis';
 import { Image } from '@components/Image';
 import { Paper } from '@components/Paper';
-import { BasicDataFrameProps } from '@components/BasicDataFrame';
+import { IBasicDataFrame } from '@components/BasicDataFrame';
 
 interface Props {
   factorsCount: string;
   factorsOptions: string[];
   rotationMethod: RotationMethod;
   rotationOptions: RotationMethod[];
-  loadings: FactorLoadings;
+  loadings: IFactorLoadings;
   onFactorsChange: (value: number) => void;
   onRotationMethodChange: (value: RotationMethod) => void;
   onNewTab: () => void;
   onRemove: () => void;
   onRun: () => void;
-  onExportLoadings: (loadings: BasicDataFrameProps) => void;
+  onExportLoadings: (loadings: IBasicDataFrame) => void;
 }
 
 export const AxisRotation: React.FC<Props> = props => {

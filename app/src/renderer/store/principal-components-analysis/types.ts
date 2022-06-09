@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/named
 import { Dispatch as ReduxDispatch } from 'redux';
 
-import { BasicDataFrameProps } from '@components/BasicDataFrame';
+import { IBasicDataFrame } from '@components/BasicDataFrame';
 
 export enum ActionType {
   Loading = 'PCA__LOADING',
@@ -109,14 +109,14 @@ interface FetchedLoadingsMatrixPath {
   payload: string;
 }
 
-export interface AnalysisHints {
+export interface IAnalysisHints {
   kaiserPath: string;
-  threshold70: BasicDataFrameProps;
-  eigenvaluesG1: BasicDataFrameProps;
+  threshold70: IBasicDataFrame;
+  eigenvaluesG1: IBasicDataFrame;
 }
 interface FetchedAnalysisHints {
   type: ActionType.FetchedAnalysisHints;
-  payload: AnalysisHints;
+  payload: IAnalysisHints;
 }
 
 interface ChangeComponentsCount {
