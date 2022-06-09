@@ -8,20 +8,11 @@ from flask import Flask
 import pandas as pd
 
 from routes import all_routes
-import api
 
 from .utils import setup_app_dirs
 
-# App state
+# App dataframe
 dataFrame = pd.DataFrame()
-
-factor_analysis = api.FactorAnalysis()
-
-
-def new_factor_analysis():
-    global factor_analysis
-    factor_analysis = api.FactorAnalysis()
-
 
 # App dirs
 setup_app_dirs()

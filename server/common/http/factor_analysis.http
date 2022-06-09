@@ -2,7 +2,7 @@
 @route = http://localhost:5000/factor-analysis
 
 ### Read data
-GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/factor-analysis.csv
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/factor-analysis.bfi.csv
 
 ### Print server's dataframe head
 GET {{local_host}}/printhead 
@@ -28,7 +28,7 @@ GET {{route}}/tests/bartlett
 GET {{route}}/tests/kmo
 
 ### default analysis
-POST {{route}}/analyze
+POST {{route}}/default-analysis
 
 ### default hints
 GET {{route}}/default-hints
