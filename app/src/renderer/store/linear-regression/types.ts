@@ -11,13 +11,14 @@ export enum ActionType {
   LockNextStep = 'LINEAR_REGRESSION__LOCK_NEXT_STEP',
   JumpToStep = 'LINEAR_REGRESSION__JUMP_TO_STEP',
 
-  FetchedVariables = 'LINEAR_REGRESSION__FETCHED_VARIABLES',
-  ChangeLabelX = 'LINEAR_REGRESSION__CHANGE_LABEL_X',
-  ChangeLabelY = 'LINEAR_REGRESSION__CHANGE_LABEL_Y',
-  ChangeTestSize = 'LINEAR_REGRESSION__CHANGE_TEST_SIZE',
-  ChangeRandomState = 'LINEAR_REGRESSION__CHANGE_RANDOM_STATE',
+  SetIndependentVariables = 'LINEAR_REGRESSION__SET_INDEPENDENT_VARIABLES',
+  SetDependentVariable = 'LINEAR_REGRESSION__SET_DEPENDENT_VARIABLE',
+  SetRandState = 'LINEAR_REGRESSION__SET_RAND_STATE',
+  SetTestSize = 'LINEAR_REGRESSION__SET_TEST_SIZE',
   ModelFinished = 'LINEAR_REGRESSION__MODEL_FINISHED',
-  ChangeValueToPredict = 'LINEAR_REGRESSION__CHANGE_VALUE_TO_PREDICT',
+  FetchedVariables = 'LINEAR_REGRESSION__FETCHED_VARIABLES',
+
+  ChangeValuesToPredict = 'LINEAR_REGRESSION__CHANGE_VALUES_TO_PREDICT',
   PredictionFinished = 'LINEAR_REGRESSION__PREDICTION_FINISHED',
 }
 
@@ -52,35 +53,28 @@ interface JumpToStep {
   payload: number;
 }
 
-interface FetchedVariables {
-  type: ActionType.FetchedVariables;
+interface SetDependentVariables {
+  type: ActionType.SetIndependentVariables;
   payload: string[];
 }
 
-interface ChangeLabelX {
-  type: ActionType.ChangeLabelX;
+interface SetIndependentVariable {
+  type: ActionType.SetDependentVariable;
   payload: string;
 }
 
-interface ChangeLabelY {
-  type: ActionType.ChangeLabelY;
-  payload: string;
-}
-
-interface ChangeTestSize {
-  type: ActionType.ChangeTestSize;
+interface SetRandState {
+  type: ActionType.SetRandState;
   payload: number;
 }
 
-interface ChangeRandomState {
-  type: ActionType.ChangeRandomState;
+interface SetTestSize {
+  type: ActionType.SetTestSize;
   payload: number;
 }
 
 export interface ModelResult {
-  trainPath: string;
-  testPath: string;
-  coeff: number;
+  coeff: number[];
   intercept: number;
   equation: string;
   mse: number;
@@ -92,14 +86,19 @@ interface ModelFinished {
   payload: ModelResult;
 }
 
+interface ChangeValuesToPredict {
+  type: ActionType.ChangeValuesToPredict;
+  payload: number[];
+}
+
 interface PredictionFinished {
   type: ActionType.PredictionFinished;
   payload: number;
 }
 
-interface ChangeValueToPredict {
-  type: ActionType.ChangeValueToPredict;
-  payload: number;
+interface FetchedVariables {
+  type: ActionType.FetchedVariables;
+  payload: string[];
 }
 
 export type DispatchTypes =
@@ -110,13 +109,13 @@ export type DispatchTypes =
   | UnlockNextStep
   | LockNextStep
   | JumpToStep
-  | FetchedVariables
-  | ChangeLabelX
-  | ChangeLabelY
-  | ChangeTestSize
-  | ChangeRandomState
+  | SetIndependentVariable
+  | SetDependentVariables
+  | SetRandState
+  | SetTestSize
   | ModelFinished
+  | ChangeValuesToPredict
   | PredictionFinished
-  | ChangeValueToPredict;
+  | FetchedVariables;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;

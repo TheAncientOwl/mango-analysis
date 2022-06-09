@@ -5,21 +5,20 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
 import {
   fetchVariables,
-  changeLabelX,
-  changeLabelY,
-  changeTestSize,
-  changeRandomState,
+  setDependentVariable,
+  setIndependentVariables,
+  setRandState,
+  setTestSize,
   runModel,
   lockNextStep,
-} from '@store/linear-regression/actions';
+} from '@src/renderer/store/linear-regression/actions';
 
 // eslint-disable-next-line import/named
 import { SelectChangeEvent, Stack } from '@mui/material';
 
-import { Select } from '@components/select/Select';
-import { RunButton } from '@components/buttons';
 import { AnalysisStepLogic } from '@components/analysis';
-import { SelectSlider } from '@components/select';
+import { Select, AutoCompleteCheckedSelect, SelectSlider } from '@components/select';
+import { RunButton } from '@components/buttons';
 
 import { StepsID } from '.';
 
@@ -30,16 +29,16 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 
   React.useEffect(() => {
     props.lockNextStep(StepsID.ModelPicker);
-  }, [props.xLabel, props.yLabel, props.testSize, props.randomState]);
+  }, [props.independendVariables, props.dependendVariable, props.testSize, props.randomState]);
 
-  const handleLabelChangeX = React.useCallback(
-    (event: SelectChangeEvent) => props.changeLabelX(event.target.value),
-    [props.changeLabelX]
+  const handleIndependentVarsChange = React.useCallback(
+    (values: string[]) => props.setIndependentVariables(values),
+    [props.setIndependentVariables]
   );
 
-  const handleLabelChangeY = React.useCallback(
-    (event: SelectChangeEvent) => props.changeLabelY(event.target.value),
-    [props.changeLabelY]
+  const handleDependentVarChange = React.useCallback(
+    (e: SelectChangeEvent) => props.setDependentVariable(e.target.value),
+    [props.setDependentVariable]
   );
 
   return (
@@ -47,20 +46,20 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
       <Stack direction='row' alignItems='center' gap={2} mb={5}>
         <Select
           minWidth='15em'
-          id='yLabel'
+          id='dependendVar'
           label='Dependent Variable'
-          value={props.yLabel}
+          value={props.dependendVariable}
           values={props.variables}
-          onChange={handleLabelChangeY}
+          onChange={handleDependentVarChange}
         />
 
-        <Select
-          minWidth='15em'
-          id='xLabel'
-          label='Independent Variable'
-          value={props.xLabel}
-          values={props.variables}
-          onChange={handleLabelChangeX}
+        <AutoCompleteCheckedSelect
+          minWidth='25em'
+          id='independentVars'
+          label='Independend Variables'
+          checkedValues={props.independendVariables}
+          possibleValues={props.variables}
+          onChange={handleIndependentVarsChange}
         />
       </Stack>
 
@@ -70,7 +69,7 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
         label='Random State'
         min={0}
         max={100}
-        onChange={value => props.changeRandomState(value)}
+        onChange={value => props.setRandState(value)}
         value={props.randomState}
         sx={{ mb: 4 }}
       />
@@ -81,14 +80,16 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
         label='Test Size'
         min={0}
         max={100}
-        onChange={value => props.changeTestSize(value)}
+        onChange={value => props.setTestSize(value)}
         value={props.testSize}
         sx={{ mb: 3 }}
       />
 
       <RunButton
-        disabled={props.xLabel === '' || props.yLabel === ''}
-        onClick={() => props.runModel(props.xLabel, props.yLabel, props.testSize / 100, props.randomState)}>
+        disabled={props.independendVariables.length === 0 || props.dependendVariable === ''}
+        onClick={() =>
+          props.runModel(props.independendVariables, props.dependendVariable, props.testSize / 100, props.randomState)
+        }>
         run model
       </RunButton>
     </AnalysisStepLogic>
@@ -97,19 +98,19 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
-  xLabel: state.linearRegression.xLabel,
-  yLabel: state.linearRegression.yLabel,
+  dependendVariable: state.linearRegression.dependentVariable,
+  independendVariables: state.linearRegression.independentVariables,
   variables: state.linearRegression.variables,
+  randomState: state.linearRegression.randState,
   testSize: state.linearRegression.testSize,
-  randomState: state.linearRegression.randomState,
 });
 
 const mapDispatch = {
   fetchVariables,
-  changeLabelX,
-  changeLabelY,
-  changeTestSize,
-  changeRandomState,
+  setDependentVariable,
+  setIndependentVariables,
+  setRandState,
+  setTestSize,
   runModel,
   lockNextStep,
 };

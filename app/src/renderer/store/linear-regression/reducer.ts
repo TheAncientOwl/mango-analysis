@@ -13,13 +13,13 @@ import {
 const StepsCountArray = 2;
 
 interface IDefaultState extends IDefaultAnalysisStep {
+  independentVariables: string[];
+  dependentVariable: string;
   variables: string[];
-  xLabel: string;
-  yLabel: string;
+  randState: number;
   testSize: number;
-  randomState: number;
   modelResult: ModelResult;
-  valueToPredict: number | undefined;
+  valuesToPredict: number[];
   prediction: number | undefined;
 }
 
@@ -28,22 +28,20 @@ const defaultState: IDefaultState = {
   currentStep: 0,
   nextStepUnlocked: new Array(StepsCountArray).fill(false),
 
+  independentVariables: [],
+  dependentVariable: '',
   variables: [],
-  xLabel: '',
-  yLabel: '',
+  randState: 42,
   testSize: 33,
-  randomState: 42,
   modelResult: {
-    trainPath: '',
-    testPath: '',
-    coeff: 0,
+    coeff: [],
     intercept: 0,
     equation: '',
     mse: 0,
     rSquaredAdj: 0,
     rSquared: 0,
   },
-  valueToPredict: undefined,
+  valuesToPredict: [],
   prediction: undefined,
 };
 
@@ -77,38 +75,31 @@ export const linearRegressionReducer = (state: IDefaultState = defaultState, act
       return defaultState;
     }
 
-    case ActionType.FetchedVariables: {
+    case ActionType.SetIndependentVariables: {
       return {
         ...state,
-        loading: false,
-        variables: action.payload,
+        independentVariables: action.payload,
       };
     }
 
-    case ActionType.ChangeLabelX: {
+    case ActionType.SetDependentVariable: {
       return {
         ...state,
-        xLabel: action.payload,
-      };
-    }
-    case ActionType.ChangeLabelY: {
-      return {
-        ...state,
-        yLabel: action.payload,
+        dependentVariable: action.payload,
       };
     }
 
-    case ActionType.ChangeTestSize: {
+    case ActionType.SetRandState: {
+      return {
+        ...state,
+        randState: action.payload,
+      };
+    }
+
+    case ActionType.SetTestSize: {
       return {
         ...state,
         testSize: action.payload,
-      };
-    }
-
-    case ActionType.ChangeRandomState: {
-      return {
-        ...state,
-        randomState: action.payload,
       };
     }
 
@@ -125,18 +116,26 @@ export const linearRegressionReducer = (state: IDefaultState = defaultState, act
       };
     }
 
+    case ActionType.FetchedVariables: {
+      return {
+        ...state,
+        loading: false,
+        variables: action.payload,
+      };
+    }
+
+    case ActionType.ChangeValuesToPredict: {
+      return {
+        ...state,
+        valuesToPredict: action.payload,
+      };
+    }
+
     case ActionType.PredictionFinished: {
       return {
         ...state,
         loading: false,
         prediction: action.payload,
-      };
-    }
-
-    case ActionType.ChangeValueToPredict: {
-      return {
-        ...state,
-        valueToPredict: action.payload,
       };
     }
 

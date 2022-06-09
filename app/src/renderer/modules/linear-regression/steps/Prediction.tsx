@@ -3,30 +3,47 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { predict, changeValueToPredict } from '@store/linear-regression/actions';
+import { predict, changeValuesToPredict } from '@src/renderer/store/linear-regression/actions';
 
-import { Typography, Collapse, Stack } from '@mui/material';
+import { Collapse, Stack, Typography } from '@mui/material';
 
 import { InputWithSave } from '@components/InputWithSave';
 import { RunButton } from '@components/buttons';
 
 const Prediction: React.FC<PropsFromRedux> = props => {
+  React.useEffect(() => {
+    props.changeValuesToPredict(new Array(props.independentVariables.length).fill(0));
+  }, [props.independentVariables]);
+
+  const handleChange = (index: number, value: number) => {
+    const newValues = [...props.valuesToPredict];
+    newValues[index] = value;
+
+    props.changeValuesToPredict(newValues);
+  };
+
   return (
     <>
-      <Stack direction='row' alignItems='center' gap={2} mb={2}>
-        <InputWithSave
-          text={props.valueToPredict === undefined ? 0 : props.valueToPredict}
-          onSave={value => props.changeValueToPredict(value as number)}
-          placeholder='Value to predict'
-          tooltip='Value Saved'
-          tooltipUnsaved='Value Not saved. Click to save'
-          type='number'
-        />
-
-        <RunButton disabled={props.valueToPredict === undefined} onClick={() => props.predict(props.valueToPredict)}>
-          predict
-        </RunButton>
+      <Stack direction='column' gap={1} mb={2}>
+        {props.independentVariables.map((label, index) => (
+          <InputWithSave
+            key={index}
+            onSave={value => handleChange(index, value as number)}
+            text={props.valuesToPredict[index] === undefined ? 0 : props.valuesToPredict[index]}
+            placeholder={label}
+            tooltip='Value Saved'
+            tooltipUnsaved='Value Not saved. Click to save'
+            type='number'
+          />
+        ))}
       </Stack>
+
+      <RunButton
+        sx={{ mb: 2 }}
+        disabled={props.valuesToPredict.some(value => value === undefined)}
+        onClick={() => props.predict(props.valuesToPredict)}>
+        predict
+      </RunButton>
 
       <Collapse in={props.prediction !== undefined}>
         <Typography>Prediction: {props.prediction}</Typography>
@@ -37,13 +54,14 @@ const Prediction: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
-  valueToPredict: state.linearRegression.valueToPredict,
   prediction: state.linearRegression.prediction,
+  valuesToPredict: state.linearRegression.valuesToPredict,
+  independentVariables: state.linearRegression.independentVariables,
 });
 
 const mapDispatch = {
   predict,
-  changeValueToPredict,
+  changeValuesToPredict,
 };
 
 const connector = connect(mapState, mapDispatch);

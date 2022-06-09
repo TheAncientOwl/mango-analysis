@@ -4,13 +4,11 @@ import TableViewIcon from '@mui/icons-material/TableView';
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 import DataManager from '@modules/data-manager';
 import PrincipalComponentsAnalysis from '@modules/principal-components-analysis';
 import FactorAnalysis from '@modules/factor-analysis';
-import LinearRegression from '@modules/linear-regression';
-import MultipleLinearRegression from '@modules/multiple-linear-regression';
+import LinearRegression from '@src/renderer/modules/linear-regression';
 
 interface Route {
   name: string;
@@ -37,17 +35,10 @@ export const AppRoutes: ReadonlyArray<Route> = [
     icon: <BubbleChartIcon />,
   },
   {
-    name: 'linear regression',
-    alias: 'Regression',
+    name: 'multiple linear regression',
+    alias: 'Multiple Regression',
     routePath: '/linear-regression',
     element: <LinearRegression />,
     icon: <AutoGraphIcon />,
-  },
-  {
-    name: 'multiple linear regression',
-    alias: 'Multiple Regression',
-    routePath: '/multiple-linear-regression',
-    element: <MultipleLinearRegression />,
-    icon: <AutoAwesomeIcon />,
   },
 ];

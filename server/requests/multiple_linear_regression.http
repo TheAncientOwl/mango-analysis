@@ -1,8 +1,8 @@
 @local_host = http://localhost:5000
-@route = http://localhost:5000/multiple-linear-regression
+@route = http://localhost:5000/linear-regression
 
 ### Read data
-GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/multiple-linear-regression.csv
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/test-data/linear-regression.csv
 
 ### Print server's dataframe head
 GET {{local_host}}/printhead 

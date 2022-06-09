@@ -1,6 +1,6 @@
-import { axios } from '@config/.';
-
 import { Dispatch, ActionType } from './types';
+
+import { axios } from '@config/.';
 
 export const resetState = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Reset });
@@ -26,36 +26,28 @@ export const jumpToStep = (step: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.JumpToStep, payload: step });
 };
 
-export const fetchVariables = () => async (dispatch: Dispatch) => {
-  dispatch({ type: ActionType.Loading });
-
-  const res = await axios.get('/linear-regression/variables');
-
-  dispatch({ type: ActionType.FetchedVariables, payload: res.data.variables });
+export const setIndependentVariables = (values: string[]) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetIndependentVariables, payload: values });
 };
 
-export const changeLabelX = (value: string) => (dispatch: Dispatch) => {
-  dispatch({ type: ActionType.ChangeLabelX, payload: value });
+export const setDependentVariable = (value: string) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetDependentVariable, payload: value });
 };
 
-export const changeLabelY = (value: string) => (dispatch: Dispatch) => {
-  dispatch({ type: ActionType.ChangeLabelY, payload: value });
+export const setRandState = (value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetRandState, payload: value });
 };
 
-export const changeTestSize = (value: number) => (dispatch: Dispatch) => {
-  dispatch({ type: ActionType.ChangeTestSize, payload: value });
-};
-
-export const changeRandomState = (value: number) => (dispatch: Dispatch) => {
-  dispatch({ type: ActionType.ChangeRandomState, payload: value });
+export const setTestSize = (value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetTestSize, payload: value });
 };
 
 export const runModel =
-  (xLabel: string, yLabel: string, testSize: number, randomState: number) => async (dispatch: Dispatch) => {
+  (xLabels: string[], yLabel: string, testSize: number, randomState: number) => async (dispatch: Dispatch) => {
     dispatch({ type: ActionType.Loading });
 
     const res = await axios.post('/linear-regression/run-model', {
-      xLabel,
+      xLabels,
       yLabel,
       testSize,
       randomState,
@@ -64,14 +56,22 @@ export const runModel =
     dispatch({ type: ActionType.ModelFinished, payload: res.data });
   };
 
-export const predict = (value: number) => async (dispatch: Dispatch) => {
+export const fetchVariables = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
-  const res = await axios.post(`/linear-regression/predict`, { value });
+  const res = await axios.get('/linear-regression/variables');
+
+  dispatch({ type: ActionType.FetchedVariables, payload: res.data.variables });
+};
+
+export const predict = (values: number[]) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  const res = await axios.post('/linear-regression/predict', { values });
 
   dispatch({ type: ActionType.PredictionFinished, payload: res.data.prediction });
 };
 
-export const changeValueToPredict = (value: number) => (dispatch: Dispatch) => {
-  dispatch({ type: ActionType.ChangeValueToPredict, payload: value });
+export const changeValuesToPredict = (values: number[]) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ChangeValuesToPredict, payload: values });
 };

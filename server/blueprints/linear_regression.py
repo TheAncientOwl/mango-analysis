@@ -9,7 +9,7 @@ linear_regression = flask.Blueprint('linear_regression', __name__)
 def create_new_linear_regression():
     app.new_linear_regression()
 
-    return flask.jsonify(message='New LinearRegression created!'), 200
+    return flask.jsonify(message='New MultipleLinearRegression created!'), 200
 
 
 @linear_regression.get('/linear-regression/variables')
@@ -22,15 +22,13 @@ def run_model():
     data = flask.request.get_json()
 
     result = app.linear_regression.run_model(
-        X_label=data['xLabel'],
+        x_labels=data['xLabels'],
         y_label=data['yLabel'],
         test_size=data['testSize'],
         random_state=data['randomState']
     )
 
     return flask.jsonify(
-        trainPath=result['trainPath'],
-        testPath=result['testPath'],
         coeff=result['coeff'],
         intercept=result['intercept'],
         equation=result['equation'],
@@ -44,6 +42,11 @@ def run_model():
 def predict():
     data = flask.request.get_json()
 
-    value = data['value']
+    values = data['values']
 
-    return flask.jsonify(prediction=app.linear_regression.predict_value(value)), 200
+    return flask.jsonify(prediction=app.linear_regression.predict_value(values)), 200
+
+
+@linear_regression.get('/linear-regression/differences/<int:count>')
+def get_differences(count):
+    return flask.jsonify(diffs=app.linear_regression.diff[0:count].to_dict(orient='split')), 200
