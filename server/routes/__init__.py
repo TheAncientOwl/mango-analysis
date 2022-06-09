@@ -4,6 +4,7 @@ from .data_view import data_view
 from .data_scale import data_scale
 
 from .principal_components_analysis import principal_components_analysis
+from .linear_regression import linear_regression
 
 all_routes = [data_import_export, data_drop, data_view,
-              data_scale, principal_components_analysis]
+              data_scale, principal_components_analysis, linear_regression]

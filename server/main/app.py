@@ -16,16 +16,11 @@ from .utils import setup_app_dirs
 dataFrame = pd.DataFrame()
 
 factor_analysis = api.FactorAnalysis()
-linear_regression = api.LinearRegression()
+
 
 def new_factor_analysis():
     global factor_analysis
     factor_analysis = api.FactorAnalysis()
-
-
-def new_linear_regression():
-    global linear_regression
-    linear_regression = api.LinearRegression()
 
 
 # App dirs
