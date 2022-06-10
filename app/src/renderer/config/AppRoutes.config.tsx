@@ -35,8 +35,8 @@ export const AppRoutes: ReadonlyArray<IRoute> = [
     icon: <BubbleChartIcon />,
   },
   {
-    name: 'multiple linear regression',
-    alias: 'Multiple Regression',
+    name: 'linear regression',
+    alias: 'Linear Regression',
     routePath: '/linear-regression',
     element: <LinearRegression />,
     icon: <AutoGraphIcon />,

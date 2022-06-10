@@ -43,7 +43,7 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 
   return (
     <AnalysisStepLogic>
-      <Stack direction='row' alignItems='center' gap={2} mb={5}>
+      <Stack direction='row' alignItems='center' gap={2} mb={5} maxWidth='100%'>
         <Select
           minWidth='15em'
           id='dependendVar'
@@ -54,7 +54,7 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
         />
 
         <AutoCompleteCheckedSelect
-          minWidth='25em'
+          minWidth='min(25em, 50%)'
           id='independentVars'
           label='Independend Variables'
           checkedValues={props.independendVariables}
