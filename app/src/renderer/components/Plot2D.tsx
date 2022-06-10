@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { v4 as uuidv4 } from 'uuid';
+
 // eslint-disable-next-line import/named
 import { Box, Grid, SelectChangeEvent, Collapse, IconButton, Stack } from '@mui/material';
 
@@ -48,6 +50,18 @@ export interface IPlot2D {
   targets: string[];
   title: string;
 }
+
+export const createPlot = (): IPlot2D => ({
+  id: uuidv4(),
+  xLabel: '',
+  yLabel: '',
+  plotSrc: '',
+  annot: false,
+  legend: false,
+  targets: [],
+  open: true,
+  title: '',
+});
 
 interface IPlotEvents {
   onChangeAxisX: (event: SelectChangeEvent) => void;

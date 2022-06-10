@@ -1,7 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { StepsID } from '@modules/principal-components-analysis/steps';
-import { IPlot2D } from '@components/Plot2D';
+import { IPlot2D, createPlot } from '@components/Plot2D';
 
 import { IAnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
 import {
@@ -61,7 +59,7 @@ const defaultState: IDefaultState = {
     pcaLabels: [],
     targets: [],
   },
-  plots: [],
+  plots: [createPlot()],
 
   possible: {
     targets: [],
@@ -213,20 +211,7 @@ export const principalComponentsAnalysisReducer = (
     }
 
     case ActionType.PushDefaultPlot: {
-      const newPlots: IPlot2D[] = [
-        ...state.plots,
-        {
-          id: uuidv4(),
-          xLabel: '',
-          yLabel: '',
-          plotSrc: '',
-          annot: false,
-          legend: false,
-          targets: [],
-          open: true,
-          title: '',
-        },
-      ];
+      const newPlots: IPlot2D[] = [...state.plots, createPlot()];
 
       return {
         ...state,
