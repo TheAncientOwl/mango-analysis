@@ -8,8 +8,6 @@ export const Tooltip = styled(({ className, ...props }: TooltipProps) => (
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     maxWidth: 350,
-    backgroundColor: theme.palette.info.main,
-    color: theme.palette.info.contrastText,
     boxShadow: theme.shadows[1],
     fontSize: 11,
     padding: 10,
