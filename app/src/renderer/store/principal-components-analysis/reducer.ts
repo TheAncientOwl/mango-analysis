@@ -321,6 +321,8 @@ export const principalComponentsAnalysisReducer = (
     }
 
     case ActionType.DeletePlot: {
+      if (state.plots.length === 1) return state;
+
       const index = action.payload;
       const newPlots = [...state.plots];
       newPlots.splice(index, 1);

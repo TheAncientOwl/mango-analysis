@@ -27,18 +27,6 @@ const addIcon = <AddBoxIcon />;
 
 const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
-const emptyPlot: IPlot2D = {
-  open: false,
-  id: '',
-  xLabel: '',
-  yLabel: '',
-  plotSrc: '',
-  annot: false,
-  legend: false,
-  targets: [],
-  title: '',
-};
-
 export interface IPlot2D {
   open: boolean;
   id: string;
@@ -63,6 +51,8 @@ export const createPlot = (): IPlot2D => ({
   title: '',
 });
 
+const emptyPlot = createPlot();
+
 interface IPlotEvents {
   onChangeAxisX: (event: SelectChangeEvent) => void;
   onChangeAxisY: (event: SelectChangeEvent) => void;
@@ -79,9 +69,9 @@ interface IPlotEvents {
 interface Props extends IPlotEvents {
   plot: IPlot2D;
 
-  componentsCount: number;
   pcaLabels: string[];
   targets: string[];
+  disableDelete: boolean;
 }
 
 export const Plot2D: React.FC<Props> = props => {
@@ -112,11 +102,13 @@ export const Plot2D: React.FC<Props> = props => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip title='Delete'>
-        <IconButton onClick={props.onDelete} color='error'>
-          {deleteIcon}
-        </IconButton>
-      </Tooltip>
+      <RenderIf condition={!props.disableDelete}>
+        <Tooltip title='Delete'>
+          <IconButton onClick={props.onDelete} color='error'>
+            {deleteIcon}
+          </IconButton>
+        </Tooltip>
+      </RenderIf>
     </Stack>
   );
 

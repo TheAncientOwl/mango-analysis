@@ -2,6 +2,7 @@ import React from 'react';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '@store/.';
 import {
   changePlotAxisX,
   changePlotAxisY,
@@ -24,7 +25,6 @@ interface WrapperProps {
   plot: IPlot2D;
   plotIndex: number;
 
-  componentsCount: number;
   pcaLabels: string[];
   targets: string[];
 }
@@ -89,7 +89,6 @@ const PlotWrapper2D: React.FC<Props> = props => {
   return (
     <Plot2D
       plot={props.plot}
-      componentsCount={props.componentsCount}
       pcaLabels={props.pcaLabels}
       targets={props.targets}
       onChangeAxisX={handleChangeAxisX}
@@ -102,13 +101,15 @@ const PlotWrapper2D: React.FC<Props> = props => {
       onDelete={handleDelete}
       onTitleChange={handleTitleChange}
       onPushDefaultPlot={handlePushDefaultPlot}
+      disableDelete={props.plotsCount === 1}
     />
   );
 };
 
 // <redux>
-const noState = {};
-const mapState = () => noState;
+const mapState = (state: RootState) => ({
+  plotsCount: state.pca.plots.length,
+});
 
 const mapDispatch = {
   changePlotAxisX,
