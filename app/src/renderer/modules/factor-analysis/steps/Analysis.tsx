@@ -37,7 +37,7 @@ const Analysis: React.FC<PropsFromRedux> = props => {
     const options = new Array<string>(Math.max(0, props.maxFactorsCount)).fill('');
 
     options.forEach((element, index, array) => {
-      array[index] = `${index + 2}`;
+      array[index] = `${index + 1}`;
     });
 
     return options;
@@ -73,7 +73,7 @@ const Analysis: React.FC<PropsFromRedux> = props => {
 // <redux>
 const mapState = (state: RootState) => ({
   tabs: state.factorAnalysis.analysisTabs,
-  maxFactorsCount: state.factorAnalysis.features.length - 1,
+  maxFactorsCount: state.factorAnalysis.features.length,
   currentTab: state.factorAnalysis.currentTab,
 });
 
