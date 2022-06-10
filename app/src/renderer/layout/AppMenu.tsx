@@ -20,6 +20,7 @@ const AppMenu: React.FC<PropsFromRedux> = props => {
         <List>
           {AppRoutes.map((section, index) => (
             <ListItemButton
+              alignItems='flex-start'
               disabled={index > 0 && !props.importedData}
               component={Link}
               to={section.routePath}
@@ -27,7 +28,18 @@ const AppMenu: React.FC<PropsFromRedux> = props => {
               sx={{ color: 'text.primary' }}
               onClick={() => props.setAppTitle(section.name)}>
               <ListItemIcon sx={{ color: 'secondary.main' }}>{section.icon}</ListItemIcon>
-              <ListItemText sx={{ textTransform: 'capitalize' }}>{section.alias}</ListItemText>
+              <ListItemText
+                primaryTypographyProps={{
+                  variant: 'subtitle2',
+                  style: {
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    textTransform: 'capitalize',
+                  },
+                }}>
+                {section.alias}
+              </ListItemText>
             </ListItemButton>
           ))}
         </List>
