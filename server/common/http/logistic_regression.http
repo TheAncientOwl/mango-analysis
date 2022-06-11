@@ -1,0 +1,42 @@
+@local_host = http://localhost:5000
+@route = http://localhost:5000/logistic-regression
+
+###
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/logistic-regression.diabetes.csv
+
+###
+GET {{local_host}}/printhead 
+
+###
+POST {{route}}/new
+
+### variables
+GET {{route}}/variables
+
+### run-model
+POST {{route}}/run-model
+Content-Type: application/json
+
+{
+  "xLabels": ["Pregnancies", "Insulin", "BMI", "Age", "Glucose", "BloodPressure", "DiabetesPedigreeFunction"],
+  "yLabel": "Outcome",
+  "testSize": 0.33,
+  "randomState": 42,
+  "maxIter": 150
+}
+
+### predict
+POST {{route}}/predict
+Content-Type: application/json
+
+{
+  "values": [6, 148, 72, 0, 33.6, 0.627, 50]
+}
+
+### predict
+POST {{route}}/predict
+Content-Type: application/json
+
+{
+  "value": -13
+}
