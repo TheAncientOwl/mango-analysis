@@ -24,12 +24,12 @@ const AppMenu: React.FC<PropsFromRedux> = props => {
               key={index}
               placement='right'
               TransitionComponent={Zoom}
-              title={<Typography sx={{ textTransform: 'capitalize' }}>{section.alias}</Typography>}>
+              title={<Typography sx={{ textTransform: 'capitalize' }}>{section.name}</Typography>}>
               <ListItemButton
                 alignItems='flex-start'
                 disabled={index > 0 && !props.importedData}
                 component={Link}
-                to={section.routePath}
+                to={section.url}
                 sx={{ color: 'text.primary' }}
                 onClick={() => props.setAppTitle(section.name)}>
                 <ListItemIcon sx={{ color: 'secondary.main' }}>{section.icon}</ListItemIcon>
@@ -43,7 +43,7 @@ const AppMenu: React.FC<PropsFromRedux> = props => {
                       textTransform: 'capitalize',
                     },
                   }}>
-                  {section.alias}
+                  {section.name}
                 </ListItemText>
               </ListItemButton>
             </Tooltip>

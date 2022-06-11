@@ -14,39 +14,34 @@ import LogisticRegression from '@modules/logistic-regression';
 
 interface IRoute {
   name: string;
-  alias: string;
-  routePath: string;
+  url: string;
   element: React.ReactElement<unknown, string | React.JSXElementConstructor<unknown>>;
   icon: React.ReactNode;
 }
 
 export const AppRoutes: ReadonlyArray<IRoute> = [
-  { name: 'data manager', alias: 'data manager', routePath: '/', element: <DataManager />, icon: <TableViewIcon /> },
+  { name: 'data manager', url: '/', element: <DataManager />, icon: <TableViewIcon /> },
   {
     name: 'principal components analysis',
-    alias: 'PCA',
-    routePath: '/pca',
+    url: '/pca',
     element: <PrincipalComponentsAnalysis />,
     icon: <SettingsInputComponentIcon />,
   },
   {
     name: 'factor analysis',
-    alias: 'Factor Analysis',
-    routePath: '/factor-analysis',
+    url: '/factor-analysis',
     element: <FactorAnalysis />,
     icon: <BubbleChartIcon />,
   },
   {
     name: 'linear regression',
-    alias: 'Linear Regression',
-    routePath: '/linear-regression',
+    url: '/linear-regression',
     element: <LinearRegression />,
     icon: <AutoGraphIcon />,
   },
   {
     name: 'logistic regression',
-    alias: 'Logistic Regression',
-    routePath: '/logistic-regression',
+    url: '/logistic-regression',
     element: <LogisticRegression />,
     icon: <AutoFixHighIcon />,
   },

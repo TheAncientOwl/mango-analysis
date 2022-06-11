@@ -26,7 +26,7 @@ const App: React.FC = () => {
           <AppPaper>
             <Routes>
               {AppRoutes.map((section, index) => (
-                <Route key={index} path={section.routePath} element={section.element} />
+                <Route key={index} path={section.url} element={section.element} />
               ))}
             </Routes>
           </AppPaper>
