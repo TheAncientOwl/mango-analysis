@@ -15,7 +15,7 @@ export const StepsID = Object.freeze({
 export const StepsLinearRegression: ReadonlyArray<IStep> = [
   {
     index: StepsID.ModelPicker,
-    title: 'Pick features',
+    title: 'Choose Model',
     content: <ModelPicker />,
   },
   {
