@@ -22,17 +22,14 @@ export const Select: React.FC<Props> = ({
   values,
   onChange,
 }) => {
+  const menuItems = values.length !== 0 ? values : [value];
+
   return (
     <Box maxWidth={maxWidth} minWidth={minWidth}>
       <FormControl fullWidth>
         <InputLabel id={`${id}-label`}>{label}</InputLabel>
-        <MuiSelect
-          labelId={`${id}-label`}
-          id={`${id}`}
-          value={values.indexOf(value) !== -1 ? value : ''}
-          label={`Display ${label}`}
-          onChange={onChange}>
-          {values.map((item, index) => (
+        <MuiSelect labelId={`${id}-label`} id={`${id}`} value={value} label={`Display ${label}`} onChange={onChange}>
+          {menuItems.map((item, index) => (
             <MenuItem key={index} value={item}>
               {item}
             </MenuItem>
