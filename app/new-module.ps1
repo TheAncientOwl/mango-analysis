@@ -95,11 +95,11 @@ New-Item -Path "$($moduleDirectoryPath)/steps" -Name "index.tsx" -ErrorAction Si
 Set-Content "$($moduleDirectoryPath)/steps/index.tsx" @"
 import React from 'react';
 
-import { StepConfig } from '@components/analysis';
+import { IStep } from '@components/analysis';
 
 export const StepsID = Object.freeze({});
 
-export const Steps$($moduleNameCapitalized): ReadonlyArray<StepConfig> = [];
+export const Steps$($moduleNameCapitalized): ReadonlyArray<IStep> = [];
 
 "@
 

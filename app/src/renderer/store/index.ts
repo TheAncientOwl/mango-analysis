@@ -1,3 +1,4 @@
+import { logisticRegressionReducer } from './logistic-regression/reducer';
 import { linearRegressionReducer } from './linear-regression/reducer';
 import { factorAnalysisReducer } from './factor-analysis/reducer';
 import { principalComponentsAnalysisReducer } from './principal-components-analysis/reducer';
@@ -9,6 +10,7 @@ import thunk from 'redux-thunk';
 
 export const store = configureStore({
   reducer: {
+    logisticRegression: logisticRegressionReducer,
     linearRegression: linearRegressionReducer,
     factorAnalysis: factorAnalysisReducer,
     pca: principalComponentsAnalysisReducer,

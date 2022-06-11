@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { TextField, Stack, IconButton, Box } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
 
 import { Tooltip } from '@components/Tooltip';
 
@@ -17,7 +17,7 @@ interface Props {
   type?: 'text' | 'number';
 }
 
-const editIcon = <EditIcon />;
+const saveIcon = <SaveIcon />;
 
 export const InputWithSave: React.FC<Props> = ({
   text,
@@ -51,7 +51,7 @@ export const InputWithSave: React.FC<Props> = ({
       </Box>
       <Tooltip title={notSaved ? tooltipUnsaved : tooltip}>
         <IconButton onClick={() => onSave(value)} color={notSaved ? 'warning' : 'inherit'}>
-          {editIcon}
+          {saveIcon}
         </IconButton>
       </Tooltip>
     </Stack>

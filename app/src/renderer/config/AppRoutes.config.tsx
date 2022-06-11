@@ -4,11 +4,13 @@ import TableViewIcon from '@mui/icons-material/TableView';
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
 import DataManager from '@modules/data-manager';
 import PrincipalComponentsAnalysis from '@modules/principal-components-analysis';
 import FactorAnalysis from '@modules/factor-analysis';
-import LinearRegression from '@src/renderer/modules/linear-regression';
+import LinearRegression from '@modules/linear-regression';
+import LogisticRegression from '@modules/logistic-regression';
 
 interface IRoute {
   name: string;
@@ -40,5 +42,12 @@ export const AppRoutes: ReadonlyArray<IRoute> = [
     routePath: '/linear-regression',
     element: <LinearRegression />,
     icon: <AutoGraphIcon />,
+  },
+  {
+    name: 'logistic regression',
+    alias: 'Logistic Regression',
+    routePath: '/logistic-regression',
+    element: <LogisticRegression />,
+    icon: <AutoFixHighIcon />,
   },
 ];
