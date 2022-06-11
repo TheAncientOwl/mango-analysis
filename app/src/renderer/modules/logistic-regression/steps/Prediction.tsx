@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { predict, changeValuesToPredict } from '@store/linear-regression/actions';
+import { predict, changeValuesToPredict } from '@store/logistic-regression/actions';
 
 import { Collapse, Stack, Typography } from '@mui/material';
 
@@ -54,9 +54,9 @@ const Prediction: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
-  prediction: state.linearRegression.prediction,
-  valuesToPredict: state.linearRegression.valuesToPredict,
-  independentVariables: state.linearRegression.independentVariables,
+  prediction: state.logisticRegression.prediction,
+  valuesToPredict: state.logisticRegression.valuesToPredict,
+  independentVariables: state.logisticRegression.independentVariables,
 });
 
 const mapDispatch = {

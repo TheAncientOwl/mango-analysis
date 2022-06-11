@@ -1,5 +1,7 @@
 import { Dispatch, ActionType } from './types';
 
+import { axios } from '@config/.';
+
 export const resetState = () => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Reset });
 };
@@ -24,3 +26,58 @@ export const jumpToStep = (step: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.JumpToStep, payload: step });
 };
 
+export const setIndependentVariables = (values: string[]) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetIndependentVariables, payload: values });
+};
+
+export const setDependentVariable = (value: string) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetDependentVariable, payload: value });
+};
+
+export const setRandState = (value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetRandState, payload: value });
+};
+
+export const setTestSize = (value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetTestSize, payload: value });
+};
+
+export const setMaxIterations = (value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.SetMaxIterations, payload: value });
+};
+
+export const runModel =
+  (xLabels: string[], yLabel: string, testSize: number, randomState: number, maxIter: number) =>
+  async (dispatch: Dispatch) => {
+    dispatch({ type: ActionType.Loading });
+
+    const res = await axios.post('/logistic-regression/run-model', {
+      xLabels,
+      yLabel,
+      testSize,
+      randomState,
+      maxIter,
+    });
+
+    dispatch({ type: ActionType.ModelFinished, payload: res.data });
+  };
+
+export const fetchVariables = () => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  const res = await axios.get('/logistic-regression/variables');
+
+  dispatch({ type: ActionType.FetchedVariables, payload: res.data.variables });
+};
+
+export const predict = (values: number[]) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  const res = await axios.post('/logistic-regression/predict', { values });
+
+  dispatch({ type: ActionType.PredictionFinished, payload: res.data.prediction });
+};
+
+export const changeValuesToPredict = (values: number[]) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ChangeValuesToPredict, payload: values });
+};

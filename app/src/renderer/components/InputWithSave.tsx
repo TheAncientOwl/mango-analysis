@@ -1,11 +1,15 @@
 import React from 'react';
 
+// eslint-disable-next-line import/named
+import { SxProps } from '@mui/system';
+
 import { TextField, Stack, IconButton, Box } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
 import { Tooltip } from '@components/Tooltip';
 
 interface Props {
+  sx?: SxProps;
   minWidth?: string;
   maxWidth?: string;
   text: string | number;
@@ -20,6 +24,7 @@ interface Props {
 const saveIcon = <SaveIcon />;
 
 export const InputWithSave: React.FC<Props> = ({
+  sx,
   text,
   placeholder,
   onSave,
@@ -35,7 +40,7 @@ export const InputWithSave: React.FC<Props> = ({
   const notSaved = text !== value;
 
   return (
-    <Stack direction='row' gap={1}>
+    <Stack sx={sx} direction='row' gap={1}>
       <Box minWidth={minWidth} maxWidth={maxWidth}>
         <TextField
           color={notSaved ? 'warning' : color}
@@ -44,7 +49,7 @@ export const InputWithSave: React.FC<Props> = ({
           type={type}
           label={placeholder}
           variant='outlined'
-          onChange={e => setValue(e.target.value)}
+          onChange={e => setValue(type === 'number' ? +e.target.value : e.target.value)}
           value={value}
           placeholder={placeholder}
         />

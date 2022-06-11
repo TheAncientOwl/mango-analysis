@@ -75,6 +75,7 @@ def run_model():
     # visualize confusion matrix
     class_names = [set(y)]
 
+    plt.figure(figsize=(8, 8))
     fig, ax = plt.subplots()
 
     tick_marks = np.arange(len(class_names))
@@ -99,11 +100,13 @@ def run_model():
     recall = metrics.recall_score(y_test, y_pred)
 
     # ROC Curve
+    plt.figure(figsize=(8, 8))
     y_pred_proba = stateLogisticRegression.model.predict_proba(x_test)[::, 1]
     fpr, tpr, _ = metrics.roc_curve(y_test, y_pred_proba)
     auc = metrics.roc_auc_score(y_test, y_pred_proba)
     plt.plot(fpr, tpr, label="data 1, auc="+str(auc))
     plt.legend(loc=4)
+    plt.title('ROC Curve')
 
     roc_path = os.path.join(utils.app_data_path,
                             f'ROC_Curve.{utils.make_uuid()}.jpg')
@@ -118,7 +121,7 @@ def run_model():
             'precision': precision,
             'recall': recall
         }
-    }, rocCurve=roc_path)
+    }, rocCurvePath=roc_path)
 
 
 @logistic_regression.post('/logistic-regression/predict')

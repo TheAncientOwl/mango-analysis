@@ -11,7 +11,8 @@ import {
   setTestSize,
   runModel,
   lockNextStep,
-} from '@store/linear-regression/actions';
+  setMaxIterations,
+} from '@store/logistic-regression/actions';
 
 // eslint-disable-next-line import/named
 import { SelectChangeEvent, Stack } from '@mui/material';
@@ -21,6 +22,7 @@ import { Select, AutoCompleteCheckedSelect, SelectSlider } from '@components/sel
 import { RunButton } from '@components/buttons';
 
 import { StepsID } from '.';
+import { InputWithSave } from '@components/InputWithSave';
 
 const ModelPicker: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {
@@ -43,7 +45,7 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 
   return (
     <AnalysisStepLogic>
-      <Stack direction='row' alignItems='center' gap={2} mb={5} maxWidth='100%'>
+      <Stack direction='row' alignItems='center' gap={2} mb={3} maxWidth='100%'>
         <Select
           minWidth='15em'
           id='dependendVar'
@@ -62,6 +64,17 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
           onChange={handleIndependentVarsChange}
         />
       </Stack>
+
+      <InputWithSave
+        sx={{ mb: 5 }}
+        minWidth='6em'
+        text={props.maxIterations}
+        placeholder='Max Iterations'
+        tooltip='Value Saved'
+        tooltipUnsaved='Value not saved. Click to save. (Cannot set negative values)'
+        onSave={(value: number) => props.setMaxIterations(+value)}
+        type='number'
+      />
 
       <SelectSlider
         maxWidth='32em'
@@ -88,7 +101,13 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
       <RunButton
         disabled={props.independendVariables.length === 0 || props.dependendVariable === ''}
         onClick={() =>
-          props.runModel(props.independendVariables, props.dependendVariable, props.testSize / 100, props.randomState)
+          props.runModel(
+            props.independendVariables,
+            props.dependendVariable,
+            props.testSize / 100,
+            props.randomState,
+            props.maxIterations
+          )
         }>
         run model
       </RunButton>
@@ -98,11 +117,12 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
-  dependendVariable: state.linearRegression.dependentVariable,
-  independendVariables: state.linearRegression.independentVariables,
-  variables: state.linearRegression.variables,
-  randomState: state.linearRegression.randState,
-  testSize: state.linearRegression.testSize,
+  dependendVariable: state.logisticRegression.dependentVariable,
+  independendVariables: state.logisticRegression.independentVariables,
+  variables: state.logisticRegression.variables,
+  randomState: state.logisticRegression.randState,
+  testSize: state.logisticRegression.testSize,
+  maxIterations: state.logisticRegression.maxIterations,
 });
 
 const mapDispatch = {
@@ -113,6 +133,7 @@ const mapDispatch = {
   setTestSize,
   runModel,
   lockNextStep,
+  setMaxIterations,
 };
 
 const connector = connect(mapState, mapDispatch);
