@@ -7,7 +7,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '@store/.';
+import { RootState, resetAppState } from '@store/.';
 import { changeScalingMethod, scaleData } from '@store/data-manager/actions';
 import { ScalingMethodType } from '@store/data-manager/types';
 
@@ -28,6 +28,8 @@ const ScalingHandler: React.FC<PropsFromRedux> = props => {
     doubleCheckSwitch.off();
 
     props.scaleData(props.scalingMethod, props.page, props.pageSize);
+
+    resetAppState();
   };
 
   return (
