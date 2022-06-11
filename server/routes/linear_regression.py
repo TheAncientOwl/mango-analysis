@@ -28,7 +28,7 @@ def create_new_linear_regression():
     global stateLinearRegression
     stateLinearRegression = StateLinearRegression()
 
-    return flask.jsonify(message='New MultipleLinearRegression created!')
+    return flask.jsonify(message='New LinearRegression created!')
 
 
 @linear_regression.get('/linear-regression/variables')
@@ -45,8 +45,6 @@ def run_model():
     y_label = data['yLabel']
     test_size = data['testSize']
     random_state = data['randomState']
-
-    print('>> TYPE:', type(x_labels))
 
     x = app.dataFrame[x_labels].values
     y = app.dataFrame[y_label].values
@@ -101,9 +99,9 @@ def predict():
 
     values = data['values']
 
-    return flask.jsonify(prediction=stateLinearRegression.model.predict([values])[0]), 200
+    return flask.jsonify(prediction=stateLinearRegression.model.predict([values])[0])
 
 
 @linear_regression.get('/linear-regression/differences/<int:count>')
 def get_differences(count):
-    return flask.jsonify(diffs=stateLinearRegression.diff[0:count].to_dict(orient='split')), 200
+    return flask.jsonify(diffs=stateLinearRegression.diff[0:count].to_dict(orient='split'))
