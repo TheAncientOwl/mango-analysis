@@ -18,7 +18,7 @@ import {
 import { SelectChangeEvent, Stack } from '@mui/material';
 
 import { AnalysisStepLogic } from '@components/analysis';
-import { Select, AutoCompleteCheckedSelect, SelectSlider } from '@components/select';
+import { Select, AutoCompleteCheckedSelect, TestSizeSelector } from '@components/select';
 import { RunButton } from '@components/buttons';
 
 import { StepsID } from '.';
@@ -76,26 +76,11 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
         type='number'
       />
 
-      <SelectSlider
-        maxWidth='32em'
-        sliderWidth='20em'
-        label='Random State'
-        min={0}
-        max={100}
-        onChange={value => props.setRandState(value)}
-        value={props.randomState}
-        sx={{ mb: 4 }}
-      />
-
-      <SelectSlider
-        maxWidth='32em'
-        sliderWidth='20em'
-        label='Test Size'
-        min={0}
-        max={100}
-        onChange={value => props.setTestSize(value)}
-        value={props.testSize}
-        sx={{ mb: 3 }}
+      <TestSizeSelector
+        randomState={props.randomState}
+        testSize={props.testSize}
+        onRandomStateChange={props.setRandState}
+        onTestSizeChange={props.setTestSize}
       />
 
       <RunButton
