@@ -47,14 +47,17 @@ def run():
 
     state.ca = state.ca.fit(state.X)
 
+    summary = pd.DataFrame({'EigenValues': state.ca.eigenvalues_,
+                           'Explained Inertia': state.ca.explained_inertia_},
+                           index=[f'Component {x}' for x in range(0, data['nComponents'])])
+
     return flask.jsonify(
         rowCoordinates=state.ca.row_coordinates(
             state.X).to_dict(orient='split'),
         columnCoordinates=state.ca.column_coordinates(
             state.X).to_dict(orient='split'),
-        eigenValues=state.ca.eigenvalues_,
-        totalInertie=state.ca.total_inertia_,
-        explainedIntertia=state.ca.explained_inertia_
+        totalInertia=state.ca.total_inertia_,
+        summary=summary.to_dict(orient='split')
     )
 
 
