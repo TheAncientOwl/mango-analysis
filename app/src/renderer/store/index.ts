@@ -1,3 +1,7 @@
+import { svmReducer } from './svm/reducer';
+import { somReducer } from './som/reducer';
+import { knnReducer } from './knn/reducer';
+import { clusterAnalysisReducer } from './cluster-analysis/reducer';
 import { correspondenceAnalysisReducer } from './correspondence-analysis/reducer';
 import { logisticRegressionReducer } from './logistic-regression/reducer';
 import { linearRegressionReducer } from './linear-regression/reducer';
@@ -11,6 +15,10 @@ import thunk from 'redux-thunk';
 
 export const store = configureStore({
   reducer: {
+    svm: svmReducer,
+    som: somReducer,
+    knn: knnReducer,
+    clusterAnalysis: clusterAnalysisReducer,
     correspondenceAnalysis: correspondenceAnalysisReducer,
     logisticRegression: logisticRegressionReducer,
     linearRegression: linearRegressionReducer,
