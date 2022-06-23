@@ -8,6 +8,21 @@ from .linear_regression import linear_regression
 from .factor_analysis import factor_analysis
 from .logistic_regression import logistic_regression
 from .correspondence_analysis import correspondence_analysis
+from .cluster_analysis import cluster_analysis
+from .knn import knn
+from .som import som
 
-all_routes = [data_import_export, data_drop, data_view,
-              data_scale, principal_components_analysis, linear_regression, factor_analysis, logistic_regression, correspondence_analysis]
+all_routes = [
+    data_import_export,
+    data_drop,
+    data_view,
+    data_scale,
+    principal_components_analysis,
+    linear_regression,
+    factor_analysis,
+    logistic_regression,
+    correspondence_analysis,
+    cluster_analysis,
+    knn,
+    som
+  ]
