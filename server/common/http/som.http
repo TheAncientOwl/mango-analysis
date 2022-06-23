@@ -1,0 +1,8 @@
+@local_host = http://localhost:5000
+@route = http://localhost:5000/som
+
+### Read data
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/FILL.csv
+
+### Print server's dataframe head
+GET {{local_host}}/printhead 
