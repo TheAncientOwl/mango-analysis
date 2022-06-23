@@ -1,0 +1,33 @@
+@local_host = http://localhost:5000
+@route = http://localhost:5000/ca
+
+### Read data
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/pc-data-correspondence-analysis.csv
+
+### Print server's dataframe head
+GET {{local_host}}/printhead 
+
+### new fa
+POST {{route}}/new
+
+###
+POST {{route}}/run
+Content-Type: application/json
+
+{
+  "nComponents": 4,
+  "nIter": 10,
+  "rowsName": "Componenta",
+  "columnsName": "Tip Investitie"
+}
+
+###
+POST {{route}}/plot
+Content-Type: application/json
+
+{
+  "xComponent": 0,
+  "yComponent": 1,
+  "showRowLabels": true,
+  "showColLabels": true
+}
