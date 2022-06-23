@@ -5,12 +5,14 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
 
 import DataManager from '@modules/data-manager';
 import PrincipalComponentsAnalysis from '@modules/principal-components-analysis';
 import FactorAnalysis from '@modules/factor-analysis';
 import LinearRegression from '@modules/linear-regression';
 import LogisticRegression from '@modules/logistic-regression';
+import CorrespondenceAnalysis from '@modules/correspondence-analysis';
 
 interface IRoute {
   name: string;
@@ -44,5 +46,11 @@ export const AppRoutes: ReadonlyArray<IRoute> = [
     url: '/logistic-regression',
     element: <LogisticRegression />,
     icon: <AutoFixHighIcon />,
+  },
+  {
+    name: 'correspondence analysis',
+    url: '/correspondence-analysis',
+    element: <CorrespondenceAnalysis />,
+    icon: <StackedLineChartIcon />,
   },
 ];
