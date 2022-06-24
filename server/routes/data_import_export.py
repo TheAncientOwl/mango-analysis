@@ -25,6 +25,7 @@ def import_csv(filePath):
     app.dataFrame = pd.read_csv(filePath, na_values=['NA'])
     app.dataFrame.insert(
         0, '_mango_id', range(1, len(app.dataFrame) + 1))
+    app.dataFrame.fillna('', inplace=True)
 
     return flask.jsonify(message='Success'), 200
 

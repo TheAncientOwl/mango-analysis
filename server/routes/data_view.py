@@ -23,7 +23,6 @@ def rows_between(start, end):
     end = min(app.dataFrame.shape[0], end)
 
     requestedDf = app.dataFrame[start:end]
-    requestedDf.fillna('', inplace=True)
 
     missingValues = True if app.dataFrame.isnull().sum().sum() > 0 else False
 
