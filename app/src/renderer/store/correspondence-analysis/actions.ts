@@ -1,4 +1,5 @@
 import { axios } from '@src/renderer/config';
+import { store } from '..';
 import { Dispatch, ActionType } from './types';
 
 export const resetState = () => (dispatch: Dispatch) => {
@@ -54,3 +55,56 @@ export const runAnalysis =
 
     dispatch({ type: ActionType.AnalysisFinished, payload: res.data });
   };
+
+export const changePlotTitle = (index: number, value: string) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ChangePlotTitle, payload: { index, value } });
+};
+
+export const changePlotComponentX = (index: number, value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ChangePlotComponentX, payload: { index, value } });
+};
+
+export const changePlotComponentY = (index: number, value: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ChangePlotComponentY, payload: { index, value } });
+};
+
+export const togglePlotRowLabels = (index: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.TogglePlotRowLabels, payload: index });
+};
+
+export const togglePlotColLabels = (index: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.TogglePlotColLabels, payload: index });
+};
+
+export const pushDefaultPlot = () => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.PushDefaultPlot });
+};
+
+export const fetchPlot = (index: number) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  const { title, xComponent, yComponent, showRowLabels, showColLabels } =
+    store.getState().correspondenceAnalysis.plots[index];
+
+  try {
+    const res = await axios.post('/ca/plot', { title, xComponent, yComponent, showRowLabels, showColLabels });
+
+    dispatch({
+      type: ActionType.FetchedPlotSrc,
+      payload: {
+        index,
+        value: res.data.imgPath,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const togglePlotOpen = (index: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.TogglePlotOpen, payload: index });
+};
+
+export const deletePlot = (index: number) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.DeletePlot, payload: index });
+};

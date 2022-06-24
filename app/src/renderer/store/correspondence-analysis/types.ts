@@ -19,6 +19,16 @@ export enum ActionType {
   ChangeColumnsName = 'CORRESPONDENCE_ANALYSIS__CHANGE_COLUMNS_NAME',
 
   AnalysisFinished = 'CORRESPONDENCE_ANALYSIS__ANALYSIS_FINISHED',
+
+  ChangePlotTitle = 'CORRESPONDENCE_ANALYSIS__CHANGE_PLOT_TITLE',
+  ChangePlotComponentX = 'CORRESPONDENCE_ANALYSIS__CHANGE_PLOT_COMPONENT_X',
+  ChangePlotComponentY = 'CORRESPONDENCE_ANALYSIS__CHANGE_PLOT_COMPONENT_Y',
+  TogglePlotRowLabels = 'CORRESPONDENCE_ANALYSIS__TOGGLE_PLOT_ROW_LABELS',
+  TogglePlotColLabels = 'CORRESPONDENCE_ANALYSIS__TOGGLE_PLOT_COL_LABELS',
+  FetchedPlotSrc = 'CORRESPONDENCE_ANALYSIS__FETCHED_PLOT_SRC',
+  PushDefaultPlot = 'CORRESPONDENCE_ANALYSIS__PUSH_DEFAULT_PLOT',
+  TogglePlotOpen = 'CORRESPONDENCE_ANALYSIS__TOGGLE_PLOT_OPEN',
+  DeletePlot = 'CORRESPONDENCE_ANALYSIS__DELETE_PLOT',
 }
 
 interface Loading {
@@ -83,6 +93,62 @@ interface AnalysisFinished {
   payload: ICorrespondenceAnalysisResult;
 }
 
+interface ChangePlotTitle {
+  type: ActionType.ChangePlotTitle;
+  payload: {
+    index: number;
+    value: string;
+  };
+}
+
+interface ChangePlotComponentX {
+  type: ActionType.ChangePlotComponentX;
+  payload: {
+    index: number;
+    value: number;
+  };
+}
+
+interface ChangePlotComponentY {
+  type: ActionType.ChangePlotComponentY;
+  payload: {
+    index: number;
+    value: number;
+  };
+}
+
+interface TogglePlotRowLabels {
+  type: ActionType.TogglePlotRowLabels;
+  payload: number;
+}
+
+interface TogglePlotColLabels {
+  type: ActionType.TogglePlotColLabels;
+  payload: number;
+}
+
+interface PushDefaultPlot {
+  type: ActionType.PushDefaultPlot;
+}
+
+interface FetchedPlotSrc {
+  type: ActionType.FetchedPlotSrc;
+  payload: {
+    index: number;
+    value: string;
+  };
+}
+
+interface TogglePlotOpen {
+  type: ActionType.TogglePlotOpen;
+  payload: number;
+}
+
+interface DeletePlot {
+  type: ActionType.DeletePlot;
+  payload: number;
+}
+
 export type DispatchTypes =
   | Loading
   | Reset
@@ -95,6 +161,15 @@ export type DispatchTypes =
   | ChangeIterN
   | ChangeRowsName
   | ChangeColumnsName
-  | AnalysisFinished;
+  | AnalysisFinished
+  | ChangePlotTitle
+  | ChangePlotComponentX
+  | ChangePlotComponentY
+  | TogglePlotRowLabels
+  | TogglePlotColLabels
+  | PushDefaultPlot
+  | FetchedPlotSrc
+  | TogglePlotOpen
+  | DeletePlot;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;

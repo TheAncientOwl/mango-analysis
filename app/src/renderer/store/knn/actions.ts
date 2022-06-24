@@ -23,4 +23,3 @@ export const lockNextStep = (step: number) => (dispatch: Dispatch) => {
 export const jumpToStep = (step: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.JumpToStep, payload: step });
 };
-

@@ -10,6 +10,8 @@ import {
   jumpToStep,
 } from '@store/IDefaultAnalysisState';
 
+import { IRowColPlot2D, createPlot } from '@components/RowColPlot2D';
+
 const StepsCount = 3;
 
 interface IDefaultState extends IDefaultAnalysisStep {
@@ -18,6 +20,8 @@ interface IDefaultState extends IDefaultAnalysisStep {
   rowsName: string;
   columnsName: string;
   result: ICorrespondenceAnalysisResult;
+
+  plots: IRowColPlot2D[];
 }
 
 const defaultState: IDefaultState = {
@@ -36,6 +40,8 @@ const defaultState: IDefaultState = {
     summary: { columns: [], data: [], index: [] },
     totalInertia: undefined,
   },
+
+  plots: [createPlot()],
 };
 
 export const correspondenceAnalysisReducer = (
@@ -105,7 +111,7 @@ export const correspondenceAnalysisReducer = (
 
     case ActionType.AnalysisFinished: {
       const newSteps = [...state.nextStepUnlocked];
-      newSteps[0] = true;
+      newSteps.fill(true);
 
       return {
         ...state,
@@ -113,6 +119,122 @@ export const correspondenceAnalysisReducer = (
         currentStep: 1,
         nextStepUnlocked: newSteps,
         result: action.payload,
+      };
+    }
+
+    case ActionType.PushDefaultPlot: {
+      const newPlots: IRowColPlot2D[] = [...state.plots, createPlot()];
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.ChangePlotComponentX: {
+      const { index, value } = action.payload;
+
+      if (state.plots[index].xComponent === value) return state;
+
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], xComponent: value };
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.ChangePlotComponentY: {
+      const { index, value } = action.payload;
+
+      if (state.plots[index].yComponent === value) return state;
+
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], yComponent: value };
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.FetchedPlotSrc: {
+      const { index, value } = action.payload;
+
+      if (state.plots[index].plotSrc === value)
+        return {
+          ...state,
+          loading: false,
+        };
+
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], plotSrc: value };
+
+      return {
+        ...state,
+        loading: false,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.TogglePlotRowLabels: {
+      const index = action.payload;
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], showRowLabels: !newPlots[index].showRowLabels };
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.TogglePlotColLabels: {
+      const index = action.payload;
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], showColLabels: !newPlots[index].showColLabels };
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.TogglePlotOpen: {
+      const index = action.payload;
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], open: !newPlots[index].open };
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.DeletePlot: {
+      if (state.plots.length === 1) return state;
+
+      const index = action.payload;
+      const newPlots = [...state.plots];
+      newPlots.splice(index, 1);
+
+      return {
+        ...state,
+        plots: newPlots,
+      };
+    }
+
+    case ActionType.ChangePlotTitle: {
+      const { index, value } = action.payload;
+
+      if (state.plots[index].title === value) return state;
+
+      const newPlots = [...state.plots];
+      newPlots[index] = { ...newPlots[index], title: value };
+
+      return {
+        ...state,
+        plots: newPlots,
       };
     }
 

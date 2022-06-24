@@ -14,7 +14,7 @@ export const DataVisualizer: React.FC<PropsFromRedux> = props => {
     <TransitionGroup>
       {props.plots.map((plot, plotIndex) => (
         <Collapse key={plot.id}>
-          <PlotWrapper2D plot={plot} plotIndex={plotIndex} pcaLabels={props.pcaLabels} targets={props.targets} />
+          <PlotWrapper2D plot={plot} plotIndex={plotIndex} />
         </Collapse>
       ))}
     </TransitionGroup>
@@ -23,10 +23,8 @@ export const DataVisualizer: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
-  componentsCount: state.pca.analysisComponentsCount,
-  plots: state.pca.plots,
-  pcaLabels: state.pca.plot.pcaLabels,
-  targets: state.pca.plot.targets,
+  componentsCount: state.correspondenceAnalysis.nComponents,
+  plots: state.correspondenceAnalysis.plots,
 });
 
 const mapDispatch = {};

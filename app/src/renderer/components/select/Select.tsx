@@ -8,8 +8,8 @@ interface Props {
   minWidth?: string;
   id: string;
   label: string;
-  value: string;
-  values: string[];
+  value: string | number;
+  values: string[] | number[];
   onChange: (event: SelectChangeEvent) => void;
 }
 
