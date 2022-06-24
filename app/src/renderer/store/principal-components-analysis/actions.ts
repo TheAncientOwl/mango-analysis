@@ -61,7 +61,9 @@ export const fetchCorrelationMatrixPath = () => async (dispatch: Dispatch) => {
 export const fetchAnalysisHints = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
-  await axios.post('/pca/analyze');
+  await axios.post('/pca/analyze', {
+    componentsCount: 'all',
+  });
 
   const res = await axios.get('/pca/components-count-hints');
 

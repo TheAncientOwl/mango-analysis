@@ -27,6 +27,11 @@ GET {{pca_route}}/plot/correlation-matrix
 
 ### ------------------------------------------------------------------------------------------- ###
 POST {{pca_route}}/analyze
+Content-Type: application/json
+
+{
+  "componentsCount": "all"
+}
 
 ### ------------------------------------------------------------------------------------------- ###
 POST {{pca_route}}/analyze

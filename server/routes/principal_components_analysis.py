@@ -98,7 +98,7 @@ def plot_correlation_matrix():
 def analyze():
     data = flask.request.get_json()
 
-    components_count = data['componentsCount'] if data != None else len(
+    components_count = data['componentsCount'] if data['componentsCount'] != "all" else len(
         statePCA.features)
 
     statePCA.pca = PCA(n_components=components_count)
