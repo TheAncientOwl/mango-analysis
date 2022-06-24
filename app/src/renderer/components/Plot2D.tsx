@@ -59,7 +59,7 @@ interface IPlotEvents {
   onPlot: () => void;
   onToggleAnnot: () => void;
   onToggleLegend: () => void;
-  onTargetsChange: (values: string[]) => void;
+  onTargetsChange?: (values: string[]) => void;
   onToggleOpen: () => void;
   onDelete: () => void;
   onTitleChange: (value: string) => void;
@@ -146,26 +146,28 @@ export const Plot2D: React.FC<Props> = props => {
         <Checkbox checked={plot.legend} onChange={props.onToggleLegend} label='Legend' />
       </Grid>
 
-      <Grid item>
-        <CheckedButton
-          checked={props.targets.length === plot.targets.length}
-          onClick={() => props.onTargetsChange(props.targets.length === plot.targets.length ? [] : props.targets)}>
-          all targets
-        </CheckedButton>
-      </Grid>
+      <RenderIf condition={props.targets.length > 0}>
+        <Grid item>
+          <CheckedButton
+            checked={props.targets.length === plot.targets.length}
+            onClick={() => props.onTargetsChange(props.targets.length === plot.targets.length ? [] : props.targets)}>
+            all targets
+          </CheckedButton>
+        </Grid>
 
-      <Grid item xs={12}>
-        <RenderIf condition={props.targets.length !== plot.targets.length}>
-          <AutoCompleteCheckedSelect
-            minWidth='10em'
-            id='select-targets'
-            label='Targets'
-            checkedValues={plot.targets}
-            possibleValues={props.targets}
-            onChange={props.onTargetsChange}
-          />
-        </RenderIf>
-      </Grid>
+        <Grid item xs={12}>
+          <RenderIf condition={props.targets.length !== plot.targets.length}>
+            <AutoCompleteCheckedSelect
+              minWidth='10em'
+              id='select-targets'
+              label='Targets'
+              checkedValues={plot.targets}
+              possibleValues={props.targets}
+              onChange={props.onTargetsChange}
+            />
+          </RenderIf>
+        </Grid>
+      </RenderIf>
 
       <Grid item>
         <PlotButton
