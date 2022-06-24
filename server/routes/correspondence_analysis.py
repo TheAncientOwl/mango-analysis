@@ -74,6 +74,7 @@ def plot_ca():
         show_row_labels=data['showRowLabels'],
         show_col_labels=data['showColLabels']
     )
+    ax.set_title(data['title'], fontsize=20)
 
     img_path = os.path.join(utils.plots_app_data_path,
                             f'CorrespondenceAnalysis.{utils.make_uuid()}.jpg')

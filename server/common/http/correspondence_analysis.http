@@ -29,5 +29,6 @@ Content-Type: application/json
   "xComponent": 0,
   "yComponent": 1,
   "showRowLabels": true,
-  "showColLabels": true
+  "showColLabels": true,
+  "title": "Dunno"
 }
