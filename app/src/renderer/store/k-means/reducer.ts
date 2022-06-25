@@ -1,4 +1,4 @@
-import { ActionType, DispatchTypes } from './types';
+import { ActionType, DispatchTypes, IKMeansClusters, KMeansInit } from './types';
 
 import {
   IDefaultAnalysisStep,
@@ -10,10 +10,24 @@ import {
   jumpToStep,
 } from '@store/IDefaultAnalysisState';
 
-const StepsCount = 0;
+const StepsCount = 3;
 
 interface IDefaultState extends IDefaultAnalysisStep {
-  specificStatePropery: string;
+  label: string;
+  features: string[];
+  possible: {
+    labels: string[];
+    features: string[];
+  };
+
+  init: KMeansInit;
+  nInit: number;
+  maxIter: number;
+  randomState: number;
+  nClusters: number;
+  elbowSrc: string;
+  silhouetteSrc: string;
+  clusters: IKMeansClusters | undefined;
 }
 
 const defaultState: IDefaultState = {
@@ -21,7 +35,21 @@ const defaultState: IDefaultState = {
   currentStep: 0,
   nextStepUnlocked: new Array(StepsCount).fill(false),
 
-  specificStatePropery: 'dunno',
+  label: '',
+  features: [],
+  possible: {
+    labels: [],
+    features: [],
+  },
+
+  init: 'k-means++',
+  nInit: 4,
+  maxIter: 200,
+  nClusters: 4,
+  randomState: 42,
+  elbowSrc: '',
+  silhouetteSrc: '',
+  clusters: undefined,
 };
 
 export const kMeansReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
@@ -52,6 +80,99 @@ export const kMeansReducer = (state: IDefaultState = defaultState, action: Dispa
 
     case ActionType.Reset: {
       return defaultState;
+    }
+
+    case ActionType.ChangeLabel: {
+      return {
+        ...state,
+        label: action.payload,
+      };
+    }
+
+    case ActionType.ChangeFeatures: {
+      return {
+        ...state,
+        features: action.payload,
+      };
+    }
+
+    case ActionType.FetchedPossibleLabelsFeatures: {
+      return {
+        ...state,
+        loading: false,
+        possible: action.payload,
+      };
+    }
+
+    case ActionType.ChangeInit: {
+      return {
+        ...state,
+        init: action.payload,
+      };
+    }
+
+    case ActionType.ChangeNInit: {
+      return {
+        ...state,
+        nInit: action.payload,
+      };
+    }
+
+    case ActionType.ChangeMaxIter: {
+      return {
+        ...state,
+        maxIter: action.payload,
+      };
+    }
+
+    case ActionType.ChangeRandomState: {
+      return {
+        ...state,
+        randomState: action.payload,
+      };
+    }
+
+    case ActionType.ChangeClusterN: {
+      return {
+        ...state,
+        nClusters: action.payload,
+      };
+    }
+
+    case ActionType.FetchedElbowSrc: {
+      return {
+        ...state,
+        loading: false,
+        elbowSrc: action.payload,
+      };
+    }
+
+    case ActionType.FetchedSilhouetteSrc: {
+      return {
+        ...state,
+        loading: false,
+        silhouetteSrc: action.payload,
+      };
+    }
+
+    case ActionType.FetchedClusters: {
+      return {
+        ...state,
+        loading: false,
+        clusters: action.payload,
+      };
+    }
+
+    case ActionType.SetLabelAndFeaturesSuccess: {
+      const newSteps = [...state.nextStepUnlocked];
+      newSteps.fill(true);
+
+      return {
+        ...state,
+        loading: false,
+        currentStep: 1,
+        nextStepUnlocked: newSteps,
+      };
     }
 
     default: {
