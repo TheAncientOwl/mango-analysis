@@ -1,0 +1,42 @@
+@local_host = http://localhost:5000
+@route = http://localhost:5000/hierarchycal
+
+### Read data
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/pca-data.agriculture.csv
+
+###
+POST http://localhost:5000/data/scale
+Content-Type: application/json
+
+{
+  "method": "robust_scaling"
+}
+
+### Print server's dataframe head
+GET {{local_host}}/printhead 
+
+###
+POST {{route}}/new
+
+###
+GET {{route}}/possible-labels-and-features
+
+###
+POST {{route}}/set-targets-and-label
+Content-Type: application/json
+
+{
+  "label": "Country",
+  "features": ["EA", "EAM", "EAF", "AFF", "ANE", "AME", "CY", "SA", "CP", "LA", "LCP", "ARL", "AGL"]
+}
+
+###
+GET {{route}}/plot/dendrogram
+
+###
+POST {{route}}/agglomerative-clustering
+Content-Type: application/json
+
+{
+  "nClusters": 4
+}

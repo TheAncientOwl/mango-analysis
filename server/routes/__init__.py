@@ -8,7 +8,8 @@ from .linear_regression import linear_regression
 from .factor_analysis import factor_analysis
 from .logistic_regression import logistic_regression
 from .correspondence_analysis import correspondence_analysis
-from .cluster_analysis import cluster_analysis
+from .cluster_analysis_kmeans import kmeans
+from .cluster_analysis_hierarchycal import hierarchycal
 from .knn import knn
 from .som import som
 
@@ -22,7 +23,8 @@ all_routes = [
     factor_analysis,
     logistic_regression,
     correspondence_analysis,
-    cluster_analysis,
+    kmeans,
+    hierarchycal,
     knn,
     som
-  ]
+]

@@ -1,0 +1,65 @@
+@local_host = http://localhost:5000
+@route = http://localhost:5000/kmeans
+
+### Read data
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/pca-data.agriculture.csv
+
+###
+POST http://localhost:5000/data/scale
+Content-Type: application/json
+
+{
+  "method": "robust_scaling"
+}
+
+### Print server's dataframe head
+GET {{local_host}}/printhead 
+
+###
+POST {{route}}/new
+
+###
+GET {{route}}/possible-labels-and-features
+
+###
+POST {{route}}/set-targets-and-label
+Content-Type: application/json
+
+{
+  "label": "Country",
+  "features": ["EA", "EAM", "EAF", "AFF", "ANE", "AME", "CY", "SA", "CP", "LA", "LCP", "ARL", "AGL"]
+}
+
+###
+POST {{route}}/plot/elbow
+Content-Type: application/json
+
+{
+  "init": "random",
+  "nInit": 4,
+  "maxIter": 10,
+  "randomState": 42
+}
+
+###
+POST {{route}}/plot/silhouette
+Content-Type: application/json
+
+{
+  "init": "random",
+  "nInit": 4,
+  "maxIter": 10,
+  "randomState": 42
+}
+
+###
+POST {{route}}/cluster
+Content-Type: application/json
+
+{
+  "init": "random",
+  "nInit": 4,
+  "nClusters": 4,
+  "maxIter": 300,
+  "randomState": 42
+}
