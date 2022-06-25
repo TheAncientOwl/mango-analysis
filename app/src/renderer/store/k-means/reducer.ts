@@ -112,6 +112,8 @@ export const kMeansReducer = (state: IDefaultState = defaultState, action: Dispa
     }
 
     case ActionType.ChangeNInit: {
+      if (action.payload < 0) return state;
+
       return {
         ...state,
         nInit: action.payload,
@@ -119,6 +121,8 @@ export const kMeansReducer = (state: IDefaultState = defaultState, action: Dispa
     }
 
     case ActionType.ChangeMaxIter: {
+      if (action.payload < 0) return state;
+
       return {
         ...state,
         maxIter: action.payload,

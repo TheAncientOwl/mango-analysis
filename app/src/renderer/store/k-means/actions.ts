@@ -77,6 +77,8 @@ export const setServerLabelFeatures = () => async (dispatch: Dispatch) => {
 
   try {
     await axios.post('/kmeans/set-targets-and-label', { label, features });
+
+    dispatch({ type: ActionType.SetLabelAndFeaturesSuccess });
   } catch (err) {
     console.log(err);
   }
