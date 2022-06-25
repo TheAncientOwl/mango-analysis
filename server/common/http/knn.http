@@ -2,7 +2,96 @@
 @route = http://localhost:5000/knn
 
 ### Read data
-GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/FILL.csv
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/knn.csv
 
 ### Print server's dataframe head
 GET {{local_host}}/printhead 
+
+###
+POST {{route}}/new
+
+###
+GET {{route}}/possible-features
+
+###
+POST {{route}}/set-target-and-features
+Content-Type: application/json
+
+{
+  "target": "Rings",
+  "features": ["Length", "Diameter", "Height", "Whole weight", "Shucked weight", "Viscera weight", "Shell weight"],
+  "testSize": 0.2,
+  "randomState": 42
+}
+
+### 
+POST {{route}}/arbitrary
+Content-Type: application/json
+
+{
+  "nNeighbors": 4
+}
+
+###
+POST {{route}}/grid-search-cv
+Content-Type: application/json
+
+{
+
+}
+
+###
+POST {{route}}/grid-search-cv-weights
+Content-Type: application/json
+
+{
+
+}
+
+###
+POST {{route}}/bagging
+Content-Type: application/json
+
+{
+
+}
+
+###
+POST {{route}}/set-model
+Content-Type: application/json
+
+{
+  "modelName": "Arbitrary"
+}
+
+###
+POST {{route}}/set-model
+Content-Type: application/json
+
+{
+  "modelName": "GridSearchCV"
+}
+
+###
+POST {{route}}/set-model
+Content-Type: application/json
+
+{
+  "modelName": "GridSearchCV & Weights"
+}
+
+###
+POST {{route}}/set-model
+Content-Type: application/json
+
+{
+  "modelName": "Bagged GridSearchCV"
+}
+
+###
+POST {{route}}/predict
+Content-Type: application/json
+
+{
+  "values": [0.455,	0.365, 0.095, 0.5140, 0.2245, 0.1010, 0.150]
+}
