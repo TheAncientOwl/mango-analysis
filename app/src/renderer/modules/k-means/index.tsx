@@ -3,13 +3,13 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { nextStep, prevStep } from '@store/cluster-analysis/actions';
+import { nextStep, prevStep } from '@src/renderer/store/k-means/actions';
 
 import { Analysis } from '@components/analysis';
 
 import { StepsClusterAnalysis } from './steps';
 
-const ClusterAnalysis: React.FC<PropsFromRedux> = props => {
+const KMeans: React.FC<PropsFromRedux> = props => {
   return (
     <Analysis
       stepsConfig={StepsClusterAnalysis}
@@ -24,9 +24,9 @@ const ClusterAnalysis: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
-  loading: state.clusterAnalysis.loading,
-  currentStep: state.clusterAnalysis.currentStep,
-  unlockedSteps: state.clusterAnalysis.nextStepUnlocked,
+  loading: state.kMeans.loading,
+  currentStep: state.kMeans.currentStep,
+  unlockedSteps: state.kMeans.nextStepUnlocked,
 });
 
 const mapDispatch = {
@@ -37,6 +37,5 @@ const mapDispatch = {
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(ClusterAnalysis);
+export default connector(KMeans);
 // </redux>
-

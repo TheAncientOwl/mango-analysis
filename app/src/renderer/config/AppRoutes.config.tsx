@@ -17,7 +17,7 @@ import FactorAnalysis from '@modules/factor-analysis';
 import LinearRegression from '@modules/linear-regression';
 import LogisticRegression from '@modules/logistic-regression';
 import CorrespondenceAnalysis from '@modules/correspondence-analysis';
-import ClusterAnalysis from '@modules/cluster-analysis';
+import KMeans from '@modules/k-means';
 import Knn from '@modules/knn';
 import Som from '@modules/som';
 import Svm from '@modules/svm';
@@ -62,9 +62,9 @@ export const AppRoutes: ReadonlyArray<IRoute> = [
     icon: <StackedLineChartIcon />,
   },
   {
-    name: 'cluster analysis',
-    url: '/cluster-analysis',
-    element: <ClusterAnalysis />,
+    name: 'K-Means',
+    url: '/kmeans',
+    element: <KMeans />,
     icon: <AutoAwesomeIcon />,
   },
   {

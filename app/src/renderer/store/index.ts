@@ -1,7 +1,7 @@
 import { svmReducer } from './svm/reducer';
 import { somReducer } from './som/reducer';
 import { knnReducer } from './knn/reducer';
-import { clusterAnalysisReducer } from './cluster-analysis/reducer';
+import { kMeansReducer } from './k-means/reducer';
 import { correspondenceAnalysisReducer } from './correspondence-analysis/reducer';
 import { logisticRegressionReducer } from './logistic-regression/reducer';
 import { linearRegressionReducer } from './linear-regression/reducer';
@@ -18,7 +18,7 @@ export const store = configureStore({
     svm: svmReducer,
     som: somReducer,
     knn: knnReducer,
-    clusterAnalysis: clusterAnalysisReducer,
+    kMeans: kMeansReducer,
     correspondenceAnalysis: correspondenceAnalysisReducer,
     logisticRegression: logisticRegressionReducer,
     linearRegression: linearRegressionReducer,

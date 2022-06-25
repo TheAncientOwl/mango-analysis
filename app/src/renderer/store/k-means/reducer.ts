@@ -24,7 +24,7 @@ const defaultState: IDefaultState = {
   specificStatePropery: 'dunno',
 };
 
-export const clusterAnalysisReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
+export const kMeansReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
   switch (action.type) {
     case ActionType.Loading: {
       return loading(state) as IDefaultState;
@@ -59,4 +59,3 @@ export const clusterAnalysisReducer = (state: IDefaultState = defaultState, acti
     }
   }
 };
-

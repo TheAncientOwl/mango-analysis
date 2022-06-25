@@ -2,14 +2,14 @@
 import { Dispatch as ReduxDispatch } from 'redux';
 
 export enum ActionType {
-  Loading = 'CLUSTER_ANALYSIS__LOADING',
-  Reset = 'CLUSTER_ANALYSIS__RESET',
+  Loading = 'K_MEANS__LOADING',
+  Reset = 'K_MEANS__RESET',
 
-  NextStep = 'CLUSTER_ANALYSIS__NEXT_STEP',
-  PrevStep = 'CLUSTER_ANALYSIS__PREV_STEP',
-  UnlockNextStep = 'CLUSTER_ANALYSIS__UNLOCK_NEXT_STEP',
-  LockNextStep = 'CLUSTER_ANALYSIS__LOCK_NEXT_STEP',
-  JumpToStep = 'CLUSTER_ANALYSIS__JUMP_TO_STEP',
+  NextStep = 'K_MEANS__NEXT_STEP',
+  PrevStep = 'K_MEANS__PREV_STEP',
+  UnlockNextStep = 'K_MEANS__UNLOCK_NEXT_STEP',
+  LockNextStep = 'K_MEANS__LOCK_NEXT_STEP',
+  JumpToStep = 'K_MEANS__JUMP_TO_STEP',
 }
 
 interface Loading {
@@ -43,14 +43,6 @@ interface JumpToStep {
   payload: number;
 }
 
-export type DispatchTypes = 
-  | Loading
-  | Reset
-  | NextStep
-  | PrevStep
-  | UnlockNextStep
-  | LockNextStep
-  | JumpToStep;
+export type DispatchTypes = Loading | Reset | NextStep | PrevStep | UnlockNextStep | LockNextStep | JumpToStep;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;
-

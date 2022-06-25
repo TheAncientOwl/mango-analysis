@@ -1,7 +1,7 @@
 import { resetState as resetStateSvm } from './svm/actions';
 import { resetState as resetStateSom } from './som/actions';
 import { resetState as resetStateKnn } from './knn/actions';
-import { resetState as resetStateClusterAnalysis } from './cluster-analysis/actions';
+import { resetState as resetStateKMeans } from './k-means/actions';
 import { resetState as resetStateCorrespondenceAnalysis } from './correspondence-analysis/actions';
 import { resetState as resetStateLogisticRegression } from './logistic-regression/actions';
 import { resetState as resetStateLinearRegression } from './linear-regression/actions';
@@ -15,7 +15,7 @@ export const resetAppState = () => {
   store.dispatch(resetStatePCA());
   store.dispatch(resetStateLogisticRegression());
   store.dispatch(resetStateCorrespondenceAnalysis());
-  store.dispatch(resetStateClusterAnalysis());
+  store.dispatch(resetStateKMeans());
   store.dispatch(resetStateKnn());
   store.dispatch(resetStateSom());
   store.dispatch(resetStateSvm());
