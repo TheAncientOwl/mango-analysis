@@ -7,9 +7,10 @@ export interface IBasicDataFrame {
   data: number[][];
   index: string[];
   maxWidth?: string;
+  fixed?: number;
 }
 
-export const BasicDataFrame: React.FC<IBasicDataFrame> = ({ columns, data, index, maxWidth = 'auto' }) => {
+export const BasicDataFrame: React.FC<IBasicDataFrame> = ({ columns, data, index, maxWidth = 'auto', fixed = 4 }) => {
   return (
     <TableContainer sx={{ maxWidth: maxWidth }}>
       <Table size='small' stickyHeader aria-label='basic-data-frame'>
@@ -29,7 +30,7 @@ export const BasicDataFrame: React.FC<IBasicDataFrame> = ({ columns, data, index
               <TableCell align='center'>{index[idx]}</TableCell>
               {line.map((number, idx) => (
                 <TableCell align='right' key={idx}>
-                  {(number as number).toFixed(4)}
+                  {(number as number).toFixed(fixed)}
                 </TableCell>
               ))}
             </TableRow>

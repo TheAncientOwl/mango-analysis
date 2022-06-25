@@ -137,6 +137,7 @@ export const kMeansReducer = (state: IDefaultState = defaultState, action: Dispa
     }
 
     case ActionType.ChangeClusterN: {
+      if (action.payload < 0) return state;
       return {
         ...state,
         nClusters: action.payload,
@@ -169,7 +170,8 @@ export const kMeansReducer = (state: IDefaultState = defaultState, action: Dispa
 
     case ActionType.SetLabelAndFeaturesSuccess: {
       const newSteps = [...state.nextStepUnlocked];
-      newSteps.fill(true);
+      newSteps[0] = true;
+      newSteps[1] = true;
 
       return {
         ...state,
