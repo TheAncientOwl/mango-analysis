@@ -73,15 +73,15 @@ def run():
 def plot():
     data = flask.request.get_json()
 
-    feature1 = data['feature1']
-    feature2 = data['feature2']
+    featureX = data['featurX']
+    featureY = data['featureY']
 
     # predictions
     plt.figure(figsize=(8, 8))
-    plt.scatter(app.dataFrame[feature1], app.dataFrame[feature2],
+    plt.scatter(app.dataFrame[featureX], app.dataFrame[featureY],
                 c=state.predictions)
-    plt.xlabel(feature1)
-    plt.ylabel(feature2)
+    plt.xlabel(featureX)
+    plt.ylabel(featureY)
     plt.title(data['title'])
     plt.legend()
 
@@ -96,14 +96,14 @@ def plot():
 def plot_original():
     data = flask.request.get_json()
 
-    feature1 = data['feature1']
-    feature2 = data['feature2']
+    featureX = data['featureX']
+    featureY = data['featureY']
 
     plt.figure(figsize=(8, 8))
-    plt.scatter(app.dataFrame[feature1], app.dataFrame[feature2],
+    plt.scatter(app.dataFrame[featureX], app.dataFrame[featureY],
                 c=state.target)
-    plt.xlabel(feature1)
-    plt.ylabel(feature2)
+    plt.xlabel(featureX)
+    plt.ylabel(featureY)
     plt.title('Original')
     plt.legend()
 

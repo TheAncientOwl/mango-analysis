@@ -36,8 +36,8 @@ POST {{route}}/plot/predictions
 Content-Type: application/json
 
 {
-  "feature1": "sepal length (cm)",
-  "feature2": "sepal width (cm)",
+  "featureX": "sepal length (cm)",
+  "featureY": "sepal width (cm)",
   "title": "Dunno"
 }
 
@@ -46,6 +46,6 @@ POST {{route}}/plot/original
 Content-Type: application/json
 
 {
-  "feature1": "sepal length (cm)",
-  "feature2": "sepal width (cm)"
+  "featureX": "sepal length (cm)",
+  "featureY": "sepal width (cm)"
 }
