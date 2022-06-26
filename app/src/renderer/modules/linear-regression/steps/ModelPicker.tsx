@@ -29,7 +29,7 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 
   React.useEffect(() => {
     props.lockNextStep(StepsID.ModelPicker);
-  }, [props.independendVariables, props.dependendVariable, props.testSize, props.randomState]);
+  }, [props.independentVariables, props.dependendVariable, props.testSize, props.randomState]);
 
   const handleIndependentVarsChange = React.useCallback(
     (values: string[]) => props.setIndependentVariables(values),
@@ -56,8 +56,8 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
         <AutoCompleteCheckedSelect
           minWidth='min(25em, 50%)'
           id='independentVars'
-          label='Independend Variables'
-          checkedValues={props.independendVariables}
+          label='independent Variables'
+          checkedValues={props.independentVariables}
           possibleValues={props.variables}
           onChange={handleIndependentVarsChange}
         />
@@ -71,9 +71,9 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
       />
 
       <RunButton
-        disabled={props.independendVariables.length === 0 || props.dependendVariable === ''}
+        disabled={props.independentVariables.length === 0 || props.dependendVariable === ''}
         onClick={() =>
-          props.runModel(props.independendVariables, props.dependendVariable, props.testSize / 100, props.randomState)
+          props.runModel(props.independentVariables, props.dependendVariable, props.testSize / 100, props.randomState)
         }>
         run model
       </RunButton>
@@ -84,7 +84,7 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 // <redux>
 const mapState = (state: RootState) => ({
   dependendVariable: state.linearRegression.dependentVariable,
-  independendVariables: state.linearRegression.independentVariables,
+  independentVariables: state.linearRegression.independentVariables,
   variables: state.linearRegression.variables,
   randomState: state.linearRegression.randState,
   testSize: state.linearRegression.testSize,
