@@ -54,9 +54,28 @@ Content-Type: application/json
 }
 
 ###
+POST {{route}}/set-target-and-features
+Content-Type: application/json
+
+{
+  "testSize": 0.2,
+  "randomState": 42,
+  "target": "target",
+  "features": ["mean radius", "mean texture", "mean perimeter", "mean area"]
+}
+
+###
 POST {{route}}/run-model
 Content-Type: application/json
 
 {
   "kernel": "linear"
+}
+
+###
+POST  {{route}}/predict
+Content-Type: application/json
+
+{
+  "values": [1, 2, 5, 4]
 }

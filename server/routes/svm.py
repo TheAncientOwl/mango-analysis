@@ -38,7 +38,13 @@ def create_new_svm():
 
 @svm.get('/svm/possible-features')
 def get_possible_features():
-    return flask.jsonify(features=utils.get_numeric_columns(app.dataFrame))
+    targets = []
+
+    for label in app.dataFrame.columns:
+        if len(app.dataFrame[label].unique()) == 2:
+            targets.append(label)
+
+    return flask.jsonify(features=utils.get_numeric_columns(app.dataFrame), targets=targets)
 
 
 @svm.post('/svm/set-target-and-features')
@@ -51,6 +57,9 @@ def set_target_and_features():
     state.X_train, state.X_test, state.y_train, state.y_test = train_test_split(
         features, target, test_size=data['testSize'], random_state=data['randomState']
     )
+
+    print(state.X_train)
+    print(state.y_train)
 
     return flask.jsonify(feedback='Success!')
 
@@ -70,6 +79,7 @@ def run_model():
         precision=precision_score(state.y_test, state.y_pred),
         recall=recall_score(state.y_test, state.y_pred)
     )
+
 
 @svm.post('/svm/predict')
 def predict():
