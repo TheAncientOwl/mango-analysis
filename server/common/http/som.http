@@ -2,7 +2,50 @@
 @route = http://localhost:5000/som
 
 ### Read data
-GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/FILL.csv
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/som-iris.csv
 
 ### Print server's dataframe head
 GET {{local_host}}/printhead 
+
+###
+POST {{route}}/new
+
+###
+GET {{route}}/possible-features
+
+###
+POST {{route}}/set-target-and-features
+Content-Type: application/json
+
+{
+  "target": "target",
+  "features": ["sepal length (cm)", "sepal width (cm)", "petal length (cm)", "petal width (cm)"]
+}
+
+###
+POST {{route}}/run
+Content-Type: application/json
+
+{
+  "m": 3,
+  "n": 1
+}
+
+###
+POST {{route}}/plot/predictions
+Content-Type: application/json
+
+{
+  "feature1": "sepal length (cm)",
+  "feature2": "sepal width (cm)",
+  "title": "Dunno"
+}
+
+###
+POST {{route}}/plot/original
+Content-Type: application/json
+
+{
+  "feature1": "sepal length (cm)",
+  "feature2": "sepal width (cm)"
+}
