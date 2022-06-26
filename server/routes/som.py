@@ -73,7 +73,7 @@ def run():
 def plot():
     data = flask.request.get_json()
 
-    featureX = data['featurX']
+    featureX = data['featureX']
     featureY = data['featureY']
 
     # predictions
