@@ -149,6 +149,13 @@ export const knnReducer = (state: IDefaultState = defaultState, action: Dispatch
       };
     }
 
+    case ActionType.SetServerFeaturesTargetSuccess: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
     default: {
       return state;
     }

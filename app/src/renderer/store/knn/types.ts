@@ -20,7 +20,8 @@ export enum ActionType {
   ChangeNeighborsN = 'KNN__CHANGE_N_NEIGHBORS',
   ChangedPredictionModelSuccess = 'KNN__CHANGED_PREDICTION_MODEL_SUCCESS',
   ChangeValuesToPredict = 'KNN__CHANGE_VALUES_TO_PREDICT',
-  FetchedPrediction = 'KNN_FETCHED_PREDICTION',
+  FetchedPrediction = 'KNN__FETCHED_PREDICTION',
+  SetServerFeaturesTargetSuccess = 'KNN__SET_SERVER_FEATURES_TARGET_SUCCESS',
 }
 
 interface Loading {
@@ -108,6 +109,10 @@ interface FetchedPrediction {
   payload: number;
 }
 
+interface SetServerFeaturesTargetSuccess {
+  type: ActionType.SetServerFeaturesTargetSuccess;
+}
+
 export type DispatchTypes =
   | Loading
   | Reset
@@ -125,6 +130,7 @@ export type DispatchTypes =
   | ChangeTarget
   | ChangeTestSize
   | ChangeValuesToPredict
-  | ChangedPredictionModelSuccess;
+  | ChangedPredictionModelSuccess
+  | SetServerFeaturesTargetSuccess;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;

@@ -152,3 +152,22 @@ export const runPrediction = () => async (dispatch: Dispatch) => {
     console.error(err);
   }
 };
+
+export const setServerTargetFeatures = () => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.Loading });
+
+  try {
+    const { target, features, randomState, testSize } = store.getState().knn;
+
+    await axios.post('/knn/set-target-and-features', {
+      target,
+      features,
+      randomState,
+      testSize: testSize / 100,
+    });
+
+    dispatch({ type: ActionType.SetServerFeaturesTargetSuccess });
+  } catch (err) {
+    console.error(err);
+  }
+};

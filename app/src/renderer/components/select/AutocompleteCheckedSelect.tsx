@@ -23,6 +23,7 @@ export const AutoCompleteCheckedSelect: React.FC<Props> = ({
   maxWidth = 'auto',
   id,
   label,
+  checkedValues,
   possibleValues,
   onChange,
 }) => {
@@ -32,6 +33,7 @@ export const AutoCompleteCheckedSelect: React.FC<Props> = ({
         fullWidth
         multiple
         id={id}
+        value={checkedValues}
         options={possibleValues}
         disableCloseOnSelect
         getOptionLabel={option => option}
