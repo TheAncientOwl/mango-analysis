@@ -2,7 +2,61 @@
 @route = http://localhost:5000/svm
 
 ### Read data
-GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/FILL.csv
+GET {{local_host}}/data/import/csv/C:/Users/TheAncientOwl/Code/data-analysis-tool/server/common/test-data/svm-breast-cancer.csv
 
 ### Print server's dataframe head
 GET {{local_host}}/printhead 
+
+###
+POST {{route}}/new
+
+###
+GET {{route}}/possible-features
+
+###
+POST {{route}}/set-target-and-features
+Content-Type: application/json
+
+{
+  "testSize": 0.2,
+  "randomState": 42,
+  "target": "target",
+  "features": ["mean radius",
+    "mean texture",
+    "mean perimeter",
+    "mean area",
+    "mean smoothness",
+    "mean compactness",
+    "mean concavity",
+    "mean concave points",
+    "mean symmetry",
+    "mean fractal dimension",
+    "radius error",
+    "texture error",
+    "perimeter error",
+    "area error",
+    "smoothness error",
+    "compactness error",
+    "concavity error",
+    "concave points error",
+    "symmetry error",
+    "fractal dimension error",
+    "worst radius",
+    "worst texture",
+    "worst perimeter",
+    "worst area",
+    "worst smoothness",
+    "worst compactness",
+    "worst concavity",
+    "worst concave points",
+    "worst symmetry",
+    "worst fractal dimension"]
+}
+
+###
+POST {{route}}/run-model
+Content-Type: application/json
+
+{
+  "kernel": "linear"
+}

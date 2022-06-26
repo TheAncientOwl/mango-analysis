@@ -12,6 +12,7 @@ from .cluster_analysis_kmeans import kmeans
 from .cluster_analysis_hierarchycal import hierarchycal
 from .knn import knn
 from .som import som
+from .svm import svm
 
 all_routes = [
     data_import_export,
@@ -26,5 +27,6 @@ all_routes = [
     kmeans,
     hierarchycal,
     knn,
-    som
+    som,
+    svm
 ]
