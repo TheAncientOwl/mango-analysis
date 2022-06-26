@@ -10,7 +10,7 @@ import {
   jumpToStep,
 } from '@store/IDefaultAnalysisState';
 
-import { IRowColPlot2D, createPlot } from '@components/RowColPlot2D';
+import { IRowColPlot2D, createPlot } from '@modules/correspondence-analysis/steps/RowColPlot2D';
 
 const StepsCount = 3;
 

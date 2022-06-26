@@ -10,14 +10,15 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
-import { Tooltip } from './Tooltip';
-import { PlotButton } from './buttons';
-import { Paper } from './Paper';
-import { Select } from './select/Select';
-import { Image } from './Image';
-import { Checkbox } from './Checkbox';
-import { InputWithSave } from './InputWithSave';
-import { RenderIf } from './RenderIf';
+import { Tooltip } from '../../../components/Tooltip';
+import { CheckedButton, PlotButton } from '../../../components/buttons';
+import { Paper } from '../../../components/Paper';
+import { Select } from '../../../components/select/Select';
+import { Image } from '../../../components/Image';
+import { Checkbox } from '../../../components/Checkbox';
+import { InputWithSave } from '../../../components/InputWithSave';
+import { AutoCompleteCheckedSelect } from '../../../components/select';
+import { RenderIf } from '../../../components/RenderIf';
 
 const visibleIcon = <VisibilityIcon />;
 const hiddenIcon = <VisibilityOffIcon />;
@@ -26,36 +27,39 @@ const addIcon = <AddBoxIcon />;
 
 const separator = <Stack mt={2} mb={2} sx={{ bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 
-export interface IRowColPlot2D {
-  id: string;
+export interface IPlot2D {
   open: boolean;
-  title: string;
+  id: string;
+  xLabel: string;
+  yLabel: string;
   plotSrc: string;
-  xComponent: number;
-  yComponent: number;
-  showRowLabels: boolean;
-  showColLabels: boolean;
+  annot: boolean;
+  legend: boolean;
+  targets: string[];
+  title: string;
 }
 
-export const createPlot = (): IRowColPlot2D => ({
+export const createPlot = (): IPlot2D => ({
   id: uuidv4(),
+  xLabel: '',
+  yLabel: '',
+  plotSrc: '',
+  annot: false,
+  legend: false,
+  targets: [],
   open: true,
   title: '',
-  plotSrc: '',
-  xComponent: 0,
-  yComponent: 0,
-  showRowLabels: true,
-  showColLabels: true,
 });
 
 const emptyPlot = createPlot();
 
 interface IPlotEvents {
-  onChangeComponentX: (event: SelectChangeEvent) => void;
-  onChangeComponentY: (event: SelectChangeEvent) => void;
+  onChangeAxisX: (event: SelectChangeEvent) => void;
+  onChangeAxisY: (event: SelectChangeEvent) => void;
   onPlot: () => void;
-  onToggleRowLabels: () => void;
-  onToggleColLabels: () => void;
+  onToggleAnnot: () => void;
+  onToggleLegend: () => void;
+  onTargetsChange?: (values: string[]) => void;
   onToggleOpen: () => void;
   onDelete: () => void;
   onTitleChange: (value: string) => void;
@@ -63,24 +67,15 @@ interface IPlotEvents {
 }
 
 interface Props extends IPlotEvents {
-  plot: IRowColPlot2D;
+  plot: IPlot2D;
 
-  componentsCount: number;
+  pcaLabels: string[];
+  targets: string[];
   disableDelete: boolean;
 }
 
-export const RowColPlot2D: React.FC<Props> = props => {
-  const plot: IRowColPlot2D = props.plot !== undefined ? props.plot : emptyPlot;
-
-  const componentsCountOptions = React.useMemo(() => {
-    const options = new Array(Math.max(0, props.componentsCount)).fill(0);
-
-    options.forEach((element, index, array) => {
-      array[index] = index;
-    });
-
-    return options;
-  }, [props.componentsCount]);
+export const Plot2D: React.FC<Props> = props => {
+  const plot: IPlot2D = props.plot !== undefined ? props.plot : emptyPlot;
 
   const mainToolbar = (
     <Stack direction='row' gap={1}>
@@ -124,10 +119,10 @@ export const RowColPlot2D: React.FC<Props> = props => {
           minWidth={'7em'}
           maxWidth={'20em'}
           id='xLabel'
-          label='X Component'
-          value={plot.xComponent}
-          values={componentsCountOptions}
-          onChange={props.onChangeComponentX}
+          label='X Axis'
+          value={plot.xLabel}
+          values={props.pcaLabels}
+          onChange={props.onChangeAxisX}
         />
       </Grid>
 
@@ -137,22 +132,48 @@ export const RowColPlot2D: React.FC<Props> = props => {
           maxWidth={'20em'}
           id='yLabel'
           label='Y Axis'
-          value={plot.yComponent}
-          values={componentsCountOptions}
-          onChange={props.onChangeComponentY}
+          value={plot.yLabel}
+          values={props.pcaLabels}
+          onChange={props.onChangeAxisY}
         />
       </Grid>
 
       <Grid item>
-        <Checkbox checked={plot.showRowLabels} onChange={props.onToggleRowLabels} label='Row labels' />
+        <Checkbox checked={plot.annot} onChange={props.onToggleAnnot} label='Annotations' />
       </Grid>
 
       <Grid item>
-        <Checkbox checked={plot.showColLabels} onChange={props.onToggleColLabels} label='Column labels' />
+        <Checkbox checked={plot.legend} onChange={props.onToggleLegend} label='Legend' />
       </Grid>
 
+      <RenderIf condition={props.targets.length > 0}>
+        <Grid item>
+          <CheckedButton
+            checked={props.targets.length === plot.targets.length}
+            onClick={() => props.onTargetsChange(props.targets.length === plot.targets.length ? [] : props.targets)}>
+            all targets
+          </CheckedButton>
+        </Grid>
+
+        <Grid item xs={12}>
+          <RenderIf condition={props.targets.length !== plot.targets.length}>
+            <AutoCompleteCheckedSelect
+              minWidth='10em'
+              id='select-targets'
+              label='Targets'
+              checkedValues={plot.targets}
+              possibleValues={props.targets}
+              onChange={props.onTargetsChange}
+            />
+          </RenderIf>
+        </Grid>
+      </RenderIf>
+
       <Grid item>
-        <PlotButton onClick={props.onPlot} size='small'>
+        <PlotButton
+          disabled={plot.xLabel === '' || plot.yLabel === '' || plot.targets.length === 0}
+          onClick={props.onPlot}
+          size='small'>
           plot
         </PlotButton>
       </Grid>
@@ -169,7 +190,7 @@ export const RowColPlot2D: React.FC<Props> = props => {
 
         <RenderIf condition={plot.plotSrc !== ''}>
           <Box sx={{ mt: 2, maxWidth: '40em' }}>
-            <Image src={plot.plotSrc} alt={`Plot ${plot.xComponent} - ${plot.yComponent}`} />
+            <Image src={plot.plotSrc} alt={`Plot ${plot.xLabel} - ${plot.yLabel}`} />
           </Box>
         </RenderIf>
       </Collapse>

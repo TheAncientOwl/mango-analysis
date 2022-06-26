@@ -1,5 +1,5 @@
 import { StepsID } from '@modules/principal-components-analysis/steps';
-import { IPlot2D, createPlot } from '@components/Plot2D';
+import { IPlot2D, createPlot } from '@modules/principal-components-analysis/steps/Plot2D';
 
 import { IAnalysisHints, PossibleTF, ActionType, DispatchTypes } from './types';
 import {

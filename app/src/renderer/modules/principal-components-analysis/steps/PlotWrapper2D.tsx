@@ -19,7 +19,7 @@ import {
 // eslint-disable-next-line import/named
 import { SelectChangeEvent } from '@mui/material';
 
-import { IPlot2D, Plot2D } from '@components/Plot2D';
+import { IPlot2D, Plot2D } from '@modules/principal-components-analysis/steps/Plot2D';
 
 interface WrapperProps {
   plot: IPlot2D;

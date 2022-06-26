@@ -10,6 +10,10 @@ export enum ActionType {
   UnlockNextStep = 'SOM__UNLOCK_NEXT_STEP',
   LockNextStep = 'SOM__LOCK_NEXT_STEP',
   JumpToStep = 'SOM__JUMP_TO_STEP',
+
+  FetchedPossibleFeatures = 'SOM__FETCHED_POSSIBLE_FEATURES',
+  ChangeTarget = 'SOM__CHANGE_TARGET',
+  ChangeFeatures = 'SOM__CHANGE_FEATURES',
 }
 
 interface Loading {
@@ -43,14 +47,6 @@ interface JumpToStep {
   payload: number;
 }
 
-export type DispatchTypes = 
-  | Loading
-  | Reset
-  | NextStep
-  | PrevStep
-  | UnlockNextStep
-  | LockNextStep
-  | JumpToStep;
+export type DispatchTypes = Loading | Reset | NextStep | PrevStep | UnlockNextStep | LockNextStep | JumpToStep;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;
-

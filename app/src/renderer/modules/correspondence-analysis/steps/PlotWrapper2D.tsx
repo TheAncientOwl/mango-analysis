@@ -18,7 +18,7 @@ import {
 // eslint-disable-next-line import/named
 import { SelectChangeEvent } from '@mui/material';
 
-import { IRowColPlot2D, RowColPlot2D } from '@components/RowColPlot2D';
+import { IRowColPlot2D, RowColPlot2D } from '@modules/correspondence-analysis/steps/RowColPlot2D';
 
 interface WrapperProps {
   plot: IRowColPlot2D;
