@@ -31,7 +31,7 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 
   React.useEffect(() => {
     props.lockNextStep(StepsID.ModelPicker);
-  }, [props.independentVariables, props.dependendVariable, props.testSize, props.randomState]);
+  }, [props.independentVariables, props.dependentVariable, props.testSize, props.randomState]);
 
   const handleIndependentVarsChange = React.useCallback(
     (values: string[]) => props.setIndependentVariables(values),
@@ -48,9 +48,9 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
       <Stack direction='row' alignItems='center' gap={2} mb={3} maxWidth='100%'>
         <Select
           minWidth='15em'
-          id='dependendVar'
+          id='dependentVar'
           label='Dependent Variable'
-          value={props.dependendVariable}
+          value={props.dependentVariable}
           values={props.variables}
           onChange={handleDependentVarChange}
         />
@@ -84,11 +84,11 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
       />
 
       <RunButton
-        disabled={props.independentVariables.length === 0 || props.dependendVariable === ''}
+        disabled={props.independentVariables.length === 0 || props.dependentVariable === ''}
         onClick={() =>
           props.runModel(
             props.independentVariables,
-            props.dependendVariable,
+            props.dependentVariable,
             props.testSize / 100,
             props.randomState,
             props.maxIterations
@@ -102,7 +102,7 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
 
 // <redux>
 const mapState = (state: RootState) => ({
-  dependendVariable: state.logisticRegression.dependentVariable,
+  dependentVariable: state.logisticRegression.dependentVariable,
   independentVariables: state.logisticRegression.independentVariables,
   variables: state.logisticRegression.variables,
   randomState: state.logisticRegression.randState,
