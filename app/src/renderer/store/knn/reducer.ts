@@ -1,4 +1,4 @@
-import { ActionType, DispatchTypes } from './types';
+import { ActionType, DispatchTypes, IModelKNN } from './types';
 
 import {
   IDefaultAnalysisStep,
@@ -10,10 +10,19 @@ import {
   jumpToStep,
 } from '@store/IDefaultAnalysisState';
 
-const StepsCount = 0;
+const StepsCount = 4;
 
 interface IDefaultState extends IDefaultAnalysisStep {
-  specificStatePropery: string;
+  possbileFeatures: string[];
+  target: string;
+  features: string[];
+  nNeigbors: number;
+  predictionModelName: string;
+  valuesToPredict: number[];
+  prediction: number | undefined;
+  models: IModelKNN[];
+  testSize: number;
+  randomState: number;
 }
 
 const defaultState: IDefaultState = {
@@ -21,7 +30,16 @@ const defaultState: IDefaultState = {
   currentStep: 0,
   nextStepUnlocked: new Array(StepsCount).fill(false),
 
-  specificStatePropery: 'dunno',
+  possbileFeatures: [],
+  target: '',
+  features: [],
+  nNeigbors: 4,
+  predictionModelName: '',
+  valuesToPredict: [],
+  prediction: undefined,
+  models: [],
+  testSize: 20,
+  randomState: 42,
 };
 
 export const knnReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
@@ -54,9 +72,85 @@ export const knnReducer = (state: IDefaultState = defaultState, action: Dispatch
       return defaultState;
     }
 
+    case ActionType.FetchedModel: {
+      if (state.models.some(model => model === action.payload)) return state;
+
+      return {
+        ...state,
+        loading: false,
+        models: [...state.models, action.payload],
+      };
+    }
+
+    case ActionType.FetchedPossibleFeatures: {
+      return {
+        ...state,
+        loading: false,
+        possbileFeatures: action.payload,
+      };
+    }
+
+    case ActionType.ChangeTarget: {
+      return {
+        ...state,
+        target: action.payload,
+      };
+    }
+
+    case ActionType.ChangeFeatures: {
+      return {
+        ...state,
+        features: action.payload,
+      };
+    }
+
+    case ActionType.ChangeTestSize: {
+      return {
+        ...state,
+        testSize: action.payload,
+      };
+    }
+
+    case ActionType.ChangeRandomState: {
+      return {
+        ...state,
+        randomState: action.payload,
+      };
+    }
+
+    case ActionType.ChangeNeighborsN: {
+      if (action.payload < 1) return state;
+
+      return {
+        ...state,
+        nNeigbors: action.payload,
+      };
+    }
+
+    case ActionType.ChangedPredictionModelSuccess: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
+    case ActionType.ChangeValuesToPredict: {
+      return {
+        ...state,
+        valuesToPredict: action.payload,
+      };
+    }
+
+    case ActionType.FetchedPrediction: {
+      return {
+        ...state,
+        loading: false,
+        prediction: action.payload,
+      };
+    }
+
     default: {
       return state;
     }
   }
 };
-
