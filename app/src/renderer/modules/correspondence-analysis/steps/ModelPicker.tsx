@@ -16,11 +16,11 @@ import {
 import { Stack, SelectChangeEvent } from '@mui/material';
 
 import { InputWithSave } from '@components/InputWithSave';
-import { RunButton } from '@src/renderer/components/buttons';
+import { RunButton } from '@components/buttons';
 import { AnalysisStepLogic } from '@components/analysis';
 
 import { StepsID } from '.';
-import { Select } from '@src/renderer/components/select';
+import { Select } from '@components/select';
 
 const ModelPicker: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {

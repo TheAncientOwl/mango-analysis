@@ -10,6 +10,7 @@ import {
   jumpToStep,
   newNextStepUnlockedArray,
 } from '@store/IDefaultAnalysisState';
+import { StepsID } from '@modules/knn/steps';
 
 const StepsCount = 4;
 
@@ -130,6 +131,9 @@ export const knnReducer = (state: IDefaultState = defaultState, action: Dispatch
       return {
         ...state,
         loading: false,
+        predictionModelName: action.payload,
+        currentStep: StepsID.PredictionModel + 1,
+        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, StepsID.PredictionModel, true),
       };
     }
 

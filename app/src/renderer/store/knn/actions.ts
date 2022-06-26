@@ -121,15 +121,13 @@ export const changeNeighborsN = (value: number) => (dispatch: Dispatch) => {
   dispatch({ type: ActionType.ChangeNeighborsN, payload: value });
 };
 
-export const setServerPredictionModel = () => async (dispatch: Dispatch) => {
+export const setServerPredictionModel = (value: string) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
   try {
-    const { predictionModelName } = store.getState().knn;
+    await axios.post('/knn/set-model', { modelName: value });
 
-    await axios.post('/knn/set-model', { modelName: predictionModelName });
-
-    dispatch({ type: ActionType.ChangedPredictionModelSuccess });
+    dispatch({ type: ActionType.ChangedPredictionModelSuccess, payload: value });
   } catch (err) {
     console.error(err);
   }

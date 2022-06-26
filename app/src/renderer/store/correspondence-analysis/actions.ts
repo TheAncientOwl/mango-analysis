@@ -1,4 +1,4 @@
-import { axios } from '@src/renderer/config';
+import { axios } from '@config/.';
 import { store } from '..';
 import { Dispatch, ActionType } from './types';
 

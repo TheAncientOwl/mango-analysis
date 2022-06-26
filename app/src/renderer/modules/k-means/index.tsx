@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { nextStep, prevStep } from '@src/renderer/store/k-means/actions';
+import { nextStep, prevStep } from '@store/k-means/actions';
 
 import { Analysis } from '@components/analysis';
 

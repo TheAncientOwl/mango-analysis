@@ -24,8 +24,8 @@ import { Select, CheckedSelect, SelectSlider } from '@components/select';
 import { AnalysisStepLogic } from '@components/analysis';
 
 import { StepsID } from '.';
-import { KMeansInit } from '@src/renderer/store/k-means/types';
-import { InputWithSave } from '@src/renderer/components/InputWithSave';
+import { KMeansInit } from '@store/k-means/types';
+import { InputWithSave } from '@components/InputWithSave';
 
 const VerticalLine = <Stack sx={{ m: 1, bgcolor: 'grey.700', p: 0.1 }}></Stack>;
 

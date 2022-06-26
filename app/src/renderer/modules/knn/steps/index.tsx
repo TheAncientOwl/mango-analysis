@@ -4,10 +4,12 @@ import { IStep } from '@components/analysis';
 
 import ModelPicker from './ModelPicker';
 import Models from './Models';
+import PredictionModel from './PredictionModel';
 
 export const StepsID = Object.freeze({
   ModelPicker: 0,
   Models: 1,
+  PredictionModel: 2,
 });
 
 export const StepsKnn: ReadonlyArray<IStep> = [
@@ -18,7 +20,12 @@ export const StepsKnn: ReadonlyArray<IStep> = [
   },
   {
     index: StepsID.Models,
-    title: 'Models',
+    title: 'Run Models',
     content: <Models />,
+  },
+  {
+    index: StepsID.PredictionModel,
+    title: 'Choose prediction model',
+    content: <PredictionModel />,
   },
 ];

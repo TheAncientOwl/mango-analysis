@@ -24,6 +24,7 @@ export enum ActionType {
   ChangeRandomState = 'KNN__CHANGE_RANDOM_STATE',
   ChangeNeighborsN = 'KNN__CHANGE_N_NEIGHBORS',
   ChangedPredictionModelSuccess = 'KNN__CHANGED_PREDICTION_MODEL_SUCCESS',
+  ChangePredictionModelName = 'KNN__CHANGE_PREDICTION_MODEL_NAME',
   ChangeValuesToPredict = 'KNN__CHANGE_VALUES_TO_PREDICT',
   FetchedPrediction = 'KNN__FETCHED_PREDICTION',
   SetServerFeaturesTargetSuccess = 'KNN__SET_SERVER_FEATURES_TARGET_SUCCESS',
@@ -114,6 +115,7 @@ interface ChangeNeighborsN {
 
 interface ChangedPredictionModelSuccess {
   type: ActionType.ChangedPredictionModelSuccess;
+  payload: string;
 }
 
 interface ChangeValuesToPredict {
