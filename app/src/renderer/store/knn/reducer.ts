@@ -17,13 +17,17 @@ interface IDefaultState extends IDefaultAnalysisStep {
   possbileFeatures: string[];
   target: string;
   features: string[];
-  nNeigbors: number;
+  nNeighbors: number;
   predictionModelName: string;
   valuesToPredict: number[];
   prediction: number | undefined;
-  models: IModelKNN[];
   testSize: number;
   randomState: number;
+
+  arbitraryModel: IModelKNN | undefined;
+  gridModel: IModelKNN | undefined;
+  gridModelWeights: IModelKNN | undefined;
+  baggedModel: IModelKNN | undefined;
 }
 
 const defaultState: IDefaultState = {
@@ -34,13 +38,17 @@ const defaultState: IDefaultState = {
   possbileFeatures: [],
   target: '',
   features: [],
-  nNeigbors: 4,
+  nNeighbors: 4,
   predictionModelName: '',
   valuesToPredict: [],
   prediction: undefined,
-  models: [],
   testSize: 20,
   randomState: 42,
+
+  arbitraryModel: undefined,
+  gridModel: undefined,
+  gridModelWeights: undefined,
+  baggedModel: undefined,
 };
 
 export const knnReducer = (state: IDefaultState = defaultState, action: DispatchTypes): IDefaultState => {
@@ -71,16 +79,6 @@ export const knnReducer = (state: IDefaultState = defaultState, action: Dispatch
 
     case ActionType.Reset: {
       return defaultState;
-    }
-
-    case ActionType.FetchedModel: {
-      if (state.models.some(model => model === action.payload)) return state;
-
-      return {
-        ...state,
-        loading: false,
-        models: [...state.models, action.payload],
-      };
     }
 
     case ActionType.FetchedPossibleFeatures: {
@@ -124,7 +122,7 @@ export const knnReducer = (state: IDefaultState = defaultState, action: Dispatch
 
       return {
         ...state,
-        nNeigbors: action.payload,
+        nNeighbors: action.payload,
       };
     }
 
@@ -156,6 +154,53 @@ export const knnReducer = (state: IDefaultState = defaultState, action: Dispatch
         loading: false,
         currentStep: 1,
         nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, 0, true),
+      };
+    }
+
+    case ActionType.FetchedArbitraryModel: {
+      return {
+        ...state,
+        loading: false,
+        arbitraryModel: action.payload,
+        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, 1, true),
+      };
+    }
+
+    case ActionType.FetchedGridModel: {
+      return {
+        ...state,
+        loading: false,
+        gridModel: action.payload,
+        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, 1, true),
+      };
+    }
+
+    case ActionType.FetchedGridWeightsModel: {
+      return {
+        ...state,
+        loading: false,
+        gridModelWeights: action.payload,
+        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, 1, true),
+      };
+    }
+
+    case ActionType.FetchedBaggedModel: {
+      return {
+        ...state,
+        loading: false,
+        baggedModel: action.payload,
+        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, 1, true),
+      };
+    }
+
+    case ActionType.ResetModels: {
+      return {
+        ...state,
+        arbitraryModel: undefined,
+        gridModel: undefined,
+        gridModelWeights: undefined,
+        baggedModel: undefined,
+        nextStepUnlocked: new Array(state.nextStepUnlocked.length).fill(false),
       };
     }
 

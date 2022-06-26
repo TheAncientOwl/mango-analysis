@@ -50,7 +50,10 @@ def create_new_knn():
 @knn.get('/knn/possible-features')
 def get_possible_targets_and_features():
     features = app.dataFrame.columns.tolist()
-    features.remove('_mango_id')
+    try:
+        features.remove('_mango_id')
+    except:
+        pass
 
     return flask.jsonify(features=features)
 
@@ -87,10 +90,8 @@ def arbitrary():
     return flask.jsonify(name='Arbitrary', trainError=state.arbitrary.train_error, testError=state.arbitrary.test_error)
 
 
-@knn.post('/knn/grid-search-cv')
+@knn.get('/knn/grid-search-cv')
 def gridSearchCV():
-    data = flask.request.get_json()
-
     parameters = {
         'n_neighbors': range(1, 50)
     }
@@ -109,10 +110,8 @@ def gridSearchCV():
     return flask.jsonify(name='GridSearchCV', trainError=state.gridSearchCV.train_error, testError=state.gridSearchCV.test_error)
 
 
-@knn.post('/knn/grid-search-cv-weights')
+@knn.get('/knn/grid-search-cv-weights')
 def gridSearchCV_weights():
-    data = flask.request.get_json()
-
     parameters = {
         'n_neighbors': range(1, 50),
         "weights": ["uniform", "distance"],
@@ -133,10 +132,8 @@ def gridSearchCV_weights():
     return flask.jsonify(name='GridSearchCV & Weights', trainError=state.gridSearchCV_weights.train_error, testError=state.gridSearchCV_weights.test_error)
 
 
-@knn.post('/knn/bagging')
+@knn.get('/knn/bagging')
 def bagging():
-    data = flask.request.get_json()
-
     if state.gridSearchCV_weights.model == None:
         gridSearchCV_weights()
 

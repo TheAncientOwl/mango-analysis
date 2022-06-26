@@ -31,12 +31,12 @@ export const runArbitrary = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
   try {
-    const { nNeigbors } = store.getState().knn;
+    const { nNeighbors } = store.getState().knn;
 
-    const res = await axios.post('/knn/arbitrary', { nNeigbors });
+    const res = await axios.post('/knn/arbitrary', { nNeighbors });
 
     dispatch({
-      type: ActionType.FetchedModel,
+      type: ActionType.FetchedArbitraryModel,
       payload: { name: res.data.name, testError: res.data.testError, trainError: res.data.trainError },
     });
   } catch (err) {
@@ -48,10 +48,10 @@ export const runGridSearchCV = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
   try {
-    const res = await axios.post('/knn/grid-search-cv');
+    const res = await axios.get('/knn/grid-search-cv');
 
     dispatch({
-      type: ActionType.FetchedModel,
+      type: ActionType.FetchedGridModel,
       payload: { name: res.data.name, testError: res.data.testError, trainError: res.data.trainError },
     });
   } catch (err) {
@@ -63,10 +63,10 @@ export const runGridSearchCVWeights = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
   try {
-    const res = await axios.post('/knn/grid-search-cv-weights');
+    const res = await axios.get('/knn/grid-search-cv-weights');
 
     dispatch({
-      type: ActionType.FetchedModel,
+      type: ActionType.FetchedGridWeightsModel,
       payload: { name: res.data.name, testError: res.data.testError, trainError: res.data.trainError },
     });
   } catch (err) {
@@ -78,10 +78,10 @@ export const runBagging = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.Loading });
 
   try {
-    const res = await axios.post('/knn/bagging');
+    const res = await axios.get('/knn/bagging');
 
     dispatch({
-      type: ActionType.FetchedModel,
+      type: ActionType.FetchedBaggedModel,
       payload: { name: res.data.name, testError: res.data.testError, trainError: res.data.trainError },
     });
   } catch (err) {
@@ -170,4 +170,8 @@ export const setServerTargetFeatures = () => async (dispatch: Dispatch) => {
   } catch (err) {
     console.error(err);
   }
+};
+
+export const resetModels = () => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.ResetModels });
 };

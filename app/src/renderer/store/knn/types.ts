@@ -11,7 +11,12 @@ export enum ActionType {
   LockNextStep = 'KNN__LOCK_NEXT_STEP',
   JumpToStep = 'KNN__JUMP_TO_STEP',
 
-  FetchedModel = 'KNN__FETCHED_MODEL',
+  FetchedArbitraryModel = 'KNN__FETCHED_MODEL_ARBITRARY',
+  FetchedGridModel = 'KNN__FETCHED_MODEL_GRID',
+  FetchedGridWeightsModel = 'KNN__FETCHED_MODEL_GRID_WEIGHTS',
+  FetchedBaggedModel = 'KNN__FETCHED_MODEL_BAGGED',
+  ResetModels = 'KNN__RESET_MODELS',
+
   FetchedPossibleFeatures = 'KNN__FETCHED_POSSIBLE_FEATURES',
   ChangeTarget = 'KNN__CHANGE_TARGET',
   ChangeFeatures = 'KNN__CHANGE_FEATURES',
@@ -57,11 +62,23 @@ interface JumpToStep {
 
 export interface IModelKNN {
   name: string;
-  trainError: number;
-  testError: number;
+  trainError: number | undefined;
+  testError: number | undefined;
 }
-interface FetchedModel {
-  type: ActionType.FetchedModel;
+interface FetchedArbitraryModel {
+  type: ActionType.FetchedArbitraryModel;
+  payload: IModelKNN;
+}
+interface FetchedGridModel {
+  type: ActionType.FetchedGridModel;
+  payload: IModelKNN;
+}
+interface FetchedGridWeightsModel {
+  type: ActionType.FetchedGridWeightsModel;
+  payload: IModelKNN;
+}
+interface FetchedBaggedModel {
+  type: ActionType.FetchedBaggedModel;
   payload: IModelKNN;
 }
 
@@ -113,6 +130,10 @@ interface SetServerFeaturesTargetSuccess {
   type: ActionType.SetServerFeaturesTargetSuccess;
 }
 
+interface ResetModels {
+  type: ActionType.ResetModels;
+}
+
 export type DispatchTypes =
   | Loading
   | Reset
@@ -121,7 +142,6 @@ export type DispatchTypes =
   | UnlockNextStep
   | LockNextStep
   | JumpToStep
-  | FetchedModel
   | FetchedPossibleFeatures
   | FetchedPrediction
   | ChangeFeatures
@@ -131,6 +151,11 @@ export type DispatchTypes =
   | ChangeTestSize
   | ChangeValuesToPredict
   | ChangedPredictionModelSuccess
-  | SetServerFeaturesTargetSuccess;
+  | SetServerFeaturesTargetSuccess
+  | FetchedArbitraryModel
+  | FetchedGridModel
+  | FetchedGridWeightsModel
+  | FetchedBaggedModel
+  | ResetModels;
 
 export type Dispatch = ReduxDispatch<DispatchTypes>;
