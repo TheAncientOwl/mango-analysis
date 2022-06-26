@@ -8,6 +8,7 @@ import {
   unlockNextStep,
   lockNextStep,
   jumpToStep,
+  newNextStepUnlockedArray,
 } from '@store/IDefaultAnalysisState';
 
 const StepsCount = 4;
@@ -153,6 +154,8 @@ export const knnReducer = (state: IDefaultState = defaultState, action: Dispatch
       return {
         ...state,
         loading: false,
+        currentStep: 1,
+        nextStepUnlocked: newNextStepUnlockedArray(state.nextStepUnlocked, 0, true),
       };
     }
 

@@ -10,6 +10,7 @@ import {
   changeTestSize,
   changeRandomState,
   lockNextStep,
+  setServerTargetFeatures,
 } from '@store/knn/actions';
 
 // eslint-disable-next-line import/named
@@ -19,6 +20,7 @@ import { AnalysisStepLogic } from '@components/analysis';
 import { Select, AutoCompleteCheckedSelect, TestSizeSelector } from '@components/select';
 
 import { StepsID } from '.';
+import { RunButton } from '@src/renderer/components/buttons';
 
 const ModelPicker: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {
@@ -67,6 +69,10 @@ const ModelPicker: React.FC<PropsFromRedux> = props => {
         onRandomStateChange={props.changeRandomState}
         onTestSizeChange={props.changeTestSize}
       />
+
+      <RunButton disabled={props.features.length === 0 || props.target === ''} onClick={props.setServerTargetFeatures}>
+        continue
+      </RunButton>
     </AnalysisStepLogic>
   );
 };
@@ -87,6 +93,7 @@ const mapDispatch = {
   changeTestSize,
   changeRandomState,
   lockNextStep,
+  setServerTargetFeatures,
 };
 
 const connector = connect(mapState, mapDispatch);
