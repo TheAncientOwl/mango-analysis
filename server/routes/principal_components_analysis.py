@@ -45,19 +45,9 @@ def create_new_pca():
 
 @principal_components_analysis.get('/pca/possible-targets-and-features')
 def get_possible_targets_and_features():
-    targets = []
-    features = []
+    columns = app.dataFrame.drop('_mango_id', axis=1).columns.to_list()
 
-    for label in app.dataFrame.columns:
-        if label == '_mango_id':
-            continue
-
-        if utils.pandas_is_numeric(app.dataFrame[label]):
-            features.append(label)
-        else:
-            targets.append(label)
-
-    return flask.jsonify(targets=targets, features=features)
+    return flask.jsonify(targets=columns, features=columns)
 
 
 @principal_components_analysis.post('/pca/set-targets-and-features')
