@@ -37,19 +37,13 @@ def create_new_cluster_analysis():
 
 @kmeans.get('/kmeans/possible-labels-and-features')
 def get_possible_targets_and_features():
-    labels = []
-    features = []
+    variables = list(app.dataFrame.columns)
+    try:
+        variables.remove('_mango_id')
+    except:
+        pass
 
-    for label in app.dataFrame.columns:
-        if label == '_mango_id':
-            continue
-
-        if utils.pandas_is_numeric(app.dataFrame[label]):
-            features.append(label)
-        else:
-            labels.append(label)
-
-    return flask.jsonify(labels=labels, features=features)
+    return flask.jsonify(labels=variables, features=variables)
 
 
 @kmeans.post('/kmeans/set-targets-and-label')
@@ -61,7 +55,7 @@ def set_target_and_feature():
         state.labels = app.dataFrame.loc[:, state.label_tag].values
     else:
         state.labels = range(0, len(app.dataFrame.index))
-        
+
     state.feature_tags = list(data['features'])
     state.features = app.dataFrame.loc[:, state.feature_tags].values
 
@@ -155,13 +149,10 @@ def cluster():
 
     centers_df = pd.DataFrame(kmeans.cluster_centers_,
                               columns=state.feature_tags)
-    centers_df['__Cluster'] = index = [
-        f'Cluster {x}' for x in range(0, len(kmeans.cluster_centers_))]
-    centers_df.set_index('__Cluster', inplace=True)
 
-    result_df = pd.DataFrame({'Cluster': kmeans.labels_})
-    if (state.label_tag != '__none__'):
-        result_df.index = state.labels
+    result_df = pd.DataFrame(
+        {'Cluster': kmeans.labels_, 'Original': app.dataFrame[state.label_tag], 'Index': app.dataFrame['_mango_id']})
+    result_df.set_index('Index', inplace=True)
 
     return flask.jsonify(
         inertia=kmeans.inertia_,

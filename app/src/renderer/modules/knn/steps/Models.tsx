@@ -3,17 +3,33 @@ import React from 'react';
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
-import { runArbitrary, runGridSearchCV, runGridSearchCVWeights, runBagging } from '@store/knn/actions';
+import {
+  runArbitrary,
+  runGridSearchCV,
+  runGridSearchCVWeights,
+  runBagging,
+  changeNeighborsN,
+} from '@store/knn/actions';
 
 import { Grid } from '@mui/material';
 
 import { Model } from './Model';
 import { AnalysisStepLogic } from '@components/analysis';
+import { InputWithSave } from '@src/renderer/components/InputWithSave';
 
 const Models: React.FC<PropsFromRedux> = props => {
   return (
     <AnalysisStepLogic>
-      <Grid container gap={2}>
+      <InputWithSave
+        text={props.nNeighbors}
+        placeholder='Neighbors Count'
+        tooltip='Saved.'
+        tooltipUnsaved='Value not saved. Click to save. (Value cannot be less than 1)'
+        onSave={props.changeNeighborsN}
+        type='number'
+      />
+
+      <Grid container gap={2} mt={2}>
         <Grid item xs={5}>
           <Model {...props.arbitrary} name='Arbitrary K Neighbors ' onRun={props.runArbitrary} />
         </Grid>
@@ -37,6 +53,7 @@ const mapState = (state: RootState) => ({
   grid: state.knn.gridModel,
   gridWeights: state.knn.gridModelWeights,
   bagged: state.knn.baggedModel,
+  nNeighbors: state.knn.nNeighbors,
 });
 
 const mapDispatch = {
@@ -44,6 +61,7 @@ const mapDispatch = {
   runGridSearchCV,
   runGridSearchCVWeights,
   runBagging,
+  changeNeighborsN,
 };
 
 const connector = connect(mapState, mapDispatch);

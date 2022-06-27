@@ -38,7 +38,10 @@ def create_new_logistic_regression():
 @logistic_regression.get('/logistic-regression/variables')
 def get_variables():
     variables = list(app.dataFrame.columns)
-    variables.remove('_mango_id')
+    try:
+        variables.remove('_mango_id')
+    except:
+        pass
 
     return flask.jsonify(variables=variables)
 
