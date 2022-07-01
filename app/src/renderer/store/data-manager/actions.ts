@@ -4,6 +4,8 @@ import { store } from '..';
 import { Dispatch, ActionType, ScalingMethodType } from './types';
 
 const fetchDataFrame = async (dispatch: Dispatch, page: number, pageSize: number, feedbackMessage = '') => {
+  if (!store.getState().appGlobal.serverUp) return;
+
   dispatch({
     type: ActionType.Loading,
   });

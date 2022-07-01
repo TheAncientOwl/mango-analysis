@@ -11,6 +11,9 @@ import App from '@renderer/layout';
 
 import { Provider } from 'react-redux';
 import { store } from '@store/.';
+import { checkServerUp } from './store/app-global/actions';
+
+store.dispatch(checkServerUp());
 
 // Render application in DOM
 ReactDOM.render(

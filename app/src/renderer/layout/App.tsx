@@ -11,11 +11,14 @@ import { AppRoutes } from '@config/.';
 import AppMenu from './AppMenu';
 import AppBar from './AppBar';
 import { AppPaper } from './AppPaper';
+import AppServerLoading from './AppServerLoading';
 
 const App: React.FC = () => {
   return (
     <React.Fragment>
       <AppBar />
+
+      <AppServerLoading />
 
       <Stack direction='column' sx={{ width: '100vw', height: '100vh' }}>
         <Toolbar variant='dense' />
