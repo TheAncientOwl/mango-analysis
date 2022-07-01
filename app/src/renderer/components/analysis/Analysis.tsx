@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Box, Backdrop, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { IStep } from './index';
 import { AnalysisStep } from './AnalysisStep';
+import { LoadingScreen } from '@components/LoadingScreen';
 
 interface Props {
   loading: boolean;
@@ -48,9 +49,7 @@ export const Analysis: React.FC<Props> = props => {
         ))}
       </Box>
 
-      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={props.loading}>
-        <CircularProgress color='inherit' />
-      </Backdrop>
+      <LoadingScreen loading={props.loading} />
     </>
   );
 };

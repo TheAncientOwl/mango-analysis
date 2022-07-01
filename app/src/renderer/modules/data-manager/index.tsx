@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Backdrop, CircularProgress } from '@mui/material';
-
 // eslint-disable-next-line import/named
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '@store/.';
@@ -11,6 +9,7 @@ import { Snackbar } from '@components/Snackbar';
 
 import { Toolbar } from './Toolbar';
 import DataFrameViewer from './data-frame-viewer';
+import { LoadingScreen } from '@src/renderer/components/LoadingScreen';
 
 const DataManager: React.FC<PropsFromRedux> = props => {
   React.useEffect(() => {
@@ -27,9 +26,7 @@ const DataManager: React.FC<PropsFromRedux> = props => {
         {props.feedbackMessage}
       </Snackbar>
 
-      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={props.loading}>
-        <CircularProgress color='inherit' />
-      </Backdrop>
+      <LoadingScreen loading={props.loading} />
     </>
   );
 };
