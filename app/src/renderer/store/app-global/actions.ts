@@ -14,8 +14,6 @@ export const checkServerUp = () => async (dispatch: Dispatch) => {
   setInterval(async () => {
     const { serverUp } = store.getState().appGlobal;
 
-    console.log(serverUp ? 'Server up' : 'Server down. fetching...');
-
     if (serverUp) return;
 
     try {

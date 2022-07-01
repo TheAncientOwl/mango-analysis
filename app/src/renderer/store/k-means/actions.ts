@@ -80,7 +80,7 @@ export const setServerLabelFeatures = () => async (dispatch: Dispatch) => {
 
     dispatch({ type: ActionType.SetLabelAndFeaturesSuccess });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 

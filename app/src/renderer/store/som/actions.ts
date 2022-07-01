@@ -57,7 +57,7 @@ export const runModel = () => async (dispatch: Dispatch) => {
 
     dispatch({ type: ActionType.ModelFinished });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
@@ -110,7 +110,7 @@ export const fetchPlotSrc = (index: number) => async (dispatch: Dispatch) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 
   if (!plotOriginal) return;
@@ -129,7 +129,7 @@ export const fetchPlotSrc = (index: number) => async (dispatch: Dispatch) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 

@@ -24,7 +24,7 @@ const stopServer = () => {
 };
 
 export const setupPythonServer = () => {
-  if (inDev()) return;
+  // if (inDev()) return;
 
   app.on('ready', startServer);
   app.on('will-quit', stopServer);
