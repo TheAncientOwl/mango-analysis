@@ -25,8 +25,15 @@ def setup_app_dirs():
     make_dirs(app_data_path)
 
     # plots directory
-    shutil.rmtree(plots_app_data_path)
-    make_dirs(plots_app_data_path)
+    try:
+        shutil.rmtree(plots_app_data_path)
+    except:
+        pass
+
+    try:
+        make_dirs(plots_app_data_path)
+    except:
+        pass
 
 
 def get_numeric_columns(df):
