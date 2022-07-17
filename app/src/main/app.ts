@@ -1,3 +1,4 @@
+import { inDev } from '@src/common/helpers';
 import { app, BrowserWindow, session } from 'electron';
 import { createAppWindow } from './appWindow';
 import { setupPythonServer } from './spawnPythonServer';
@@ -15,15 +16,17 @@ if (require('electron-squirrel-startup')) {
 app.whenReady().then(async () => {
   createAppWindow();
 
-  // react devtools
-  await session.defaultSession.loadExtension(
-    'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.24.7_0'
-  );
+  if (inDev()) {
+    // react devtools
+    await session.defaultSession.loadExtension(
+      'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\4.25.0_0'
+    );
 
-  // redux devtools
-  await session.defaultSession.loadExtension(
-    'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\3.0.11_0'
-  );
+    // redux devtools
+    await session.defaultSession.loadExtension(
+      'C:\\Users\\TheAncientOwl\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\3.0.11_1'
+    );
+  }
 });
 
 /**
