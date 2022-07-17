@@ -172,7 +172,7 @@ export const principalComponentsAnalysisReducer = (
         analysisComponentsCount: action.payload,
         nextStepUnlocked: newSteps,
         loadingsMatrixPath: '',
-        plots: [],
+        plots: [createPlot()],
       };
     }
 
