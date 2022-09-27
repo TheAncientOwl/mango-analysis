@@ -33,6 +33,15 @@ Degree paper project 2021-2022.
 - Zoom in / Zoom out images + download
 - Import CSV data
 - Modern UI
+
+## Demo
+
+### Data Manager module
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/0GK35d1vrgY/0.jpg)](https://www.youtube.com/watch?v=0GK35d1vrgY)
+
+### Principal Components module
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/nG_zG08gqsY/0.jpg)](https://www.youtube.com/watch?v=nG_zG08gqsY)
+
 ## Build
 
 ### [ Windows ]
